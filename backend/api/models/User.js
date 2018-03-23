@@ -8,7 +8,23 @@
 module.exports = {
 
   attributes: {
-
+    username: {
+      type: 'string',
+      primaryKey: true
+    },
+    email:{
+      type: 'string',
+      unique: true
+    },
+    password: {
+      type: 'string'
+    },
+    pais: {
+      type: 'string'
+    },
+    rango: {
+      type: 'string'
+    }
   }
 };
 
