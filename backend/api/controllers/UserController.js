@@ -7,15 +7,10 @@
 
 module.exports = {
 	registerMail: function(req,res){
-        var name = req.param('username');
-        var pass = req.param('password');
-        var mail = req.param('email');
-        User.create({
-            email: mail,
-            username: name,
-            password: pass,
-        }).exec(function(err,user){
-            if(!err) res.ok();
+        var {username, password, email} = req.query;
+        var mailAuth = new MailAuth();
+        mailAuth.register(username, password, email, function(status){
+            res.send(status);
         });
     },
 
