@@ -38,7 +38,15 @@ module.exports.routes = {
   'GET /registerMail': {
     controller: 'UserController',
     action: 'registerMail'
-  }
+  },
+  'GET /registerFacebook': {
+    controller: 'UserController',
+    action: 'registerFacebook'
+  },
+  'GET /registerGoogle': {
+    controller: 'UserController',
+    action: 'registerGoogle'
+  },
 
   /***************************************************************************
   *                                                                          *

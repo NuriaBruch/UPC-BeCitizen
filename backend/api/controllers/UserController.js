@@ -14,6 +14,16 @@ module.exports = {
         });
     },
 
+    registerGoogle: function(req, res){
+        // var googleAuth = new GoogleAuth();
+        res.ok();
+    },
+
+    registerFacebook: function(req, res){
+        //var facebookAuth = new FacebookAuth();
+        res.ok();
+    },
+
      /* He supuesto que en el login nos pueden mandar una pareja
            de username y pass o email y pass*/
     findUser: function(req,res){
