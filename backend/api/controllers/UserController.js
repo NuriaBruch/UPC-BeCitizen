@@ -15,8 +15,12 @@ module.exports = {
     },
 
     registerGoogle: function(req, res){
-        // var googleAuth = new GoogleAuth();
-        res.ok();
+        var googleAuth = new GoogleAuth();
+        var mail = req.param('email');
+        var name = req.param('username');
+        googleAuth.registerViaGoogle(mail,name,function(status){
+            res.send(status);
+        });
     },
 
     registerFacebook: function(req, res){

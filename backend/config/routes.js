@@ -48,6 +48,7 @@ module.exports.routes = {
     action: 'registerGoogle'
   },
 
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
