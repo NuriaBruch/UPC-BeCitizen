@@ -39,6 +39,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'registerMail'
   },
+  'GET /loginMail': {
+    controller: 'UserController',
+    action: 'loginMail'
+  },
   'GET /registerFacebook': {
     controller: 'UserController',
     action: 'registerFacebook'

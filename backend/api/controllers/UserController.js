@@ -14,6 +14,14 @@ module.exports = {
         });
     },
 
+    loginMail: function(req, res){
+        var {email, password} = req.query;
+        var mailAuth = new MailAuth();
+        mailAuth.login(email, password, function(status){
+            res.send(status);
+        });
+    },
+
     registerGoogle: function(req, res){
         // var googleAuth = new GoogleAuth();
         res.ok();
