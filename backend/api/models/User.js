@@ -10,7 +10,10 @@ module.exports = {
   attributes: {
     username: {
       type: 'string',
-      primaryKey: true
+      primaryKey: true,
+      required: true,
+      unique: true
+
     },
     email:{
       type: 'string',
