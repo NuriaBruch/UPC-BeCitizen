@@ -24,9 +24,8 @@ module.exports = {
 
     registerGoogle: function(req, res){
         var googleAuth = new GoogleAuth();
-        var mail = req.param('email');
-        var name = req.param('username');
-        googleAuth.registerViaGoogle(mail,name,function(status){
+        var accessToken = req.param('accessToken');
+        googleAuth.registerViaGoogle(accessToken,function(status){
             res.send(status);
         });
     },
