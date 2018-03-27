@@ -33,23 +33,6 @@ module.exports = {
     registerFacebook: function(req, res){
         //var facebookAuth = new FacebookAuth();
         res.ok();
-    },
-
-     /* He supuesto que en el login nos mandan un id
-      que puede ser email o username y la contraseña*/
-    findUserMail: function(req,res){
-        var id = req.param('id');
-        var pass = req.param('password');
-        User.find({ 
-            or: [
-                { email: id, password: pass },
-                { username: id, password: pass}
-            ]
-        }).exec(function(err,userFound){
-            res.send({user: userFound});
-        });
     }
-
-
 };
 
