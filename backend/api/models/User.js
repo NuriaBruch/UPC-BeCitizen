@@ -1,4 +1,4 @@
-/**
+  /**
  * User.js
  *
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
@@ -8,14 +8,12 @@
 module.exports = {
 
   attributes: {
-    username: {
-      columnName: 'the_primary_key',
+    email:{
       type: 'string',
       primaryKey: true
     },
-    email:{
+    username: {
       type: 'string',
-      unique: true
     },
     password: {
       type: 'string'

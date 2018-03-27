@@ -1,16 +1,54 @@
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
+
+function getGoogleMail(accessToken, callback){
+    const request = require('request');
+
+    const options = {  
+        url: 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token='.concat(accessToken),
+        method: 'GET',
+    };
+
+    request(options, function(err, res, body) {
+        if(err) {
+            callback(err);
+        } 
+        var parsed = JSON.parse(body);
+        var mail = parsed["email"];
+        console.log(mail);
+        console.log(body);
+        console.log(accessToken);
+        var usrPassword = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        console.log(usrPassword);
+        
+        User.create({email: mail, pasword: usrPassword,tipoLogIn: "google"}).exec(function(err2, newUser){
+            if(err2 !== undefined && err2){
+                callback(err2);
+            }
+            else callback(undefined);
+        });
+    });
+
+}
+
 module.exports = class GoogleAuth{
-    registerViaGoogle(mail,usrname,callback){
-        var usrPassword = mail.concat(usrname).concat("ThisUsrIsLoggedViaGoogle");
+    registerViaGoogle(IdToken,callback){
         var response = {
             status: "Ok",
             errors: []
         };
-        User.create({username: usrname, password: usrPassword, email: mail}).exec(function(err2, newUser){
-            if(err2 !== undefined && err2){
-                response.status = "Register error";
-                response.errors.push(err2);
+        getGoogleMail(IdToken,function(err){
+            if(err !== undefined && err){
+                response.status = "Google registration error";
+                response.errors.push(err);
+                callback(response);
             }
-            callback(response);
+            else callback(response);
         });
+        
     }
 }
