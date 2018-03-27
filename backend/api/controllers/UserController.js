@@ -28,16 +28,15 @@ module.exports = {
         res.ok();
     },
 
-     /* He supuesto que en el login nos pueden mandar una pareja
-           de username y pass o email y pass*/
-    findUser: function(req,res){
-        var mail = req.param('email');
+     /* He supuesto que en el login nos mandan un id
+      que puede ser email o username y la contraseña*/
+    findUserMail: function(req,res){
+        var id = req.param('id');
         var pass = req.param('password');
-        var name = req.param('username');
         User.find({ 
             or: [
-                { email: mail, password: pass },
-                { username: name, password: pass}
+                { email: id, password: pass },
+                { username: id, password: pass}
             ]
         }).exec(function(err,userFound){
             res.send({user: userFound});

@@ -10,11 +10,11 @@ module.exports = {
   attributes: {
     username: {
       type: 'string',
-      primaryKey: true
+      unique: true
     },
     email:{
       type: 'string',
-      unique: true
+      primaryKey: true
     },
     password: {
       type: 'string'
@@ -24,6 +24,11 @@ module.exports = {
     },
     rango: {
       type: 'string'
+    },
+    tipoLogIn: {
+      type: 'string',
+      enum: ['facebook', 'google', 'mail'],
+      defaultsTo: 'mail'
     }
   }
 };
