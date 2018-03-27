@@ -9,12 +9,13 @@ module.exports = {
 
   attributes: {
     username: {
+      columnName: 'the_primary_key',
       type: 'string',
-      unique: true
+      primaryKey: true
     },
     email:{
       type: 'string',
-      primaryKey: true
+      unique: true
     },
     password: {
       type: 'string'
