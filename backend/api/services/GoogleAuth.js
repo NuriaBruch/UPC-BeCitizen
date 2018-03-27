@@ -1,3 +1,10 @@
+function randomString(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+}
+
+
 function getGoogleMail(accessToken, callback){
     const request = require('request');
 
@@ -6,22 +13,24 @@ function getGoogleMail(accessToken, callback){
         method: 'GET',
     };
 
-
     request(options, function(err, res, body) {
         if(err) {
             callback(err);
         } 
-        var mail = body.email;
-        var usrPassword = Math.random().toString(36).slice(-8);
+        var parsed = JSON.parse(body);
+        var mail = parsed["email"];
+        console.log(mail);
+        console.log(body);
+        console.log(accessToken);
+        var usrPassword = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        console.log(usrPassword);
         
-        User.create({email: mail, pasword: usrPassword}).exec(function(err2, newUser){
+        User.create({email: mail, pasword: usrPassword,tipoLogIn: "google"}).exec(function(err2, newUser){
             if(err2 !== undefined && err2){
-                response.status = "Register error";
-                response.errors.push(err2);
+                callback(err2);
             }
-            callback(response);
+            else callback(undefined);
         });
-        callback(undefined);
     });
 
 }
@@ -34,7 +43,7 @@ module.exports = class GoogleAuth{
         };
         getGoogleMail(IdToken,function(err){
             if(err !== undefined && err){
-                response.status = "Google auth error";
+                response.status = "Google registration error";
                 response.errors.push(err);
                 callback(response);
             }
