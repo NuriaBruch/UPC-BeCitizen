@@ -51,6 +51,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'registerGoogle'
   },
+  'GET /loginGoogle': {
+    controller: 'UserController',
+    action: 'loginGoogle'
+  },
 
 
   /***************************************************************************

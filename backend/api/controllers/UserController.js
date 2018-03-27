@@ -29,6 +29,13 @@ module.exports = {
             res.send(status);
         });
     },
+    loginGoogle: function(req,res){
+        var googleAuth = new GoogleAuth();
+        var accessToken = req.param('accessToken');
+        googleAuth.loginViaGoogle(accessToken, function(status){
+            res.send(status);
+        });
+    },
 
     registerFacebook: function(req, res){
         //var facebookAuth = new FacebookAuth();
