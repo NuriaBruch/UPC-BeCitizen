@@ -7,3 +7,4 @@
 .externalNativeBuild
 /frontend/BeCitizeN/.idea/*
 /.idea/*
+projectFilesBackup/*
