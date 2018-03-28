@@ -21,14 +21,6 @@ module.exports = {
             res.send(status);
         });
     },
-
-    registerGoogle: function(req, res){
-        var googleAuth = new GoogleAuth();
-        var accessToken = req.param('accessToken');
-        googleAuth.registerViaGoogle(accessToken,function(status){
-            res.send(status);
-        });
-    },
     loginGoogle: function(req,res){
         var googleAuth = new GoogleAuth();
         var accessToken = req.param('accessToken');

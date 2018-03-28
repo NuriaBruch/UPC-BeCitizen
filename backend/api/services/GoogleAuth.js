@@ -11,7 +11,6 @@ function getGoogleMail(accessToken,callback){
         method: 'GET',
     };
     request(options, function(err1, res, body) {
-        console.log(body);
         if(err1 !== undefined && err1) {
             var mail = "badTokenConfirmation";
             callback(mail);
@@ -19,7 +18,10 @@ function getGoogleMail(accessToken,callback){
         else{
             var parsed = JSON.parse(body);
             var mail = parsed["email"];
-            callback(mail);
+            if(mail === undefined){
+                callback("badTokenConfirmation");
+            }
+            else callback(mail);
         }
     });
 }
@@ -35,35 +37,11 @@ function logMail(mail, callback){
 }
 
 module.exports = class GoogleAuth{
-    registerViaGoogle(accessToken,callback){
-        var response = {
-            status: "Ok",
-            errors: []
-        };
-        getGoogleMail(accessToken,function(usrMail){
-            var mail;
-            mail = usrMail;
-            if(mail==="badTokenConfirmation"){
-                response.status = "Error";
-                response.errors.push("User not found");
-                callback(response);
-            }
-            else {
-                logMail(mail,function(err2){
-                    if(err2 !== undefined && err2){
-                        response.status = "Error";
-                        response.errors.push(err2);
-                        callback(response);
-                    }
-                    else callback(response);
-                });
-            }
-        });
-    }
-
     loginViaGoogle(accessToken,callback){
         var response = {
             status: "Ok",
+            usrname: "",
+            rank:"",
             errors: []
         };
 
@@ -72,7 +50,7 @@ module.exports = class GoogleAuth{
             mail = usrMail;
             if(mail==="badTokenConfirmation"){
                 response.status = "Error";
-                response.errors.push("User not found");
+                response.errors.push("Unable to confirm access token");
                 callback(response);
             }
             else{
@@ -83,12 +61,19 @@ module.exports = class GoogleAuth{
                         callback(response);
                     }
                     else if(userFound === undefined ) {
-                        response.status = "Error";
-                        response.errors.push("User not found");
-                        callback(response);
+                        logMail(mail,function(err2){
+                            if(err2 !== undefined && err2){
+                                response.status = "Error";
+                                response.errors.push(err2);
+                                callback(response);
+                            }
+                            else callback(response);
+                        });
                     }
                     else{
                         if(userFound.tipoLogIn === "google"){
+                            response.usrname = userFound.username;
+                            response.rank = userFound.rango;
                             callback(response)
                         }
                         else{
