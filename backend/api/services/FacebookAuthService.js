@@ -10,7 +10,7 @@ function getFacebookUserInfo(userId,userToken,callback){
         { method: 'GET'
         , uri: 'https://graph.facebook.com/v2.12/'+userId+'?access_token='+userToken+'&fields=name,email,locale'
         }
-      , function (err, resp, body) {
+      ,function (err, resp, body) {
             if(err !== undefined && err)console.log('Error en la request \n'+err);
             else {
                 var userInfo = JSON.parse(body);
@@ -42,6 +42,7 @@ module.exports = {
                   console.log('Error en la request register: '+err);
                   response.status='Error';
                   response.errors.push(err);
+                  callback(response);
               }
               else {
                 var info = JSON.parse(body);
@@ -49,11 +50,13 @@ module.exports = {
                     console.log('Error en los parametros: '+info.error.message);
                     response.status='Error';
                     response.errors.push(info.error.message);
+                    callback(response);
                 }
                 else if(info.data.error){
                     console.log('Error al comprovar tokens: '+info.data.error.message);
                     response.status='Error';
                     response.errors.push(info.data.error.message);
+                    callback(response);
                 }
                 else if(String(info.data.app_id).valueOf === String(APP_ID).valueOf && String(info.data.is_valid).valueOf===String("true").valueOf){
                     //usuari autenticat correctament amb facebook
@@ -70,7 +73,7 @@ module.exports = {
                                     else if(!userFound){
                                         //no ha trobat cap usuari, l'insertem a la db
                                         var password = UtilsService.getRandomString();
-                                        User.create({password: password, email: userInfo.email, tipoLogIn: 'facebook'}).exec(
+                                        User.create({password: password, email: userInfo.email, hasFacebook: true}).exec(
                                             function(err2, newUser){
                                                 if(err2 !== undefined && err2){
                                                     response.status = "Error";
@@ -80,26 +83,25 @@ module.exports = {
                                         );
                                     }
                                     else{
-                                        if(String(userFound.tipoLogIn).valueOf === "facebook"){
-                                            response.username = userFound.username;
-                                            response.rank = userFound.rango;
+                                        //usuari ya estaba registrat a la db
+                                        response.username = userFound.username;
+                                        response.rank = "";
+                                        if(!userFound.hasFacebook){
+                                            User.update({email:userFound.email}).set({hasFacebook:true});
                                         }
-                                        /*else{
-                                            //usuari registrat que hara s'ha logejat amb facebook
-                                           //hacer el update 
-                                        }*/
                                     }
+                                    callback(response);
                                 });
                             }
                             else{
                                 response.status="Error"
                                 response.errors.push("Unable to get user info from Facebook, wrong facebookId");
-                            } 
+                                callback(response);
+                            }
                         }
                     );
                 }
                 }
-             callback(response);
             }
         );
 

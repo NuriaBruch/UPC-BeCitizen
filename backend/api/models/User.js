@@ -25,10 +25,13 @@ module.exports = {
     rango: {
       type: 'string'
     },
-    tipoLogIn: {
-      type: 'string',
-      enum: ['facebook', 'google', 'mail'],
-      defaultsTo: 'mail'
+    hasFacebook:{
+      type:'boolean',
+      defaultsTo: false
+    },
+    hasGoogle:{
+      type: 'boolean',
+      defaultsTo: false
     }
   }
 };
