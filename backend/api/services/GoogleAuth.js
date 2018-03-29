@@ -28,7 +28,7 @@ function getGoogleMail(accessToken,callback){
 
 function logMail(mail, callback){ 
     var usrPassword = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    User.create({email: mail, pasword: usrPassword,tipoLogIn: "google"}).exec(function(err3, newUser){
+    User.create({email: mail, password: usrPassword,tipoLogIn: "google"}).exec(function(err3, newUser){
         if(err3 !== undefined && err3){
             callback(err3);
         }
