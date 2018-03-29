@@ -4,12 +4,24 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import com.becitizen.app.becitizen.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+
+import static android.content.ContentValues.TAG;
 
 public class GoogleLogIn {
 
@@ -22,7 +34,12 @@ public class GoogleLogIn {
     public void configure(Activity activity) {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Request only the user's ID token, which can be used to identify the
+        // user securely to your backend. This will contain the user's basic
+        // profile (name, profile picture URL, etc) so you should not need to
+        // make an additional call to personalize your application.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(activity.getString(R.string.backendClientID))
                 .requestEmail()
                 .build();
 
@@ -54,6 +71,28 @@ public class GoogleLogIn {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             Log.w("Email", account.getEmail());
             Log.w("Display Name", account.getDisplayName());
+            Log.w("Token", account.getIdToken());
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet("https://test.com/registerGoogle");
+            httpGet.addHeader("idToken", account.getIdToken());
+
+            try {
+                System.out.println("STARTS");
+                HttpResponse response = httpClient.execute(httpGet);
+                int statusCode = response.getStatusLine().getStatusCode();
+                final String responseBody = EntityUtils.toString(response.getEntity());
+                Log.w("Result", "Signed in as: " + responseBody);
+                System.out.println("STOP");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            /*catch (ClientProtocolException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+            } catch (IOException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+            }*/
+
             mGoogleSignInClient.signOut();
             // Signed in successfully, show authenticated UI.
             //updateUI(account);
