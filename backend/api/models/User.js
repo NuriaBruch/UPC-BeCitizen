@@ -39,6 +39,9 @@ module.exports = {
       type: 'string',
       enum: ['diamond','platinum','gold','silver','bronze','coal']
     },
+    profilePicture:{
+      type: 'string'
+    },
     hasFacebook:{
       type:'boolean',
       defaultsTo: false
