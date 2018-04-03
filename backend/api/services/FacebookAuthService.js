@@ -8,7 +8,7 @@ function getFacebookUserInfo(userId,userToken,callback){
    
     request(
         { method: 'GET'
-        , uri: 'https://graph.facebook.com/v2.12/'+userId+'?access_token='+userToken+'&fields=name,email,locale'
+        , uri: 'https://graph.facebook.com/v2.12/'+userId+'?access_token='+userToken+'&fields=name,email,birthday'
         }
       ,function (err, resp, body) {
             if(err !== undefined && err)console.log('Error en la request \n'+err);
@@ -28,8 +28,17 @@ module.exports = {
         var response = {
             status: "Ok",
             errors: [] ,
-            username: "",
-            rank:""
+            loggedIn: "",
+            info:{
+                email:"",
+                username: "",
+                name:"",
+                surname:"",
+                biography: "",
+                birthday:"",
+                country:"",
+                rank:"",
+            }
         };
 
 
@@ -39,7 +48,6 @@ module.exports = {
             }
           ,function (err, resp, body) {
               if(err !== undefined && err){
-                  console.log('Error en la request register: '+err);
                   response.status='Error';
                   response.errors.push(err);
                   callback(response);
@@ -47,13 +55,11 @@ module.exports = {
               else {
                 var info = JSON.parse(body);
                 if(info.error){
-                    console.log('Error en los parametros: '+info.error.message);
                     response.status='Error';
                     response.errors.push(info.error.message);
                     callback(response);
                 }
                 else if(info.data.error){
-                    console.log('Error al comprovar tokens: '+info.data.error.message);
                     response.status='Error';
                     response.errors.push(info.data.error.message);
                     callback(response);
@@ -70,25 +76,32 @@ module.exports = {
                                         response.status = "Error";
                                         response.errors.push(err);
                                     }
-                                    else if(!userFound){
-                                        //no ha trobat cap usuari, l'insertem a la db
-                                        var password = UtilsService.getRandomString();
-                                        User.create({password: password, email: userInfo.email, hasFacebook: true}).exec(
-                                            function(err2, newUser){
-                                                if(err2 !== undefined && err2){
-                                                    response.status = "Error";
-                                                    response.errors.push(err2);
-                                                }
-                                            }
-                                        );
-                                    }
-                                    else{
-                                        //usuari ya estaba registrat a la db
+                                    else if(userFound){
+                                        //el usuari ya esta registrat
+                                        response.loggedIn = "true"
                                         response.username = userFound.username;
-                                        response.rank = "";
+                                        response.name = userFound.name;
+                                        response.surname = userFound.surname;
+                                        response.biography = userFound.biography;
+                                        response.birthday = userFound.birthday;
+                                        response.country = userFound.country;
+                                        response.rank = userFound.rank;
                                         if(!userFound.hasFacebook){
                                             User.update({email:userFound.email}).set({hasFacebook:true});
                                         }
+                                    }
+                                    else{
+                                        //el usuari no esta registrat, nomes agafem info
+                                        
+                                        /*--DESCOMENTAR CUANDO ESTEN IMPLEMENTADAS EN UTILSSERVICE--
+                                        var JsonName = UtilsService.getJsonName(userInfo.name);
+                                        var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                        response.name = JsonName.name;
+                                        response.surname = JsonName.surname;
+                                        response.birthday = birthday; */
+                                        response.name = userInfo.name;
+                                        response.birthday = userInfo.birthday;
+                                        response.loggedIn = "false";
                                     }
                                     callback(response);
                                 });
@@ -100,6 +113,10 @@ module.exports = {
                             }
                         }
                     );
+
+
+
+                    
                 }
                 }
             }
