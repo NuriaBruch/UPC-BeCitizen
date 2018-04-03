@@ -29,7 +29,6 @@ public class GoogleLogIn {
     private static int RC_SIGN_IN = 100;
 
     private GoogleSignInClient mGoogleSignInClient;
-    private GoogleSignInAccount account;
 
     public GoogleLogIn() {}
 
@@ -70,7 +69,7 @@ public class GoogleLogIn {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            account = completedTask.getResult(ApiException.class);
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             //TODO: delete logs
             Log.w("Email", account.getEmail());
@@ -78,7 +77,7 @@ public class GoogleLogIn {
             Log.w("Token", account.getIdToken());
 
             sendUserDataToServer request = new sendUserDataToServer();
-            if (request.execute(new String[]{"https://www.googleapis.com/oauth2/v3/tokeninfo"}).equals("Success")) {
+            if (request.execute(new String[]{"https://www.googleapis.com/oauth2/v3/tokeninfo", account.getIdToken()}).equals("Success")) {
                 mGoogleSignInClient.signOut();
                 // Signed in successfully, show authenticated UI.
                 //updateUI(account);
@@ -94,10 +93,10 @@ public class GoogleLogIn {
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected String doInBackground(String... data) {
 
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(urls[0] + "?id_token=" + account.getIdToken());
+            HttpGet httpGet = new HttpGet(data[0] + "?id_token=" + data[1]);
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
