@@ -2,6 +2,7 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.R;
@@ -28,6 +29,7 @@ public class GoogleLogIn {
     private static int RC_SIGN_IN = 100;
 
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInAccount account;
 
     public GoogleLogIn() {}
 
@@ -68,39 +70,48 @@ public class GoogleLogIn {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
+
+            //TODO: delete logs
             Log.w("Email", account.getEmail());
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet("https://test.com/registerGoogle");
-            httpGet.addHeader("idToken", account.getIdToken());
-
-            try {
-                System.out.println("STARTS");
-                HttpResponse response = httpClient.execute(httpGet);
-                int statusCode = response.getStatusLine().getStatusCode();
-                final String responseBody = EntityUtils.toString(response.getEntity());
-                Log.w("Result", "Signed in as: " + responseBody);
-                System.out.println("STOP");
-            } catch (Exception e) {
-                e.printStackTrace();
+            sendUserDataToServer request = new sendUserDataToServer();
+            if (request.execute(new String[]{"https://www.googleapis.com/oauth2/v3/tokeninfo"}).equals("Success")) {
+                mGoogleSignInClient.signOut();
+                // Signed in successfully, show authenticated UI.
+                //updateUI(account);
             }
-            /*catch (ClientProtocolException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-            } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-            }*/
-
-            mGoogleSignInClient.signOut();
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
+        }
+    }
+
+    private class sendUserDataToServer extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(urls[0] + "?id_token=" + account.getIdToken());
+
+            try {
+                HttpResponse response = httpClient.execute(httpGet);
+                int statusCode = response.getStatusLine().getStatusCode();
+                final String responseBody = EntityUtils.toString(response.getEntity());
+                Log.w("Result", "Signed in as: " + responseBody);
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            } catch (IOException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            }
+            return "Success";
         }
     }
 }
