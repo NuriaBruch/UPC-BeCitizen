@@ -5,7 +5,6 @@ function getGoogleMail(accessToken,callback){
         method: 'GET',
     };
     request(options, function(err1, res, body) {
-        console.log(body);
         if(err1 !== undefined && err1) {
             var mail = "badTokenConfirmation";
             callback(mail);
