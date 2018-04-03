@@ -19,11 +19,25 @@ module.exports = {
     password: {
       type: 'string'
     },
-    pais: {
+    name: {
       type: 'string'
     },
-    rango: {
+    surname: {
       type: 'string'
+    },
+    biography: {
+      type: 'string',
+      size: 240
+    },
+    birthday: {
+      type: 'string'
+    },
+    country: {
+      type: 'string'
+    },
+    rank: {
+      type: 'string',
+      enum: ['diamond','platinum','gold','silver','bronze','coal']
     },
     hasFacebook:{
       type:'boolean',
