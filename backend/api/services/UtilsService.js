@@ -17,6 +17,17 @@ getHashedString: function(pass,saltRounds,callback){
         }
         else callback(hash);
     });
+},
+
+getUsrInfo: function(name,callback){
+    answer = {
+        namne: "",
+        surname: ""
+    }
+    var result = name.split(" ", 2);
+    answer.name = result[0];
+    answer.name = result[1];
+    callback(answer);
 }
 
 
