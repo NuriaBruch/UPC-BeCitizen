@@ -27,7 +27,7 @@ module.exports = {
     },
     loginGoogle: function(req,res){
         var googleAuth = new GoogleAuth();
-        var accessToken = req.param('accessToken');
+        var accessToken = req.param('idToken');
         googleAuth.loginViaGoogle(accessToken, function(status){
             res.send(status);
         });

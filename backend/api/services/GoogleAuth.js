@@ -1,13 +1,7 @@
-function randomString(length, chars) {
-    var result = '';
-    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-    return result;
-}
-
 function getGoogleMail(accessToken,callback){
     const request = require('request');
     const options = {  
-        url: 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token='.concat(accessToken),
+        url: 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='.concat(accessToken),
         method: 'GET',
     };
     request(options, function(err1, res, body) {
@@ -18,21 +12,12 @@ function getGoogleMail(accessToken,callback){
         else{
             var parsed = JSON.parse(body);
             var mail = parsed["email"];
-            if(mail === undefined){
-                callback("badTokenConfirmation");
+            var name = parsed["name"];
+            if(mail === undefined || name === undefined){
+                callback("badTokenConfirmation",undefined);
             }
-            else callback(mail);
+            else callback(mail,name);
         }
-    });
-}
-
-function logMail(mail, callback){ 
-    var usrPassword = randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    User.create({email: mail, password: usrPassword,tipoLogIn: "google"}).exec(function(err3, newUser){
-        if(err3 !== undefined && err3){
-            callback(err3);
-        }
-        else callback(undefined);
     });
 }
 
@@ -40,14 +25,25 @@ module.exports = class GoogleAuth{
     loginViaGoogle(accessToken,callback){
         var response = {
             status: "Ok",
-            usrname: "",
-            rank:"",
-            errors: []
+            errors: [] ,
+            loggedIn: "",
+            info:{
+                email:"",
+                username: "",
+                name:"",
+                surname:"",
+                biography: "",
+                birthday:"",
+                country:"",
+                rank:"",
+            }
         };
 
-        getGoogleMail(accessToken,function(usrMail){
+        getGoogleMail(accessToken,function(usrMail,usrName){
             var mail;
+            var name;
             mail = usrMail;
+            name = usrName;
             if(mail==="badTokenConfirmation"){
                 response.status = "Error";
                 response.errors.push("Unable to confirm access token");
@@ -61,19 +57,26 @@ module.exports = class GoogleAuth{
                         callback(response);
                     }
                     else if(userFound === undefined ) {
-                        logMail(mail,function(err2){
-                            if(err2 !== undefined && err2){
-                                response.status = "Error";
-                                response.errors.push(err2);
-                                callback(response);
-                            }
-                            else callback(response);
+                        UtilsService.getUsrInfo(name,function(usrInfo){
+                        response.info.name = usrInfo.name;
+                        response.info.surname = usrInfo.surname;
+                        response.loggedIn = "False";
+                        response.info.email = mail;
+                        callback(response);
                         });
+                        
                     }
                     else{
                         if(userFound.tipoLogIn === "google"){
-                            response.usrname = userFound.username;
-                            response.rank = userFound.rango;
+                            response.loggedIn = "True";
+                            response.info.username = userFound.username;
+                            response.info.email = userFound.email;
+                            response.info.name = userFound.name;
+                            response.info.surname = userFound.surname;
+                            response.info.biography = userFound.biography;
+                            response.info.birthday = userFound.birthday;
+                            response.info.country = userFound.country;
+                            response.info.rank = userFound.rank;
                             callback(response)
                         }
                         else{

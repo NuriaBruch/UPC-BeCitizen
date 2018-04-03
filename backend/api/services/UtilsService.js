@@ -14,6 +14,17 @@ getHashedString: function(pass,saltRounds,callback){
     bcrypt.hash(pass, saltRounds, function(err1, hash) {
         callback(err1,hash);
     });
+},
+
+getUsrInfo: function(name,callback){
+    answer = {
+        namne: "",
+        surname: ""
+    }
+    var result = name.split(" ", 2);
+    answer.name = result[0];
+    answer.surname = result[1];
+    callback(answer);
 }
 
 
