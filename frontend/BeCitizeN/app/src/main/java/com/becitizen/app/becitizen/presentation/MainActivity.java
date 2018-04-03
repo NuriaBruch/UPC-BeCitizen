@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.sign_in_button:
                 googleLogIn.signIn(this);
                 break;
+            case R.id.fb_login_button:
+                break;
         }
     }
 
