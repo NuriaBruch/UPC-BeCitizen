@@ -5,6 +5,7 @@ function getGoogleMail(accessToken,callback){
         method: 'GET',
     };
     request(options, function(err1, res, body) {
+        console.log(body);
         if(err1 !== undefined && err1) {
             var mail = "badTokenConfirmation";
             callback(mail);
@@ -57,7 +58,7 @@ module.exports = class GoogleAuth{
                         callback(response);
                     }
                     else if(userFound === undefined ) {
-                        UtilsServices.getUsrInfo(name,function(usrInfo){
+                        UtilsService.getUsrInfo(name,function(usrInfo){
                         response.info.name = usrInfo.name;
                         response.info.surname = usrInfo.surname;
                         response.loggedIn = "False";

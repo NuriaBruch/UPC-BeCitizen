@@ -26,7 +26,7 @@ getUsrInfo: function(name,callback){
     }
     var result = name.split(" ", 2);
     answer.name = result[0];
-    answer.name = result[1];
+    answer.surname = result[1];
     callback(answer);
 }
 
