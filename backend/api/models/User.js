@@ -37,7 +37,8 @@ module.exports = {
     },
     rank: {
       type: 'string',
-      enum: ['diamond','platinum','gold','silver','bronze','coal']
+      enum: ['diamond','platinum','gold','silver','bronze','coal'],
+      defaultsTo: 'coal'
     },
     profilePicture:{
       type: 'string'
