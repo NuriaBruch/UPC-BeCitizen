@@ -12,10 +12,7 @@ getRandomString: function (){
 getHashedString: function(pass,saltRounds,callback){
     var bcrypt = require('bcrypt');
     bcrypt.hash(pass, saltRounds, function(err1, hash) {
-        if(err1 !== undefined && err1) {
-            callback(err1);
-        }
-        else callback(hash);
+        callback(err1,hash);
     });
 },
 

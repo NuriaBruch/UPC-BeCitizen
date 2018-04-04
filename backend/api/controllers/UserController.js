@@ -6,10 +6,14 @@
  */
 
 module.exports = {
-	registerMail: function(req,res){
-        var {username, password, email} = req.query;
-        var mailAuth = new MailAuth();
-        mailAuth.register(username, password, email, function(status){
+
+	registerAll: function(req,res){
+        var {username, password, email, name, surname, birthday, country, facebook, google} = req.query;
+        
+        var hasFace = (facebook==='true');
+        var hasGoogle = (google === 'true');
+
+        Register.register(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
             res.send(status);
         });
     },
