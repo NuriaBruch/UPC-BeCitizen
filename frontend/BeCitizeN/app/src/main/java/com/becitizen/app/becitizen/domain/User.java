@@ -1,8 +1,5 @@
 package com.becitizen.app.becitizen.domain;
 
-/**
- * Created by ISA on 03/04/2018.
- */
 
 public class User {
     private String username;
@@ -11,6 +8,9 @@ public class User {
     private String birthDate;
     private String country;
     private String biography;
+
+    public User() {
+    }
 
     public User (String mail, String password) {
         this.mail = mail;
