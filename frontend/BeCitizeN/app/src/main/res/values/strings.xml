@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">BeCitizeN</string>
+    <string name="facebook_app_id">1386882294791151</string>
     <string name="emaillabel">E-mail:</string>
     <string name="passwordLabel">Password:</string>
     <string name="login">Login</string>
+    <string name="login_success">Logged successfully!</string>
+    <string name="login_cancel">Login was cancelled</string>
+    <string name="login_fail">Login failed</string>
     <string name="backendClientID">857901571463-rhtuk6e89trutq00m185t2fm5assha08.apps.googleusercontent.com</string>
 
     <string name="checkInfo">Check your information</string>
