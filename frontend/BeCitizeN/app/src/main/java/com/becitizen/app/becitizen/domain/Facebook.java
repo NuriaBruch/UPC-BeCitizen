@@ -46,6 +46,8 @@ public class Facebook {
             e.printStackTrace();
         }
 
+        user = new User();
+
         try {
 
             /*
@@ -60,8 +62,6 @@ public class Facebook {
 
             registered = resp.getBoolean("loggedIn");
             JSONObject info = resp.getJSONObject("info");
-
-            user = new User();
 
             if(!info.isNull("email")) user.setMail(info.getString("email"));
             if(!info.isNull("username")) user.setUsername(info.getString("username"));
