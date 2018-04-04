@@ -34,7 +34,7 @@ module.exports = class MailAuth {
                         response.status = "Error";
                         response.errors.push("Server error");
                     }
-                    else if(!result){
+                    else if(result == false){
                         response.status = "Error";
                         response.errors.push("Incorrect password");
                     }
@@ -44,6 +44,7 @@ module.exports = class MailAuth {
                         response.info.surname = userFound.surname;
                         response.info.biography = userFound.biography;
                         response.info.birthday = userFound.birthday;
+                        response.info.country = userFound.country;
                         response.info.rank = userFound.rank;
                     }
                     callback(response);

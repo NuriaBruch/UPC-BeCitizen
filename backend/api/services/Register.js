@@ -2,7 +2,7 @@ var bcrypt = require('bcrypt');
 
 module.exports = class Register {
 
-    registerAll(user, pass, email, name, surname, birthday, country, hasFace, hasGoogle, callback){
+    registerAll(username, pass, email, name, surname, birthday, country, hasFace, hasGoogle, callback){
         var response = {
            status: "Ok",
            errors: []
@@ -18,9 +18,9 @@ module.exports = class Register {
             }
             else{
                 User.create({
-                    username: user, 
-                    password: pass, 
                     email: email,
+                    username: username, 
+                    password: hash, 
                     name: name,
                     surname: surname,
                     birthday: birthday,
