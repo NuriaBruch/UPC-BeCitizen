@@ -35,17 +35,17 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'GET /registerMail': {
+  'POST /register': {
     controller: 'UserController',
-    action: 'registerMail'
+    action: 'registerAll'
   },
   'GET /loginMail': {
     controller: 'UserController',
     action: 'loginMail'
   },
-  'GET /registerFacebook': {
+  'GET / loginFacebook': {
     controller: 'UserController',
-    action: 'registerFacebook'
+    action: 'loginFacebook'
   },
   'GET /loginGoogle': {
     controller: 'UserController',

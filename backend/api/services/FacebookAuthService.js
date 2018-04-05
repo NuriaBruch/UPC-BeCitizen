@@ -23,7 +23,7 @@ function getFacebookUserInfo(userId,userToken,callback){
 
 module.exports = {
 
-    facebookRegister: function(userToken,callback){
+    loginFace: function(userToken,callback){
 
         var response = {
             status: "Ok",
@@ -78,14 +78,14 @@ module.exports = {
                                     }
                                     else if(userFound){
                                         //el usuari ya esta registrat
-                                        response.loggedIn = "true"
-                                        response.username = userFound.username;
-                                        response.name = userFound.name;
-                                        response.surname = userFound.surname;
-                                        response.biography = userFound.biography;
-                                        response.birthday = userFound.birthday;
-                                        response.country = userFound.country;
-                                        response.rank = userFound.rank;
+                                        response.loggedIn = "true";
+                                        response.info.username = userFound.username;
+                                        response.info.name = userFound.name;
+                                        response.info.surname = userFound.surname;
+                                        response.info.biography = userFound.biography;
+                                        response.info.birthday = userFound.birthday;
+                                        response.info.country = userFound.country;
+                                        response.info.rank = userFound.rank;
                                         if(!userFound.hasFacebook){
                                             User.update({email:userFound.email}).set({hasFacebook:true});
                                         }
@@ -96,11 +96,12 @@ module.exports = {
                                         /*--DESCOMENTAR CUANDO ESTEN IMPLEMENTADAS EN UTILSSERVICE--
                                         var JsonName = UtilsService.getJsonName(userInfo.name);
                                         var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
-                                        response.name = JsonName.name;
-                                        response.surname = JsonName.surname;
-                                        response.birthday = birthday; */
-                                        response.name = userInfo.name;
-                                        response.birthday = userInfo.birthday;
+                                        response.info.name = JsonName.name;
+                                        response.info.surname = JsonName.surname;
+                                         */
+                                        response.info.email = userInfo.email;
+                                        response.info.name = userInfo.name;
+                                        response.info.birthday = userInfo.birthday;
                                         response.loggedIn = "false";
                                     }
                                     callback(response);
