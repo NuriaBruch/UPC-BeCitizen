@@ -15,6 +15,13 @@
     <string name="logout">Logout</string>
 
 
+    <string name="SignUp">Sign up</string>
+    <string name="enterEmail">Enter your email</string>
+    <string name="enterPassw">Enter your password</string>
+    <string name="repeatPassw">Repeat your password</string>
+    <string name="Accept">Accept</string>
+
+
     <string name="checkInfo">Check your information</string>
     <string name="username">Username</string>
     <string name="firstName">First Name</string>
