@@ -8,12 +8,13 @@
 module.exports = {
 
 	registerAll: function(req,res){
-        var {username, password, email, name, surname, birthday, country, facebook, google} = req.query;
+        var {username, password, email, name, surname, birthday, country, facebook, google} = req.body;
         
         var hasFace = (facebook==='true');
         var hasGoogle = (google === 'true');
+        var register = new Register();
 
-        Register.register(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
+        register.registerAll(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
             res.send(status);
         });
     },
@@ -33,10 +34,10 @@ module.exports = {
         });
     },
 
-    registerFacebook: function(req, res){
+    loginFacebook: function(req, res){
         //var facebookAuth = new FacebookAuth();
         var accessToken = req.param('accessToken');
-        FacebookAuthService.facebookRegister(accessToken, function(status){
+        FacebookAuthService.loginFace(accessToken, function(status){
             res.send(status);
         });
     }
