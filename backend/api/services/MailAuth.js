@@ -19,26 +19,28 @@ module.exports = class MailAuth {
 
         User.findOne({email: email}).exec(function(err1, userFound){
             if(err1 !== undefined && err1) {
-                response.status = "Error";
+                // DB error
+                response.status = "E1";
                 response.errors.push(err1);
                 callback(response);
             }
             else if(userFound === undefined ) {
-                response.status = "Error";
+                response.status = "E2";
                 response.errors.push("User not found");
                 callback(response);
             }
             else{
                 bcrypt.compare(pass, userFound.password, function(err2, result) {
                     if(err1 !== undefined && err1){
-                        response.status = "Error";
+                        response.status = "E3";
                         response.errors.push("Server error");
                     }
                     else if(result == false){
-                        response.status = "Error";
+                        response.status = "E4";
                         response.errors.push("Incorrect password");
                     }
                     else{
+                        //Status == Ok
                         response.info.username = userFound.username;
                         response.info.name = userFound.name;
                         response.info.surname = userFound.surname;

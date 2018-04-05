@@ -45,14 +45,14 @@ module.exports = class GoogleAuth{
             mail = usrMail;
             name = usrName;
             if(mail==="badTokenConfirmation"){
-                response.status = "Error";
+                response.status = "E1";
                 response.errors.push("Unable to confirm access token");
                 callback(response);
             }
             else{
                 User.findOne({email: mail}).exec(function(err1, userFound){
                     if(err1 !== undefined && err1) {
-                        response.status = "Error";
+                        response.status = "E2";
                         response.errors.push(err1);
                         callback(response);
                     }
@@ -80,7 +80,7 @@ module.exports = class GoogleAuth{
                             callback(response)
                         }
                         else{
-                            response.status = "Error";
+                            response.status = "E3";
                             response.errors.push("User not granted via google");
                             callback(response);
                         }
