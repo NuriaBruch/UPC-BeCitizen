@@ -26,8 +26,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int RC_SIGN_IN = 100;
-
     private GoogleLogIn googleLogIn;
 
     private LoginButton fbLoginButton;
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case RC_SIGN_IN:
+            case GoogleLogIn.RC_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
                 googleLogIn.onResult(this, data);
                 break;
