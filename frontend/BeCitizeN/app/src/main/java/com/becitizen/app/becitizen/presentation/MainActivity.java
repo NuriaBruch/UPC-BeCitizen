@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 // FB
-                System.out.println("### RequestCode: " + requestCode);
+                Log.w("RequestCode", "### RequestCode: " + requestCode);
                 Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
                 callbackManager.onActivityResult(requestCode, resultCode, data);
         }
