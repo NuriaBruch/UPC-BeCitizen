@@ -83,7 +83,7 @@ public class Facebook {
     }
 
 
-    public User getUser() {
+    public static User getUser() {
         return user;
     }
 }
