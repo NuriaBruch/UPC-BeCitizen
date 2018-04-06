@@ -130,7 +130,6 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
         TextInputEditText birthDate = findViewById(R.id.birthDateInput);
         if (birthDate.getText().toString().trim().isEmpty()) {
             birthDate.setError(getString(R.string.errorMsgName));
-            requestFocus(birthDate);
             return false;
         }
         else {

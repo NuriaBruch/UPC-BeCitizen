@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.Facebook;
+import com.becitizen.app.becitizen.domain.User;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -56,10 +57,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     toastText = getResources().getString(R.string.login_success);
 
+                    // It goes to the InsideActivity.
+                    // Flags: If back is pressed in the InsideActivity, the app will exit and not return to this activity.
+                    goToActivity(InsideActivity.class, new Bundle(), Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 } else {
                     // Code if the user is not yet registered in our database
                     // Facebook.getUser() returns a user with the data of user that could be obtain from FB
                     // TODO: go to register formular view and pass the user data as a parameter
+
+                    toastText = getResources().getString(R.string.login_success);
+
+                    User user = Facebook.getUser();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username", user.getUsername());
+                    bundle.putString("mail", user.getMail());
+                    bundle.putString("firstName", user.getFirstName());
+                    bundle.putString("lastName", user.getLastName());
+                    bundle.putString("birthDate", user.getBirthDate());
+                    bundle.putString("country", user.getCountry());
+
+                    // It goes to the DataRegisterView and all the data of the user is sent.
+                    goToActivity(DataRegisterView.class, bundle, 0);
                 }
             }
 
@@ -104,9 +124,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             default:
                 // FB
-                System.out.println("### RequestCode: " + requestCode);
+                Log.w("RequestCode", "### RequestCode: " + requestCode);
                 Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
                 callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    private void goToActivity(Class c, Bundle extras, int flags) {
+
+        Intent intent = new Intent(this, c);
+        intent.putExtras(extras);
+        intent.addFlags(flags);
+        startActivity(intent);
+    }
+
+
+
 }
