@@ -24,6 +24,11 @@ import java.util.Locale;
 
 public class DataRegisterView extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText birthDateInput;
+    TextInputEditText usernameInput;
+    TextInputEditText lastNameInput;
+    Spinner countryInput;
+    TextInputEditText firstNameInput;
+    ControllerUserPresentation controllerUserPresentation;
     Button submitButton;
     Calendar myCalendar = Calendar.getInstance();
     int day = myCalendar.get(Calendar.DAY_OF_MONTH);
@@ -34,6 +39,8 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_register_view);
+
+        controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
 
         birthDateInput = findViewById(R.id.birthDateInput);
         birthDateInput.setOnClickListener(this);
@@ -80,14 +87,25 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
             return;
         }
 
+        countryInput = findViewById(R.id.countrySpinner);
+        int result = controllerUserPresentation.registerData(
+                usernameInput.getText().toString().trim(),
+                firstNameInput.getText().toString().trim(),
+                lastNameInput.getText().toString().trim(),
+                birthDateInput.getText().toString().trim(),
+                countryInput.getSelectedItem().toString().trim()
+        );
+
+        // controlar errores del controller
+
         Toast.makeText(getApplicationContext(), "You submitted your data", Toast.LENGTH_SHORT).show();
     }
 
     private boolean validateUsername() {
-        TextInputEditText username = findViewById(R.id.usernameInput);
-        if (username.getText().toString().trim().isEmpty()) {
-            username.setError(getString(R.string.errorMsgName));
-            requestFocus(username);
+        usernameInput = findViewById(R.id.usernameInput);
+        if (usernameInput.getText().toString().trim().isEmpty()) {
+            usernameInput.setError(getString(R.string.errorMsgName));
+            requestFocus(usernameInput);
             return false;
         }
         else {
@@ -98,10 +116,10 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateFirstName() {
-        TextInputEditText firstName = findViewById(R.id.firstNameInput);
-        if (firstName.getText().toString().trim().isEmpty()) {
-            firstName.setError(getString(R.string.errorMsgName));
-            requestFocus(firstName);
+        firstNameInput = findViewById(R.id.firstNameInput);
+        if (firstNameInput.getText().toString().trim().isEmpty()) {
+            firstNameInput.setError(getString(R.string.errorMsgName));
+            requestFocus(firstNameInput);
             return false;
         }
         else {
@@ -112,10 +130,10 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateLastName() {
-        TextInputEditText lastName = findViewById(R.id.lastNameInput);
-        if (lastName.getText().toString().trim().isEmpty()) {
-            lastName.setError(getString(R.string.errorMsgName));
-            requestFocus(lastName);
+        lastNameInput = findViewById(R.id.lastNameInput);
+        if (lastNameInput.getText().toString().trim().isEmpty()) {
+            lastNameInput.setError(getString(R.string.errorMsgName));
+            requestFocus(lastNameInput);
             return false;
         }
         else {
@@ -126,9 +144,9 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateBirthDate() {
-        TextInputEditText birthDate = findViewById(R.id.birthDateInput);
-        if (birthDate.getText().toString().trim().isEmpty()) {
-            birthDate.setError(getString(R.string.errorMsgName));
+        birthDateInput = findViewById(R.id.birthDateInput);
+        if (birthDateInput.getText().toString().trim().isEmpty()) {
+            birthDateInput.setError(getString(R.string.errorMsgName));
             return false;
         }
         else {
