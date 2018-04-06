@@ -57,13 +57,12 @@ module.exports = class GoogleAuth{
                         callback(response);
                     }
                     else if(userFound === undefined ) {
-                        UtilsService.getUsrInfo(name,function(usrInfo){
+                        var usrInfo = UtilsService.getUserName(name);
                         response.info.name = usrInfo.name;
                         response.info.surname = usrInfo.surname;
                         response.loggedIn = "False";
                         response.info.email = mail;
                         callback(response);
-                        });
                         
                     }
                     else{

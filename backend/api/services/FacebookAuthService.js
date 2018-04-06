@@ -93,15 +93,12 @@ module.exports = {
                                     else{
                                         //el usuari no esta registrat, nomes agafem info
                                         
-                                        /*--DESCOMENTAR CUANDO ESTEN IMPLEMENTADAS EN UTILSSERVICE--
-                                        var JsonName = UtilsService.getJsonName(userInfo.name);
                                         var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                        var JsonName = UtilsService.getUserName(userInfo.name);
                                         response.info.name = JsonName.name;
                                         response.info.surname = JsonName.surname;
-                                         */
                                         response.info.email = userInfo.email;
-                                        response.info.name = userInfo.name;
-                                        response.info.birthday = userInfo.birthday;
+                                        response.info.birthday = birthday;
                                         response.loggedIn = "false";
                                     }
                                     callback(response);
