@@ -44,13 +44,15 @@
         android:layout_alignEnd="@+id/tvSignUp"
         android:layout_alignStart="@+id/tvSignUp"
         android:layout_below="@+id/tilMail"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        >
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tietPassw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enterPassw"
+            android:inputType="textNoSuggestions"
             />
     </android.support.design.widget.TextInputLayout>
 
@@ -68,6 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/repeatPassw"
+            android:inputType="textNoSuggestions"
             />
     </android.support.design.widget.TextInputLayout>
 

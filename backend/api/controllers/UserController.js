@@ -7,14 +7,14 @@
 
 module.exports = {
 
-	registerAll: function(req,res){
+	register: function(req,res){
         var {username, password, email, name, surname, birthday, country, facebook, google} = req.body;
         
         var hasFace = (facebook==='true');
         var hasGoogle = (google === 'true');
-        var register = new Register();
+        var gestionUser = new GestionUser();
 
-        register.registerAll(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
+        gestionUser.register(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
             res.send(status);
         });
     },
@@ -53,8 +53,12 @@ module.exports = {
         });
     },
 
-    changePass: function(req, res){
-        res.ok();
+    existsEmail: function(req,res){
+        var{email} = req.query;
+        var gestionUser = new GestionUser();
+        gestionUser.checkMail(email,function(status){
+            res.send(status);
+        });
     }
 };
 

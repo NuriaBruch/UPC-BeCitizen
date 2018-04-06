@@ -24,7 +24,6 @@ import java.util.Locale;
 
 public class DataRegisterView extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText birthDateInput;
-    Spinner countrySpinner;
     Button submitButton;
     Calendar myCalendar = Calendar.getInstance();
     int day = myCalendar.get(Calendar.DAY_OF_MONTH);
