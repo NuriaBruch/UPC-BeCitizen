@@ -33,7 +33,7 @@
     <string name="dateFormat">dd/mm/yyyy</string>
     <string name="submit">Submit</string>
     <string name="errorMsgName">Not a valid input</string>
-    
+
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
