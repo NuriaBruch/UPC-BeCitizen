@@ -2,7 +2,7 @@ package com.becitizen.app.becitizen.domain;
 
 public class ControllerUserDomain {
     private static ControllerUserDomain uniqueInstance;
-    User currentUser;
+    private User currentUser;
 
     private ControllerUserDomain() {
         currentUser = null;
