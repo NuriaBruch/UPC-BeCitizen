@@ -48,19 +48,19 @@ module.exports = {
             }
           ,function (err, resp, body) {
               if(err !== undefined && err){
-                  response.status='Error';
+                  response.status='E1';
                   response.errors.push(err);
                   callback(response);
               }
               else {
                 var info = JSON.parse(body);
                 if(info.error){
-                    response.status='Error';
+                    response.status='E1';
                     response.errors.push(info.error.message);
                     callback(response);
                 }
                 else if(info.data.error){
-                    response.status='Error';
+                    response.status='E1';
                     response.errors.push(info.data.error.message);
                     callback(response);
                 }
@@ -73,7 +73,7 @@ module.exports = {
                                 //tenim la informació del usuari
                                 User.findOne({email: userInfo.email}).exec(function(err, userFound){
                                     if(err !== undefined && err) {
-                                        response.status = "Error";
+                                        response.status = "E2";
                                         response.errors.push(err);
                                     }
                                     else if(userFound){
@@ -93,22 +93,19 @@ module.exports = {
                                     else{
                                         //el usuari no esta registrat, nomes agafem info
                                         
-                                        /*--DESCOMENTAR CUANDO ESTEN IMPLEMENTADAS EN UTILSSERVICE--
-                                        var JsonName = UtilsService.getJsonName(userInfo.name);
                                         var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                        var JsonName = UtilsService.getUserName(userInfo.name);
                                         response.info.name = JsonName.name;
                                         response.info.surname = JsonName.surname;
-                                         */
                                         response.info.email = userInfo.email;
-                                        response.info.name = userInfo.name;
-                                        response.info.birthday = userInfo.birthday;
+                                        response.info.birthday = birthday;
                                         response.loggedIn = "false";
                                     }
                                     callback(response);
                                 });
                             }
                             else{
-                                response.status="Error"
+                                response.status="E3"
                                 response.errors.push("Unable to get user info from Facebook, wrong facebookId");
                                 callback(response);
                             }

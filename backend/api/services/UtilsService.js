@@ -9,14 +9,7 @@ getRandomString: function (){
     return result;
 },
 
-getHashedString: function(pass,saltRounds,callback){
-    var bcrypt = require('bcrypt');
-    bcrypt.hash(pass, saltRounds, function(err1, hash) {
-        callback(err1,hash);
-    });
-},
-
-getUsrInfo: function(name,callback){
+getUserName: function(name){
     answer = {
         namne: "",
         surname: ""
@@ -24,7 +17,12 @@ getUsrInfo: function(name,callback){
     var result = name.split(" ", 2);
     answer.name = result[0];
     answer.surname = result[1];
-    callback(answer);
+    return answer;
+},
+
+getFormattedBirthday: function(birthday){
+    var result = birthday.split("/", 3);
+    return result[1]+"/"+result[0]+"/"+result[2];
 }
 
 

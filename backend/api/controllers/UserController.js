@@ -35,7 +35,6 @@ module.exports = {
     },
 
     loginFacebook: function(req, res){
-        //var facebookAuth = new FacebookAuth();
         var accessToken = req.param('accessToken');
         FacebookAuthService.loginFace(accessToken, function(status){
             res.send(status);

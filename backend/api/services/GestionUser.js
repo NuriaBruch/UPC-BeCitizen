@@ -12,7 +12,7 @@ module.exports = class GestionUser {
 
         bcrypt.hash(pass, saltRounds, function(err1, hash) {
             if(err1 !== undefined && err1) {
-                response.status = "Error";
+                response.status = "E1";
                 response.errors.push("Server error");
                 callback(response);
             }
@@ -29,7 +29,7 @@ module.exports = class GestionUser {
                     hasGoogle: hasGoogle
                 }).exec(function(err2, newUser){
                     if(err2 !== undefined && err2){
-                        response.status = "Error";
+                        response.status = "E2";
                         response.errors.push(err2);
                     }
                     callback(response);
