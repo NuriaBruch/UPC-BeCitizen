@@ -66,7 +66,7 @@ module.exports = class GoogleAuth{
                         
                     }
                     else{
-                        if(userFound.tipoLogIn === "google"){
+                        if(userFound.hasGoogle === true){
                             response.loggedIn = "True";
                             response.info.username = userFound.username;
                             response.info.email = userFound.email;
