@@ -31,4 +31,9 @@ public class ControllerUserPresentation {
     public void createUser(String mail, String password) {
         controllerUserDomain.createUser(mail, password);
     }
+
+    public int registerData(String username, String firstName, String lastName, String birthDate, String country) {
+        controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
+        return 0;
+    }
 }
