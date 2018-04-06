@@ -43,7 +43,7 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'loginMail'
   },
-  'GET / loginFacebook': {
+  'GET /loginFacebook': {
     controller: 'UserController',
     action: 'loginFacebook'
   },
