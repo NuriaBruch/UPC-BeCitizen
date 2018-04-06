@@ -53,7 +53,7 @@ public class ViewSignUpMail extends AppCompatActivity {
         if (!validatePassw2()) return;
 
         controllerUserPresentation.createUser(tietMail.getText().toString(), tietPassw.getText().toString());
-        Intent i=new Intent(this,DataRegisterView.class);
+        Intent i = new Intent(this,DataRegisterView.class);
         startActivity(i);
 
     }
