@@ -1,8 +1,12 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.content.Intent;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -10,11 +14,12 @@ import com.becitizen.app.becitizen.R;
 
 import java.util.regex.Pattern;
 
-public class ViewSignUpMail extends AppCompatActivity {
+public class ViewSignUpMail extends AppCompatActivity /*implements View.OnClickListener*/ {
 
-    private EditText etEmail;
-    private EditText etPassword;
-    private EditText etPassword2;
+    private TextInputEditText tietMail;
+    private TextInputEditText tietPassw;
+    private TextInputEditText tietPassw2;
+
 
     public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
             "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -31,34 +36,74 @@ public class ViewSignUpMail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_sign_up_mail);
 
-        etEmail = (EditText)findViewById(R.id.etEmail);
-        etPassword = (EditText)findViewById(R.id.etPassword);
-        etPassword2 = (EditText)findViewById(R.id.etPassword2);
+        tietMail = findViewById(R.id.tietMail);
+        tietPassw = findViewById(R.id.tietPassw);
+        tietPassw.setTransformationMethod(new PasswordTransformationMethod());
+        tietPassw2 = findViewById(R.id.tietPassw2);
+        tietPassw2.setTransformationMethod(new PasswordTransformationMethod());
     }
 
     public void signUp(View view) {
-        String email = etEmail.getText().toString();
-        String pass = etPassword.getText().toString();
-        String pass2 = etPassword2.getText().toString();
+        if (!validateEmail()) return;
+        if (!validatePassw()) return;
+        if (!validatePassw2()) return;
 
-        if (email.isEmpty() || pass.isEmpty() || pass2.isEmpty()) {
-            Toast notificacion = Toast.makeText(this,"It is obligatory to fill in all the fields" ,Toast.LENGTH_SHORT);
-            notificacion.show();
+        Intent i=new Intent(this,DataRegisterView.class);
+        i.putExtra("email", tietMail.getText().toString());
+        i.putExtra("password", tietPassw.getText().toString());
+        startActivity(i);
+
+    }
+
+    private boolean validateEmail() {
+        String email = tietMail.getText().toString();
+        boolean b = true;
+
+        if (email.trim().isEmpty() || !EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
+            tietMail.setError(getString(R.string.errorMsgName));
+            requestFocus(tietMail);
+            b = false;
         }
 
-        else if (!EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
-            Toast notificacion = Toast.makeText(this,"Enter a valid email" ,Toast.LENGTH_SHORT);
-            notificacion.show();
+        return b;
+    }
+
+    private boolean validatePassw() {
+        String pass = tietPassw.getText().toString();
+        boolean b = true;
+
+        if (pass.trim().isEmpty()) {
+            tietPassw.setError(getString(R.string.errorMsgName));
+            requestFocus(tietPassw);
+            b = false;
         }
 
-        else if (!pass.equals(pass2)) {
-            Toast notificacion = Toast.makeText(this,"Passwords do not match" ,Toast.LENGTH_SHORT);
-            notificacion.show();
+        return b;
+    }
+
+    private boolean validatePassw2() {
+        String pass = tietPassw.getText().toString();
+        String pass2 = tietPassw2.getText().toString();
+        boolean b = true;
+
+        if (pass2.trim().isEmpty()) {
+            tietPassw2.setError(getString(R.string.errorMsgName));
+            requestFocus(tietPassw2);
+            b = false;
         }
 
-        else {
-            // Aqui falta cridar a la vista de dades
+        else if (b && !pass2.equals(pass)) {
+            tietPassw2.setError(getString(R.string.errorPassw));
+            requestFocus(tietPassw2);
+            b = false;
         }
 
+        return b;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 }

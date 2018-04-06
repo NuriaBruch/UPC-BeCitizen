@@ -8,6 +8,7 @@ public class User {
     private String birthDate;
     private String country;
     private String biography;
+    private Rank rank;
 
     public User() {
     }
@@ -79,5 +80,13 @@ public class User {
 
     public void setBiography(String biography) {
         this.biography = biography;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public void setRank(Rank rank) {
+        this.rank = rank;
     }
 }

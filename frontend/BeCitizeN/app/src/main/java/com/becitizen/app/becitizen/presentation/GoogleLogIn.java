@@ -26,7 +26,7 @@ import static android.content.ContentValues.TAG;
 
 public class GoogleLogIn {
 
-    private static int RC_SIGN_IN = 100;
+    public static final int RC_SIGN_IN = 100;
 
     private GoogleSignInClient mGoogleSignInClient;
 

@@ -1,68 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlGeneral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.becitizen.app.becitizen.presentation.ViewSignUpMail">
 
-    <LinearLayout
-        android:id="@+id/llParam"
+    <TextView
+        android:id="@+id/tvSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp"
 
-        <TextView
+        android:textSize="30sp"
+        android:text="@string/SignUp"
+        android:textStyle="bold"
+        />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilMail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvSignUp"
+        android:layout_alignStart="@+id/tvSignUp"
+        android:layout_below="@+id/tvSignUp"
+        android:layout_marginTop="20dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Sign Up"
-            android:textSize = "20dp" />
+            android:hint="@string/enterEmail"
+            android:inputType="textEmailAddress"/>
+    </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etEmail"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilPassw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvSignUp"
+        android:layout_alignStart="@+id/tvSignUp"
+        android:layout_below="@+id/tilMail"
+        android:layout_marginTop="20dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietPassw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginBottom="10dp"
-            android:hint="Enter your email"
-            android:inputType="textEmailAddress" />
+            android:hint="@string/enterPassw"
+            />
+    </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etPassword"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilPassw2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvSignUp"
+        android:layout_alignStart="@+id/tvSignUp"
+        android:layout_below="@+id/tilPassw"
+        android:layout_marginTop="20dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietPassw2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginBottom="10dp"
-            android:hint="Enter your password"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/etPassword2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:layout_marginBottom="10dp"
-            android:hint="Repeat your password"
-            android:inputType="textPassword" />
-    </LinearLayout>
+            android:hint="@string/repeatPassw"
+            />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/bSignUp"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvSignUp"
         android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/tvSignUp"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:background="@color/colorAccent"
         android:onClick="signUp"
-        android:text="Accept"
-        android:textColor="@android:color/white" />
+        android:text="@string/Accept"
+        android:textSize="18sp"/>
+
 </RelativeLayout>
