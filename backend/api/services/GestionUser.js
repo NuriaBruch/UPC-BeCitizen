@@ -1,8 +1,8 @@
 var bcrypt = require('bcrypt');
 
-module.exports = class Register {
+module.exports = class GestionUser {
 
-    registerAll(username, pass, email, name, surname, birthday, country, hasFace, hasGoogle, callback){
+    register(username, pass, email, name, surname, birthday, country, hasFace, hasGoogle, callback){
         var response = {
            status: "Ok",
            errors: []
@@ -36,5 +36,23 @@ module.exports = class Register {
                 });
             }
         });
-    }
+    };
+    checkMail(email,callback){
+        var response = {
+            status: "Ok",
+            found:"Yes",
+            errors: []
+        }
+        User.findOne({email:email}).exec(function(err1,userFound){
+            if(err1 !== undefined && err1){
+                response.status = "Error";
+                response.errors.push("Server error");
+            }
+            else if(userFound === undefined){
+                response.found = "No";
+                response.errors.push("User not found");
+            }
+            callback(response);
+        }); 
+    }; 
 };
