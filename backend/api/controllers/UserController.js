@@ -23,6 +23,10 @@ module.exports = {
         var {email, password} = req.query;
         var mailAuth = new MailAuth();
         mailAuth.login(email, password, function(status){
+            if(status.status === 'Ok') {
+                req.session.authenticated = true;
+                req.session.userEmail = email;
+            }
             res.send(status);
         });
     },
@@ -30,6 +34,10 @@ module.exports = {
         var googleAuth = new GoogleAuth();
         var accessToken = req.param('idToken');
         googleAuth.loginViaGoogle(accessToken, function(status){
+            if(status.status === 'Ok') {
+                req.session.authenticated = true;
+                req.session.userEmail = status.info.email;
+            }
             res.send(status);
         });
     },
@@ -37,6 +45,10 @@ module.exports = {
     loginFacebook: function(req, res){
         var accessToken = req.param('accessToken');
         FacebookAuthService.loginFace(accessToken, function(status){
+            if(status.status === 'Ok') {
+                req.session.authenticated = true;
+                req.session.userEmail = status.info.email;
+            }
             res.send(status);
         });
     },
