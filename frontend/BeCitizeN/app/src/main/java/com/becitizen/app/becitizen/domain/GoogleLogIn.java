@@ -1,34 +1,24 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.domain;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.adapters.BackendConnection;
+import com.becitizen.app.becitizen.presentation.DataRegisterView;
+import com.becitizen.app.becitizen.presentation.InsideActivity;
+import com.becitizen.app.becitizen.presentation.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-
-import static android.content.ContentValues.TAG;
 
 public class GoogleLogIn {
 
@@ -82,8 +72,7 @@ public class GoogleLogIn {
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
-            sendUserDataToServer request = new sendUserDataToServer();
-            JSONObject data = new JSONObject(request.execute(new String[]{"http://10.0.2.2:1337/loginGoogle", account.getIdToken()}).get());
+            JSONObject data = new JSONObject(BackendConnection.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
 
             if(data.get("status").equals("Ok")) {
                 Bundle bundle = new Bundle();
@@ -113,33 +102,8 @@ public class GoogleLogIn {
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
-        }  catch (InterruptedException | ExecutionException | JSONException e) {
+        }  catch (JSONException e) {
             e.printStackTrace();
-        }
-    }
-
-    private class sendUserDataToServer extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... data) {
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(data[0] + "?idToken=" + data[1]);
-            String responseBody;
-
-            try {
-                HttpResponse response = httpClient.execute(httpGet);
-                int statusCode = response.getStatusLine().getStatusCode();
-                responseBody = EntityUtils.toString(response.getEntity());
-                Log.w("Result", "Signed in as: " + responseBody);
-            } catch (ClientProtocolException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            }
-            return responseBody;
         }
     }
 }
