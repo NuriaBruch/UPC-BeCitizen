@@ -3,6 +3,7 @@ package com.becitizen.app.becitizen.presentation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.R;
@@ -60,14 +61,15 @@ public class GoogleLogIn {
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public void onResult(Activity activity, Intent data) {
+    public Bundle onResult(Activity activity, Intent data) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        handleSignInResult(task);
+        return handleSignInResult(task);
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+    private Bundle handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        Bundle bundle = new Bundle();
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
@@ -76,9 +78,17 @@ public class GoogleLogIn {
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
+            bundle.putString("username", null);
+            bundle.putString("mail", account.getEmail());
+            bundle.putString("firstName", account.getGivenName());
+            bundle.putString("lastName", account.getFamilyName());
+            bundle.putString("birthDate", null);
+            bundle.putString("country", null);
+
             sendUserDataToServer request = new sendUserDataToServer();
-            if (request.execute(new String[]{"https://www.googleapis.com/oauth2/v3/tokeninfo", account.getIdToken()}).equals("Success")) {
+            if (request.execute(new String[]{"http://10.0.2.2:1337/loginGoogle", account.getIdToken()}).equals("Success")) {
                 mGoogleSignInClient.signOut();
+                System.out.println("asaSS");
                 // Signed in successfully, show authenticated UI.
                 //updateUI(account);
             }
@@ -88,6 +98,7 @@ public class GoogleLogIn {
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
         }
+        return bundle;
     }
 
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
@@ -96,12 +107,13 @@ public class GoogleLogIn {
         protected String doInBackground(String... data) {
 
             HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(data[0] + "?id_token=" + data[1]);
+            HttpGet httpGet = new HttpGet(data[0] + "?idToken=" + data[1]);
+            String responseBody;
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
                 int statusCode = response.getStatusLine().getStatusCode();
-                final String responseBody = EntityUtils.toString(response.getEntity());
+                responseBody = EntityUtils.toString(response.getEntity());
                 Log.w("Result", "Signed in as: " + responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
