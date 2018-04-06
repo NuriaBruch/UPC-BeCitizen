@@ -120,7 +120,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case GoogleLogIn.RC_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-                googleLogIn.onResult(this, data);
+                Bundle bundle = googleLogIn.onResult(this, data);
+
+                // It goes to the DataRegisterView and all the data of the user is sent.
+                //goToActivity(DataRegisterView.class, bundle, 0);
+                goToActivity(InsideActivity.class, new Bundle(), Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 break;
             default:
                 // FB
