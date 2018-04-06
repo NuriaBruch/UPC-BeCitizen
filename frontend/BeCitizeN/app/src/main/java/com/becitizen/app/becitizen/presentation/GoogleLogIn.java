@@ -1,10 +1,12 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -20,8 +22,11 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import static android.content.ContentValues.TAG;
 
@@ -61,15 +66,14 @@ public class GoogleLogIn {
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public Bundle onResult(Activity activity, Intent data) {
+    public void onResult(MainActivity activity, Intent data) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        return handleSignInResult(task);
+        handleSignInResult(task, activity);
     }
 
-    private Bundle handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        Bundle bundle = new Bundle();
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
@@ -78,27 +82,40 @@ public class GoogleLogIn {
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
-            bundle.putString("username", null);
-            bundle.putString("mail", account.getEmail());
-            bundle.putString("firstName", account.getGivenName());
-            bundle.putString("lastName", account.getFamilyName());
-            bundle.putString("birthDate", null);
-            bundle.putString("country", null);
-
             sendUserDataToServer request = new sendUserDataToServer();
-            if (request.execute(new String[]{"http://10.0.2.2:1337/loginGoogle", account.getIdToken()}).equals("Success")) {
-                mGoogleSignInClient.signOut();
-                System.out.println("asaSS");
-                // Signed in successfully, show authenticated UI.
-                //updateUI(account);
+            JSONObject data = new JSONObject(request.execute(new String[]{"http://10.0.2.2:1337/loginGoogle", account.getIdToken()}).get());
+
+            if(data.get("status").equals("Ok")) {
+                Bundle bundle = new Bundle();
+
+                if (data.get("loggedIn").equals("False")) {
+                    bundle.putString("username", null);
+                    bundle.putString("mail", account.getEmail());
+                    bundle.putString("firstName", account.getGivenName());
+                    bundle.putString("lastName", account.getFamilyName());
+                    bundle.putString("birthDate", null);
+                    bundle.putString("country", null);
+
+                    // It goes to the DataRegisterView and all the data of the user is sent.
+                    activity.goToActivity(DataRegisterView.class, bundle, 0);
+                } else {
+                    activity.goToActivity(InsideActivity.class, bundle, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+            } else {
+                Toast toast = Toast.makeText(activity.getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                toast.show();
             }
+            //mGoogleSignInClient.signOut();
+            // Signed in successfully, show authenticated UI.
+            //updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
+        }  catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
         }
-        return bundle;
     }
 
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
@@ -122,7 +139,7 @@ public class GoogleLogIn {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
             }
-            return "Success";
+            return responseBody;
         }
     }
 }
