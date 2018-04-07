@@ -40,15 +40,16 @@ module.exports = class GestionUser {
     checkMail(email,callback){
         var response = {
             status: "Ok",
+            found:"Yes",
             errors: []
         }
         User.findOne({email:email}).exec(function(err1,userFound){
             if(err1 !== undefined && err1){
-                response.status = "E2";
+                response.status = "Error";
                 response.errors.push("Server error");
             }
             else if(userFound === undefined){
-                response.status = "E1";
+                response.found = "No";
                 response.errors.push("User not found");
             }
             callback(response);
