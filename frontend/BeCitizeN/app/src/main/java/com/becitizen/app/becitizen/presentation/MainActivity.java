@@ -131,6 +131,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
     }
 
+    public void signUpMail(View view) {
+        goToActivity(ViewSignUpMail.class, new Bundle(), 0);
+    }
+
+    public void logInGuest(View view) {
+
+    }
+
+    public void logInMail(View view) {
+
+    }
+
 
 
 }

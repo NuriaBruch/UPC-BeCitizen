@@ -4,28 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.becitizen.app.becitizen.presentation.MainActivity">
+    android:padding="20dp"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    tools:context="com.becitizen.app.becitizen.presentation.MainActivity"
+    >
 
-    <TextView
+    <ImageView
+        android:id="@+id/mainImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:srcCompat="@drawable/bcn_icon_dark"/>
+
+    <Button
+        android:id="@+id/bLogInMail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/textView" />
+        android:layout_above="@+id/linealLayout2"
+        android:layout_centerHorizontal="true"
+        android:onClick="logInMail"
+        android:text="@string/logInMail"
+        android:textAllCaps="false" />
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/fb_login_button"
+    <LinearLayout
+        android:id="@+id/linealLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/linealLayout1"
+        android:layout_marginTop="10dp">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/fb_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            facebook:com_facebook_login_text="@string/logInFacebook"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linealLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/bSignUpMail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="signUpMail"
+            android:text="@string/signUpMail"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/bGuest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="logInGuest"
+            android:text="@string/logInGuest"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

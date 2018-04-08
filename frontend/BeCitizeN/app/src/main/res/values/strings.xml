@@ -14,8 +14,13 @@
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
 
+    <string name="logInFacebook">Facebook</string>
+    <string name="logInGoogle">Google</string>
+    <string name="logInMail">Log in with email</string>
+    <string name="logInGuest">Log in as a guest</string>
+    <string name="signUpMail">Sign up with email</string>
 
-    <string name="SignUp">Sign up</string>
+    <string name="signUpTitle">Sign up</string>
     <string name="enterEmail">Enter your email</string>
     <string name="enterPassw">Enter your password</string>
     <string name="repeatPassw">Repeat your password</string>
