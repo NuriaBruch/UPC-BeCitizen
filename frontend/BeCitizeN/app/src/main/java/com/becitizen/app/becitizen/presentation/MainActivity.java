@@ -1,21 +1,22 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.Facebook;
+import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.GoogleLogIn;
-import com.becitizen.app.becitizen.domain.User;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,8 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private LoginButton fbLoginButton;
     private CallbackManager callbackManager;
-
-    private String toastText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,49 +41,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                if (Facebook.login()) {
-                    //Code if the user is already registered in our database
-                    // Facebook.getUser() returns a user with the data of our db
-                    //TODO: do login
 
-                    toastText = getResources().getString(R.string.login_success);
+                JSONObject json = null;
+                try {
+                    json = new JSONObject(ControllerUserDomain.getUniqueInstance().facebookLogin());
+                    if (json.getBoolean("loggedIn")) {
 
-                    // It goes to the InsideActivity.
-                    // Flags: If back is pressed in the InsideActivity, the app will exit and not return to this activity.
-                    goToActivity(InsideActivity.class, new Bundle(), Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        showToast(getResources().getString(R.string.login_success));
+                        goToActivity(InsideActivity.class, new Bundle(), Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                } else {
-                    // Code if the user is not yet registered in our database
-                    // Facebook.getUser() returns a user with the data of user that could be obtain from FB
-                    // TODO: go to register formular view and pass the user data as a parameter
+                    } else {
 
-                    toastText = getResources().getString(R.string.login_success);
+                        showToast(getResources().getString(R.string.login_success));
 
-                    User user = Facebook.getUser();
+                        JSONObject info = json.getJSONObject("info");
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("username", user.getUsername());
-                    bundle.putString("mail", user.getMail());
-                    bundle.putString("firstName", user.getFirstName());
-                    bundle.putString("lastName", user.getLastName());
-                    bundle.putString("birthDate", user.getBirthDate());
-                    bundle.putString("country", user.getCountry());
+                        Bundle bundle = new Bundle();
+                        bundle.putString("username", info.getString("username"));
+                        bundle.putString("mail", info.getString("email"));
+                        bundle.putString("firstName", info.getString("name"));
+                        bundle.putString("lastName", info.getString("surname"));
+                        bundle.putString("birthDate", info.getString("birthday"));
+                        bundle.putString("country", info.getString("country"));
 
-                    // It goes to the DataRegisterView and all the data of the user is sent.
-                    goToActivity(DataRegisterView.class, bundle, 0);
+                        goToActivity(DataRegisterView.class, bundle, 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
 
             @Override
             public void onCancel() {
 
-                toastText = getResources().getString(R.string.login_cancel);
+                showToast(getResources().getString(R.string.login_cancel));
             }
 
             @Override
             public void onError(FacebookException error) {
 
-                toastText = getResources().getString(R.string.login_fail);
+                showToast(getResources().getString(R.string.login_fail));
 
             }
         });
@@ -118,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 // FB
                 Log.w("RequestCode", "### RequestCode: " + requestCode);
-                Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
                 callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -143,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-
-
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
 }

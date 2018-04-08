@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.domain;
 
+import org.json.JSONObject;
+
 public class ControllerUserDomain {
     private static ControllerUserDomain uniqueInstance;
     private User currentUser;
@@ -30,6 +32,19 @@ public class ControllerUserDomain {
         currentUser.setCountry(country);
         // llamar al adapter para registrar al usuario
         return 0;
+    }
+
+    public String facebookLogin() throws Exception {
+
+        String response = Facebook.login();
+        JSONObject json = new JSONObject(response);
+
+        if (json.getBoolean("loggedIn")) {
+            //TODO: do login
+        }
+
+        return response;
+
     }
 
 
