@@ -14,6 +14,8 @@ import com.becitizen.app.becitizen.R;
 
 import java.util.regex.Pattern;
 
+import static android.util.Patterns.EMAIL_ADDRESS;
+
 public class ViewSignUpMail extends AppCompatActivity {
 
     private ControllerUserPresentation controllerUserPresentation;
@@ -21,17 +23,6 @@ public class ViewSignUpMail extends AppCompatActivity {
     private TextInputEditText tietMail;
     private TextInputEditText tietPassw;
     private TextInputEditText tietPassw2;
-
-
-    public static final Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
-            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-                    "\\@" +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-                    "(" +
-                    "\\." +
-                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-                    ")+"
-    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +52,7 @@ public class ViewSignUpMail extends AppCompatActivity {
     private boolean validateEmail() {
         String email = tietMail.getText().toString();
 
-        if (email.trim().isEmpty() || !EMAIL_ADDRESS_PATTERN.matcher(email).matches()) {
+        if (email.trim().isEmpty() || !EMAIL_ADDRESS.matcher(email).matches()) {
             tietMail.setError(getString(R.string.errorMsgName));
             requestFocus(tietMail);
             return false;
