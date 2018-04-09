@@ -119,27 +119,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void signUpMailMainMenu(View view) {
+        goToActivity(ViewSignUpMail.class, new Bundle(), 0);
+    }
+
+    public void logInGuestMainMenu(View view) {
+        goToActivity(InsideActivity.class, new Bundle(), 0);
+    }
+
+    public void logInMailMainMenu(View view) {
+
+    }
+
+    private void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+    }
+
+
     public void goToActivity(Class c, Bundle extras, int flags) {
 
         Intent intent = new Intent(this, c);
         intent.putExtras(extras);
         intent.addFlags(flags);
         startActivity(intent);
-    }
-
-    public void signUpMail(View view) {
-        goToActivity(ViewSignUpMail.class, new Bundle(), 0);
-    }
-
-    public void logInGuest(View view) {
-
-    }
-
-    public void logInMail(View view) {
-
-    }
-
-    private void showToast(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 }

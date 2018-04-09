@@ -14,6 +14,8 @@
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
 
+    <string name="enter">Enter</string>
+
     <string name="logInFacebook">Facebook</string>
     <string name="logInGoogle">Google</string>
     <string name="logInMail">Log in with email</string>
