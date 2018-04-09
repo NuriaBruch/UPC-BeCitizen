@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void logInMailMainMenu(View view) {
-
+        goToActivity(MailLoginActivity.class, new Bundle(), 0);
     }
 
     private void showToast(String text) {
