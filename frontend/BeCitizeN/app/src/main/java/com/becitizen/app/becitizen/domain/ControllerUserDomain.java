@@ -50,9 +50,10 @@ public class ControllerUserDomain {
 
     public LoginResponse facebookLogin() {
 
-        String response = controllerUserData.loginFB();
+
         JSONObject json = null;
         try {
+            String response = Facebook.login();
             json = new JSONObject(response);
 
             JSONObject info = json.getJSONObject("info");
@@ -68,7 +69,7 @@ public class ControllerUserDomain {
 
             return LoginResponse.REGISTER;
         }
-        catch (JSONException e) {
+        catch (Exception e) {
             return LoginResponse.ERROR;
         }
     }
