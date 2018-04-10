@@ -1,6 +1,13 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.os.Bundle;
+
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.LoginResponse;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Nuria on 06/04/2018.
@@ -38,5 +45,17 @@ public class ControllerUserPresentation {
 
     public int checkCredentials(String email, String password) {
         return 0;
+    }
+
+    public LoginResponse facebookLogin() {
+        return controllerUserDomain.facebookLogin();
+    }
+
+    public LoginResponse googleLogin(GoogleSignInAccount account) {
+        return controllerUserDomain.googleLogin(account);
+    }
+
+    public Bundle getUserData() {
+        return controllerUserDomain.getUserData();
     }
 }

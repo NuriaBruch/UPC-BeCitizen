@@ -40,37 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
                 handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
-
-                /*JSONObject json = null;
-                try {
-                    json = new JSONObject(ControllerUserDomain.getUniqueInstance().facebookLogin());
-                    if (json.getBoolean("loggedIn")) {
-
-                        showToast(getResources().getString(R.string.login_success));
-                        goToActivity(InsideActivity.class, new Bundle(), Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    } else {
-
-                        showToast(getResources().getString(R.string.login_success));
-
-                        JSONObject info = json.getJSONObject("info");
-
-                        Bundle bundle = new Bundle();
-                        bundle.putString("username", info.getString("username"));
-                        bundle.putString("mail", info.getString("email"));
-                        bundle.putString("firstName", info.getString("name"));
-                        bundle.putString("lastName", info.getString("surname"));
-                        bundle.putString("birthDate", info.getString("birthday"));
-                        bundle.putString("country", info.getString("country"));
-
-                        goToActivity(DataRegisterView.class, bundle, 0);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
-
             }
 
             @Override

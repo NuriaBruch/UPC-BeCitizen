@@ -69,48 +69,12 @@ public class GoogleLogIn {
     }
 
     private LoginResponse handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
+        GoogleSignInAccount account = null;
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            //TODO: delete logs
-            Log.w("Email", account.getEmail());
-            Log.w("Display Name", account.getDisplayName());
-            Log.w("Token", account.getIdToken());
-
-            return ControllerUserPresentation.getUniqueInstance().googleLogin(account.getIdToken());
-
-            /*JSONObject data = new JSONObject(ControllerUserData.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
-
-            if(data.get("status").equals("Ok")) {
-                Bundle bundle = new Bundle();
-
-                if (data.get("loggedIn").equals("False")) {
-                    bundle.putString("username", null);
-                    bundle.putString("mail", account.getEmail());
-                    bundle.putString("firstName", account.getGivenName());
-                    bundle.putString("lastName", account.getFamilyName());
-                    bundle.putString("birthDate", null);
-                    bundle.putString("country", null);
-
-                    // It goes to the DataRegisterView and all the data of the user is sent.
-                    activity.goToActivity(DataRegisterView.class, bundle, 0);
-                } else {
-                    activity.goToActivity(InsideActivity.class, bundle, Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                }
-            } else {
-                Toast toast = Toast.makeText(activity.getApplicationContext(), "Error", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            //mGoogleSignInClient.signOut();
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);*/
+            account = completedTask.getResult(ApiException.class);
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
-            //updateUI(null);
-        }  catch (JSONException e) {
-            e.printStackTrace();
+            return LoginResponse.ERROR;
         }
+        return ControllerUserPresentation.getUniqueInstance().googleLogin(account);
     }
 }
