@@ -1,11 +1,10 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.os.Bundle;
+
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.LoginResponse;
-
-/**
- * Created by Nuria on 06/04/2018.
- */
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class ControllerUserPresentation {
 
@@ -40,12 +39,15 @@ public class ControllerUserPresentation {
     public int checkCredentials(String email, String password) {
         return 0;
     }
-
     public LoginResponse facebookLogin() {
-        return null;
+        return controllerUserDomain.facebookLogin();
     }
 
-    public LoginResponse googleLogin(String idToken) {
-        return null;
+    public LoginResponse googleLogin(GoogleSignInAccount account) {
+        return controllerUserDomain.googleLogin(account);
+    }
+
+    public Bundle getUserData() {
+        return controllerUserDomain.getUserData();
     }
 }
