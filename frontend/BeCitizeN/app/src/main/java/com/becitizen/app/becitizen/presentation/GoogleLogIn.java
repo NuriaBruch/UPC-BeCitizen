@@ -2,16 +2,10 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.LoginResponse;
-import com.becitizen.app.becitizen.domain.adapters.BackendConnection;
-import com.becitizen.app.becitizen.presentation.DataRegisterView;
-import com.becitizen.app.becitizen.presentation.InsideActivity;
-import com.becitizen.app.becitizen.presentation.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class GoogleLogIn {
 
@@ -86,7 +79,7 @@ public class GoogleLogIn {
 
             return ControllerUserPresentation.getUniqueInstance().googleLogin(account.getIdToken());
 
-            /*JSONObject data = new JSONObject(BackendConnection.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
+            /*JSONObject data = new JSONObject(ControllerUserData.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
 
             if(data.get("status").equals("Ok")) {
                 Bundle bundle = new Bundle();

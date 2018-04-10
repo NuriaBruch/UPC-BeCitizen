@@ -3,7 +3,7 @@ package com.becitizen.app.becitizen.domain;
 
 import android.util.Log;
 
-import com.becitizen.app.becitizen.domain.adapters.BackendConnection;
+import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookException;
@@ -21,10 +21,10 @@ public class Facebook {
 
     public static String login() throws Exception {
 
-        BackendConnection backendConnection = BackendConnection.getInstance();
+        ControllerUserData controllerUserData = ControllerUserData.getInstance();
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
-            response = backendConnection.doGetRequest(URI_FB_LOGIN + "?accessToken=" + token);
+            response = controllerUserData.doGetRequest(URI_FB_LOGIN + "?accessToken=" + token);
         else throw new FacebookException("You are not logged with Facebook");
 
         JSONObject resp = null;

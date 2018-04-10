@@ -15,16 +15,16 @@ import java.util.concurrent.ExecutionException;
 
 import static android.content.ContentValues.TAG;
 
-public class BackendConnection {
+public class ControllerUserData {
 
-    private static BackendConnection instance = null;
+    private static ControllerUserData instance = null;
 
-    protected BackendConnection() {
+    protected ControllerUserData() {
         // Exists only to defeat instantiation.
     }
-    public static BackendConnection getInstance() {
+    public static ControllerUserData getInstance() {
         if(instance == null) {
-            instance = new BackendConnection();
+            instance = new ControllerUserData();
         }
         return instance;
     }
