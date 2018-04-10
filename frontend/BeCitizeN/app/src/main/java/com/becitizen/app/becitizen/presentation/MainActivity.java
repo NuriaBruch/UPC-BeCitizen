@@ -41,7 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                JSONObject json = null;
+                handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
+
+                /*JSONObject json = null;
                 try {
                     json = new JSONObject(ControllerUserDomain.getUniqueInstance().facebookLogin());
                     if (json.getBoolean("loggedIn")) {
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                }
+                }*/
 
             }
 
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case 64206:
                 //Facebook
-                //handleExternalLoginResult(callbackManager.onActivityResult(requestCode, resultCode, data));
+                callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
