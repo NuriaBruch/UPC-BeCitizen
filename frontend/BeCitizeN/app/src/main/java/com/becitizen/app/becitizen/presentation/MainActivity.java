@@ -112,9 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 googleLogIn.onResult(this, data);
 
                 break;
-            default:
-                // FB
-                Log.w("RequestCode", "### RequestCode: " + requestCode);
+            case 64206:
+                //Facebook
                 callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
