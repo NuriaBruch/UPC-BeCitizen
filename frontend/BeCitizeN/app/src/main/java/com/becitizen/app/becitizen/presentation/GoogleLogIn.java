@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.domain;
+package com.becitizen.app.becitizen.presentation;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.LoginResponse;
 import com.becitizen.app.becitizen.domain.adapters.BackendConnection;
 import com.becitizen.app.becitizen.presentation.DataRegisterView;
 import com.becitizen.app.becitizen.presentation.InsideActivity;
@@ -28,13 +29,15 @@ public class GoogleLogIn {
 
     public GoogleLogIn() {}
 
+    /**
+     * Configure sign-in to request the user's ID, email address, and basic
+     * profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+     * Request only the user's ID token, which can be used to identify the
+     * user securely to your backend.
+     *
+     * @param  activity the activity from which the login is used
+     */
     public void configure(Activity activity) {
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        // Request only the user's ID token, which can be used to identify the
-        // user securely to your backend. This will contain the user's basic
-        // profile (name, profile picture URL, etc) so you should not need to
-        // make an additional call to personalize your application.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(activity.getString(R.string.backendClientID))
                 .requestEmail()
@@ -44,26 +47,35 @@ public class GoogleLogIn {
         mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
     }
 
+    /**
+     * Check for existing Google Sign In account, if the user is already signed in
+     * the GoogleSignInAccount will be non-null.
+     *
+     * @param  activity the activity from which the login is used
+     */
     public void start(Activity activity) {
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
         //updateUI(account);
     }
 
+    /**
+     * Start SignIn screen to get a result.
+     *
+     * @param  activity the activity from which the login is used
+     */
     public void signIn(Activity activity) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public void onResult(MainActivity activity, Intent data) {
+    public LoginResponse onResult(MainActivity activity, Intent data) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        handleSignInResult(task, activity);
+        return handleSignInResult(task, activity);
     }
 
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
+    private LoginResponse handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
@@ -72,7 +84,9 @@ public class GoogleLogIn {
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
-            JSONObject data = new JSONObject(BackendConnection.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
+            return ControllerUserPresentation.getUniqueInstance().googleLogin(account.getIdToken());
+
+            /*JSONObject data = new JSONObject(BackendConnection.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
 
             if(data.get("status").equals("Ok")) {
                 Bundle bundle = new Bundle();
@@ -96,7 +110,7 @@ public class GoogleLogIn {
             }
             //mGoogleSignInClient.signOut();
             // Signed in successfully, show authenticated UI.
-            //updateUI(account);
+            //updateUI(account);*/
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
