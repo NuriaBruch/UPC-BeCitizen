@@ -16,9 +16,8 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:srcCompat="@drawable/bcn_icon_dark"/>
+        app:srcCompat="@drawable/bcn_icon_dark"
+        android:layout_above="@+id/bLogInMail"/>
 
     <Button
         android:id="@+id/bLogInMail"
@@ -26,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/linealLayout2"
         android:layout_centerHorizontal="true"
-        android:onClick="logInMail"
+        android:onClick="logInMailMainMenu"
         android:text="@string/logInMail"
         android:textAllCaps="false" />
 
@@ -63,7 +62,7 @@
             android:id="@+id/bSignUpMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="signUpMail"
+            android:onClick="signUpMailMainMenu"
             android:text="@string/signUpMail"
             android:textAllCaps="false" />
 
@@ -71,12 +70,10 @@
             android:id="@+id/bGuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="logInGuest"
+            android:onClick="logInGuestMainMenu"
             android:text="@string/logInGuest"
             android:textAllCaps="false" />
 
     </LinearLayout>
-
-
 
 </RelativeLayout>

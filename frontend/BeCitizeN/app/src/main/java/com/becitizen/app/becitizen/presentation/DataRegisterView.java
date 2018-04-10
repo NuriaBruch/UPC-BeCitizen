@@ -145,7 +145,12 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
 
     private boolean validateBirthDate() {
         birthDateInput = findViewById(R.id.birthDateInput);
-        if (birthDateInput.getText().toString().trim().isEmpty()) {
+        String date = birthDateInput.getText().toString().trim();
+        String yearString = date.substring(6);
+        if (date.isEmpty()) {
+            birthDateInput.setError(getString(R.string.errorMsgName));
+            return false;
+        } else if (Integer.valueOf(yearString) > year - 18) {
             birthDateInput.setError(getString(R.string.errorMsgName));
             return false;
         }

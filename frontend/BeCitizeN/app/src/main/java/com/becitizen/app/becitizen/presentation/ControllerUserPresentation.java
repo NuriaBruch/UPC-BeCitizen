@@ -33,7 +33,10 @@ public class ControllerUserPresentation {
     }
 
     public int registerData(String username, String firstName, String lastName, String birthDate, String country) {
-        controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
+        return controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
+    }
+
+    public int checkCredentials(String email, String password) {
         return 0;
     }
 }
