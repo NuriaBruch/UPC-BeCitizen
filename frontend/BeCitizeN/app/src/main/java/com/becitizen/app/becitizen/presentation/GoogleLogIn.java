@@ -69,15 +69,16 @@ public class GoogleLogIn {
     }
 
     private LoginResponse handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
+        GoogleSignInAccount account = null;
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            account = completedTask.getResult(ApiException.class);
 
             //TODO: delete logs
             Log.w("Email", account.getEmail());
             Log.w("Display Name", account.getDisplayName());
             Log.w("Token", account.getIdToken());
 
-            return ControllerUserPresentation.getUniqueInstance().googleLogin(account.getIdToken());
+
 
             /*JSONObject data = new JSONObject(ControllerUserData.getInstance().doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
 
@@ -109,8 +110,7 @@ public class GoogleLogIn {
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("TAG", "signInResult:failed code=" + e.getStatusCode());
             //updateUI(null);
-        }  catch (JSONException e) {
-            e.printStackTrace();
         }
+        return ControllerUserPresentation.getUniqueInstance().googleLogin(account.getIdToken());
     }
 }

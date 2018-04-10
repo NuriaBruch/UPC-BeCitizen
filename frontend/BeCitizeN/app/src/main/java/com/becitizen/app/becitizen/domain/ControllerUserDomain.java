@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.domain;
 
 
+import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
 import org.json.JSONException;
@@ -43,7 +44,7 @@ public class ControllerUserDomain {
 
     public String facebookLogin() throws Exception {
 
-        String response = Facebook.login();
+        String response = ControllerUserData.getInstance().facebookLogin();
         JSONObject json = new JSONObject(response);
 
         if (json.getBoolean("loggedIn")) {
@@ -76,7 +77,7 @@ public class ControllerUserDomain {
         }
 
 
-        return preferences.getValue(PREFS_KEY, "userName");
+        return json.toString();
     }
 
     private void doLogin(String mode, String userName) throws SharedPreferencesException {
