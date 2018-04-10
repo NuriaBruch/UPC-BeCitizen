@@ -1,5 +1,5 @@
-const APP_ID = "230715197485988";
-const APP_SECRET = "52e3445c32ff62dc31514a6a14e73803";
+const APP_ID = "1386882294791151"; //"230715197485988";
+const APP_SECRET = "d05d76e60a6abaa2dc862accf94e9197";//"52e3445c32ff62dc31514a6a14e73803";
 var request = require("request");
 
 
@@ -71,6 +71,7 @@ module.exports = {
                         function(userInfo){
                             if(userInfo){
                                 //tenim la informació del usuari
+                                response.info.email = userInfo.email;
                                 User.findOne({email: userInfo.email}).exec(function(err, userFound){
                                     if(err !== undefined && err) {
                                         response.status = "E2";
@@ -93,7 +94,9 @@ module.exports = {
                                     else{
                                         //el usuari no esta registrat, nomes agafem info
                                         
-                                        var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                        if(userInfo.birthday != undefined){
+                                            var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                        }
                                         var JsonName = UtilsService.getUserName(userInfo.name);
                                         response.info.name = JsonName.name;
                                         response.info.surname = JsonName.surname;
