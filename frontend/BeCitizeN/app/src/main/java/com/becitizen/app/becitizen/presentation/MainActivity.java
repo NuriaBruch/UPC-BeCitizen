@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 toast.show();
                 break;
             case REGISTER:
-                this.startActivity(new Intent(this, DataRegisterView.class));
+                startActivity(new Intent(this, DataRegisterView.class));
                 break;
             case LOGGED_IN:
                 Intent intent = new Intent(this, InsideActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.startActivity(intent);
+                startActivity(intent);
                 break;
         }
     }

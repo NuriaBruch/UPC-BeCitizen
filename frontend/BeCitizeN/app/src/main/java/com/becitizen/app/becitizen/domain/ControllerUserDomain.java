@@ -81,9 +81,10 @@ public class ControllerUserDomain {
     public LoginResponse googleLogin(GoogleSignInAccount account) {
         // TODO: poner uri en controller
         try {
-            JSONObject info = new JSONObject(controllerUserData.doGetRequest("http://becitizen.cf/loginGoogle?idToken=" + account.getIdToken()));
+            JSONObject response = new JSONObject(controllerUserData.doGetRequest("http://becitizen.cf/loginGoogle?idToken=" + account.getIdToken()));
 
-            if (info.get("status").equals("Ok")) {
+            if (response.get("status").equals("Ok")) {
+                JSONObject info = response.getJSONObject("info");
                 currentUser = new User(info.getString("email"), null);
                 currentUser.setUsername(info.getString("username"));
                 currentUser.setFirstName(info.getString("name"));
@@ -92,7 +93,7 @@ public class ControllerUserDomain {
                 currentUser.setCountry(info.getString("country"));
                 currentUser.setGoogle(true);
 
-                if (info.get("loggedIn").equals("False"))
+                if (response.getBoolean("loggedIn"))
                     return LoginResponse.REGISTER;
                 else
                     return LoginResponse.LOGGED_IN;
