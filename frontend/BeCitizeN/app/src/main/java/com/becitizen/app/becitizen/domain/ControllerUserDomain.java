@@ -95,8 +95,10 @@ public class ControllerUserDomain {
 
                 if (response.getBoolean("loggedIn"))
                     return LoginResponse.REGISTER;
-                else
+                else {
+                    doLogin("google", currentUser.getUsername());
                     return LoginResponse.LOGGED_IN;
+                }
             } else {
                 return LoginResponse.ERROR;
             }
@@ -104,7 +106,7 @@ public class ControllerUserDomain {
             // Signed in successfully, show authenticated UI.
             //updateUI(account);*/
         }
-        catch (JSONException e) {
+        catch (JSONException | SharedPreferencesException e) {
             return LoginResponse.ERROR;
         }
     }
