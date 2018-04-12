@@ -72,4 +72,8 @@ public class ControllerUserPresentation {
         if (mode.equals("guest")) return mode;
         else return json.getString("userName");
     }
+
+    public void guestLogin() {
+        controllerUserDomain.guestLogin();
+    }
 }

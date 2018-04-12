@@ -159,4 +159,12 @@ public class ControllerUserDomain {
             e.printStackTrace();
         }
     }
+
+    public void guestLogin() {
+        try {
+            doLogin("guest", "");
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
+        }
+    }
 }
