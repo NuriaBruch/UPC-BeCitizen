@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 public class ControllerUserData {
 
     //URIs
-    private static final String URI_FB_LOGIN = "http://10.0.2.2:1337/loginFacebook";
+    private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
 
     private static ControllerUserData instance = null;
 
