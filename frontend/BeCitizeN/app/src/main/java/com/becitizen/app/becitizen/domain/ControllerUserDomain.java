@@ -93,7 +93,7 @@ public class ControllerUserDomain {
                 currentUser.setCountry(info.getString("country"));
                 currentUser.setGoogle(true);
 
-                if (response.getBoolean("loggedIn"))
+                if (!response.getBoolean("loggedIn"))
                     return LoginResponse.REGISTER;
                 else {
                     doLogin("google", currentUser.getUsername());
