@@ -111,13 +111,11 @@ public class ControllerUserDomain {
         }
     }
 
-    public Bundle getUserData() {
+    public Bundle getUserDataRegister() {
         Bundle bundle = new Bundle();
-        bundle.putString("username", currentUser.getUsername());
         bundle.putString("firstName", currentUser.getFirstName());
         bundle.putString("lastName", currentUser.getLastName());
         bundle.putString("birthDate", currentUser.getBirthDate());
-        bundle.putString("country", currentUser.getCountry());
         return bundle;
     }
 

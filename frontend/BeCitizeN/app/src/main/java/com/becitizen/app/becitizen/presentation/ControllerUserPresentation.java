@@ -2,13 +2,10 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.os.Bundle;
 
-import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.LoginResponse;
-import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ControllerUserPresentation {
@@ -53,8 +50,8 @@ public class ControllerUserPresentation {
         return controllerUserDomain.googleLogin(account);
     }
 
-    public Bundle getUserData() {
-        return controllerUserDomain.getUserData();
+    public Bundle getUserDataRegister() {
+        return controllerUserDomain.getUserDataRegister();
     }
 
     public void logout() {
