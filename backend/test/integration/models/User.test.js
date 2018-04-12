@@ -2,18 +2,18 @@ describe('UserModel', function () {
 
   describe('#insertUser()', function () {
     it('should check if user is created', function (done) {
-      var email = "omarcruz11@hotmail.com";
-      var username = "omar97";
-      var password = "contraseña";
-      var name = "omar";
-      var usernme = "omar2";
-      var biography = "This is me, this is real";
-      var birthday = "29/02/1975";
-      var country = "Argentina";
-      var rank = "diamond";
-      var profilePicture = "http://images/omar.png";
-      var hasFacebook = "true";
-      var hasGoogle = "false";
+      let email = "omarcruz11@hotmail.com";
+      let username = "omar97";
+      let password = "contraseña";
+      let name = "omar";
+      let usernme = "omar2";
+      let biography = "This is me, this is real";
+      let birthday = "29/02/1975";
+      let country = "Argentina";
+      let rank = "diamond";
+      let profilePicture = "http://images/omar.png";
+      let hasFacebook = true;
+      let hasGoogle = false;
       User.create({
         email: email,
         username: username,
@@ -29,9 +29,22 @@ describe('UserModel', function () {
         hasGoogle: hasGoogle
       })
       .then(function (userCreated) {
-        //if(userCreated.email == email) done();
-        //else done("Error creating user!!!");
-        done("asds");
+        if(userCreated.email == email &&
+        userCreated.username == username &&
+        userCreated.password == password &&
+        userCreated.name == name &&
+        userCreated.usernme == usernme &&
+        userCreated.biography == biography &&
+        userCreated.birthday == birthday &&
+        userCreated.country == country &&
+        userCreated.rank == rank &&
+        userCreated.profilePicture == profilePicture &&
+        userCreated.hasFacebook == hasFacebook &&
+        userCreated.hasGoogle == hasGoogle) 
+        {
+          done();
+        }
+        else done("Error creating user!!!");
       })
       .catch((err) => done(err));
     });
