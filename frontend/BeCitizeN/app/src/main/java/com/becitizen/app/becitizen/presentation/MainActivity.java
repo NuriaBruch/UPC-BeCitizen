@@ -14,6 +14,8 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.Arrays;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private GoogleLogIn googleLogIn;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         callbackManager = CallbackManager.Factory.create();
 
         fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        fbLoginButton.setReadPermissions(Arrays.asList("email", "user_birthday"));
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
