@@ -70,7 +70,10 @@ public class ControllerUserData {
         // TODO gestionar error.
         try {
             JSONObject info = new JSONObject(doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
-            return info.get("status").equals("Ok");
+            if (info.get("status").equals("Ok")) {
+                return !info.get("found").equals("No");
+            }
+            return true;
         }
         catch (JSONException e) {
             return true;
