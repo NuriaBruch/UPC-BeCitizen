@@ -10,6 +10,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
@@ -40,9 +41,6 @@ public class ControllerUserData {
     }
 
     public String facebookLogin() throws Exception {
-
-        ControllerUserData controllerUserData = ControllerUserData.getInstance();
-
         String response, token;
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
@@ -93,13 +91,22 @@ public class ControllerUserData {
         uri += "&facebook=" + facebook;
         uri += "&google=" + google;
 
+
+        /* DESCOMENTAR I ACABAR QUAN FUNCIONI
         try {
-            JSONObject info = new JSONObject(doGetRequest(uri));
-            return info.get("status").equals("Ok");
+            JSONObject info = new JSONObject(doPostRequest(uri));
+            if (info.get("status").equals("Ok")) {
+                if (info.get("".equals(""))) return true;
+            }
+            return false;
         }
         catch (JSONException e) {
             return false;
         }
+
+        */
+
+        return false;
     }
 
     public String doGetRequest(String url) {
@@ -137,4 +144,42 @@ public class ControllerUserData {
             return responseBody;
         }
     }
+
+    /* INTENT DE POST
+
+    public String doPostRequest(String url) {
+        sendUserDataToServer request = new sendUserDataToServer();
+        String data = "";
+        try {
+            data = request.execute(new String[]{url}).post();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    private class sendPostToServer extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... data) {
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(data[0]);
+            String responseBody;
+
+            try {
+                HttpResponse response = httpClient.execute(httpPost);
+                int statusCode = response.getStatusLine().getStatusCode();
+                responseBody = EntityUtils.toString(response.getEntity());
+                Log.w("Result", "Signed in as: " + responseBody);
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            } catch (IOException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            }
+            return responseBody;
+        }
+    }*/
 }

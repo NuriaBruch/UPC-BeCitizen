@@ -76,6 +76,12 @@ public class ViewSignUpMail extends AppCompatActivity {
             return false;
         }
 
+        if (pass.trim().length() < 6) {
+            tietPassw.setError(getString(R.string.errorPasswlenght));
+            requestFocus(tietPassw);
+            return false;
+        }
+
         return true;
     }
 

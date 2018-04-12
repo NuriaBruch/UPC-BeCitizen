@@ -25,6 +25,7 @@
     <string name="enterPassw">Enter your password</string>
     <string name="repeatPassw">Repeat your password</string>
     <string name="Accept">Accept</string>
+    <string name="errorPasswlenght">Password too short, 6 characters at least</string>
     <string name="errorPassw">Passwords do not match</string>
     <string name="errorMail">Mail already registered</string>
 
