@@ -13,6 +13,8 @@ public class User {
     private boolean google;
 
     public User() {
+        facebook = google = false;
+        rank = Rank.COAL;
     }
 
     public User (String mail, String password) {

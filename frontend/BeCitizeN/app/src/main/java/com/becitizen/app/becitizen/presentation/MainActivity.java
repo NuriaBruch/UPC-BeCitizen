@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void goToActivity(Class c, Bundle extras, int flags) {
-
         Intent intent = new Intent(this, c);
         intent.putExtras(extras);
         intent.addFlags(flags);

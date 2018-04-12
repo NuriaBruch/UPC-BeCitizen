@@ -32,21 +32,22 @@ public class ControllerUserDomain {
     }
 
     public boolean existsMail(String mail) {
-        return false;
+        return controllerUserData.existsMail(mail);
     }
 
     public void createUser (String mail, String password) {
         currentUser = new User (mail, password);
     }
 
-    public int registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
         currentUser.setBirthDate(birthDate);
         currentUser.setCountry(country);
-        // llamar al adapter para registrar al usuario
-        return 0;
+
+        return controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
+                firstName, lastName, birthDate, country, currentUser.isFacebook(), currentUser.isGoogle());
     }
 
     public LoginResponse facebookLogin() {
@@ -63,6 +64,7 @@ public class ControllerUserDomain {
             currentUser.setLastName(info.getString("surname"));
             currentUser.setBirthDate(info.getString("birthday"));
             currentUser.setCountry(info.getString("country"));
+            currentUser.setFacebook(true);
 
             if (json.getBoolean("loggedIn")) {
                 doLogin("facebook", currentUser.getUsername());
@@ -78,9 +80,8 @@ public class ControllerUserDomain {
 
     public LoginResponse googleLogin(GoogleSignInAccount account) {
         // TODO: poner uri en controller
-        JSONObject info = null;
         try {
-            info = new JSONObject(controllerUserData.doGetRequest("http://10.0.2.2:1337/loginGoogle?idToken=" + account.getIdToken()));
+            JSONObject info = new JSONObject(controllerUserData.doGetRequest("http://becitizen.cf/loginGoogle?idToken=" + account.getIdToken()));
 
             if (info.get("status").equals("Ok")) {
                 currentUser = new User(info.getString("email"), null);
@@ -89,6 +90,8 @@ public class ControllerUserDomain {
                 currentUser.setLastName(info.getString("surname"));
                 currentUser.setBirthDate(info.getString("birthday"));
                 currentUser.setCountry(info.getString("country"));
+                currentUser.setGoogle(true);
+
                 if (info.get("loggedIn").equals("False"))
                     return LoginResponse.REGISTER;
                 else

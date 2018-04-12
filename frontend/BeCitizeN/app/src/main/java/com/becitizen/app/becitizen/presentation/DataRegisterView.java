@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -88,7 +89,7 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
         }
 
         countryInput = findViewById(R.id.countrySpinner);
-        int result = controllerUserPresentation.registerData(
+        boolean result = controllerUserPresentation.registerData(
                 usernameInput.getText().toString().trim(),
                 firstNameInput.getText().toString().trim(),
                 lastNameInput.getText().toString().trim(),
@@ -96,9 +97,15 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
                 countryInput.getSelectedItem().toString().trim()
         );
 
-        // controlar errores del controller
+        if (result) {
+            Intent i = new Intent(this,InsideActivity.class);
+            startActivity(i);
+        }
 
-        Toast.makeText(getApplicationContext(), "You submitted your data", Toast.LENGTH_SHORT).show();
+        else {
+            usernameInput.setError(getString(R.string.errorUsername));
+            requestFocus(usernameInput);
+        }
     }
 
     private boolean validateUsername() {

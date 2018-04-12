@@ -24,6 +24,8 @@ public class ControllerUserData {
 
     //URIs
     private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
+    private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
+    private static final String URI_REGISTER = "http://becitizen.cf/register";
 
     private static ControllerUserData instance = null;
 
@@ -64,7 +66,38 @@ public class ControllerUserData {
         }
     }
 
+    public boolean existsMail(String mail) {
+        // TODO gestionar error.
+        try {
+            JSONObject info = new JSONObject(doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
+            return info.get("status").equals("Ok");
+        }
+        catch (JSONException e) {
+            return true;
+        }
+    }
 
+    public boolean registerData(String email, String password, String username, String firstName,
+                            String lastName, String birthDate, String country, boolean facebook, boolean google) {
+        String uri = URI_REGISTER;
+        uri += "?username=" + username;
+        uri += "&password=" + password;
+        uri += "&email=" + email;
+        uri += "&name=" + firstName;
+        uri += "&surname=" + lastName;
+        uri += "&birthday=" + birthDate;
+        uri += "&country=" + country;
+        uri += "&facebook=" + facebook;
+        uri += "&google=" + google;
+
+        try {
+            JSONObject info = new JSONObject(doGetRequest(uri));
+            return info.get("status").equals("Ok");
+        }
+        catch (JSONException e) {
+            return false;
+        }
+    }
 
     public String doGetRequest(String url) {
         sendUserDataToServer request = new sendUserDataToServer();
