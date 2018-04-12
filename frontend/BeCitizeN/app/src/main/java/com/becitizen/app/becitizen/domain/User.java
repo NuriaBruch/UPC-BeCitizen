@@ -9,6 +9,8 @@ public class User {
     private String country;
     private String biography;
     private Rank rank;
+    private boolean facebook;
+    private boolean google;
 
     public User() {
     }
@@ -88,5 +90,21 @@ public class User {
 
     public void setRank(Rank rank) {
         this.rank = rank;
+    }
+
+    public boolean isFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(boolean facebook) {
+        this.facebook = facebook;
+    }
+
+    public boolean isGoogle() {
+        return google;
+    }
+
+    public void setGoogle(boolean google) {
+        this.google = google;
     }
 }
