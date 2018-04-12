@@ -25,9 +25,9 @@
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textLoggedAs"
-        android:layout_marginBottom="56dp"
+        android:layout_alignStart="@+id/textYouIn"
+        android:layout_below="@+id/textLoggedAs"
+        android:layout_marginTop="74dp"
         android:onClick="onClick"
         android:text="@string/logout" />
 </RelativeLayout>

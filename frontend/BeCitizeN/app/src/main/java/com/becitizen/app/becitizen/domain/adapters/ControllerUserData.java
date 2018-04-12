@@ -33,6 +33,7 @@ public class ControllerUserData {
     protected ControllerUserData() {
         // Exists only to defeat instantiation.
     }
+
     public static ControllerUserData getInstance() {
         if(instance == null) {
             instance = new ControllerUserData();
