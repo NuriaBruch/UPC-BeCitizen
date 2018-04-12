@@ -3,7 +3,7 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textYouIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -12,11 +12,11 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textLoggedAs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_below="@+id/textView3"
+        android:layout_alignStart="@+id/textYouIn"
+        android:layout_below="@+id/textYouIn"
         android:layout_marginTop="17dp"
         android:text="@string/loggedAs"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
@@ -26,7 +26,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView4"
+        android:layout_alignStart="@+id/textLoggedAs"
         android:layout_marginBottom="56dp"
+        android:onClick="onClick"
         android:text="@string/logout" />
 </RelativeLayout>

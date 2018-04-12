@@ -2,9 +2,14 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.os.Bundle;
 
+import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ControllerUserPresentation {
 
@@ -39,6 +44,7 @@ public class ControllerUserPresentation {
     public int checkCredentials(String email, String password) {
         return 0;
     }
+
     public LoginResponse facebookLogin() {
         return controllerUserDomain.facebookLogin();
     }
@@ -49,5 +55,21 @@ public class ControllerUserPresentation {
 
     public Bundle getUserData() {
         return controllerUserDomain.getUserData();
+    }
+
+    public void logout() {
+        controllerUserDomain.logout();
+    }
+
+    public boolean isLogged() throws Exception {
+            return controllerUserDomain.isLogged();
+    }
+
+    public String getLoggedUser() throws Exception {
+
+        JSONObject json = new JSONObject(controllerUserDomain.getLoggedUser());
+        String mode = json.getString("mode");
+        if (mode.equals("guest")) return mode;
+        else return json.getString("userName");
     }
 }

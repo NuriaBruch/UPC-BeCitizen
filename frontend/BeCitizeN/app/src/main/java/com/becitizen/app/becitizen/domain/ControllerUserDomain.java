@@ -2,6 +2,7 @@ package com.becitizen.app.becitizen.domain;
 
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
@@ -63,10 +64,14 @@ public class ControllerUserDomain {
             currentUser.setBirthDate(info.getString("birthday"));
             currentUser.setCountry(info.getString("country"));
 
-            if (json.getBoolean("loggedIn")) return LoginResponse.LOGGED_IN;
+            if (json.getBoolean("loggedIn")) {
+                doLogin("facebook", currentUser.getUsername());
+                return LoginResponse.LOGGED_IN;
+            }
             return LoginResponse.REGISTER;
         }
         catch (Exception e) {
+            Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;
         }
     }
@@ -145,5 +150,13 @@ public class ControllerUserDomain {
     private void doLogout() throws SharedPreferencesException {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "false");
+    }
+
+    public void logout() {
+        try {
+            doLogout();
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
+        }
     }
 }

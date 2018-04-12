@@ -12,9 +12,11 @@ public class MySharedPreferences {
     private static MySharedPreferences instance;
     private Context context;
 
-    public MySharedPreferences(Context context) {
-        this.context = context;
-        instance = this;
+    public static void init(Context context) {
+        if(instance == null) {
+            instance = new MySharedPreferences();
+            instance.context = context;
+        }
     }
 
     public static MySharedPreferences getInstance() throws SharedPreferencesException {
