@@ -3,6 +3,7 @@ package com.becitizen.app.becitizen.domain.adapters;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.facebook.AccessToken;
 import com.facebook.FacebookException;
 
@@ -30,10 +31,18 @@ public class ControllerUserData {
 
     private static ControllerUserData instance = null;
 
+    /**
+     * Constructora por defecto para evitar que sea instanciado
+     */
     protected ControllerUserData() {
         // Exists only to defeat instantiation.
     }
 
+    /**
+     * Metodo para obtener la instancia del singleton
+     *
+     * @return La instancia de ControllerUserData
+     */
     public static ControllerUserData getInstance() {
         if(instance == null) {
             instance = new ControllerUserData();
@@ -41,7 +50,14 @@ public class ControllerUserData {
         return instance;
     }
 
-    public String facebookLogin() throws Exception {
+    /**
+     * Metodo que envia la solicitud de hacer login con Facebook a nuestro servidor,
+     * comprueba si ha sucedido algun error en el servidor y devuelve su respuesta.
+     *
+     * @return La respuesta de nuestro servidor al hacer login con Facebook
+     * @throws ServerException Si se ha generado algún error en el servidor o no devuelve la respuesta esperada.
+     */
+    public String facebookLogin() throws ServerException {
         String response, token;
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
@@ -56,15 +72,21 @@ public class ControllerUserData {
 
                 return response;
 
-            } else throw new Exception("Server response status is not OK");
+            } else throw new ServerException("Server response status is not OK");
 
         } catch (JSONException e) {
             e.printStackTrace();
             Log.d("Server", response);
-            throw new Exception("The server has not returned the expected JSONObject. \n");
+            throw new ServerException("The server has not returned the expected JSONObject. \n");
         }
     }
 
+    /**
+     * Metodo que envia la solicitud para comprovar si un email esta registrado en nuestro servidor
+     *
+     * @param mail Email a comprobar si esta registrado
+     * @return True si el email esta registrado en nuestro servidor, False de lo contrario
+     */
     public boolean existsMail(String mail) {
         // TODO gestionar error.
         try {
@@ -79,6 +101,20 @@ public class ControllerUserData {
         }
     }
 
+    /**
+     * Metodo que envia la solicitud para registrar un usuario con los datos de los parametros en nuestro servidor
+     *
+     * @param email Email del usuario
+     * @param password Contrasena del usuario
+     * @param username Nombre de usuario
+     * @param firstName Nombre del usuario
+     * @param lastName Apellido del usuario
+     * @param birthDate Fecha de nacimiento del usuario
+     * @param country Pais del usuario
+     * @param facebook True si el usuario se registra con Facebook
+     * @param google True si el usuario se registra con Google
+     * @return False si ha ocurrido algun error, True de lo contrario
+     */
     public boolean registerData(String email, String password, String username, String firstName,
                             String lastName, String birthDate, String country, boolean facebook, boolean google) {
         String uri = URI_REGISTER;
@@ -110,6 +146,12 @@ public class ControllerUserData {
         return false;
     }
 
+    /**
+     * Metodo que permite hacer un get a la url indicada
+     *
+     * @param url Direccion en la que se quiere hacer el get
+     * @return Respuesta obtenida con el get
+     */
     public String doGetRequest(String url) {
         sendUserDataToServer request = new sendUserDataToServer();
         String data = "";
@@ -121,6 +163,9 @@ public class ControllerUserData {
         return data;
     }
 
+    /**
+     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http
+     */
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
 
         @Override
