@@ -138,14 +138,10 @@ public class ControllerUserData {
 
     }
 
-    public boolean checkCredentials(String email, String password) {
-        try {
-            JSONObject info = new JSONObject(doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password));
-            return info.get("status").equals("Ok");
+    public String checkCredentials(String email, String password) {
+        return doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
 
-        } catch (JSONException e) {
-            return false;
-        }
+
     }
 
     /**

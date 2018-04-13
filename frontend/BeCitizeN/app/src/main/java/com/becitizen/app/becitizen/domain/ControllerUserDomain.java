@@ -181,6 +181,27 @@ public class ControllerUserDomain {
     }
 
     public boolean checkCredentials(String email, String password) {
-        return controllerUserData.checkCredentials(email,password);
+        try {
+            JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
+
+            if (response.get("status").equals("Ok")) {
+                JSONObject info = response.getJSONObject("info");
+                currentUser = new User(email, null);
+                currentUser.setUsername(info.getString("username"));
+                currentUser.setFirstName(info.getString("name"));
+                currentUser.setLastName(info.getString("surname"));
+                currentUser.setBirthDate(info.getString("birthday"));
+                currentUser.setCountry(info.getString("country"));
+                doLogin("mail", currentUser.getUsername());
+                return true;
+
+            }
+            return false;
+        } catch (JSONException e) {
+            return false;
+        } catch (SharedPreferencesException e) {
+            return false;
+        }
     }
+
 }
