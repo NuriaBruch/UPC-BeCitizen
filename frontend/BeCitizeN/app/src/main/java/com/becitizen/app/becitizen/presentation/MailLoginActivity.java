@@ -62,7 +62,7 @@ public class MailLoginActivity extends AppCompatActivity {
     private boolean validateEmail() {
         String email = tietMail.getText().toString();
 
-        if (email.trim().isEmpty() || !EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.trim().isEmpty()) {
             tietMail.setError(getString(R.string.errorMsgName));
             requestFocus(tietMail);
             return false;
