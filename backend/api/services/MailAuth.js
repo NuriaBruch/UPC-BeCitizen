@@ -2,12 +2,13 @@ var bcrypt = require('bcrypt');
 
 module.exports = class MailAuth {
 
-    login(email, pass, callback){
+    login(id, pass, callback){
         var response = {
             status: "Ok",
             errors: [],
             info:{
                 username: "",
+                email: "",
                 name:"",
                 surname:"",
                 biography: "",
@@ -17,7 +18,12 @@ module.exports = class MailAuth {
             }
         };
 
-        User.findOne({email: email}).exec(function(err1, userFound){
+        User.findOne({
+            or:[
+                {email: id},
+                {username: id}
+            ]
+            }).exec(function(err1, userFound){
             if(err1 !== undefined && err1) {
                 // DB error
                 response.status = "E1";
@@ -42,6 +48,7 @@ module.exports = class MailAuth {
                     else{
                         //Status == Ok
                         response.info.username = userFound.username;
+                        response.info.email = userFound.email;
                         response.info.name = userFound.name;
                         response.info.surname = userFound.surname;
                         response.info.biography = userFound.biography;

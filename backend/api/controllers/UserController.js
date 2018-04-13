@@ -10,7 +10,7 @@ module.exports = {
 	register: function(req,res){
         var {username, password, email, name, surname, birthday, country, facebook, google} = req.body;
         
-        var hasFace = (facebook==='true');
+        var hasFace = (facebook ==='true');
         var hasGoogle = (google === 'true');
         var gestionUser = new GestionUser();
 
@@ -20,12 +20,14 @@ module.exports = {
     },
 
     loginMail: function(req, res){
-        var {email, password} = req.query;
+        var id = req.query.email;
+        var password = req.query.password;
+
         var mailAuth = new MailAuth();
-        mailAuth.login(email, password, function(status){
+        mailAuth.login(id, password, function(status){
             if(status.status === 'Ok') {
                 req.session.authenticated = true;
-                req.session.userEmail = email;
+                req.session.userEmail = status.info.email;
             }
             res.send(status);
         });
