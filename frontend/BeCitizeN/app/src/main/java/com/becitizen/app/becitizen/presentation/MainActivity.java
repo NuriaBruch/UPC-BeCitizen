@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.LoginResponse;
+import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;

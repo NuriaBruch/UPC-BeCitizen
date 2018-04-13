@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
+import com.becitizen.app.becitizen.domain.entities.User;
+import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
-import com.becitizen.app.becitizen.presentation.ControllerUserPresentation;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONException;

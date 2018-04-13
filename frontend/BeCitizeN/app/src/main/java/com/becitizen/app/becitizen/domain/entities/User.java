@@ -1,5 +1,7 @@
-package com.becitizen.app.becitizen.domain;
+package com.becitizen.app.becitizen.domain.entities;
 
+
+import com.becitizen.app.becitizen.domain.enumerations.Rank;
 
 public class User {
     private String username;

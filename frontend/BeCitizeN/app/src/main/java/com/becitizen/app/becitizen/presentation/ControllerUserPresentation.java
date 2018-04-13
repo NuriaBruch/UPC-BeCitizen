@@ -3,7 +3,7 @@ package com.becitizen.app.becitizen.presentation;
 import android.os.Bundle;
 
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
-import com.becitizen.app.becitizen.domain.LoginResponse;
+import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONObject;
