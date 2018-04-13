@@ -59,17 +59,18 @@ public class GoogleLogIn {
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public LoginResponse onResult(MainActivity activity, Intent data) {
+    /**
+     * Handle login result.
+     *
+     * @param  data the data resulting from the login intent
+     */
+    public LoginResponse onResult(Intent data) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        return handleSignInResult(task, activity);
-    }
-
-    private LoginResponse handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
         GoogleSignInAccount account = null;
         try {
-            account = completedTask.getResult(ApiException.class);
+            account = task.getResult(ApiException.class);
         } catch (ApiException e) {
             return LoginResponse.ERROR;
         }
