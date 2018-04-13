@@ -53,6 +53,7 @@ public class ControllerUserDomain {
             if (result)
                 doLogin("mail", currentUser.getUsername());
         } catch (SharedPreferencesException e) {
+            // TODO gestionar errors.
             return false;
         }
         return result;
@@ -81,6 +82,7 @@ public class ControllerUserDomain {
             return LoginResponse.REGISTER;
         }
         catch (Exception e) {
+            // TODO gestionar errors.
             Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;
         }
@@ -107,6 +109,7 @@ public class ControllerUserDomain {
                     return LoginResponse.LOGGED_IN;
                 }
             } else {
+                // TODO gestionar errors.
                 return LoginResponse.ERROR;
             }
             //mGoogleSignInClient.signOut();
