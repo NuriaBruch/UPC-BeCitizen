@@ -31,6 +31,8 @@ public class ControllerUserData {
 
     //URIs
     private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
+    private static final String URI_GOOGLE_LOGIN = "http://becitizen.cf/loginGoogle?idToken=";
+
     private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
     private static final String URI_REGISTER = "http://becitizen.cf/register";
     private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
@@ -81,10 +83,15 @@ public class ControllerUserData {
             } else throw new ServerException("Server response status is not OK");
 
         } catch (JSONException e) {
+            // TODO gestionar errors.
             e.printStackTrace();
             Log.d("Server", response);
             throw new ServerException("The server has not returned the expected JSONObject. \n");
         }
+    }
+
+    public String googleLogin(String token) {
+        return doGetRequest(URI_GOOGLE_LOGIN + token);
     }
 
     /**
@@ -94,7 +101,7 @@ public class ControllerUserData {
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
     public boolean existsMail(String mail) {
-        // TODO gestionar error.
+        // TODO gestionar errors.
         try {
             JSONObject info = new JSONObject(doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
@@ -133,6 +140,7 @@ public class ControllerUserData {
             return false;
         }
         catch (JSONException e) {
+            // TODO gestionar errors.
             return false;
         }
 
@@ -140,8 +148,6 @@ public class ControllerUserData {
 
     public String checkCredentials(String email, String password) {
         return doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
-
-
     }
 
     /**
@@ -150,7 +156,7 @@ public class ControllerUserData {
      * @param url Direccion en la que se quiere hacer el get
      * @return Respuesta obtenida con el get
      */
-    public String doGetRequest(String url) {
+    private String doGetRequest(String url) {
         sendUserDataToServer request = new sendUserDataToServer();
         String data = "";
         try {

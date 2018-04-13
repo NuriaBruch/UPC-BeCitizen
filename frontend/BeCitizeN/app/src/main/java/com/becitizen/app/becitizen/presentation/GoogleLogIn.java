@@ -21,12 +21,9 @@ public class GoogleLogIn {
     public GoogleLogIn() {}
 
     /**
-     * Configure sign-in to request the user's ID, email address, and basic
-     * profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-     * Request only the user's ID token, which can be used to identify the
-     * user securely to your backend.
+     * Configurar la sign-in request para pedir el user token id.
      *
-     * @param  activity the activity from which the login is used
+     * @param  activity la actividad donde se utiliza el login
      */
     public void configure(Activity activity) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -39,37 +36,27 @@ public class GoogleLogIn {
     }
 
     /**
-     * Check for existing Google Sign In account, if the user is already signed in
-     * the GoogleSignInAccount will be non-null.
+     * Abrir ventana de sign-in con Google
      *
-     * @param  activity the activity from which the login is used
-     */
-    public void start(Activity activity) {
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(activity);
-        //updateUI(account);
-    }
-
-    /**
-     * Start SignIn screen to get a result.
-     *
-     * @param  activity the activity from which the login is used
+     * @param  activity la actividad donde se utiliza el login
      */
     public void signIn(Activity activity) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    public LoginResponse onResult(MainActivity activity, Intent data) {
+    /**
+     * Procesa el resultado del login.
+     *
+     * @param  data los datos resultantes del intent de login
+     */
+    public LoginResponse onResult(Intent data) {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        return handleSignInResult(task, activity);
-    }
-
-    private LoginResponse handleSignInResult(Task<GoogleSignInAccount> completedTask, MainActivity activity) {
         GoogleSignInAccount account = null;
         try {
-            account = completedTask.getResult(ApiException.class);
+            account = task.getResult(ApiException.class);
         } catch (ApiException e) {
             return LoginResponse.ERROR;
         }

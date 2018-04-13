@@ -59,12 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        googleLogIn.start(this);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.sign_in_button:
@@ -80,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case GoogleLogIn.RC_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-                handleExternalLoginResult(googleLogIn.onResult(this, data));
+                handleExternalLoginResult(googleLogIn.onResult(data));
                 break;
             case 64206:
                 //Facebook
