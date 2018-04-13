@@ -79,7 +79,7 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 int m = month + 1; // starts with 0
                 String formattedDay = (dayOfMonth < 10)? "0" + String.valueOf(dayOfMonth):String.valueOf(dayOfMonth);
-                String formattedMonth = (month < 10)? "0" + String.valueOf(month):String.valueOf(month);
+                String formattedMonth = (m < 10)? "0" + String.valueOf(m):String.valueOf(m);
                 birthDateInput.setText(formattedDay + "/" + formattedMonth + "/" + year);
 
             }
