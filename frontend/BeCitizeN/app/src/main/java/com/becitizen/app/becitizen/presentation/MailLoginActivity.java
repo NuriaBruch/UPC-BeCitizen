@@ -37,9 +37,9 @@ public class MailLoginActivity extends AppCompatActivity {
         if (!validateEmail()) return;
         if (!validatePassw()) return;
 
-        int i = controllerUserPresentation.checkCredentials(tietMail.getText().toString(), tietPassw.getText().toString());
+        boolean i = controllerUserPresentation.checkCredentials(tietMail.getText().toString(), tietPassw.getText().toString());
 
-        if(i == 0) {
+        if(i) {
             Intent intent = new Intent(this, InsideActivity.class);
             startActivity(intent);
         }

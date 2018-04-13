@@ -33,6 +33,7 @@ public class ControllerUserData {
     private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
     private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
     private static final String URI_REGISTER = "http://becitizen.cf/register";
+    private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
 
     private static ControllerUserData instance = null;
 
@@ -135,6 +136,16 @@ public class ControllerUserData {
             return false;
         }
 
+    }
+
+    public boolean checkCredentials(String email, String password) {
+        try {
+            JSONObject info = new JSONObject(doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password));
+            return info.get("status").equals("Ok");
+
+        } catch (JSONException e) {
+            return false;
+        }
     }
 
     /**

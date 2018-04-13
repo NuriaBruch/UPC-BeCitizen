@@ -38,8 +38,8 @@ public class ControllerUserPresentation {
         return controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
     }
 
-    public int checkCredentials(String email, String password) {
-        return 0;
+    public boolean checkCredentials(String email, String password) {
+        return controllerUserDomain.checkCredentials(email,password);
     }
 
     public LoginResponse facebookLogin() {

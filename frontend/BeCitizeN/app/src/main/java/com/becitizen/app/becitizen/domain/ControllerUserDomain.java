@@ -179,4 +179,8 @@ public class ControllerUserDomain {
             e.printStackTrace();
         }
     }
+
+    public boolean checkCredentials(String email, String password) {
+        return controllerUserData.checkCredentials(email,password);
+    }
 }
