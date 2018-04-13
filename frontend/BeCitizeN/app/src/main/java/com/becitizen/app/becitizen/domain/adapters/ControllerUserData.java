@@ -8,16 +8,21 @@ import com.facebook.AccessToken;
 import com.facebook.FacebookException;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.ContentValues.TAG;
@@ -117,23 +122,12 @@ public class ControllerUserData {
      */
     public boolean registerData(String email, String password, String username, String firstName,
                             String lastName, String birthDate, String country, boolean facebook, boolean google) {
-        String uri = URI_REGISTER;
-        uri += "?username=" + username;
-        uri += "&password=" + password;
-        uri += "&email=" + email;
-        uri += "&name=" + firstName;
-        uri += "&surname=" + lastName;
-        uri += "&birthday=" + birthDate;
-        uri += "&country=" + country;
-        uri += "&facebook=" + facebook;
-        uri += "&google=" + google;
 
-
-        /* DESCOMENTAR I ACABAR QUAN FUNCIONI
+        String[] dataRequest = {URI_REGISTER, username, password, email, firstName, lastName, birthDate, country, String.valueOf(facebook), String.valueOf(google)};
         try {
-            JSONObject info = new JSONObject(doPostRequest(uri));
+            JSONObject info = new JSONObject(doPostRequest(dataRequest));
             if (info.get("status").equals("Ok")) {
-                if (info.get("".equals(""))) return true;
+               return true;
             }
             return false;
         }
@@ -141,9 +135,6 @@ public class ControllerUserData {
             return false;
         }
 
-        */
-
-        return false;
     }
 
     /**
@@ -157,6 +148,17 @@ public class ControllerUserData {
         String data = "";
         try {
             data = request.execute(new String[]{url}).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    public String doPostRequest(String[] dataRequest) {
+        PostTask request = new PostTask();
+        String data = "";
+        try {
+            data = request.execute(dataRequest).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -191,33 +193,32 @@ public class ControllerUserData {
         }
     }
 
-    /* INTENT DE POST
-
-    public String doPostRequest(String url) {
-        sendUserDataToServer request = new sendUserDataToServer();
-        String data = "";
-        try {
-            data = request.execute(new String[]{url}).post();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
-    private class sendPostToServer extends AsyncTask<String, Void, String> {
-
+    private class PostTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... data) {
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(data[0]);
+            // Create a new HttpClient and Post Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(data[0]);
             String responseBody;
 
             try {
-                HttpResponse response = httpClient.execute(httpPost);
+                //add data
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+                nameValuePairs.add(new BasicNameValuePair("username", data[1]));
+                nameValuePairs.add(new BasicNameValuePair("password", data[2]));
+                nameValuePairs.add(new BasicNameValuePair("email", data[3]));
+                nameValuePairs.add(new BasicNameValuePair("name", data[4]));
+                nameValuePairs.add(new BasicNameValuePair("surname", data[5]));
+                nameValuePairs.add(new BasicNameValuePair("birthday", data[6]));
+                nameValuePairs.add(new BasicNameValuePair("country", data[7]));
+                nameValuePairs.add(new BasicNameValuePair("facebook", data[8]));
+                nameValuePairs.add(new BasicNameValuePair("google", data[9]));
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                //execute http post
+                HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-                Log.w("Result", "Signed in as: " + responseBody);
+
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
@@ -227,5 +228,6 @@ public class ControllerUserData {
             }
             return responseBody;
         }
-    }*/
+    }
+
 }
