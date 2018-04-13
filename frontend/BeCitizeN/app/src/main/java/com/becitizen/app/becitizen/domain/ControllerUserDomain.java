@@ -47,8 +47,15 @@ public class ControllerUserDomain {
         currentUser.setBirthDate(birthDate);
         currentUser.setCountry(country);
 
-        return controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
+        boolean result = controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
                 firstName, lastName, birthDate, country, currentUser.isFacebook(), currentUser.isGoogle());
+        try {
+            if (result)
+                doLogin("mail", currentUser.getUsername());
+        } catch (SharedPreferencesException e) {
+            return false;
+        }
+        return result;
     }
 
     public LoginResponse facebookLogin() {
