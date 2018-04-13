@@ -154,6 +154,13 @@ public class ControllerUserData {
         return data;
     }
 
+    /**
+     * Metodo que permite hacer un post a la url indicada con
+     * un objeto formado por los valores en los parametros
+     *
+     * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a postear
+     * @return Respuesta obtenida con el post
+     */
     public String doPostRequest(String[] dataRequest) {
         PostTask request = new PostTask();
         String data = "";
@@ -166,7 +173,7 @@ public class ControllerUserData {
     }
 
     /**
-     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http
+     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http get
      */
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
 
@@ -193,6 +200,9 @@ public class ControllerUserData {
         }
     }
 
+    /**
+     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http post
+     */
     private class PostTask extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... data) {
