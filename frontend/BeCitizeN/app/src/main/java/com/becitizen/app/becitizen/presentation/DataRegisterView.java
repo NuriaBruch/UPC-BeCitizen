@@ -26,9 +26,9 @@ import java.util.Locale;
 public class DataRegisterView extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText birthDateInput;
     TextInputEditText usernameInput;
+    TextInputEditText firstNameInput;
     TextInputEditText lastNameInput;
     Spinner countryInput;
-    TextInputEditText firstNameInput;
     ControllerUserPresentation controllerUserPresentation;
     Button submitButton;
     Calendar myCalendar = Calendar.getInstance();
@@ -43,8 +43,18 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
 
         controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
 
+        Bundle bundle = controllerUserPresentation.getUserDataRegister();
+
+        usernameInput = findViewById(R.id.usernameInput);
+        firstNameInput = findViewById(R.id.firstNameInput);
+        lastNameInput = findViewById(R.id.lastNameInput);
         birthDateInput = findViewById(R.id.birthDateInput);
-        birthDateInput.setOnClickListener(this);
+            birthDateInput.setOnClickListener(this);
+        countryInput = findViewById(R.id.countrySpinner);
+
+        firstNameInput.setText(bundle.getString("firstName"));
+        lastNameInput.setText(bundle.getString("lastName"));
+        birthDateInput.setText(bundle.getString("birthDate"));
 
         submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(this);
@@ -88,7 +98,7 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        countryInput = findViewById(R.id.countrySpinner);
+
         boolean result = controllerUserPresentation.registerData(
                 usernameInput.getText().toString().trim(),
                 firstNameInput.getText().toString().trim(),
@@ -109,7 +119,6 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateUsername() {
-        usernameInput = findViewById(R.id.usernameInput);
         if (usernameInput.getText().toString().trim().isEmpty()) {
             usernameInput.setError(getString(R.string.errorMsgName));
             requestFocus(usernameInput);
@@ -123,7 +132,6 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateFirstName() {
-        firstNameInput = findViewById(R.id.firstNameInput);
         if (firstNameInput.getText().toString().trim().isEmpty()) {
             firstNameInput.setError(getString(R.string.errorMsgName));
             requestFocus(firstNameInput);
@@ -137,7 +145,6 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateLastName() {
-        lastNameInput = findViewById(R.id.lastNameInput);
         if (lastNameInput.getText().toString().trim().isEmpty()) {
             lastNameInput.setError(getString(R.string.errorMsgName));
             requestFocus(lastNameInput);
@@ -151,7 +158,6 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean validateBirthDate() {
-        birthDateInput = findViewById(R.id.birthDateInput);
         String date = birthDateInput.getText().toString().trim();
         String yearString = date.substring(6);
         if (date.isEmpty()) {
