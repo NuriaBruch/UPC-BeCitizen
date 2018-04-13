@@ -1,5 +1,5 @@
-const APP_ID = "1386882294791151"; //"230715197485988";
-const APP_SECRET = "d05d76e60a6abaa2dc862accf94e9197";//"52e3445c32ff62dc31514a6a14e73803";
+const APP_ID = "1386882294791151"; 
+const APP_SECRET = "d05d76e60a6abaa2dc862accf94e9197";
 var request = require("request");
 
 
@@ -96,12 +96,11 @@ module.exports = {
                                         
                                         if(userInfo.birthday != undefined){
                                             var birthday = UtilsService.getFormattedBirthday(userInfo.birthday);
+                                            response.info.birthday = birthday;
                                         }
                                         var JsonName = UtilsService.getUserName(userInfo.name);
                                         response.info.name = JsonName.name;
                                         response.info.surname = JsonName.surname;
-                                        response.info.email = userInfo.email;
-                                        response.info.birthday = birthday;
                                         response.loggedIn = "false";
                                     }
                                     callback(response);

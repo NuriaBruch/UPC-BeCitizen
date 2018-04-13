@@ -25,7 +25,7 @@ module.exports = class GestionUser {
                     surname: surname,
                     birthday: birthday,
                     country: country,
-                    hasFace: hasFace,
+                    hasFacebook: hasFace,
                     hasGoogle: hasGoogle
                 }).exec(function(err2, newUser){
                     if(err2 !== undefined && err2){
