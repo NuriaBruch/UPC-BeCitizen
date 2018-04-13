@@ -21,16 +21,26 @@ public class ControllerUserDomain {
 
     private String PREFS_KEY = "myPreferences";
 
+    /**
+     * Constructora por defecto para evitar que sea instanciado
+     *
+     **/
     private ControllerUserDomain() {
         controllerUserData = ControllerUserData.getInstance();
         currentUser = null;
     }
 
+    /**
+     * Metodo para obtener la instancia del singleton
+     *
+     * @return La instancia de ControllerUserDomain
+     */
     public static ControllerUserDomain getUniqueInstance() {
         if (uniqueInstance == null)
             uniqueInstance = new ControllerUserDomain();
         return uniqueInstance;
     }
+
 
     public boolean existsMail(String mail) {
         return controllerUserData.existsMail(mail);
