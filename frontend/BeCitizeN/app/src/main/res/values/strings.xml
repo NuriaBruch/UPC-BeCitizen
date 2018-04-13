@@ -13,6 +13,8 @@
     <string name="youAreIn">You are in!</string>
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
+    <string name="errorIncorrEmail">Incorrect email</string>
+    <string name="errorIncorrPassw">Incorrect password</string>
 
     <string name="enter">Enter</string>
     <string name="logInGoogle">Google</string>

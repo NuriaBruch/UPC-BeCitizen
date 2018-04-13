@@ -37,14 +37,26 @@ public class MailLoginActivity extends AppCompatActivity {
         if (!validateEmail()) return;
         if (!validatePassw()) return;
 
-        boolean i = controllerUserPresentation.checkCredentials(tietMail.getText().toString(), tietPassw.getText().toString());
+        String email = tietMail.getText().toString().trim();
+        boolean i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
 
         if(i) {
             Intent intent = new Intent(this, InsideActivity.class);
             startActivity(intent);
         }
 
-        //Aqui els possibles errors
+        else {
+            if (controllerUserPresentation.existsMail(email)) {
+                tietPassw.setError(getString(R.string.errorIncorrPassw));
+                requestFocus(tietPassw);
+            }
+
+            else {
+                tietMail.setError(getString(R.string.errorIncorrEmail));
+                requestFocus(tietMail);
+            }
+        }
+
     }
 
     private boolean validateEmail() {
