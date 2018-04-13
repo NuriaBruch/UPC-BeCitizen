@@ -53,6 +53,7 @@ public class ControllerUserDomain {
             if (result)
                 doLogin("mail", currentUser.getUsername());
         } catch (SharedPreferencesException e) {
+            // TODO gestionar errors.
             return false;
         }
         return result;
@@ -81,15 +82,15 @@ public class ControllerUserDomain {
             return LoginResponse.REGISTER;
         }
         catch (Exception e) {
+            // TODO gestionar errors.
             Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;
         }
     }
 
     public LoginResponse googleLogin(GoogleSignInAccount account) {
-        // TODO: poner uri en controller
         try {
-            JSONObject response = new JSONObject(controllerUserData.doGetRequest("http://becitizen.cf/loginGoogle?idToken=" + account.getIdToken()));
+            JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
 
             if (response.get("status").equals("Ok")) {
                 JSONObject info = response.getJSONObject("info");
@@ -108,6 +109,7 @@ public class ControllerUserDomain {
                     return LoginResponse.LOGGED_IN;
                 }
             } else {
+                // TODO gestionar errors.
                 return LoginResponse.ERROR;
             }
             //mGoogleSignInClient.signOut();
