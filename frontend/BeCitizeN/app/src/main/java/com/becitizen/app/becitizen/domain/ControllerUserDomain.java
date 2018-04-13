@@ -41,15 +41,36 @@ public class ControllerUserDomain {
         return uniqueInstance;
     }
 
-
+    /**
+     * Retorna si un email ya esta registrado en nuestro servidor
+     *
+     * @param mail Email a comprovar
+     * @return True si el email esta en el servidor, false de lo contrario
+     */
     public boolean existsMail(String mail) {
         return controllerUserData.existsMail(mail);
     }
 
+    /**
+     * Crea un usuario con el email y contrasena recibidos
+     *
+     * @param mail Email
+     * @param password Contrasena
+     */
     public void createUser (String mail, String password) {
         currentUser = new User (mail, password);
     }
 
+    /**
+     * Registra un usuario con los parametros pasados
+     *
+     * @param username Nombre de usuario
+     * @param firstName Nombre
+     * @param lastName Apellido
+     * @param birthDate Fecha de nacimiento
+     * @param country Pais
+     * @return False si ha ocurrido algun error, true de lo contrario
+     */
     public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
@@ -69,6 +90,11 @@ public class ControllerUserDomain {
         return result;
     }
 
+    /**
+     * Metodo que identifica un usuario en nuestro servidor con Facebook
+     *
+     * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
+     */
     public LoginResponse facebookLogin() {
 
         JSONObject json = null;
@@ -98,6 +124,12 @@ public class ControllerUserDomain {
         }
     }
 
+    /**
+     * Metodo que identifica un usuario en nuestro servidor con Google
+     *
+     * @param account Cuenta de Google que identifica al usuario
+     * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
+     */
     public LoginResponse googleLogin(GoogleSignInAccount account) {
         try {
             JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
@@ -131,6 +163,12 @@ public class ControllerUserDomain {
         }
     }
 
+    /**
+     * Retorna los datos obtenidos de Google o Facebook
+     * si los hay
+     *
+     * @return Bundle que contiene los datos para el formulario de registro
+     */
     public Bundle getUserDataRegister() {
         Bundle bundle = new Bundle();
         bundle.putString("firstName", currentUser.getFirstName());
@@ -139,11 +177,23 @@ public class ControllerUserDomain {
         return bundle;
     }
 
+    /**
+     * Determina si hay algun usuario identificado
+     *
+     * @return True si el usuario esta identificado, false de lo contrario
+     * @throws SharedPreferencesException Si MySharedPreferences no se ha inicializado
+     */
     public boolean isLogged() throws SharedPreferencesException {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         return preferences.getValue(PREFS_KEY, "isLogged").equals("true");
     }
 
+    /**
+     * Devuelve el usuario identificado
+     *
+     * @return "guest" si se ha identificado como invitado o el username si se ha identificado con email, Google o Facebook
+     * @throws SharedPreferencesException Si MySharedPreferences no se ha inicializado
+     */
     public String getLoggedUser() throws SharedPreferencesException {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         JSONObject json = new JSONObject();
@@ -164,6 +214,14 @@ public class ControllerUserDomain {
         return json.toString();
     }
 
+    /**
+     * Guarda en MySharedPreferences que el usuario esta identificado,
+     * el modo como se ha identificado y el nombre de usuario.
+     *
+     * @param mode Modo de identificacion: facebook, google, guest, mail
+     * @param userName Nombre de usuario
+     * @throws SharedPreferencesException Si MySharedPreferences no se ha inicializado
+     */
     private void doLogin(String mode, String userName) throws SharedPreferencesException {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "true");
@@ -171,11 +229,20 @@ public class ControllerUserDomain {
         if(!mode.equals("guest")) preferences.saveValue(PREFS_KEY, "userName", userName);
     }
 
+    /**
+     * Guarda en MySharedPreferences que el usuario no esta identificado.
+     *
+     * @throws SharedPreferencesException Si MySharedPreferences no se ha inicializado
+     */
     private void doLogout() throws SharedPreferencesException {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "false");
     }
 
+    /**
+     * Guarda en MySharedPreferences que el usuario no esta identificado.
+     *
+     */
     public void logout() {
         try {
             doLogout();
@@ -184,6 +251,10 @@ public class ControllerUserDomain {
         }
     }
 
+    /**
+     * Metodo que identifica un usuario como invitado
+     *
+     */
     public void guestLogin() {
         try {
             doLogin("guest", "");
@@ -192,6 +263,19 @@ public class ControllerUserDomain {
         }
     }
 
+    /**
+     *
+     *
+     * @param email
+     * @return
+     */
+    /**
+     * Retorna si un par {email, password} ya esta registrado en nuestro servidor
+     *
+     * @param email Email a comprobar
+     * @param password Contrasena a comprobar
+     * @return True si el par {email, password} esta en el servidor, false de lo contrario
+     */
     public boolean checkCredentials(String email, String password) {
         try {
             JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
