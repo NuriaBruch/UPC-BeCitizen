@@ -31,6 +31,8 @@ public class ControllerUserData {
 
     //URIs
     private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
+    private static final String URI_GOOGLE_LOGIN = "http://becitizen.cf/loginGoogle?idToken=";
+
     private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
     private static final String URI_REGISTER = "http://becitizen.cf/register";
     private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
@@ -85,6 +87,10 @@ public class ControllerUserData {
             Log.d("Server", response);
             throw new ServerException("The server has not returned the expected JSONObject. \n");
         }
+    }
+
+    public String googleLogin(String token) {
+        return doGetRequest(URI_GOOGLE_LOGIN + token);
     }
 
     /**
