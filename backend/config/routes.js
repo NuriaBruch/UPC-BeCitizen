@@ -55,6 +55,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'existsEmail'
   },
+  'GET /somethingImportant': {
+    controller: 'UserController',
+    action :'somethingImportant'
+  }
 
 
   /***************************************************************************

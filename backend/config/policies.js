@@ -30,6 +30,9 @@ module.exports.policies = {
   /*UserController: {
     changePass: 'sessionAuth'
   }*/
+  UserController: {
+    somethingImportant: 'tokenAuth'
+  }
 
   /***************************************************************************
   *                                                                          *

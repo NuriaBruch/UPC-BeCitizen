@@ -26,10 +26,18 @@ module.exports = {
         var mailAuth = new MailAuth();
         mailAuth.login(id, password, function(status){
             if(status.status === 'Ok') {
+                /*jwt.sign("")
                 req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                req.session.userEmail = status.info.email;*/
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ foo: 'bar' }, "bienquesito", function(err, token) {
+                    //console.log(err);
+                    //console.log(token);
+                    status.info["token"] = token;
+                    res.send(status);
+                });
             }
-            res.send(status);
+            else res.send(status);
         });
     },
     loginGoogle: function(req,res){
@@ -61,6 +69,10 @@ module.exports = {
         gestionUser.checkMail(email,function(status){
             res.send(status);
         });
+    },
+
+    somethingImportant: function(req, res){
+        res.send("POLEEE");
     }
 };
 
