@@ -61,6 +61,14 @@ module.exports = {
         gestionUser.checkMail(email,function(status){
             res.send(status);
         });
+    },
+
+    deactivateAccount: function(req,res){
+        var username = req.body.username;
+        var gestionUser = new GestionUser();
+        gestionUser.deactivateAccount(username,function(status){
+            res.send(status);
+        });
     }
 };
 

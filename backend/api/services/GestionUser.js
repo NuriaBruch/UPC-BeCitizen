@@ -55,4 +55,17 @@ module.exports = class GestionUser {
             callback(response);
         }); 
     }; 
+    deactivate(username,callback0){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        User.update({username:username},{deactivated:true}).exec(function(err1,userFound){
+            if(err1 !== undefined && err1){
+                response.status = "Error";
+                response.errors.push("Server error");
+            }
+            callback(response);
+        });
+    };
 };

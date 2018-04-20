@@ -55,6 +55,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'existsEmail'
   },
+  'PUT /deactivateAccount': {
+    controller: 'UserController',
+    action: 'deactivateAccount'
+  }
 
 
   /***************************************************************************

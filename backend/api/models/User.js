@@ -42,7 +42,7 @@ module.exports = {
       defaultsTo: 'coal'
     },
     profilePicture:{
-      type: 'string'
+      type: 'integer'
     },
     hasFacebook:{
       type:'boolean',
@@ -51,6 +51,14 @@ module.exports = {
     hasGoogle:{
       type: 'boolean',
       defaultsTo: false
+    },
+    deactivated:{
+      type: 'boolean',
+      defaultsTo: false
+    },
+    karma:{
+      type: 'integer',
+      defaultsTo: 0
     }
   }
 };
