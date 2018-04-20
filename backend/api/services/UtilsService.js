@@ -23,9 +23,12 @@ getUserName: function(name){
 getFormattedBirthday: function(birthday){
     var result = birthday.split("/", 3);
     return result[1]+"/"+result[0]+"/"+result[2];
+},
+
+update_deactivated: function(userFound, callback){
+    User.update({email:userFound.email},{deactivated:false}).exec(function(err1,userFound){
+        callback(err1);
+    });
 }
-
-
-
 
 }

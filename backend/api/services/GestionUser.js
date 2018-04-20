@@ -55,7 +55,7 @@ module.exports = class GestionUser {
             callback(response);
         }); 
     }; 
-    deactivate(username,callback0){
+    deactivate(username,callback){
         var response = {
             status: "Ok",
             errors: []

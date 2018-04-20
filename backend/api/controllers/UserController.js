@@ -66,7 +66,7 @@ module.exports = {
     deactivateAccount: function(req,res){
         var username = req.body.username;
         var gestionUser = new GestionUser();
-        gestionUser.deactivateAccount(username,function(status){
+        gestionUser.deactivate(username,function(status){
             res.send(status);
         });
     }

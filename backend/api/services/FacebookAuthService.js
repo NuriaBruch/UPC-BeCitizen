@@ -87,6 +87,16 @@ module.exports = {
                                         response.info.birthday = userFound.birthday;
                                         response.info.country = userFound.country;
                                         response.info.rank = userFound.rank;
+
+                                        if(userFound.deactivated){
+                                            UtilsService.update_deactivated(userFound,function(err1){
+                                                if(err1 !== undefined && err1) {
+                                                    response.status = "E1";
+                                                    response.errors.push(err1);
+                                                    callback(response);
+                                                }
+                                            })
+                                        }
                                         if(!userFound.hasFacebook){
                                             User.update({email:userFound.email}).set({hasFacebook:true});
                                         }
