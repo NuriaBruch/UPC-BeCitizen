@@ -59,6 +59,10 @@ module.exports = {
     karma:{
       type: 'integer',
       defaultsTo: 0
+    },
+    posts: {
+      collection: 'thread',
+      via: 'id'
     }
   }
 };

@@ -58,6 +58,14 @@ module.exports.routes = {
   'PUT /deactivateAccount': {
     controller: 'UserController',
     action: 'deactivateAccount'
+  },
+  'GET /categories':{
+    controller: 'ThreadController',
+    action: 'getAllCategories'
+  },
+  'POST /newThread':{
+    controller: 'ThreadController',
+    action: 'createThread'
   }
 
 
