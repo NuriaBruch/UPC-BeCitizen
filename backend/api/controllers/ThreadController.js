@@ -25,6 +25,20 @@ module.exports = {
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
         })
+    },
+
+    deleteThread: function(req,res){
+        var id = req.query.threadId;
+        ThreadService.deleteThread(id,function(status){
+            res.send(status);
+        });
+    },
+
+    reportThread: function(req,res){
+        var id = req.query.threadId;
+        ThreadService.reportThread(id,function(status){
+            res.send(status);
+        });
     }
 };
 

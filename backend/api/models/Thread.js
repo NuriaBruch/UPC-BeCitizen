@@ -28,6 +28,10 @@ module.exports = {
     numberReports:{
       type: 'integer',
       defaultsTo: 0
+    },
+    numberVotes:{
+      type: 'integer',
+      defaultsTo: 0
     }
   }
 

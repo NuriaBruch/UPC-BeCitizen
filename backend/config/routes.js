@@ -66,6 +66,14 @@ module.exports.routes = {
   'POST /newThread':{
     controller: 'ThreadController',
     action: 'createThread'
+  },
+  'DELETE /deleteThread':{
+    controller: 'ThreadController',
+    action: 'deleteThread'
+  },
+  'PUT /reportThread':{
+    controller: 'ThreadController',
+    action: 'reportThread'
   }
 
 
