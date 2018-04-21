@@ -22,7 +22,6 @@
     "grunt-sails-linker": "~0.10.1",
     "grunt-sync": "0.5.2",
     "include-all": "^1.0.0",
-    "jose-jwe-jws": "^0.1.6",
     "jsonwebtoken": "^8.2.1",
     "npm": "^5.8.0",
     "random-string": "^0.2.0",

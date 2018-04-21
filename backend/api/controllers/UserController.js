@@ -27,7 +27,7 @@ module.exports = {
         mailAuth.login(id, password, function(status){
             if(status.status === 'Ok') {
                 var jwt = require('jsonwebtoken');
-                jwt.sign({ foo: 'bar' }, "bienquesito", function(err, token) {
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
                     res.set("token", token);
                     res.send(status);
                 });
@@ -68,7 +68,7 @@ module.exports = {
     },
 
     somethingImportant: function(req, res){
-        res.send("POLEEE");
+        res.send(UtilsService.getEmailFromHeader(req));
     }
 };
 

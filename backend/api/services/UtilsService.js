@@ -1,4 +1,5 @@
 
+var jw = require('jsonwebtoken');
 module.exports = {
 
 getRandomString: function (){
@@ -23,9 +24,8 @@ getUserName: function(name){
 getFormattedBirthday: function(birthday){
     var result = birthday.split("/", 3);
     return result[1]+"/"+result[0]+"/"+result[2];
-}
+},
 
-
-
+getEmailFromHeader: (req) => jw.decode(req.get("token")).email
 
 }
