@@ -20,7 +20,8 @@ module.exports = {
     },
 
     createThread: function(req,res){
-        var {userMail, title, content, category} = req.body;
+        var userMail = UtilsService.getEmailFromHeader(req);
+        var {title, content, category} = req.body;
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
         })

@@ -12,6 +12,7 @@ module.exports = class GestionUser {
 
         bcrypt.hash(pass, saltRounds, function(err1, hash) {
             if(err1 !== undefined && err1) {
+                sails.log(err1);
                 response.status = "E1";
                 response.errors.push("Server error");
                 callback(response);
