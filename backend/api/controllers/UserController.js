@@ -26,16 +26,12 @@ module.exports = {
         var mailAuth = new MailAuth();
         mailAuth.login(id, password, function(status){
             if(status.status === 'Ok') {
-                /*jwt.sign("")
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;*/
                 var jwt = require('jsonwebtoken');
                 jwt.sign({ foo: 'bar' }, "bienquesito", function(err, token) {
-                    //console.log(err);
-                    //console.log(token);
-                    status.info["token"] = token;
+                    res.set("token", token);
                     res.send(status);
                 });
+
             }
             else res.send(status);
         });

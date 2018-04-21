@@ -9,18 +9,15 @@
  */
 module.exports = function(req, res, next) {
 
-    // User is allowed, proceed to the next policy, 
-    // or if this is the last policy, the controller
-    //if (req.session.authenticated) {
-      //return next();
-    //}
     var jwt = require('jsonwebtoken');
-    jwt.verify(req.query.token, 'bienquesito', function(err, decoded) {
+    var token = req.get("token");
+    jwt.verify(token, 'bienquesito', function(err, decoded) {
         if(err !== undefined && err) return res.send({
             status: "Error",
             errors: ["User not logged in"]
         });
         else next();
     });
-  };
+
+};
   
