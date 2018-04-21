@@ -21,6 +21,13 @@ module.exports = {
       enum: [ "culture", "Education y formation",
         "emergencies", "language", "justice", "public administration", "housing",
         "health", "work", "tourism", "off topic"],
+    },
+    postedBy:{
+      model: 'user'
+    },
+    numberReports:{
+      type: 'integer',
+      defaultsTo: 0
     }
   }
 

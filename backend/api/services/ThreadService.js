@@ -6,7 +6,7 @@ module.exports = {
             status: "Ok",
             errors: []
          };
-         sails.log(userMail);
+
         Thread.create({
             title: title,
             content:content,
@@ -17,6 +17,10 @@ module.exports = {
                 sails.log(newThread);
                 response.status = "E2";
                 response.errors.push(err2);
+            }
+            else{
+                //aqui hay que actualizar el carma del usuario pero de momento
+                //no se puede hacer por culpa de la foreign key
             }
             callback(response);
         })}
