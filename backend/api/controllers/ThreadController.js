@@ -1,0 +1,29 @@
+/**
+ * ThreadController
+ *
+ * @description :: Server-side logic for managing Threads
+ * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
+ */
+
+module.exports = {
+    
+    getAllCategories: function(req,res){
+        var response = {
+            status: "Ok",
+            errors: [],
+            categories: [ "culture", "education y formation",
+        "emergencies", "language", "justice", "public administration", "housing",
+        "health", "work", "tourism", "off topic"]
+        }
+
+        res.send(response);
+    },
+
+    createThread: function(req,res){
+        var {userMail, title, content, category} = req.body;
+        ThreadService.createThread(userMail,title,content,category,function(status){
+            res.send(status);
+        })
+    }
+};
+

@@ -55,9 +55,17 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'existsEmail'
   },
-  'GET /somethingImportant': {
+  'PUT /deactivateAccount': {
     controller: 'UserController',
-    action :'somethingImportant'
+    action: 'deactivateAccount'
+  },
+  'GET /categories':{
+    controller: 'ThreadController',
+    action: 'getAllCategories'
+  },
+  'POST /newThread':{
+    controller: 'ThreadController',
+    action: 'createThread'
   }
 
 

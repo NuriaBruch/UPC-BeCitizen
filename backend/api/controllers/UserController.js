@@ -67,8 +67,12 @@ module.exports = {
         });
     },
 
-    somethingImportant: function(req, res){
-        res.send(UtilsService.getEmailFromHeader(req));
+    deactivateAccount: function(req,res){
+        var username = req.body.username;
+        var gestionUser = new GestionUser();
+        gestionUser.deactivate(username,function(status){
+            res.send(status);
+        });
     }
 };
 

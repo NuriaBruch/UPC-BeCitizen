@@ -24,6 +24,7 @@
 
     <string name="signUpTitle">Sign up</string>
     <string name="enterEmail">Enter your email</string>
+    <string name="enterEmailUsername">Enter your email or username</string>
     <string name="enterPassw">Enter your password</string>
     <string name="repeatPassw">Repeat your password</string>
     <string name="Accept">Accept</string>
