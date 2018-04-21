@@ -11,7 +11,7 @@ module.exports = {
             title: title,
             content:content,
             category:category,
-            createdBy: userMail
+            postedBy: userMail
         }).exec(function(err2, newThread){
             if(err2 !== undefined && err2){
                 sails.log(newThread);

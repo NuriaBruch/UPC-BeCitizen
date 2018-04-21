@@ -62,7 +62,7 @@ module.exports = {
     },
     posts: {
       collection: 'thread',
-      via: 'id'
+      via: 'postedBy'
     }
   }
 };
