@@ -41,8 +41,11 @@ module.exports = {
         var accessToken = req.param('idToken');
         googleAuth.loginViaGoogle(accessToken, function(status){
             if(status.status === 'Ok') {
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
+                    res.set("token", token);
+                    res.send(status);
+                });
             }
             res.send(status);
         });
@@ -52,8 +55,11 @@ module.exports = {
         var accessToken = req.param('accessToken');
         FacebookAuthService.loginFace(accessToken, function(status){
             if(status.status === 'Ok') {
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
+                    res.set("token", token);
+                    res.send(status);
+                });
             }
             res.send(status);
         });
