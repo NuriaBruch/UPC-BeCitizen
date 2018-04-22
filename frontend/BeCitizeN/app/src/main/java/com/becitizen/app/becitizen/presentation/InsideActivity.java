@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.MySharedPreferences;
 
 public class InsideActivity extends Fragment {
 
