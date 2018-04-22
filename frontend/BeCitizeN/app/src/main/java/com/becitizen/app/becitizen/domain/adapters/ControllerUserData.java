@@ -111,7 +111,22 @@ public class ControllerUserData {
     public boolean registerData(String email, String password, String username, String firstName,
                             String lastName, String birthDate, String country, boolean facebook, boolean google) {
 
-        String[] dataRequest = {URI_REGISTER, username, password, email, firstName, lastName, birthDate, country, String.valueOf(facebook), String.valueOf(google)};
+        JSONObject json = new JSONObject();
+        try {
+            json.put("username", username);
+            json.put("password", password);
+            json.put("email", email);
+            json.put("firstName", firstName);
+            json.put("lastName", lastName);
+            json.put("birthDate", birthDate);
+            json.put("country", country);
+            json.put("facebook", String.valueOf(facebook));
+            json.put("google", String.valueOf(google));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String[] dataRequest = {URI_REGISTER, json.toString()};
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
             if (info.get("status").equals("Ok")) {

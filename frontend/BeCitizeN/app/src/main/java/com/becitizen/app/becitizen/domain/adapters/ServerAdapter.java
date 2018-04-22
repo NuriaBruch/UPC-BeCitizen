@@ -4,19 +4,15 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.ContentValues.TAG;
@@ -100,6 +96,14 @@ public class ServerAdapter {
      * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http post
      */
     private class PostTask extends AsyncTask<String, String, String> {
+
+        /**
+         * Metodo para hacer un post en segundo plano a la url de data[0] con el contenido
+         * que hay en data[1]
+         *
+         * @param data Array de strings que contiene en data[0] la url y en data[1] la entity que se va a usar en el post
+         * @return
+         */
         @Override
         protected String doInBackground(String... data) {
             // Create a new HttpClient and Post Header
@@ -107,19 +111,12 @@ public class ServerAdapter {
             HttpPost httppost = new HttpPost(data[0]);
             String responseBody;
 
+            String json = data[1];
+
             try {
                 //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("username", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("password", data[2]));
-                nameValuePairs.add(new BasicNameValuePair("email", data[3]));
-                nameValuePairs.add(new BasicNameValuePair("name", data[4]));
-                nameValuePairs.add(new BasicNameValuePair("surname", data[5]));
-                nameValuePairs.add(new BasicNameValuePair("birthday", data[6]));
-                nameValuePairs.add(new BasicNameValuePair("country", data[7]));
-                nameValuePairs.add(new BasicNameValuePair("facebook", data[8]));
-                nameValuePairs.add(new BasicNameValuePair("google", data[9]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                StringEntity entity = new StringEntity(json);
+                httppost.setEntity(entity);
                 //execute http post
                 HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();
