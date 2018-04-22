@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +26,6 @@ public class InsideActivity extends Fragment {
 
         rootView = inflater.inflate(R.layout.activity_inside, container, false);
 
-        MySharedPreferences.init(rootView.getContext());
-
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
             else {
@@ -39,17 +38,18 @@ public class InsideActivity extends Fragment {
             e.printStackTrace();
             goToLogin();
         }
-        return rootView;
-    }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.logoutButton:
+        final Button logoutButton = (Button) rootView.findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 ControllerUserPresentation.getUniqueInstance().logout();
                 showToast(getResources().getString(R.string.logout));
                 goToLogin();
-                break;
-        }
+            }
+        });
+
+        return rootView;
     }
 
     private void showToast(String text) {
@@ -57,7 +57,7 @@ public class InsideActivity extends Fragment {
     }
 
     private void goToLogin() {
-        Intent intent = new Intent(rootView.getContext(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }

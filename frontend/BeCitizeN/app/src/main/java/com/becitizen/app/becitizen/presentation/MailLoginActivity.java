@@ -41,7 +41,7 @@ public class MailLoginActivity extends AppCompatActivity {
         boolean i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
 
         if(i) {
-            Intent intent = new Intent(this, InsideActivity.class);
+            Intent intent = new Intent(this, SideMenuActivity.class);
             startActivity(intent);
         }
 

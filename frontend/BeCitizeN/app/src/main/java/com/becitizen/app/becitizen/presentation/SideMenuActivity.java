@@ -1,5 +1,6 @@
-package com.becitizen.app.becitizen;
+package com.becitizen.app.becitizen.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-import com.becitizen.app.becitizen.presentation.InsideActivity;
+import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.MySharedPreferences;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,6 +25,16 @@ public class SideMenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_menu);
+
+        //Initialize MySharedPreferences
+        MySharedPreferences.init(this);
+
+        try {
+            if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
+        } catch (Exception e) {
+            e.printStackTrace();
+            goToLogin();
+        }
 
         //Set the fragment initially
         Fragment fragment = new InsideActivity();
@@ -43,6 +57,12 @@ public class SideMenuActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
+    }
+
+    private void goToLogin() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 
     @Override
