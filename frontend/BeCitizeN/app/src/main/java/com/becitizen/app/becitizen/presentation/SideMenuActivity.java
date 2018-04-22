@@ -27,7 +27,7 @@ public class SideMenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_side_menu);
 
         //Initialize MySharedPreferences
-        MySharedPreferences.init(this);
+        ControllerUserPresentation.getUniqueInstance().initializeMySharedPreferences(this);
 
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
