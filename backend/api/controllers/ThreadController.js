@@ -39,6 +39,14 @@ module.exports = {
         ThreadService.reportThread(id,function(status){
             res.send(status);
         });
+    },
+
+    getThread: function(req,res){
+        var id = req.query.threadId;
+        var email = UtilsService.getEmailFromHeather(req);
+        ThreadService.getThread(id,email,function(status){
+            res.send(status);
+        });
     }
 };
 
