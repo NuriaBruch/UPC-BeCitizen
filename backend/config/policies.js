@@ -31,7 +31,9 @@ module.exports.policies = {
     changePass: 'sessionAuth'
   }*/
   ThreadController: {
-    createThread: 'tokenAuth'
+    createThread: 'tokenAuth',
+    deleteThread: 'tokenAuth',
+    reportThread: 'tokenAuth'
   }
 
   /***************************************************************************
