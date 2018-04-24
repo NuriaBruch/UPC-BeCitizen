@@ -73,6 +73,10 @@ module.exports = {
       collection: 'thread',
       via: 'reportedBy',
       dominant: true
+    },
+    reportedComments: {
+      collection: 'comment',
+      via: 'reportingUsers'
     }
   }
 };
