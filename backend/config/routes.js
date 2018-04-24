@@ -74,6 +74,10 @@ module.exports.routes = {
   'PUT /reportThread':{
     controller: 'ThreadController',
     action: 'reportThread'
+  },
+  'put /reportComment': {
+    controller: 'CommentController',
+    action: 'reportComment'
   }
 
 

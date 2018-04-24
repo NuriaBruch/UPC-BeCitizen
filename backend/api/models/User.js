@@ -63,6 +63,10 @@ module.exports = {
     posts: {
       collection: 'thread',
       via: 'postedBy'
+    },
+    reportedComments: {
+      collection: 'comment',
+      via: 'reportingUsers'
     }
   }
 };
