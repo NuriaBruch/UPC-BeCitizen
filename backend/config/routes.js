@@ -59,6 +59,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'deactivateAccount'
   },
+  'PUT /updateProfile':{
+    controller: 'UserController',
+    action: 'updateProfile'
+  },
   'GET /categories':{
     controller: 'ThreadController',
     action: 'getAllCategories'
