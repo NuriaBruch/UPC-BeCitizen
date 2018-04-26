@@ -1,48 +1,72 @@
-function destroyThread(threadId){
-    Thread.destroy({id: threadId}).exec(function(err5){
-        if(err5 !== undefined && err5){
-            return false;
+function destroyThread(threadId,callback){
+    var response = {
+        status: "Ok",
+        errors: []
+     };
+    Thread.destroy({id: threadId}).exec(function(err2){
+        if(err2 !== undefined && err2){
+            response.status = "E2";
+            response.errors.push(err2);
+            callback(response);
         }
-        else return true;
+        else callback(response);
     });
 }
 
-function reportAndEvaluateThread(threadId){
+function reportAndEvaluateThread(threadId,callback){
+    var response = {
+        status: "Ok",
+        errors: []
+     };
     Thread.findOne({id: threadId}).exec(function(err6,threadFound){
         if(err6 !== undefined && err6) {
-            return false;
+            response.status = "E2"
+            response.errors.push(err6);
+            callback(response);
         }
         if(threadFound === undefined){
-            return false;
+            response.status = "E2";
+            response.errors.push("Thread not found");
+            callback(response);
         }
         else{
             threadFound.numberReports = threadFound.numberReports + 1;
-            threadFound.save();
-            if(threadFound.numberReports > 20 && (threadFound.numberReports > threadFound.numberVotes)){
-                return destroyThread(threadId); ;
-            }
-            return false;
+            threadFound.save(function(err){
+                if(err){ 
+                    response.status = "E2"
+                    response.errors.push(err);
+                    callback(response);    
+                 }
+            
+                else {
+                    if(threadFound.numberReports > 20 && (threadFound.numberReports > threadFound.numberVotes)){
+                        return destroyThread(threadId,function(response){
+                            callback(response);
+                        });
+                    }
+                    else callback(response);
+                    
+                }
+            });
         }
     });
 }
 
-function increaseUserKarma(points,mail){
+function increaseUserKarma(points,mail,callback){
     User.findOne({email: mail}).exec(function(err1, userFound){
         if(err1 !== undefined && err1) {
-            return null;
+            callback(null);
         }
         if(userFound === undefined){
-            return null;
+            callback(null);
         }
         else{
             userFound.karma = userFound.karma + points;
             userFound.save();
-            return userFound.karma;
+            callback(userFound.karma);
         }
     });
 }
-
-
 
 module.exports = {
 
@@ -60,41 +84,32 @@ module.exports = {
             if(err2 !== undefined && err2){
                 response.status = "E2";
                 response.errors.push(err2);
+                callback(response);
             }
             else{
-                var result = increaseUserKarma(100,userMail);
-                if(result === null){
-                    response.status = 'E4';
-                    response.errors.push("unable to update user karma");
-                }
-            }
-            callback(response);
+                increaseUserKarma(100,userMail, function(result){
+                    if(result === null){
+                        response.status = 'E2';
+                        response.errors.push("Unable to update user karma");
+                    }
+                });
+                callback(response);
+            }   
         });
     },
-
     deleteThread: function(threadId,callback){
-        var response = {
-            status: "Ok",
-            errors: []
-         };
-         var deleted = destroyThread(threadId);
-         if(deleted){
-            response.status = "E5";
-            response.errors.push(err5);
-         }
-         callback(response);
+         var deleted = destroyThread(threadId,function(response){
+             callback(response);
+         });
     },
     reportThread: function(id,callback){
         var response = {
-            status: "Ok",
+            status: "E1",
             errors: []
          };
-        var evaluation = reportAndEvaluateThread(id);
-        if(evaluation){
-            response.status = "E5";
-            response.errors.push(err5);
-        }
-        callback(response);
+        reportAndEvaluateThread(id, function(response){
+            callback(response);
+        });
     },
 
     getThread: function(id,email,callback){
