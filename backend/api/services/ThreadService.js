@@ -68,8 +68,6 @@ function increaseUserKarma(points,mail,callback){
     });
 }
 
-
-
 module.exports = {
 
     createThread: function(userMail, title, content, category,callback){
