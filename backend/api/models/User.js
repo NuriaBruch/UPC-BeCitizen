@@ -76,7 +76,7 @@ module.exports = {
     },
     reportedComments: {
       collection: 'comment',
-      via: 'reportingUsers'
+      via: 'reportedBy'
     }
   }
 };

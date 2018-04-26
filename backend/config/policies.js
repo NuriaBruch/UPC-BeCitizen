@@ -33,7 +33,14 @@ module.exports.policies = {
   ThreadController: {
     createThread: 'tokenAuth',
     deleteThread: 'tokenAuth',
-    reportThread: 'tokenAuth'
+    reportThread: 'tokenAuth',
+  },
+  CommentController: {
+    reportComment: 'tokenAuth'
+  },
+  UserController: {
+    deactivateAccount: 'tokenAuth',
+    updateProfile: 'tokenAuth'
   }
 
   /***************************************************************************

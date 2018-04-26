@@ -12,7 +12,7 @@ module.exports = {
       type: 'string',
       required: true
     },
-    reportingUsers: {
+    reportedBy: {
       collection: 'user',
       via: 'reportedComments'
     }
