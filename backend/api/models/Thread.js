@@ -18,7 +18,7 @@ module.exports = {
     },
     category: {
       type: 'string',
-      enum: [ "culture", "Education y formation",
+      enum: [ "culture", "education and formation",
         "emergencies", "language", "justice", "public administration", "housing",
         "health", "work", "tourism", "off topic"],
     },

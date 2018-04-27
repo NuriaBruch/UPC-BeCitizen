@@ -34,8 +34,7 @@ public class CategoryThreadActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
-        parentLinearLayout = (LinearLayout) rootView.findViewById(R.id.parent_linear_layout);
-        //for (int i = 0; i < 20; ++i) addThreadRow("Test", "Guillem", "22 mins ago", 3);
+        //parentLinearLayout = (LinearLayout) rootView.findViewById(R.id.parent_linear_layout);
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
@@ -56,10 +55,6 @@ public class CategoryThreadActivity extends Fragment {
         });
 
         return rootView;
-    }
-
-    public void onDelete(View v) {
-        parentLinearLayout.removeView((View) v.getParent());
     }
 
 }

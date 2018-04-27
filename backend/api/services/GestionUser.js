@@ -89,4 +89,46 @@ module.exports = class GestionUser {
                 callback(response); 
             });
     };
+
+    view(username,callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            info: {
+                name: "",
+                surname: "",
+                biography: "",
+                birthday: "",
+                profilePicture: "",
+                country: "",
+                rank: ""
+            }
+        }
+        User.findOne({username:username}).exec(function(err1,userFound){
+            if(err1 !== undefined && err1) {
+                // DB error
+                response.status = "E1";
+                response.errors.push(err1);
+            }
+            else if(userFound === undefined ) {
+                response.status = "E2";
+                response.errors.push("User not found");
+            }
+            else if(userFound.deactivated){
+                response.status = "E3";
+                response.errors.push("User account deactivated");
+            }
+            else{
+                //Status == Ok
+                response.info.name = userFound.name;
+                response.info.surname = userFound.surname;
+                response.info.biography = userFound.biography;
+                response.info.birthday = userFound.birthday;
+                response.info.profilePicture = userFound.profilePicture;
+                response.info.country = userFound.country;
+                response.info.rank = userFound.rank;
+            }
+            callback(response);
+        });
+    }
 };
