@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
@@ -147,5 +148,9 @@ public class ControllerUserPresentation {
      */
     public void guestLogin() {
         controllerUserDomain.guestLogin();
+    }
+
+    public void initializeMySharedPreferences(Context context) {
+        ControllerUserDomain.getUniqueInstance().initializeMySharedPreferences(context);
     }
 }

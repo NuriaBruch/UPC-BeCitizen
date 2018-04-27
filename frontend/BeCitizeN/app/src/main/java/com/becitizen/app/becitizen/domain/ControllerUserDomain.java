@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.domain;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -300,4 +301,7 @@ public class ControllerUserDomain {
         }
     }
 
+    public void initializeMySharedPreferences(Context context) {
+        MySharedPreferences.init(context);
+    }
 }

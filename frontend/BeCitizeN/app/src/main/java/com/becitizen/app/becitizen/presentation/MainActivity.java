@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, DataRegisterView.class));
                 break;
             case LOGGED_IN:
-                Intent intent = new Intent(this, InsideActivity.class);
+                Intent intent = new Intent(this, SideMenuActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void logInGuestMainMenu(View view) {
         ControllerUserPresentation.getUniqueInstance().guestLogin();
-        goToActivity(InsideActivity.class, new Bundle(), 0);
+        goToActivity(SideMenuActivity.class, new Bundle(), 0);
     }
 
     public void logInMailMainMenu(View view) {
