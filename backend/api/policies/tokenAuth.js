@@ -15,9 +15,9 @@ module.exports = function(req, res, next) {
     });
     
     var token = req.get("token");
-    if(token === undefined) error();
+    if(token === undefined) return error();
     jwt.verify(token, 'bienquesito', function(err, decoded) {
-        if(err !== undefined && err) error();
+        if(err !== undefined && err) return error();
         else next();
     });
 
