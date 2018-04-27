@@ -63,6 +63,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'updateProfile'
   },
+  'GET /viewProfile':{
+    controller: 'UserController',
+    action: 'viewProfile'
+  },
   'GET /categories':{
     controller: 'ThreadController',
     action: 'getAllCategories'
