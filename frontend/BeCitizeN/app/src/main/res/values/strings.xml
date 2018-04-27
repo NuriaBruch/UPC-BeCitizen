@@ -47,6 +47,8 @@
 
     <string name="guest">Guest</string>
 
+    <string name="by"> by </string>
+
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
