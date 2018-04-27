@@ -116,9 +116,9 @@ public class ControllerUserData {
             json.put("username", username);
             json.put("password", password);
             json.put("email", email);
-            json.put("firstName", firstName);
-            json.put("lastName", lastName);
-            json.put("birthDate", birthDate);
+            json.put("name", firstName);
+            json.put("surname", lastName);
+            json.put("birthday", birthDate);
             json.put("country", country);
             json.put("facebook", String.valueOf(facebook));
             json.put("google", String.valueOf(google));
