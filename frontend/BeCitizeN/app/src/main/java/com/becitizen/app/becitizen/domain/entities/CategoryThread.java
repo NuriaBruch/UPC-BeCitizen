@@ -7,12 +7,14 @@ public class CategoryThread {
     private String author;
     private String createdAt;
     private int votes;
+    private int id;
 
-    public CategoryThread(String title, String author, String createdAt, int votes) {
+    public CategoryThread(String title, String author, String createdAt, int votes, int id) {
         this.title = title;
         this.author = author;
         this.createdAt = createdAt;
         this.votes = votes;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -45,5 +47,13 @@ public class CategoryThread {
 
     public void setVotes(int votes) {
         this.votes = votes;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

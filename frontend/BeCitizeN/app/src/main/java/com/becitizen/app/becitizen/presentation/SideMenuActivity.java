@@ -103,9 +103,11 @@ public class SideMenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment;
+
         switch (id) {
             case R.id.nav_information:
-                Fragment fragment = new InsideActivity();
+                fragment = new InsideActivity();
                 fragmentTransaction(fragment);
                 break;
             case R.id.nav_faq:
@@ -121,10 +123,11 @@ public class SideMenuActivity extends AppCompatActivity
                 */
                 break;
             case R.id.nav_forum:
-                /*
-                Fragment fragment = new ForumActivity();
+                fragment = new CategoryThreadActivity();
                 fragmentTransaction(fragment);
-                */
+
+                //fragment = new ForumCategoriesActivity();
+                //fragmentTransaction(fragment);
                 break;
             case R.id.nav_private_messages:
                 /*

@@ -34,17 +34,16 @@ public class CategoryThreadActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
-        parentLinearLayout = (LinearLayout) rootView.findViewById(R.id.parent_linear_layout);
-        //for (int i = 0; i < 20; ++i) addThreadRow("Test", "Guillem", "22 mins ago", 3);
+        //parentLinearLayout = (LinearLayout) rootView.findViewById(R.id.parent_linear_layout);
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
-        dataModels= new ArrayList<>();
+        dataModels = new ArrayList<>();
 
-        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017",1));
-        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017",1));
+        dataModels.add(new CategoryThread("Apple Pie", "Jaume123", "27-04-2018 09:20:54",333, 1));
+        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017 09:20:54",1, 2));
 
-        adapter = new CategoryThreadAdapter(dataModels,getApplicationContext());
+        adapter = new CategoryThreadAdapter(dataModels, getApplicationContext());
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,29 +55,6 @@ public class CategoryThreadActivity extends Fragment {
         });
 
         return rootView;
-    }
-
-    private void addThreadRow(String title, String author, String time, int votes) {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.row_category_thread, null);
-
-        //set title
-        TextView titleView = (TextView) rowView.findViewById(R.id.threadTitle);
-        titleView.setText(title);
-
-        //set subtitle
-        TextView subtitleView = (TextView) rowView.findViewById(R.id.threadSubtitle);
-        subtitleView.setText(time + " by " + author);
-
-        //set votes
-        TextView votesView = (TextView) rowView.findViewById(R.id.votes);
-        votesView.setText(String.valueOf(votes));
-
-        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
-    }
-
-    public void onDelete(View v) {
-        parentLinearLayout.removeView((View) v.getParent());
     }
 
 }
