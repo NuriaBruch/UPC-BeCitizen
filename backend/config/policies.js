@@ -40,7 +40,8 @@ module.exports.policies = {
   },
   UserController: {
     deactivateAccount: 'tokenAuth',
-    updateProfile: 'tokenAuth'
+    updateProfile: 'tokenAuth',
+    viewProfile: 'tokenAuth'
   }
 
   /***************************************************************************

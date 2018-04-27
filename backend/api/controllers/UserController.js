@@ -95,6 +95,9 @@ module.exports = {
 
         var username = req.query.username;
         
+        gestionUser.view(username,function(status){
+            res.send(status);
+        });
     }
 };
 
