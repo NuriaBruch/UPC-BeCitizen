@@ -25,7 +25,19 @@ module.exports = {
     postedBy:{
       model: 'user'
     },
+    votedBy:{
+      collection: 'user',
+      via: 'votes'
+    },
+    reportedBy:{
+      collection: 'user',
+      via: 'reports'
+    },
     numberReports:{
+      type: 'integer',
+      defaultsTo: 0
+    },
+    numberVotes:{
       type: 'integer',
       defaultsTo: 0
     }

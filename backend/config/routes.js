@@ -59,6 +59,14 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'deactivateAccount'
   },
+  'PUT /updateProfile':{
+    controller: 'UserController',
+    action: 'updateProfile'
+  },
+  'GET /viewProfile':{
+    controller: 'UserController',
+    action: 'viewProfile'
+  },
   'GET /categories':{
     controller: 'ThreadController',
     action: 'getAllCategories'
@@ -66,6 +74,18 @@ module.exports.routes = {
   'POST /newThread':{
     controller: 'ThreadController',
     action: 'createThread'
+  },
+  'DELETE /deleteThread':{
+    controller: 'ThreadController',
+    action: 'deleteThread'
+  },
+  'PUT /reportThread':{
+    controller: 'ThreadController',
+    action: 'reportThread'
+  },
+  'put /reportComment': {
+    controller: 'CommentController',
+    action: 'reportComment'
   }
 
 

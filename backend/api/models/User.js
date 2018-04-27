@@ -63,6 +63,20 @@ module.exports = {
     posts: {
       collection: 'thread',
       via: 'postedBy'
+    },
+    votes: {
+      collection: 'thread',
+      via: 'votedBy',
+      dominant: true
+    },
+    reports: {
+      collection: 'thread',
+      via: 'reportedBy',
+      dominant: true
+    },
+    reportedComments: {
+      collection: 'comment',
+      via: 'reportedBy'
     }
   }
 };

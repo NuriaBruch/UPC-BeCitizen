@@ -2,7 +2,7 @@ var bcrypt = require('bcrypt');
 
 module.exports = class GestionUser {
 
-    register(username, pass, email, name, surname, birthday, country, hasFace, hasGoogle, callback){
+    register(username, pass, email, name, surname, birthday, country, profilePicture, hasFace, hasGoogle, callback){
         var response = {
            status: "Ok",
            errors: []
@@ -25,6 +25,7 @@ module.exports = class GestionUser {
                     surname: surname,
                     birthday: birthday,
                     country: country,
+                    profilePicture: profilePicture,
                     hasFacebook: hasFace,
                     hasGoogle: hasGoogle
                 }).exec(function(err2, newUser){
@@ -55,17 +56,37 @@ module.exports = class GestionUser {
             callback(response);
         }); 
     }; 
-    deactivate(username,callback){
+    
+    deactivate(userMail,callback){
         var response = {
             status: "Ok",
             errors: []
         }
-        User.update({username:username},{deactivated:true}).exec(function(err1,userFound){
+        User.update({email:userMail},{deactivated:true}).exec(function(err1,userFound){
             if(err1 !== undefined && err1){
                 response.status = "Error";
                 response.errors.push("Server error");
             }
             callback(response);
         });
+    };
+
+    update(req,callback){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        var userMail = UtilsService.getEmailFromHeader(req);
+        var{name, surname, biography, birthday, country, profilePicture} = req.body;
+
+        User.update({email:userMail}, 
+            {name:name, surname:surname, biography:biography, 
+            country:country, profilePicture}).exec(function(err1,userFound){
+                if(err1 !== undefined && err1){
+                    response.status = "Error";
+                    response.errors.push("Server error");
+                }
+                callback(response); 
+            });
     };
 };

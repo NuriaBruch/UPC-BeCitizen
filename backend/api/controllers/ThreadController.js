@@ -20,10 +20,33 @@ module.exports = {
     },
 
     createThread: function(req,res){
-        var {userMail, title, content, category} = req.body;
+        var userMail = UtilsService.getEmailFromHeader(req);
+        var {title, content, category} = req.body;
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
         })
+    },
+
+    deleteThread: function(req,res){
+        var id = req.query.threadId;
+        ThreadService.deleteThread(id,function(status){
+            res.send(status);
+        });
+    },
+
+    reportThread: function(req,res){
+        var id = req.query.threadId;
+        ThreadService.reportThread(id,function(status){
+            res.send(status);
+        });
+    },
+
+    getThread: function(req,res){
+        var id = req.query.threadId;
+        var email = UtilsService.getEmailFromHeather(req);
+        ThreadService.getThread(id,email,function(status){
+            res.send(status);
+        });
     }
 };
 
