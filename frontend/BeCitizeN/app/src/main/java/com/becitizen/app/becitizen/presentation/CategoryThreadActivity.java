@@ -39,12 +39,12 @@ public class CategoryThreadActivity extends Fragment {
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
-        dataModels= new ArrayList<>();
+        dataModels = new ArrayList<>();
 
-        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017",1));
-        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017",1));
+        dataModels.add(new CategoryThread("Apple Pie", "Jaume123", "27-04-2018 09:20:54",333, 1));
+        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017 09:20:54",1, 2));
 
-        adapter = new CategoryThreadAdapter(dataModels,getApplicationContext());
+        adapter = new CategoryThreadAdapter(dataModels, getApplicationContext());
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -56,25 +56,6 @@ public class CategoryThreadActivity extends Fragment {
         });
 
         return rootView;
-    }
-
-    private void addThreadRow(String title, String author, String time, int votes) {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View rowView = inflater.inflate(R.layout.row_category_thread, null);
-
-        //set title
-        TextView titleView = (TextView) rowView.findViewById(R.id.threadTitle);
-        titleView.setText(title);
-
-        //set subtitle
-        TextView subtitleView = (TextView) rowView.findViewById(R.id.threadSubtitle);
-        subtitleView.setText(time + " by " + author);
-
-        //set votes
-        TextView votesView = (TextView) rowView.findViewById(R.id.votes);
-        votesView.setText(String.valueOf(votes));
-
-        parentLinearLayout.addView(rowView, parentLinearLayout.getChildCount() - 1);
     }
 
     public void onDelete(View v) {

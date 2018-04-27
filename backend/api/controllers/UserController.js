@@ -88,6 +88,13 @@ module.exports = {
         gestionUser.update(req,function(status){
             res.send(status);
         });
+    },
+
+    viewProfile: function(req, res){
+        var gestionUser = new GestionUser();
+
+        var username = req.query.username;
+        
     }
 };
 
