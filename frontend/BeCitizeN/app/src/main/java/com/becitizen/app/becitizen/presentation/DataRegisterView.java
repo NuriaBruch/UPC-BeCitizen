@@ -108,7 +108,7 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
         );
 
         if (result) {
-            Intent i = new Intent(this,InsideActivity.class);
+            Intent i = new Intent(this,SideMenuActivity.class);
             startActivity(i);
         }
 
