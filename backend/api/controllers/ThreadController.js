@@ -48,6 +48,13 @@ module.exports = {
         ThreadService.getThread(id,email,function(status){
             res.send(status);
         });
+    },
+
+    getAllThreads: function(req,res){
+        var block = req.query.block;
+        ThreadService.getAllThreads(block,function(status){
+            res.send(status);
+        });
     }
 };
 

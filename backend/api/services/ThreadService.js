@@ -138,7 +138,7 @@ module.exports = {
                 User.findOne({email: threadFound.postedBy}).exec(function(err2,userOwner){
                     if(err2 !== undefined && err2) {
                         response.status = "E2";
-                        response.errors.push("Unable to find the user owner of the thread");
+                        response.errors.push(err2);
                     }
                     if(userOwner){
                         response.info.username = userOwner.username;
@@ -153,6 +153,55 @@ module.exports = {
                 response.status = "Error"
                 response.errors.push("Couldn't find the thread");
                 callback(response);
+            }
+        });
+    },
+
+    getAllThreads: function(block,callback){
+        var limit = 10;
+        block++; // los blocks 0 y 1 son los mismos, dejemos que front empieze a iterar con block=0
+        var response = {
+            status: "Ok",
+            errors: [],
+            threads:[]
+         };
+        Thread.count().exec(function(err,numThreads){
+            if(block >Math.ceil(numThreads/limit)){
+                response.status = "Error";
+                response.errors.push("Block out of bound");
+                callback(response);
+            }
+            else if( block<=0){
+                response.status = "Error";
+                response.errors.push("Block should be positive, like you when reading this error");
+                callback(response);
+            }
+            else{
+                Thread.find().paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
+                    if(err2 !== undefined && err2) {
+                        response.status = "E2";
+                        response.errors.push(err2);
+                    }
+                    if(threadsFound){
+                        threadsFound.forEach(thread => {
+                            var threadInfo = {
+                                title:"",
+                                votes:"",
+                                id:""
+                
+                            };
+                            threadInfo.id = thread.id;
+                            threadInfo.title = thread.title;
+                            threadInfo.votes = thread.numberVotes; 
+                            response.threads.push(threadInfo);
+                        });
+                    }
+                    else{
+                        response.status = "Error";
+                        response.errors.push("There aren't more threads");
+                    }
+                    callback(response);
+                });
             }
         });
     }
