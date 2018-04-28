@@ -90,7 +90,14 @@ module.exports.routes = {
   'GET /getThread':{
     controller: 'ThreadController',
     action: 'getThread'
+  },
+  'POST /newComment':{
+    controller: 'CommentController',
+    action: 'createComment'
   }
+
+
+
 
 
   /***************************************************************************

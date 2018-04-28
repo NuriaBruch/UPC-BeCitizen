@@ -12,9 +12,20 @@ module.exports = {
       type: 'string',
       required: true
     },
+    postedBy:{
+      model: 'user'
+    },
     reportedBy: {
       collection: 'user',
       via: 'reportedComments'
+    },
+    repliesTo:{
+      model: 'comment',
+      via:'id'
+    },
+    belongsTo:{
+      model: 'thread',
+      via:'id'
     }
   }
 };

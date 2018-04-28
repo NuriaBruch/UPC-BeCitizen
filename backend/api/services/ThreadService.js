@@ -53,21 +53,7 @@ function reportAndEvaluateThread(threadId,email,callback){
     });
 }
 
-function increaseUserKarma(points,mail,callback){
-    User.findOne({email: mail}).exec(function(err1, userFound){
-        if(err1 !== undefined && err1) {
-            callback(null);
-        }
-        if(userFound === undefined){
-            callback(null);
-        }
-        else{
-            userFound.karma = userFound.karma + points;
-            userFound.save();
-            callback(userFound.karma);
-        }
-    });
-}
+
 
 module.exports = {
 
@@ -88,7 +74,7 @@ module.exports = {
                 callback(response);
             }
             else{
-                increaseUserKarma(100,userMail, function(result){
+                UtilsService.increaseUserKarma(100,userMail, function(result){
                     if(result === null){
                         response.status = 'E2';
                         response.errors.push("Unable to update user karma");
@@ -124,6 +110,7 @@ module.exports = {
                 postedBy:"",
                 username:"",
                 rank:"",
+                profilePicture:"",
                 createdAt:"",
                 votes:"",
                 canVote:"false",
@@ -134,7 +121,7 @@ module.exports = {
         Thread.findOne({id:id}).populate('reportedBy',{where:{email:email}}).populate('votedBy',{where:{email:email}}).exec(function(err2,threadFound){
             if(err2 !== undefined && err2) {
                 response.status = "E2";
-                response.errors.push(err2);
+                response.errors.push("Unable to find the thread");
             }
             if(threadFound){
                 var userHasVoted = _.find(threadFound.votedBy,{email:email});
@@ -151,15 +138,21 @@ module.exports = {
                 User.findOne({email: threadFound.postedBy}).exec(function(err2,userOwner){
                     if(err2 !== undefined && err2) {
                         response.status = "E2";
-                        response.errors.push(err2);
+                        response.errors.push("Unable to find the user owner of the thread");
                     }
                     if(userOwner){
                         response.info.username = userOwner.username;
                         response.info.rank = userOwner.rank;
-                        callback(response);
+                        response.info.profilePicture = userOwner.profilePicture;
                     }
+                    callback(response);
                 });
                 
+            }
+            else{
+                response.status = "Error"
+                response.errors.push("Couldn't find the thread");
+                callback(response);
             }
         });
     }

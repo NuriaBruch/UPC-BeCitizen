@@ -44,5 +44,33 @@ module.exports = {
                 });
             }
         })
+    },
+
+    createThread: function(email, content, commentReplyId, threadId, callback){
+        var response = {
+            status: "Ok",
+            errors: []
+         };
+        Comment.create({
+            content:content,
+            postedBy: email,
+            repliesTo: commentReplyId,
+            belongsTo: threadId
+        }).exec(function(err2, newComment){
+            if(err2 !== undefined && err2){
+                response.status = "E2";
+                response.errors.push(err2);
+                callback(response);
+            }
+            else{
+                UtilsService.increaseUserKarma(10,email, function(result){
+                    if(result === null){
+                        response.status = 'E2';
+                        response.errors.push("Unable to update user karma");
+                    }
+                });
+                callback(response);
+            }   
+        });
     }
 }
