@@ -11,7 +11,7 @@ module.exports = {
         var response = {
             status: "Ok",
             errors: [],
-            categories: [ "culture", "education y formation",
+            categories: [ "culture", "education and formation",
         "emergencies", "language", "justice", "public administration", "housing",
         "health", "work", "tourism", "off topic"]
         }
@@ -36,14 +36,15 @@ module.exports = {
 
     reportThread: function(req,res){
         var id = req.query.threadId;
-        ThreadService.reportThread(id,function(status){
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.reportThread(id,email,function(status){
             res.send(status);
         });
     },
 
     getThread: function(req,res){
         var id = req.query.threadId;
-        var email = UtilsService.getEmailFromHeather(req);
+        var email = UtilsService.getEmailFromHeader(req);
         ThreadService.getThread(id,email,function(status){
             res.send(status);
         });

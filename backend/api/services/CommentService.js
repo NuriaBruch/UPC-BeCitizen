@@ -9,24 +9,22 @@ module.exports = {
         User.findOne({email: email}).populate("reportedComments").exec(function (err, user){
             if((err && err !== undefined) || user == undefined) {
                 response.status = "E1";
-                response.errors.push("No user");
+                response.errors.push("There is no user with that id.");
                 callback(response);
             }
             else{
                 Comment.findOne({id: commentId}).populate("reportedBy").exec(function(err1, comment){
                     if((err1 && err1 !== undefined) || comment == undefined) {
                         response.status = "E2";
-                        response.errors.push("No comment with that id");
+                        response.errors.push("There is no comment with that id.");
                         callback(response);
                     }
                     else{
-                        megaUser = _.chain(user.toJSON());
-                        var found = megaUser.pluck('reportedComments').indexOf(commentId).value();
-                        console.log(found);
-                        //found = 0;
+                        var found = _.chain(user.reportedComments).pluck("id").indexOf(commentId).value();
                         if(found === -1){
-                            if(comment.reportedBy.lenght > 0){ // <--
-                                comment.content = "This comment has been removed";
+                            const MAX_REPORTS = 10;
+                            if(_.size(comment.reportedBy) + 1 >= MAX_REPORTS){
+                                comment.content = "This comment has been deleted.";
                             }
                             user.reportedComments.add(commentId);
                             user.save(function(err){
@@ -38,7 +36,7 @@ module.exports = {
                         }
                         else{
                             response.status = "E3";
-                            response.errors.push("The user has reported that comment");
+                            response.errors.push("The user has already reported that comment.");
                             callback(response);
                         }
                     
@@ -46,5 +44,101 @@ module.exports = {
                 });
             }
         })
+    },
+
+    createComment: function(email, content, commentReplyId, threadId, callback){
+        var response = {
+            status: "Ok",
+            errors: []
+         };
+        Comment.create({
+            content:content,
+            postedBy: email,
+            repliesTo: commentReplyId,
+            belongsTo: threadId
+        }).exec(function(err2, newComment){
+            if(err2 !== undefined && err2){
+                response.status = "E2";
+                response.errors.push(err2);
+                callback(response);
+            }
+            else{
+                UtilsService.increaseUserKarma(10,email, function(result){
+                    if(result === null){
+                        response.status = 'E2';
+                        response.errors.push("Unable to update user karma");
+                    }
+                });
+                callback(response);
+            }   
+        });
+    },
+    
+    getThreadComments: function(threadId,email,callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            comment: []
+        };
+        Comment.find({belongsTo:threadId}).populate('reportedBy',{where:{email:email}}).populate('votedBy',{where:{email:email}}).exec(function(err2,commentsFound){
+            if(err2 !== undefined && err2) {
+                response.status = "E2";
+                response.errors.push(err2);
+                callback(response);
+            }
+            if(commentsFound){
+                async.each(commentsFound,function(comment,eachCb){
+                    var commentInfo = {
+                        content:"",
+                        postedBy:"",
+                        username:"",
+                        rank:"",
+                        profilePicture:"",
+                        createdAt:"",
+                        votes:"",
+                        canVote:"false",
+                        canReport:"false"
+                    };
+                    var userHasVoted = _.find(comment.votedBy,{email:email});
+                            if(userHasVoted == undefined) commentInfo.canVote = "true";
+                            var userHasReported = _.find(comment.reportedBy, {email:email});
+                            if(userHasReported == undefined) commentInfo.canReport = "true";
+                            commentInfo.postedBy = comment.postedBy;
+                            commentInfo.votes = comment.numberVotes;
+                            commentInfo.createdAt = comment.createdAt;
+                            commentInfo.content = comment.content;
+                    User.findOne({email: comment.postedBy}).exec(function(err2,userOwner){
+                        if(err2 !== undefined && err2) {
+                            response.status = "E2";
+                            response.errors.push(err2);
+                            callback(response); //error en 1 comment ya es un error final;
+                        }
+                        if(userOwner){
+                            commentInfo.username = userOwner.username;
+                            commentInfo.rank = userOwner.rank;
+                            commentInfo.profilePicture = userOwner.profilePicture;
+                            response.comment.push(commentInfo);
+                            eachCb();
+                        }
+                        else{
+                            /*para devolver comments aunq no econtremos su usuario(eliminado o algo)
+                            simplemente cambiar callback por eachCb y gestionarlo en el tercer param*/
+                            response.status = "Error"
+                            response.errors.push("Couldn't find the owner of a comment");
+                            callback(response);
+                        }
+                    });
+                },function(){
+                    callback(response);
+                });
+            }
+            else{
+                response.status = "Error"
+                response.errors.push("Couldn't find comments for this thread");
+                callback(response);
+            }
+        });
     }
+
+
 }

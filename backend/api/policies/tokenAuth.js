@@ -8,14 +8,16 @@
  *
  */
 module.exports = function(req, res, next) {
-
     var jwt = require('jsonwebtoken');
+    var error = () => res.send({
+        status: "Error",
+        errors: ["User not logged in"]
+    });
+    
     var token = req.get("token");
+    if(token === undefined) return error();
     jwt.verify(token, 'bienquesito', function(err, decoded) {
-        if(err !== undefined && err) return res.send({
-            status: "Error",
-            errors: ["User not logged in"]
-        });
+        if(err !== undefined && err) return error();
         else next();
     });
 

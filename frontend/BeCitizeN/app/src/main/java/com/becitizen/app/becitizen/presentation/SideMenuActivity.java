@@ -130,6 +130,9 @@ public class SideMenuActivity extends AppCompatActivity
             case R.id.nav_forum:
                 fragment = new CategoryThreadActivity();
                 fragmentTransaction(fragment);
+
+                //fragment = new ForumCategoriesActivity();
+                //fragmentTransaction(fragment);
                 break;
             case R.id.nav_private_messages:
                 /*
