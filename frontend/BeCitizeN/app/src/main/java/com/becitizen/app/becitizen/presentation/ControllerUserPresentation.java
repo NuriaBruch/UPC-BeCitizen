@@ -153,4 +153,18 @@ public class ControllerUserPresentation {
     public void initializeMySharedPreferences(Context context) {
         ControllerUserDomain.getUniqueInstance().initializeMySharedPreferences(context);
     }
+
+    public boolean deactivateAccount() {
+        return controllerUserDomain.deactivateAccount();
+    }
+
+    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
+        return controllerUserDomain.editProfile(firstName, lastName, birthDate, country, biography);
+    }
+
+    public Bundle getLoggerUserData() {
+        return controllerUserDomain.getLoggedUserData();
+    }
+
+
 }

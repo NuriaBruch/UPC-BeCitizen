@@ -28,7 +28,7 @@ public class ControllerUserDomain {
      **/
     private ControllerUserDomain() {
         controllerUserData = ControllerUserData.getInstance();
-        currentUser = null;
+        currentUser = new User();
     }
 
     /**
@@ -78,9 +78,10 @@ public class ControllerUserDomain {
         currentUser.setLastName(lastName);
         currentUser.setBirthDate(birthDate);
         currentUser.setCountry(country);
+        currentUser.setImage((int) (Math.random() * 8) + 1);
 
         boolean result = controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
-                firstName, lastName, birthDate, country, currentUser.isFacebook(), currentUser.isGoogle());
+                firstName, lastName, birthDate, country, currentUser.getImage(), currentUser.isFacebook(), currentUser.isGoogle());
         try {
             if (result)
                 doLogin("mail", currentUser.getUsername());
@@ -110,6 +111,8 @@ public class ControllerUserDomain {
             if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
             if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
             if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+            if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+            if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
             currentUser.setFacebook(true);
 
             if (json.getBoolean("loggedIn")) {
@@ -143,6 +146,8 @@ public class ControllerUserDomain {
                 if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
                 if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
                 if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+                if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
                 currentUser.setGoogle(true);
 
                 if (!response.getBoolean("loggedIn"))
@@ -265,12 +270,6 @@ public class ControllerUserDomain {
     }
 
     /**
-     *
-     *
-     * @param email
-     * @return
-     */
-    /**
      * Retorna si un par {email, password} ya esta registrado en nuestro servidor
      *
      * @param email Email a comprobar
@@ -284,11 +283,13 @@ public class ControllerUserDomain {
             if (response.get("status").equals("Ok")) {
                 JSONObject info = response.getJSONObject("info");
                 currentUser = new User(email, null);
-                currentUser.setUsername(info.getString("username"));
-                currentUser.setFirstName(info.getString("name"));
-                currentUser.setLastName(info.getString("surname"));
-                currentUser.setBirthDate(info.getString("birthday"));
-                currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("username")) currentUser.setUsername(info.getString("username"));
+                if(!info.isNull("name")) currentUser.setFirstName(info.getString("name"));
+                if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
+                if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
+                if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+                if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
                 doLogin("mail", currentUser.getUsername());
                 return true;
 
@@ -303,5 +304,47 @@ public class ControllerUserDomain {
 
     public void initializeMySharedPreferences(Context context) {
         MySharedPreferences.init(context);
+    }
+
+    public boolean deactivateAccount() {
+        return controllerUserData.deactivateAccount(currentUser.getUsername());
+    }
+
+    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
+        // Poster sha de mirar el Json aqui en lloc de a controllerUserData
+        int i = controllerUserData.editProfile(firstName, lastName, birthDate, country, biography);
+        if (i == 0) {
+            currentUser.setFirstName(firstName);
+            currentUser.setLastName(lastName);
+            currentUser.setBirthDate(birthDate);
+            currentUser.setCountry(country);
+            currentUser.setBiography(biography);
+        }
+        return i;
+    }
+
+    public Bundle getLoggedUserData() {
+        Bundle bundle = new Bundle();
+        /*bundle.putString("username", currentUser.getUsername());
+        bundle.putString("firstName", currentUser.getFirstName());
+        bundle.putString("lastName", currentUser.getLastName());
+        bundle.putString("birthDate", currentUser.getBirthDate());
+        bundle.putString("country", currentUser.getCountry());
+        bundle.putString("biography", currentUser.getBiography());
+        bundle.putString("mai1", currentUser.getMail());
+        bundle.putInt("image", currentUser.getImage());
+        bundle.putString("rank", currentUser.getRank());*/
+
+        bundle.putString("username", "nuria");
+        bundle.putString("firstName", "nuria");
+        bundle.putString("lastName", "bruch");
+        bundle.putString("birthDate", "16/10/1997");
+        bundle.putString("country", "catalunya");
+        bundle.putString("biography", "holiholi allioli");
+        bundle.putString("mai1", "nskkd");
+        bundle.putString("rank", "coal");
+        bundle.putInt("image", 5);
+
+        return bundle;
     }
 }

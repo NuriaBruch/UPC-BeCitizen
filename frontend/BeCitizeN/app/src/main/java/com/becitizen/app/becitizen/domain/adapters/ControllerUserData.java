@@ -19,6 +19,9 @@ public class ControllerUserData {
     private static final String URI_REGISTER = "http://becitizen.cf/register";
     private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
 
+    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
+
     private static ControllerUserData instance = null;
 
     /**
@@ -109,7 +112,7 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, boolean facebook, boolean google) {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) {
 
         JSONObject json = new JSONObject();
         try {
@@ -120,6 +123,7 @@ public class ControllerUserData {
             json.put("surname", lastName);
             json.put("birthday", birthDate);
             json.put("country", country);
+            json.put("profilePicture", image);
             json.put("facebook", String.valueOf(facebook));
             json.put("google", String.valueOf(google));
         } catch (JSONException e) {
@@ -143,6 +147,51 @@ public class ControllerUserData {
 
     public String checkCredentials(String email, String password) {
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
+    }
+
+    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", firstName);
+            json.put("surname", lastName);
+            json.put("biography", biography);
+            json.put("birthday", birthDate);
+            json.put("country", country);
+            // TODO imatge del perfil
+            //json.put("profilePicture", image);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
+        try {
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+            if (info.get("status").equals("Ok")) {
+                return true;
+            }
+            return false;
+        }
+        catch (JSONException e) {
+            // TODO gestionar errors.
+            return false;
+        }*/
+
+        return 0;
+    }
+
+
+    public boolean deactivateAccount(String username) {
+        try {
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_DEACTIVATE_ACCOUNT + "?username=" + username));
+
+            if (info.get("status").equals("Ok")) {
+                return true;
+            }
+            return false;
+        }
+        catch (JSONException e) {
+            return false;
+        }
     }
 
 }
