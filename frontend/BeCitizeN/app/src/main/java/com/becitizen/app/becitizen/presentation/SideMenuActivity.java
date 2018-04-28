@@ -91,6 +91,8 @@ public class SideMenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Fragment fragment = new UserProfile();
+            fragmentTransaction(fragment);
             return true;
         }
 
