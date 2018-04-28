@@ -22,7 +22,9 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/userprofile2"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:background="#000000"
+                android:padding="1dp"/>
 
             <ImageButton
                 android:id="@+id/ibEditProfile"
