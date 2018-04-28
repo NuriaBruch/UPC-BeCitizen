@@ -37,6 +37,7 @@
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
     <string name="birthDate">Birth Date</string>
+    <string name="biography">Biography</string>
     <string name="country">Birth Country</string>
     <string name="birthDatePicker">Select your birthdate</string>
     <string name="dateFormat">dd/mm/yyyy</string>
@@ -46,6 +47,8 @@
 
     <string name="guest">Guest</string>
     <string name="sendMessage">Send message</string>
+    <string name="update">Update</string>
+    <string name="editprofile">Edit your profile</string>
 
     <string name="by">by</string>
     <string name="seconds">seconds</string>
