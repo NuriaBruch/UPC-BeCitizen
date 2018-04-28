@@ -1,8 +1,5 @@
 package com.becitizen.app.becitizen.domain.entities;
 
-
-import com.becitizen.app.becitizen.domain.enumerations.Rank;
-
 public class User {
     private String username;
     private String mail, password;
@@ -10,7 +7,8 @@ public class User {
     private String birthDate;
     private String country;
     private String biography;
-    private Rank rank;
+    private String rank;
+    private int image;
     private boolean facebook;
     private boolean google;
 
@@ -20,7 +18,14 @@ public class User {
      */
     public User() {
         facebook = google = false;
-        rank = Rank.COAL;
+        rank = "coal";
+        image = (int) (Math.random() * 8) + 1;
+        mail = "";
+        password = "";
+        firstName = "";
+        lastName = "";
+        birthDate = "";
+        biography = "";
     }
 
     /**
@@ -33,6 +38,12 @@ public class User {
     public User (String mail, String password) {
         this.mail = mail;
         this.password = password;
+        rank = "coal";
+        image = (int) (Math.random() * 8) + 1;
+        firstName = "";
+        lastName = "";
+        birthDate = "";
+        biography = "";
     }
 
     /**
@@ -180,11 +191,11 @@ public class User {
     }
 
     /**
-     * Metodo para obtener la biografia del usuario
+     * Metodo para asignar el rango del usuario
      *
-     * @return
+     * @return rango
      */
-    public Rank getRank() {
+    public String getRank() {
         return rank;
     }
 
@@ -193,7 +204,7 @@ public class User {
      *
      * @param rank Rango
      */
-    public void setRank(Rank rank) {
+    public void setRank(String rank) {
         this.rank = rank;
     }
 
@@ -231,5 +242,23 @@ public class User {
      */
     public void setGoogle(boolean google) {
         this.google = google;
+    }
+
+    /**
+     * Metodo para asignar el valor de la imagen del usuario
+     *
+     * @param image
+     */
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    /**
+     * Metodo para obtener el valor de la imagen del usuario
+     *
+     * @return valor de la imagen
+     */
+    public int getImage() {
+        return image;
     }
 }
