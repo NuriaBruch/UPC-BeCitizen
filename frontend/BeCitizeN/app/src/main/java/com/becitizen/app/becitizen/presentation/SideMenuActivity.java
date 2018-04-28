@@ -91,7 +91,10 @@ public class SideMenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("loggeduser", true);
             Fragment fragment = new UserProfile();
+            fragment.setArguments(bundle);
             fragmentTransaction(fragment);
             return true;
         }
