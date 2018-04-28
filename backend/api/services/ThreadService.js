@@ -121,7 +121,7 @@ module.exports = {
         Thread.findOne({id:id}).populate('reportedBy',{where:{email:email}}).populate('votedBy',{where:{email:email}}).exec(function(err2,threadFound){
             if(err2 !== undefined && err2) {
                 response.status = "E2";
-                response.errors.push("Unable to find the thread");
+                response.errors.push(err2);
             }
             if(threadFound){
                 var userHasVoted = _.find(threadFound.votedBy,{email:email});

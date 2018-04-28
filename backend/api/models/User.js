@@ -77,6 +77,10 @@ module.exports = {
     reportedComments: {
       collection: 'comment',
       via: 'reportedBy'
+    },
+    votedComments: {
+      collection: 'comment',
+      via: 'votedBy'
     }
   }
 };

@@ -46,7 +46,7 @@ module.exports = {
         })
     },
 
-    createThread: function(email, content, commentReplyId, threadId, callback){
+    createComment: function(email, content, commentReplyId, threadId, callback){
         var response = {
             status: "Ok",
             errors: []
@@ -72,5 +72,73 @@ module.exports = {
                 callback(response);
             }   
         });
+    },
+    
+    getThreadComments: function(threadId,email,callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            comment: []
+        };
+        Comment.find({belongsTo:threadId}).populate('reportedBy',{where:{email:email}}).populate('votedBy',{where:{email:email}}).exec(function(err2,commentsFound){
+            if(err2 !== undefined && err2) {
+                response.status = "E2";
+                response.errors.push(err2);
+                callback(response);
+            }
+            if(commentsFound){
+                async.each(commentsFound,function(comment,eachCb){
+                    var commentInfo = {
+                        content:"",
+                        postedBy:"",
+                        username:"",
+                        rank:"",
+                        profilePicture:"",
+                        createdAt:"",
+                        votes:"",
+                        canVote:"false",
+                        canReport:"false"
+                    };
+                    var userHasVoted = _.find(comment.votedBy,{email:email});
+                            if(userHasVoted == undefined) commentInfo.canVote = "true";
+                            var userHasReported = _.find(comment.reportedBy, {email:email});
+                            if(userHasReported == undefined) commentInfo.canReport = "true";
+                            commentInfo.postedBy = comment.postedBy;
+                            commentInfo.votes = comment.numberVotes;
+                            commentInfo.createdAt = comment.createdAt;
+                            commentInfo.content = comment.content;
+                    User.findOne({email: comment.postedBy}).exec(function(err2,userOwner){
+                        if(err2 !== undefined && err2) {
+                            response.status = "E2";
+                            response.errors.push(err2);
+                            callback(response); //error en 1 comment ya es un error final;
+                        }
+                        if(userOwner){
+                            commentInfo.username = userOwner.username;
+                            commentInfo.rank = userOwner.rank;
+                            commentInfo.profilePicture = userOwner.profilePicture;
+                            response.comment.push(commentInfo);
+                            eachCb();
+                        }
+                        else{
+                            /*para devolver comments aunq no econtremos su usuario(eliminado o algo)
+                            simplemente cambiar callback por eachCb y gestionarlo en el tercer param*/
+                            response.status = "Error"
+                            response.errors.push("Couldn't find the owner of a comment");
+                            callback(response);
+                        }
+                    });
+                },function(){
+                    callback(response);
+                });
+            }
+            else{
+                response.status = "Error"
+                response.errors.push("Couldn't find comments for this thread");
+                callback(response);
+            }
+        });
     }
+
+
 }

@@ -19,6 +19,10 @@ module.exports = {
       collection: 'user',
       via: 'reportedComments'
     },
+    votedBy: {
+      collection: 'user',
+      via: 'votedComments'
+    },
     repliesTo:{
       model: 'comment',
       via:'id'
@@ -26,6 +30,14 @@ module.exports = {
     belongsTo:{
       model: 'thread',
       via:'id'
+    },
+    numberReports:{
+      type: 'integer',
+      defaultsTo: 0
+    },
+    numberVotes:{
+      type: 'integer',
+      defaultsTo: 0
     }
   }
 };

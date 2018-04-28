@@ -11,8 +11,16 @@ module.exports = {
     createComment: function(req,res){
         var email = UtilsService.getEmailFromHeader(req);
         var {content,commentReplyId,threadId} = req.body;
-        CommentService.createThread(email, content, commentReplyId, threadId,function(status){
+        CommentService.createComment(email, content, commentReplyId, threadId,function(status){
             res.send(status);
         })
+    },
+
+    getThreadComments: function(req,res){
+        var id = req.query.threadId;
+        var email = UtilsService.getEmailFromHeader(req);
+        CommentService.getThreadComments(id,email,function(status){
+            res.send(status);
+        });
     }
 }

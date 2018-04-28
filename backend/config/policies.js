@@ -36,7 +36,8 @@ module.exports.policies = {
     reportThread: 'tokenAuth',
   },
   CommentController: {
-    reportComment: 'tokenAuth'
+    reportComment: 'tokenAuth',
+    createComment: 'tokenAuth'
   },
   UserController: {
     deactivateAccount: 'tokenAuth',
