@@ -105,7 +105,11 @@ module.exports.routes = {
   'PUT /reportComment': {
     controller: 'CommentController',
     action: 'reportComment'
-  }
+  },
+  'PUT /voteComment': {
+    controller: 'CommentController',
+    action: 'voteComment'
+  },  
 
 
 

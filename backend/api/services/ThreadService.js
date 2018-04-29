@@ -193,7 +193,7 @@ module.exports = {
                         }
                         else{
                             response.status = "E4";
-                            response.errors.push("The user has already reported that thread.");
+                            response.errors.push("The user has already voted that thread.");
                             callback(response);
                         }
                     }

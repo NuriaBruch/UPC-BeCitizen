@@ -22,5 +22,13 @@ module.exports = {
         CommentService.getThreadComments(id,email,function(status){
             res.send(status);
         });
+    },
+
+    voteComment: function(req, res){
+        var id = req.body.id;
+        var email = UtilsService.getEmailFromHeader(req);
+        CommentService.voteComment(id, email,function(status){
+            res.send(status);
+        });
     }
 }
