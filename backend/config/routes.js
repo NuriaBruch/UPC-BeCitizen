@@ -77,6 +77,10 @@ module.exports.routes = {
     controller: 'ThreadController',
     action: 'getAllCategories'
   },
+  'GET /getAllThreads':{
+    controller: 'ThreadController',
+    action: 'getAllThreads'
+  },
   'GET /getThread':{
     controller: 'ThreadController',
     action: 'getThread'
