@@ -48,6 +48,14 @@ module.exports = {
         ThreadService.getThread(id,email,function(status){
             res.send(status);
         });
+    },
+
+    voteThread: function(req, res){
+        var id = req.body.id;
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.voteThread(id, email,function(status){
+            res.send(status);
+        });
     }
 };
 

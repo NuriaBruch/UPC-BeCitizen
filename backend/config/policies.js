@@ -34,6 +34,7 @@ module.exports.policies = {
     createThread: 'tokenAuth',
     deleteThread: 'tokenAuth',
     reportThread: 'tokenAuth',
+    voteThread: 'tokenAuth'
   },
   CommentController: {
     reportComment: 'tokenAuth',

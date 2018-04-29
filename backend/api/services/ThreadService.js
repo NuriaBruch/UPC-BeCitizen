@@ -155,6 +155,61 @@ module.exports = {
                 callback(response);
             }
         });
+    },
+
+    voteThread: function(id, email, callback){
+        var response = {
+            status: "Ok",
+            errors: []
+         };
+
+         User.findOne({email: email}).populate("votes")
+         .then(function(user){
+            if(user === undefined){
+                response.status = "E2";
+                response.errors.push("Couldn't find the user.");
+                callback(response);
+            }
+            else{
+                Thread.findOne({id: id}).populate("votedBy")
+                .then(function(thread){
+                    if(thread === undefined){
+                        response.status = "E3";
+                        response.errors.push("Couldn't find the thread.");
+                        callback(response);
+                    }
+                    else{
+                        var found = _.chain(user.votes).pluck("id").indexOf(id).value();
+                        if(found == -1){
+                            user.votes.add(id);
+                            thread.numberVotes = thread.numberVotes + 1;
+                            thread.votedBy.add(user.id);
+                            user.save(function(err){
+                                thread.save(function(err2){
+                                    response.status = "Ok";
+                                    callback(response);
+                                });
+                            });
+                        }
+                        else{
+                            response.status = "E4";
+                            response.errors.push("The user has already reported that thread.");
+                            callback(response);
+                        }
+                    }
+                })
+                .catch(function(error){
+                    response.status = "E1";
+                    response.errors.push("Server error.");
+                    callback(response);
+                });
+            }
+         })
+         .catch(function(error){
+            response.status = "E1";
+            response.errors.push("Server error.");
+            callback(response);
+         })
     }
 
 }

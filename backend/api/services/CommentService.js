@@ -39,7 +39,6 @@ module.exports = {
                             response.errors.push("The user has already reported that comment.");
                             callback(response);
                         }
-                    
                     } 
                 });
             }
