@@ -339,7 +339,25 @@ public class ControllerUserDomain {
         bundle.putString("firstName", "nuria");
         bundle.putString("lastName", "bruch");
         bundle.putString("birthDate", "16/10/1997");
-        bundle.putString("country", "catalunya");
+        bundle.putString("country", "British Virgin Islands");
+        bundle.putString("biography", "holiholi allioli");
+        bundle.putString("mai1", "nskkd");
+        bundle.putString("rank", "coal");
+        bundle.putInt("image", 5);
+
+        return bundle;
+    }
+
+    public Bundle getUserData(String username) {
+        Bundle bundle = new Bundle();
+
+        //TODO fer request
+
+        bundle.putString("username", "nuria");
+        bundle.putString("firstName", "nuria");
+        bundle.putString("lastName", "bruch");
+        bundle.putString("birthDate", "16/10/1997");
+        bundle.putString("country", "British Virgin Islands");
         bundle.putString("biography", "holiholi allioli");
         bundle.putString("mai1", "nskkd");
         bundle.putString("rank", "coal");

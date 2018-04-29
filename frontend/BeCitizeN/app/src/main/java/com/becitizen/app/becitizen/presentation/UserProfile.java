@@ -1,16 +1,19 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.becitizen.app.becitizen.R;
 
-public class UserProfile extends Fragment {
+public class UserProfile extends Fragment implements View.OnClickListener {
 
     private View rootView;
     private ControllerUserPresentation controllerUserPresentation;
@@ -22,8 +25,12 @@ public class UserProfile extends Fragment {
     private TextView tvMail;
     private TextView tvRank;
     private ImageView ivUserImage;
+    private FloatingActionButton fbPrivateMessage;
+    private ImageButton ibEditProfile;
+    private ImageButton ibSignOut;
 
     private boolean loggedUser;
+    private String username;
     Bundle userData;
 
     public UserProfile() {
@@ -37,6 +44,7 @@ public class UserProfile extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             loggedUser = bundle.getBoolean("loggeduser");
+            if (!loggedUser) username = bundle.getString("username");
         }
 
         controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
@@ -49,6 +57,14 @@ public class UserProfile extends Fragment {
         tvBiography = rootView.findViewById(R.id.tvBiography);
         ivUserImage = rootView.findViewById(R.id.ivUserImage);
 
+        ibEditProfile = rootView.findViewById(R.id.ibEditProfile);
+        ibEditProfile.setOnClickListener(this);
+
+        ibSignOut = rootView.findViewById(R.id.ibSignOut);
+        ibSignOut.setOnClickListener(this);
+
+        fbPrivateMessage = rootView.findViewById(R.id.fbPrivateMessage);
+
         setValues();
 
         return rootView;
@@ -58,6 +74,14 @@ public class UserProfile extends Fragment {
 
         if (loggedUser) {
             userData = controllerUserPresentation.getLoggerUserData();
+            fbPrivateMessage.setVisibility(View.GONE);
+        }
+
+        else {
+            userData = controllerUserPresentation.getUserData(username);
+            ibEditProfile.setVisibility(View.GONE);
+            ibSignOut.setVisibility(View.GONE);
+            tvMail.setVisibility(View.GONE);
         }
 
         setTextView("username", tvUsername);
@@ -78,7 +102,7 @@ public class UserProfile extends Fragment {
     private void setTextView(String text, TextView tv) {
         if (userData.get(text) != null) tv.setText(userData.get(text).toString());
         else {
-            tv.setVisibility(View.INVISIBLE);
+            tv.setVisibility(View.GONE);
         }
     }
 
@@ -120,5 +144,33 @@ public class UserProfile extends Fragment {
                 ivUserImage.setImageResource(R.drawable.userprofile1);
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ibEditProfile:
+                editProfile(rootView);
+                break;
+            case R.id.ibSignOut:
+                signOut();
+                break;
+        }
+    }
+
+    private void signOut() {
+        //controllerUserPresentation.logout();
+        //TODO canviar de un fragment a la activity
+    }
+
+    public void editProfile(View view) {
+        Fragment fragment = new UserProfileEdit();
+        fragmentTransaction(fragment);
+    }
+
+    private void fragmentTransaction(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
     }
 }

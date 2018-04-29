@@ -167,4 +167,7 @@ public class ControllerUserPresentation {
     }
 
 
+    public Bundle getUserData(String username) {
+        return controllerUserDomain.getUserData(username);
+    }
 }
