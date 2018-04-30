@@ -165,12 +165,13 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
     public void editProfile(View view) {
         Fragment fragment = new UserProfileEdit();
-        fragmentTransaction(fragment);
+        fragmentTransaction(fragment, "USER_EDIT_PROFILE");
     }
 
-    private void fragmentTransaction(Fragment fragment) {
+    private void fragmentTransaction(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
     }
 }

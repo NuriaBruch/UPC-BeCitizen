@@ -38,7 +38,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         //Set the fragment initially
         Fragment fragment = new InsideActivity();
-        fragmentTransaction(fragment);
+        fragmentTransaction(fragment, "INSIDE_ACTIVITY");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,9 +53,10 @@ public class SideMenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void fragmentTransaction(Fragment fragment) {
+    private void fragmentTransaction(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
     }
 
@@ -71,7 +72,19 @@ public class SideMenuActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int fragments = getSupportFragmentManager().getBackStackEntryCount();
+            if (fragments == 1) {
+                ControllerUserPresentation.getUniqueInstance().logout();
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                this.startActivity(intent);
+            } else {
+                if (getFragmentManager().getBackStackEntryCount() > 1) {
+                    getFragmentManager().popBackStack();
+                } else {
+                    super.onBackPressed();
+                }
+            }
         }
     }
 
@@ -95,7 +108,7 @@ public class SideMenuActivity extends AppCompatActivity
             bundle.putBoolean("loggeduser", true);
             Fragment fragment = new UserProfile();
             fragment.setArguments(bundle);
-            fragmentTransaction(fragment);
+            fragmentTransaction(fragment, "USER_PROFILE");
             return true;
         }
 
@@ -113,7 +126,7 @@ public class SideMenuActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_information:
                 fragment = new InsideActivity();
-                fragmentTransaction(fragment);
+                fragmentTransaction(fragment, "INSIDE_ACTIVITY");
                 break;
             case R.id.nav_faq:
                 /*
@@ -129,7 +142,7 @@ public class SideMenuActivity extends AppCompatActivity
                 break;
             case R.id.nav_forum:
                 fragment = new CategoryThreadActivity();
-                fragmentTransaction(fragment);
+                fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
 
                 //fragment = new ForumCategoriesActivity();
                 //fragmentTransaction(fragment);
