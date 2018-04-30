@@ -77,9 +77,9 @@ module.exports.routes = {
     controller: 'ThreadController',
     action: 'getAllCategories'
   },
-  'GET /getAllThreads':{
+  'GET /getAllThreadsCategory':{
     controller: 'ThreadController',
-    action: 'getAllThreads'
+    action: 'getAllThreadsCategory'
   },
   'GET /getThread':{
     controller: 'ThreadController',
@@ -93,7 +93,7 @@ module.exports.routes = {
     controller: 'ThreadController',
     action: 'deleteThread'
   },
-  //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  //############ COMENT CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newComment':{
     controller: 'CommentController',
     action: 'createComment'

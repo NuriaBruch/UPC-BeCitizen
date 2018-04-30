@@ -157,7 +157,7 @@ module.exports = {
         });
     },
 
-    getAllThreads: function(block,callback){
+    getAllThreadsCategory: function(block,category,callback){
         var limit = 10;
         block++; // los blocks 0 y 1 son los mismos, dejemos que front empieze a iterar con block=0
         var response = {
@@ -165,19 +165,24 @@ module.exports = {
             errors: [],
             threads:[]
          };
-        Thread.count().exec(function(err,numThreads){
+        Thread.count({category: category}).exec(function(err,numThreads){
+            if(numThreads==0){
+                response.status = "E4";
+                response.errors.push("There are no threads for this category");
+                callback(response);
+            }else
             if(block >Math.ceil(numThreads/limit)){
-                response.status = "Error";
+                response.status = "E1";
                 response.errors.push("Block out of bound");
                 callback(response);
             }
             else if( block<=0){
-                response.status = "Error";
+                response.status = "E3";
                 response.errors.push("Block should be positive, like you when reading this error");
                 callback(response);
             }
             else{
-                Thread.find().paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
+                Thread.find({category: category}).paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
                     if(err2 !== undefined && err2) {
                         response.status = "E2";
                         response.errors.push(err2);

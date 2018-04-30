@@ -50,9 +50,10 @@ module.exports = {
         });
     },
 
-    getAllThreads: function(req,res){
+    getAllThreadsCategory: function(req,res){
         var block = req.query.block;
-        ThreadService.getAllThreads(block,function(status){
+        var category = req.query.category;
+        ThreadService.getAllThreadsCategory(block,category,function(status){
             res.send(status);
         });
     }
