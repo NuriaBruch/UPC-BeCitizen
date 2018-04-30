@@ -195,21 +195,8 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     }
 
     public void changeImage() {
-
         Intent intent = new Intent(getActivity(), ImageSelection.class);
         startActivityForResult(intent,1);
-
-        /*CharSequence pictures[] = new CharSequence[] {"red", "green", "blue", "black"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
-        builder.setTitle("Pick an image");
-        builder.setItems(pictures, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // the user clicked on colors[which]
-            }
-        });
-        builder.show();*/
     }
 
     @Override
@@ -269,20 +256,16 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
         }
 
         else {
-
+            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.serverError),Toast.LENGTH_LONG);
+            notificacion.show();
         }
     }
 
     private boolean validateStringInput(String input) {
-        if (input.isEmpty()) {
-            return false;
-        }
-
-        return true;
+        return !input.isEmpty();
     }
 
     private boolean validateBirthDate(String date) {
-        date = birthDateInput.getText().toString().trim();
         String yearString = date.substring(6);
         if (date.isEmpty()) {
             birthDateInput.setError(getString(R.string.errorMsgName));
@@ -303,6 +286,5 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
-
 
 }
