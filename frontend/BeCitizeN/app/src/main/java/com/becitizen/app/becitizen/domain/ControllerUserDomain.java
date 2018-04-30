@@ -310,15 +310,16 @@ public class ControllerUserDomain {
         return controllerUserData.deactivateAccount(currentUser.getUsername());
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
+    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
         // Poster sha de mirar el Json aqui en lloc de a controllerUserData
-        int i = controllerUserData.editProfile(firstName, lastName, birthDate, country, biography);
+        int i = controllerUserData.editProfile(firstName, lastName, birthDate, image, country, biography);
         if (i == 0) {
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBirthDate(birthDate);
             currentUser.setCountry(country);
             currentUser.setBiography(biography);
+            currentUser.setImage(image);
         }
         return i;
     }
@@ -364,5 +365,9 @@ public class ControllerUserDomain {
         bundle.putInt("image", 5);
 
         return bundle;
+    }
+
+    public int deleteUser() {
+        return controllerUserData.deleteUser();
     }
 }

@@ -158,8 +158,8 @@ public class ControllerUserPresentation {
         return controllerUserDomain.deactivateAccount();
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
-        return controllerUserDomain.editProfile(firstName, lastName, birthDate, country, biography);
+    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+        return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 
     public Bundle getLoggerUserData() {
@@ -169,5 +169,9 @@ public class ControllerUserPresentation {
 
     public Bundle getUserData(String username) {
         return controllerUserDomain.getUserData(username);
+    }
+
+    public int deleteUser() {
+        return controllerUserDomain.deleteUser();
     }
 }

@@ -123,7 +123,7 @@ public class ControllerUserData {
             json.put("surname", lastName);
             json.put("birthday", birthDate);
             json.put("country", country);
-            json.put("profilePicture", image);
+            json.put("profilePicture", String.valueOf(image));
             json.put("facebook", String.valueOf(facebook));
             json.put("google", String.valueOf(google));
         } catch (JSONException e) {
@@ -149,16 +149,16 @@ public class ControllerUserData {
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, String country, String biography) {
+    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
         JSONObject json = new JSONObject();
         try {
             json.put("name", firstName);
             json.put("surname", lastName);
             json.put("biography", biography);
             json.put("birthday", birthDate);
+            json.put("profilePicture", image);
             json.put("country", country);
-            // TODO imatge del perfil
-            //json.put("profilePicture", image);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -194,4 +194,7 @@ public class ControllerUserData {
         }
     }
 
+    public int deleteUser() {
+        return 0;
+    }
 }
