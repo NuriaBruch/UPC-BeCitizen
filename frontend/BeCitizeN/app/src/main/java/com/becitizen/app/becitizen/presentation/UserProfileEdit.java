@@ -1,7 +1,9 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -122,13 +124,20 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
         int ret = controllerUserPresentation.deleteUser();
 
         if (ret == 0) {
-            // TODO redirecció a la pagina principal
+            controllerUserPresentation.logout();
+            goToLogin();
         }
 
         else {
             Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.serverError),Toast.LENGTH_LONG);
             notificacion.show();
         }
+    }
+
+    private void goToLogin() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 
     private void obtainDate() {
@@ -186,7 +195,11 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     }
 
     public void changeImage() {
-        CharSequence pictures[] = new CharSequence[] {"red", "green", "blue", "black"};
+
+        Intent intent = new Intent(getActivity(), ImageSelection.class);
+        startActivityForResult(intent,1);
+
+        /*CharSequence pictures[] = new CharSequence[] {"red", "green", "blue", "black"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(rootView.getContext());
         builder.setTitle("Pick an image");
@@ -196,7 +209,17 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
                 // the user clicked on colors[which]
             }
         });
-        builder.show();
+        builder.show();*/
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            String aux = data.getStringExtra(ImageSelection.RESULT_IMAGE);
+            selection = Integer.parseInt(aux);
+            setImage(selection);
+        }
     }
 
     public void updateProfile() {

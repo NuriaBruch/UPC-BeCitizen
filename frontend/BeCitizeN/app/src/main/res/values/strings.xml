@@ -313,4 +313,26 @@
     <string name="about">About</string>
     <string name="other">Other</string>
     <string name="rank">Rank</string>
+
+    <string-array name="image_codes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="image_pngs">
+        <item>@drawable/userprofile1</item>
+        <item>@drawable/userprofile2</item>
+        <item>@drawable/userprofile3</item>
+        <item>@drawable/userprofile4</item>
+        <item>@drawable/userprofile5</item>
+        <item>@drawable/userprofile6</item>
+        <item>@drawable/userprofile7</item>
+        <item>@drawable/userprofile8</item>
+    </string-array>
 </resources>

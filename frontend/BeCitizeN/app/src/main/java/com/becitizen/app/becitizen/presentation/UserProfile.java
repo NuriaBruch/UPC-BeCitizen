@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 
@@ -31,10 +33,11 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
     private boolean loggedUser;
     private String username;
+    private boolean activeUser;
     Bundle userData;
 
     public UserProfile() {
-
+        activeUser = true;
     }
 
     @Override
@@ -79,24 +82,32 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
         else {
             userData = controllerUserPresentation.getUserData(username);
+            activeUser = userData.getBoolean("isActive");
             ibEditProfile.setVisibility(View.GONE);
             ibSignOut.setVisibility(View.GONE);
             tvMail.setVisibility(View.GONE);
+
         }
 
-        setTextView("username", tvUsername);
+        if (activeUser) {
+            setTextView("username", tvUsername);
 
-        String name = userData.get("firstName").toString();
-        name += " " + userData.get("lastName").toString();
-        tvName.setText(name);
+            String name = userData.get("firstName").toString();
+            name += " " + userData.get("lastName").toString();
+            tvName.setText(name);
 
-        setTextView("birthDate", tvBirthDate);
-        setTextView("country", tvCountry);
-        setTextView("biography", tvBiography);
-        setTextView("mail", tvMail);
-        setTextView("rank", tvRank);
+            setTextView("birthDate", tvBirthDate);
+            setTextView("country", tvCountry);
+            setTextView("biography", tvBiography);
+            setTextView("mail", tvMail);
+            setTextView("rank", tvRank);
 
-        setImage(userData.getInt("image"));
+            setImage(userData.getInt("image"));
+        }
+
+        else {
+            //TODO usuari desactivat
+        }
     }
 
     private void setTextView(String text, TextView tv) {
@@ -159,8 +170,15 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     }
 
     private void signOut() {
-        //controllerUserPresentation.logout();
-        //TODO canviar de un fragment a la activity
+        controllerUserPresentation.logout();
+        Toast.makeText(rootView.getContext(), getResources().getString(R.string.logout), Toast.LENGTH_LONG).show();
+        goToLogin();
+    }
+
+    private void goToLogin() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 
     public void editProfile(View view) {
