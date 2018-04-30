@@ -38,6 +38,18 @@
                 android:background="#000000"
                 android:padding="1dp"/>
 
+            <ImageButton
+                android:id="@+id/ibDeleteUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@drawable/logout_icon"
+                android:background="@null"
+                android:layout_marginEnd="20dp"
+                />
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/firstNameLayout"
                 android:layout_width="match_parent"

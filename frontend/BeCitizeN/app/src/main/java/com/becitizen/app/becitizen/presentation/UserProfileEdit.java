@@ -3,18 +3,22 @@ package com.becitizen.app.becitizen.presentation;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 
@@ -32,6 +36,7 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     private Spinner countryInput;
     private TextInputEditText biographyInput;
     private ImageButton ibSelectImage;
+    private ImageButton ibDeleteUser;
     private Button bUpdate;
 
     private Calendar myCalendar = Calendar.getInstance();
@@ -62,6 +67,8 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
 
         ibSelectImage = rootView.findViewById(R.id.ibSelectImage);
             ibSelectImage.setOnClickListener(this);
+        ibDeleteUser = rootView.findViewById(R.id.ibDeleteUser);
+            ibDeleteUser.setOnClickListener(this);
         bUpdate = rootView.findViewById(R.id.bUpdate);
             bUpdate.setOnClickListener(this);
 
@@ -105,6 +112,22 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
             case R.id.bUpdate:
                 updateProfile();
                 break;
+            case R.id.ibDeleteUser:
+                deleteUser();
+                break;
+        }
+    }
+
+    private void deleteUser() {
+        int ret = controllerUserPresentation.deleteUser();
+
+        if (ret == 0) {
+            // TODO redirecció a la pagina principal
+        }
+
+        else {
+            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.serverError),Toast.LENGTH_LONG);
+            notificacion.show();
         }
     }
 
@@ -177,7 +200,85 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     }
 
     public void updateProfile() {
+        String firstName = firstNameInput.getText().toString().trim();
+        if (!validateStringInput(firstName)) {
+            firstNameInput.setError(getString(R.string.errorMsgName));
+            requestFocus(firstNameInput);
+            return;
+        }
 
+        String lastName = lastNameInput.getText().toString().trim();
+        if (!validateStringInput(lastName)) {
+            lastNameInput.setError(getString(R.string.errorMsgName));
+            requestFocus(lastNameInput);
+            return;
+        }
+
+        String date = birthDateInput.getText().toString().trim();
+        if (!validateBirthDate(date)) {
+            return;
+        }
+
+        String biography = biographyInput.getText().toString().trim();
+        if (!validateStringInput(biography)) {
+            biographyInput.setError(getString(R.string.errorMsgName));
+            requestFocus(biographyInput);
+            return;
+        }
+
+        int res = controllerUserPresentation.editProfile(firstName, lastName, date, selection,
+                countryInput.getSelectedItem().toString().trim(), biography);
+
+        if (res == 0) {
+            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.updateCorrect),Toast.LENGTH_LONG);
+            notificacion.show();
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            getActivity().getSupportFragmentManager().popBackStack();
+            transaction.remove(this);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            transaction.commit();
+        }
+
+        else if (res == 1) {
+            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.DBError),Toast.LENGTH_LONG);
+            notificacion.show();
+        }
+
+        else {
+
+        }
+    }
+
+    private boolean validateStringInput(String input) {
+        if (input.isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validateBirthDate(String date) {
+        date = birthDateInput.getText().toString().trim();
+        String yearString = date.substring(6);
+        if (date.isEmpty()) {
+            birthDateInput.setError(getString(R.string.errorMsgName));
+            return false;
+        } else if (Integer.valueOf(yearString) > year - 18) {
+            birthDateInput.setError(getString(R.string.errorMsgName));
+            return false;
+        }
+        else {
+            TextInputLayout birthDateLayout  = rootView.findViewById(R.id.birthDateLayout);
+            birthDateLayout.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
 
