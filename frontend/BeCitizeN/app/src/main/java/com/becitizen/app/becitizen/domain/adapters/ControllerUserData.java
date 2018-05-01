@@ -21,6 +21,7 @@ public class ControllerUserData {
 
     private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
     private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
+    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
 
     private static final String URI_THREADS_CATEGORY = "http://10.0.2.2:1337/getAllThreadsCategory?category=";
 
@@ -183,7 +184,8 @@ public class ControllerUserData {
 
 
     public boolean deactivateAccount(String username) {
-        try {
+        /*try {
+            // TODO això es un put, en realitat i mirar si fa falta token
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_DEACTIVATE_ACCOUNT + "?username=" + username));
 
             if (info.get("status").equals("Ok")) {
@@ -193,11 +195,13 @@ public class ControllerUserData {
         }
         catch (JSONException e) {
             return false;
-        }
+        }*/
+        return true;
     }
 
-    public int deleteUser() {
-        return 0;
+    public String viewProfile(String username) {
+        // TODO falta el token!
+        return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 
     public String getThreadsCategory(String category) {

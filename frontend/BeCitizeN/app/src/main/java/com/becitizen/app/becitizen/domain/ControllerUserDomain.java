@@ -8,6 +8,7 @@ import android.util.Log;
 import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.becitizen.app.becitizen.domain.entities.User;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -326,49 +327,88 @@ public class ControllerUserDomain {
 
     public Bundle getLoggedUserData() {
         Bundle bundle = new Bundle();
-        /*bundle.putString("username", currentUser.getUsername());
+
+        bundle.putString("username", currentUser.getUsername());
         bundle.putString("firstName", currentUser.getFirstName());
         bundle.putString("lastName", currentUser.getLastName());
         bundle.putString("birthDate", currentUser.getBirthDate());
         bundle.putString("country", currentUser.getCountry());
         bundle.putString("biography", currentUser.getBiography());
-        bundle.putString("mai1", currentUser.getMail());
+        bundle.putString("rank", currentUser.getRank());
         bundle.putInt("image", currentUser.getImage());
-        bundle.putString("rank", currentUser.getRank());*/
-
-        bundle.putString("username", "nuria");
-        bundle.putString("firstName", "nuria");
-        bundle.putString("lastName", "bruch");
-        bundle.putString("birthDate", "16/10/1997");
-        bundle.putString("country", "British Virgin Islands");
-        bundle.putString("biography", "holiholi allioli");
-        bundle.putString("mai1", "nskkd");
-        bundle.putString("rank", "coal");
-        bundle.putInt("image", 5);
 
         return bundle;
     }
 
-    public Bundle getUserData(String username) {
+    public Bundle viewProfile(String username) throws ServerException {
+
         Bundle bundle = new Bundle();
 
-        //TODO fer request
+        if (username.isEmpty()) username = currentUser.getUsername();
 
-        bundle.putString("username", "nuria");
+        /*try {
+            JSONObject response = new JSONObject(controllerUserData.viewProfile(username));
+
+            if (response.get("status").equals("Ok")) {
+                JSONObject info = response.getJSONObject("info");
+                bundle.putString("username",username);
+                if(!info.isNull("name")) bundle.putString("firstName", info.getString("name"));
+                if(!info.isNull("surname")) bundle.putString("lastName", info.getString("surname"));
+                if(!info.isNull("birthday")) bundle.putString("birthDate", info.getString("birthday"));
+                if(!info.isNull("country")) bundle.putString("country", info.getString("country"));
+                if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
+                if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
+                if(!info.isNull("profilePicture")) bundle.putInt("image", info.isNull("profilePicture"));
+
+                if (username.equals(currentUser.getUsername())) {
+                    currentUser.setFirstName(info.getString("name"));
+                    currentUser.setLastName(info.getString("surname"));
+                    currentUser.setBirthDate(info.getString("birthday"));
+                    currentUser.setCountry(info.getString("country"));
+                    currentUser.setBiography(info.getString("biography"));
+                    currentUser.setRank(info.getString("rank"));
+                }
+
+                return bundle;
+            }
+
+            else if (response.get("status").equals("E1")){
+                throw new ServerException("Server Error");
+            }
+
+            else if (response.get("status").equals("E2")){
+                throw new ServerException("User not found");
+            }
+
+            else {
+                throw new ServerException("User deactivated");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new ServerException("JSONObject error");
+        }*/
+
+        bundle.putString("username", username);
         bundle.putString("firstName", "nuria");
         bundle.putString("lastName", "bruch");
         bundle.putString("birthDate", "16/10/1997");
         bundle.putString("country", "British Virgin Islands");
         bundle.putString("biography", "holiholi allioli");
-        bundle.putString("mai1", "nskkd");
         bundle.putString("rank", "coal");
         bundle.putInt("image", 5);
 
-        return bundle;
-    }
+        if (username.equals(currentUser.getUsername())) {
+            currentUser.setFirstName("nuria");
+            currentUser.setLastName("bruch");
+            currentUser.setBirthDate("16/10/1997");
+            currentUser.setCountry("British Virgin Islands");
+            currentUser.setBiography("holiholi allioli");
+            currentUser.setRank("coal");
+            currentUser.setImage(5);
+        }
 
-    public int deleteUser() {
-        return controllerUserData.deleteUser();
+        return bundle;
     }
 
     public JSONObject getThreadsCategory(String category) {

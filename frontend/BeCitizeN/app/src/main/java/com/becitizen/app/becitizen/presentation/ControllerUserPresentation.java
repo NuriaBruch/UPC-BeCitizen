@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONArray;
@@ -167,17 +168,13 @@ public class ControllerUserPresentation {
         return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 
-    public Bundle getLoggerUserData() {
+    public Bundle getLoggedUserData() {
         return controllerUserDomain.getLoggedUserData();
     }
 
 
-    public Bundle getUserData(String username) {
-        return controllerUserDomain.getUserData(username);
-    }
-
-    public int deleteUser() {
-        return controllerUserDomain.deleteUser();
+    public Bundle viewProfile(String username) throws ServerException {
+        return controllerUserDomain.viewProfile(username);
     }
 
     /**
