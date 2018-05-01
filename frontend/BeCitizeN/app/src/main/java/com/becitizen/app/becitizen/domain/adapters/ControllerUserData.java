@@ -203,4 +203,8 @@ public class ControllerUserData {
     public String getThreadsCategory(String category) {
         return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category);
     }
+
+    public String getCategories() {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY);
+    }
 }

@@ -202,4 +202,20 @@ public class ControllerUserPresentation {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Metodo que retorna todas las categorias
+     *
+     * @return empty arraylist si ha ocurrido algun error
+     */
+    public String[] getCategories() {
+        JSONObject data = controllerUserDomain.getCategories();
+        String[] threads = {};
+        //try {
+
+            return threads;
+        //} catch (JSONException e) {
+        //    return threads;
+        //}
+    }
 }

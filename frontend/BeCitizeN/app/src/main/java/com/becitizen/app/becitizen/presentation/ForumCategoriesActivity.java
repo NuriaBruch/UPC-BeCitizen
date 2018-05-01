@@ -36,6 +36,7 @@ public class ForumCategoriesActivity extends Fragment {
         list.setAdapter(adapter);
 
         categories = new String[]{"justice", "test"};
+        //categories = ControllerUserPresentation.getUniqueInstance().getCategories();
         for (int i = 0; i < categories.length; ++i)
             adapter.add(categories[i]);
 
