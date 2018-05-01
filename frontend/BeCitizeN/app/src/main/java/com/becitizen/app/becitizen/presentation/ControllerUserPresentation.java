@@ -4,10 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ControllerUserPresentation {
 
@@ -173,5 +178,28 @@ public class ControllerUserPresentation {
 
     public int deleteUser() {
         return controllerUserDomain.deleteUser();
+    }
+
+    /**
+     * Metodo que retorna todos los threads de una categoria
+     *
+     * @param category name of the category
+     * @return empty arraylist si ha ocurrido algun error
+     */
+    public ArrayList<CategoryThread> getThreadsCategory(String category) {
+        JSONObject data = controllerUserDomain.getThreadsCategory(category);
+        ArrayList<CategoryThread> threads = new ArrayList<>();
+        try {
+            JSONArray array = (JSONArray)data.get("threads");
+            for(int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                threads.add(new CategoryThread(object.getString("title"), "test", "27-04-2018 09:20:54", object.getInt("votes"), object.getInt("id")));
+                object.get("title");
+            }
+            return threads;
+        } catch (JSONException e) {
+            return new ArrayList<>();
+        }
     }
 }

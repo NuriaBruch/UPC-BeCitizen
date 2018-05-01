@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
@@ -26,22 +27,28 @@ public class CategoryThreadActivity extends Fragment {
     ArrayList<CategoryThread> dataModels;
     ListView listView;
     private static CategoryThreadAdapter adapter;
+    private String category = "";
 
     public CategoryThreadActivity() {
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
-        //parentLinearLayout = (LinearLayout) rootView.findViewById(R.id.parent_linear_layout);
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
-        dataModels = new ArrayList<>();
+        dataModels = ControllerUserPresentation.getUniqueInstance().getThreadsCategory(category);
 
-        dataModels.add(new CategoryThread("Apple Pie", "Jaume123", "27-04-2018 09:20:54",333, 1));
-        dataModels.add(new CategoryThread("Apple Pie", "Android 1.0", "10-02-2017 09:20:54",1, 2));
+        if (dataModels.size() == 0) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         adapter = new CategoryThreadAdapter(dataModels, getApplicationContext());
 
@@ -49,7 +56,6 @@ public class CategoryThreadActivity extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 CategoryThread dataModel= dataModels.get(position);
             }
         });

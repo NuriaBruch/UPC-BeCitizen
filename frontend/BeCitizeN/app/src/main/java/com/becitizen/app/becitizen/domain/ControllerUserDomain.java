@@ -370,4 +370,14 @@ public class ControllerUserDomain {
     public int deleteUser() {
         return controllerUserData.deleteUser();
     }
+
+    public JSONObject getThreadsCategory(String category) {
+        try {
+            JSONObject response = new JSONObject(controllerUserData.getThreadsCategory(category));
+            return response;
+        }
+        catch (JSONException e) {
+            return null;
+        }
+    }
 }

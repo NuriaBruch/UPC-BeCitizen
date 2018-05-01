@@ -22,6 +22,8 @@ public class ControllerUserData {
     private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
     private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
 
+    private static final String URI_THREADS_CATEGORY = "http://10.0.2.2:1337/getAllThreadsCategory?category=";
+
     private static ControllerUserData instance = null;
 
     /**
@@ -196,5 +198,9 @@ public class ControllerUserData {
 
     public int deleteUser() {
         return 0;
+    }
+
+    public String getThreadsCategory(String category) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category);
     }
 }
