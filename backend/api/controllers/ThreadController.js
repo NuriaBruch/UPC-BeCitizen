@@ -56,6 +56,14 @@ module.exports = {
         ThreadService.getAllThreadsCategory(block,category,function(status){
             res.send(status);
         });
+    },
+    
+    voteThread: function(req, res){
+        var id = parseInt(req.query.threadId);
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.voteThread(id, email,function(status){
+            res.send(status);
+        });
     }
 };
 
