@@ -89,11 +89,15 @@ module.exports.routes = {
     controller: 'ThreadController',
     action: 'reportThread'
   },
+  'PUT /voteThread': {
+    controller: 'ThreadController',
+    action: 'voteThread'
+  },
   'DELETE /deleteThread':{
     controller: 'ThreadController',
     action: 'deleteThread'
   },
-  //############ COMENT CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  //############ COMMENT CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newComment':{
     controller: 'CommentController',
     action: 'createComment'
@@ -105,7 +109,11 @@ module.exports.routes = {
   'PUT /reportComment': {
     controller: 'CommentController',
     action: 'reportComment'
-  }
+  },
+  'PUT /voteComment': {
+    controller: 'CommentController',
+    action: 'voteComment'
+  },  
 
 
 

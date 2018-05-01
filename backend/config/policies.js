@@ -34,10 +34,12 @@ module.exports.policies = {
     createThread: 'tokenAuth',
     deleteThread: 'tokenAuth',
     reportThread: 'tokenAuth',
+    voteThread: 'tokenAuth'
   },
   CommentController: {
     reportComment: 'tokenAuth',
-    createComment: 'tokenAuth'
+    createComment: 'tokenAuth',
+    voteComment: 'tokenAuth'
   },
   UserController: {
     deactivateAccount: 'tokenAuth',
