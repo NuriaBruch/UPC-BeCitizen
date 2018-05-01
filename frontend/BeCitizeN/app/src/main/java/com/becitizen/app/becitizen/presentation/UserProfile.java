@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -24,7 +25,6 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private TextView tvBirthDate;
     private TextView tvCountry;
     private TextView tvBiography;
-    private TextView tvMail;
     private TextView tvRank;
     private ImageView ivUserImage;
     private FloatingActionButton fbPrivateMessage;
@@ -38,6 +38,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
     public UserProfile() {
         activeUser = true;
+        username = "";
     }
 
     @Override
@@ -56,7 +57,6 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         tvName = rootView.findViewById(R.id.tvName);
         tvBirthDate = rootView.findViewById(R.id.tvBirthday);
         tvCountry = rootView.findViewById(R.id.tvCountry);
-        tvMail = rootView.findViewById(R.id.tvMail);
         tvBiography = rootView.findViewById(R.id.tvBiography);
         ivUserImage = rootView.findViewById(R.id.ivUserImage);
 
@@ -76,20 +76,16 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private void setValues() {
 
         if (loggedUser) {
-            userData = controllerUserPresentation.getLoggerUserData();
             fbPrivateMessage.setVisibility(View.GONE);
         }
-
         else {
-            userData = controllerUserPresentation.getUserData(username);
-            activeUser = userData.getBoolean("isActive");
             ibEditProfile.setVisibility(View.GONE);
             ibSignOut.setVisibility(View.GONE);
-            tvMail.setVisibility(View.GONE);
-
         }
 
-        if (activeUser) {
+        try {
+            userData = controllerUserPresentation.viewProfile(username);
+
             setTextView("username", tvUsername);
 
             String name = userData.get("firstName").toString();
@@ -99,14 +95,24 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             setTextView("birthDate", tvBirthDate);
             setTextView("country", tvCountry);
             setTextView("biography", tvBiography);
-            setTextView("mail", tvMail);
             setTextView("rank", tvRank);
 
             setImage(userData.getInt("image"));
         }
 
-        else {
-            //TODO usuari desactivat
+        catch (ServerException e) {
+            ibEditProfile.setVisibility(View.GONE);
+            ibSignOut.setVisibility(View.GONE);
+            fbPrivateMessage.setVisibility(View.GONE);
+
+            if (e.getMessage().equals("User deactivated")) {
+                fbPrivateMessage.setVisibility(View.GONE);
+                // TODO posar les coses per al usuari desactivat
+            }
+
+            else {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 

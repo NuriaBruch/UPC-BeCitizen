@@ -58,7 +58,7 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
 
         controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
 
-        Bundle bundle = controllerUserPresentation.getLoggerUserData();
+        Bundle bundle = controllerUserPresentation.getLoggedUserData();
 
         firstNameInput = rootView.findViewById(R.id.firstNameInput);
         lastNameInput = rootView.findViewById(R.id.lastNameInput);
@@ -121,9 +121,9 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     }
 
     private void deleteUser() {
-        int ret = controllerUserPresentation.deleteUser();
+        boolean ret = controllerUserPresentation.deactivateAccount();
 
-        if (ret == 0) {
+        if (ret) {
             controllerUserPresentation.logout();
             goToLogin();
         }
