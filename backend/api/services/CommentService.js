@@ -29,6 +29,7 @@ module.exports = {
                             user.reportedComments.add(commentId);
                             user.save(function(err){
                                 comment.reportedBy.add(user.id);
+                                comment.numberReports = comment.numberReports + 1;
                                 comment.save(function(err){
                                     callback(response);
                                 });

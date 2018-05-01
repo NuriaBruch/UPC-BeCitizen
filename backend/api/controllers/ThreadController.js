@@ -51,7 +51,7 @@ module.exports = {
     },
 
     voteThread: function(req, res){
-        var id = req.body.id;
+        var id = parseInt(req.query.threadId);
         var email = UtilsService.getEmailFromHeader(req);
         ThreadService.voteThread(id, email,function(status){
             res.send(status);
