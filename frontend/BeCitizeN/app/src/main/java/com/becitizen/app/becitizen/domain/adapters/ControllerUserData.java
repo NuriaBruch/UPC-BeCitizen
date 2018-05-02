@@ -93,16 +93,16 @@ public class ControllerUserData {
      * @param mail Email a comprobar si esta registrado
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
-    public boolean existsMail(String mail) {
-        // TODO gestionar errors.
+    public boolean existsMail(String mail) throws ServerException {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
                 return !info.get("found").equals("No");
             }
-            return true;
+            else throw new ServerException("server error");
         }
         catch (JSONException e) {
+            // TODO gestionar errors.
             return true;
         }
     }

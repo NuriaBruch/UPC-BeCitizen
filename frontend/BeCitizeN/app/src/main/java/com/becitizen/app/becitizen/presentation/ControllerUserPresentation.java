@@ -49,7 +49,7 @@ public class ControllerUserPresentation {
      * @param email Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String email) {
+    public boolean existsMail(String email) throws ServerException {
         return controllerUserDomain.existsMail(email);
     }
 
