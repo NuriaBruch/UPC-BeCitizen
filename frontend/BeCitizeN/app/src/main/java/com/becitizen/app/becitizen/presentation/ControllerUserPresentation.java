@@ -102,7 +102,7 @@ public class ControllerUserPresentation {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException{
         return controllerUserDomain.googleLogin(account);
     }
 

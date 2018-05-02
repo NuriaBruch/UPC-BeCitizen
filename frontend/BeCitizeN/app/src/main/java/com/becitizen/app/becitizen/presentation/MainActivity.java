@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -74,7 +75,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case GoogleLogIn.RC_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-                handleExternalLoginResult(googleLogIn.onResult(data));
+                try {
+                    handleExternalLoginResult(googleLogIn.onResult(data));
+                } catch (ServerException e) {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
                 break;
             case 64206:
                 //Facebook

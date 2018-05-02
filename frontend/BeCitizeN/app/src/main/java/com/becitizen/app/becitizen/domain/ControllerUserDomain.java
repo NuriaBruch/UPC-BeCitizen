@@ -143,7 +143,7 @@ public class ControllerUserDomain {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
 
@@ -165,13 +165,12 @@ public class ControllerUserDomain {
                     doLogin("google", currentUser.getUsername());
                     return LoginResponse.LOGGED_IN;
                 }
-            } else {
-                // TODO gestionar errors.
-                return LoginResponse.ERROR;
             }
-            //mGoogleSignInClient.signOut();
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);*/
+
+            else if (response.get("status").equals("E1")) throw new ServerException("unable to confirm access token");
+            else if (response.get("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("user not granted via google");
+
         }
         catch (JSONException | SharedPreferencesException e) {
             return LoginResponse.ERROR;

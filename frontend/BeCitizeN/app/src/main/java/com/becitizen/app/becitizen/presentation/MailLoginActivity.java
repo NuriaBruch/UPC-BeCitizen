@@ -44,11 +44,13 @@ public class MailLoginActivity extends AppCompatActivity {
             if (i) {
                 Intent intent = new Intent(this, SideMenuActivity.class);
                 startActivity(intent);
-            } else {
+            }
+
+            else {
                 Toast.makeText(this, getResources().getString(R.string.JSONerror), Toast.LENGTH_LONG).show();
             }
         }
-        
+
         catch (ServerException e) {
             if (e.getMessage().equals("user not found")) {
                 tietMail.setError(getString(R.string.errorUserNotFound));

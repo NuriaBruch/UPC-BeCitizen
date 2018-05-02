@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -50,7 +51,7 @@ public class GoogleLogIn {
      *
      * @param  data los datos resultantes del intent de login
      */
-    public LoginResponse onResult(Intent data) {
+    public LoginResponse onResult(Intent data) throws ServerException {
         // The Task returned from this call is always completed, no need to attach
         // a listener.
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
