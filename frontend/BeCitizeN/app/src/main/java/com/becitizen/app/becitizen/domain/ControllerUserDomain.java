@@ -211,7 +211,10 @@ public class ControllerUserDomain {
             if(isLogged) {
                 String mode = preferences.getValue(PREFS_KEY, "mode");
                 json.put("mode", mode);
-                if (!mode.equals("guest")) json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                if (!mode.equals("guest")) {
+                    json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                    currentUser.setUsername(preferences.getValue(PREFS_KEY, "userName"));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

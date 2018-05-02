@@ -3,6 +3,7 @@ package com.becitizen.app.becitizen.domain.adapters;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -20,6 +21,8 @@ import static android.content.ContentValues.TAG;
 public class ServerAdapter {
 
     private static ServerAdapter instance;
+
+    private String TOKEN;
 
     private ServerAdapter() {
     }
@@ -78,6 +81,8 @@ public class ServerAdapter {
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
+                Header header = response.getFirstHeader("tokenn");
+                if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
                 Log.w("Result", "Signed in as: " + responseBody);
@@ -131,5 +136,9 @@ public class ServerAdapter {
             }
             return responseBody;
         }
+    }
+
+    public String getTOKEN() {
+        return TOKEN;
     }
 }
