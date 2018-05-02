@@ -13,7 +13,7 @@
     <string name="youAreIn">You are in!</string>
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
-    <string name="errorIncorrEmail">Incorrect email</string>
+    <string name="errorUserNotFound">User not found</string>
     <string name="errorIncorrPassw">Incorrect password</string>
 
     <string name="enter">Enter</string>
@@ -54,6 +54,7 @@
     <string name="serverError">Server Error</string>
     <string name="DBError">Database Error</string>
     <string name="updateCorrect">Profile updated correctly</string>
+    <string name="JSONerror">JSON error</string>
 
     <string name="by">by</string>
     <string name="seconds">seconds</string>

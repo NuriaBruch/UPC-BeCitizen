@@ -72,7 +72,7 @@ public class ControllerUserPresentation {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException{
         return controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
     }
 
@@ -83,7 +83,7 @@ public class ControllerUserPresentation {
      * @param password Contrasena
      * @return Cierto si las credenciales son correctas, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) {
+    public boolean checkCredentials(String email, String password) throws ServerException {
         return controllerUserDomain.checkCredentials(email,password);
     }
 

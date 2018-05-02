@@ -73,7 +73,7 @@ public class ControllerUserDomain {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
@@ -292,7 +292,7 @@ public class ControllerUserDomain {
      * @param password Contrasena a comprobar
      * @return True si el par {email, password} esta en el servidor, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) {
+    public boolean checkCredentials(String email, String password) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
 
@@ -310,8 +310,14 @@ public class ControllerUserDomain {
                 return true;
 
             }
-            return false;
+
+            else if (response.get("status").equals("E1")) throw new ServerException("DB error");
+            else if (response.get("status").equals("E2")) throw new ServerException("user not found");
+            else if (response.get("status").equals("E3")) throw new ServerException("server error");
+            else throw new ServerException("incorrect password");
+
         } catch (JSONException e) {
+            //TODO excepcions
             return false;
         } catch (SharedPreferencesException e) {
             return false;
