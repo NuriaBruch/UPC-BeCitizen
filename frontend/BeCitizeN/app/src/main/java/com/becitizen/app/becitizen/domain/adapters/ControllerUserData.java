@@ -122,7 +122,7 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException {
 
         JSONObject json = new JSONObject();
         try {
@@ -146,7 +146,8 @@ public class ControllerUserData {
             if (info.get("status").equals("Ok")) {
                return true;
             }
-            return false;
+            else if (info.get("status").equals("E1")) throw new ServerException("server error");
+            else throw new ServerException("DB error");
         }
         catch (JSONException e) {
             // TODO gestionar errors.
