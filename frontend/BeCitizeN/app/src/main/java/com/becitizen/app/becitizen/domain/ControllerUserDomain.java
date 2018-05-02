@@ -84,8 +84,16 @@ public class ControllerUserDomain {
         boolean result = controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
                 firstName, lastName, birthDate, country, currentUser.getImage(), currentUser.isFacebook(), currentUser.isGoogle());
         try {
-            if (result)
-                doLogin("mail", currentUser.getUsername());
+            if (result) {
+                if (!currentUser.isFacebook() && !currentUser.isGoogle()) {
+                    // Fem el login amb mail per obtenir el token de la sessió del usuari
+                    if (checkCredentials(currentUser.getMail(), currentUser.getPassword())) doLogin("mail", currentUser.getUsername());
+                }
+
+                else {
+                    doLogin("mail", currentUser.getUsername());
+                }
+            }
         } catch (SharedPreferencesException e) {
             // TODO gestionar errors.
             return false;
@@ -214,6 +222,7 @@ public class ControllerUserDomain {
                 if (!mode.equals("guest")) {
                     json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
                     currentUser.setUsername(preferences.getValue(PREFS_KEY, "userName"));
+                    controllerUserData.setToken(preferences.getValue(PREFS_KEY, "token"));
                 }
             }
         } catch (JSONException e) {
@@ -236,7 +245,10 @@ public class ControllerUserDomain {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "true");
         preferences.saveValue(PREFS_KEY, "mode", mode);
-        if(!mode.equals("guest")) preferences.saveValue(PREFS_KEY, "userName", userName);
+        if(!mode.equals("guest")) {
+            preferences.saveValue(PREFS_KEY, "userName", userName);
+            preferences.saveValue(PREFS_KEY, "token", controllerUserData.getToken());
+        }
     }
 
     /**

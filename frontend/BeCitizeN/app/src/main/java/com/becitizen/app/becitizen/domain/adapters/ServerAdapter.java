@@ -32,6 +32,14 @@ public class ServerAdapter {
         return instance;
     }
 
+    public void setTOKEN(String TOKEN) {
+        this.TOKEN = TOKEN;
+    }
+
+    public String getTOKEN() {
+        return TOKEN;
+    }
+
     /**
      * Metodo que permite hacer un get a la url indicada
      *
@@ -136,9 +144,5 @@ public class ServerAdapter {
             }
             return responseBody;
         }
-    }
-
-    public String getTOKEN() {
-        return TOKEN;
     }
 }

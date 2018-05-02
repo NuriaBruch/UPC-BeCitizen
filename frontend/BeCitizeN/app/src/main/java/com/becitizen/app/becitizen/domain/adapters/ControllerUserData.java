@@ -44,6 +44,10 @@ public class ControllerUserData {
         return instance;
     }
 
+    public String getToken() {
+        return ServerAdapter.getInstance().getTOKEN();
+    }
+
     /**
      * Metodo que envia la solicitud de hacer login con Facebook a nuestro servidor,
      * comprueba si ha sucedido algun error en el servidor y devuelve su respuesta.
@@ -210,5 +214,9 @@ public class ControllerUserData {
 
     public String getCategories() {
         return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY);
+    }
+
+    public void setToken(String token) {
+        ServerAdapter.getInstance().setTOKEN(token);
     }
 }
