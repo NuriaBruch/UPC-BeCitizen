@@ -106,7 +106,7 @@ public class ControllerUserDomain {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() {
+    public LoginResponse facebookLogin() throws ServerException {
 
         JSONObject json = null;
         try {
@@ -130,7 +130,7 @@ public class ControllerUserDomain {
             }
             return LoginResponse.REGISTER;
         }
-        catch (Exception e) {
+        catch (JSONException | SharedPreferencesException e) {
             // TODO gestionar errors.
             Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;

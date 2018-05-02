@@ -70,7 +70,10 @@ public class ControllerUserData {
 
                 return response;
 
-            } else throw new ServerException("Server response status is not OK");
+            }
+            else if (resp.getString("status").equals("E1")) throw new ServerException("server error");
+            else if (resp.getString("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("unable to get user info from Facebook, wrong facebookId");
 
         } catch (JSONException e) {
             // TODO gestionar errors.

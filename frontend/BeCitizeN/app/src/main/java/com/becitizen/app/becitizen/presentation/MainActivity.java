@@ -41,7 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
+                try {
+                    handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
+                } catch (ServerException e) {
+                    // TODO revisar el getApplicationContext
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

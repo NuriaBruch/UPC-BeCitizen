@@ -7,6 +7,7 @@ import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONArray;
@@ -92,7 +93,7 @@ public class ControllerUserPresentation {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() {
+    public LoginResponse facebookLogin() throws ServerException {
         return controllerUserDomain.facebookLogin();
     }
 
