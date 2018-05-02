@@ -89,7 +89,7 @@ public class ServerAdapter {
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
-                Header header = response.getFirstHeader("tokenn");
+                Header header = response.getFirstHeader("token");
                 if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
