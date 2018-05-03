@@ -8,30 +8,28 @@
 module.exports = {
 
   attributes: {
-    title:{
+    content:{
       type: 'string',
       required: true
-    },
-    content: {
-      type: 'string',
-      required: true
-    },
-    category: {
-      type: 'string',
-      enum: [ "culture", "education and formation",
-        "emergencies", "language", "justice", "public administration", "housing",
-        "health", "work", "tourism", "off topic"],
     },
     postedBy:{
       model: 'user'
     },
-    votedBy:{
+    reportedBy: {
       collection: 'user',
-      via: 'votes'
+      via: 'reportedComments'
     },
-    reportedBy:{
+    votedBy: {
       collection: 'user',
-      via: 'reports'
+      via: 'votedComments'
+    },
+    repliesTo:{
+      model: 'comment',
+      via:'id'
+    },
+    belongsTo:{
+      model: 'thread',
+      via:'id'
     },
     numberReports:{
       type: 'integer',
@@ -42,7 +40,5 @@ module.exports = {
       defaultsTo: 0
     }
   }
-
-
 };
 

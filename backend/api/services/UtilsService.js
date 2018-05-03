@@ -1,4 +1,5 @@
 
+var jw = require('jsonwebtoken');
 module.exports = {
 
 getRandomString: function (){
@@ -25,9 +26,28 @@ getFormattedBirthday: function(birthday){
     return result[1]+"/"+result[0]+"/"+result[2];
 },
 
+getEmailFromHeader: (req) => jw.decode(req.get("token")).email,
+
+
 update_deactivated: function(userFound, callback){
     User.update({email:userFound.email},{deactivated:false}).exec(function(err1,userFound){
         callback(err1);
+    });
+},
+
+increaseUserKarma: function(points,mail,callback){
+    User.findOne({email: mail}).exec(function(err1, userFound){
+        if(err1 !== undefined && err1) {
+            callback(null);
+        }
+        if(userFound === undefined){
+            callback(null);
+        }
+        else{
+            userFound.karma = userFound.karma + points;
+            userFound.save();
+            callback(userFound.karma);
+        }
     });
 }
 

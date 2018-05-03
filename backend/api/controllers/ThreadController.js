@@ -11,7 +11,7 @@ module.exports = {
         var response = {
             status: "Ok",
             errors: [],
-            categories: [ "culture", "education y formation",
+            categories: [ "culture", "education and formation",
         "emergencies", "language", "justice", "public administration", "housing",
         "health", "work", "tourism", "off topic"]
         }
@@ -20,10 +20,50 @@ module.exports = {
     },
 
     createThread: function(req,res){
-        var {userMail, title, content, category} = req.body;
+        var userMail = UtilsService.getEmailFromHeader(req);
+        var {title, content, category} = req.body;
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
         })
+    },
+
+    deleteThread: function(req,res){
+        var id = req.query.threadId;
+        ThreadService.deleteThread(id,function(status){
+            res.send(status);
+        });
+    },
+
+    reportThread: function(req,res){
+        var id = req.query.threadId;
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.reportThread(id,email,function(status){
+            res.send(status);
+        });
+    },
+
+    getThread: function(req,res){
+        var id = req.query.threadId;
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.getThread(id,email,function(status){
+            res.send(status);
+        });
+    },
+
+    getAllThreadsCategory: function(req,res){
+        var block = req.query.block;
+        var category = req.query.category;
+        ThreadService.getAllThreadsCategory(block,category,function(status){
+            res.send(status);
+        });
+    },
+    
+    voteThread: function(req, res){
+        var id = parseInt(req.query.threadId);
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.voteThread(id, email,function(status){
+            res.send(status);
+        });
     }
 };
 

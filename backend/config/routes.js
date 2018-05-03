@@ -35,6 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
+  //############ USER CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /register': {
     controller: 'UserController',
     action: 'register'
@@ -55,18 +56,67 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'existsEmail'
   },
+  'GET /viewProfile':{
+    controller: 'UserController',
+    action: 'viewProfile'
+  },
   'PUT /deactivateAccount': {
     controller: 'UserController',
     action: 'deactivateAccount'
+  },
+  'PUT /updateProfile':{
+    controller: 'UserController',
+    action: 'updateProfile'
+  }, 
+  //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newThread':{
+    controller: 'ThreadController',
+    action: 'createThread'
   },
   'GET /categories':{
     controller: 'ThreadController',
     action: 'getAllCategories'
   },
-  'POST /newThread':{
+  'GET /getAllThreadsCategory':{
     controller: 'ThreadController',
-    action: 'createThread'
-  }
+    action: 'getAllThreadsCategory'
+  },
+  'GET /getThread':{
+    controller: 'ThreadController',
+    action: 'getThread'
+  },
+  'PUT /reportThread':{
+    controller: 'ThreadController',
+    action: 'reportThread'
+  },
+  'PUT /voteThread': {
+    controller: 'ThreadController',
+    action: 'voteThread'
+  },
+  'DELETE /deleteThread':{
+    controller: 'ThreadController',
+    action: 'deleteThread'
+  },
+  //############ COMMENT CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newComment':{
+    controller: 'CommentController',
+    action: 'createComment'
+  },
+  'GET /getThreadComments':{
+    controller: 'CommentController',
+    action: 'getThreadComments'
+  },
+  'PUT /reportComment': {
+    controller: 'CommentController',
+    action: 'reportComment'
+  },
+  'PUT /voteComment': {
+    controller: 'CommentController',
+    action: 'voteComment'
+  },  
+
+
+
 
 
   /***************************************************************************

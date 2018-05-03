@@ -13,7 +13,7 @@
     <string name="youAreIn">You are in!</string>
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
-    <string name="errorIncorrEmail">Incorrect email</string>
+    <string name="errorUserNotFound">User not found</string>
     <string name="errorIncorrPassw">Incorrect password</string>
 
     <string name="enter">Enter</string>
@@ -37,7 +37,9 @@
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
     <string name="birthDate">Birth Date</string>
+    <string name="biography">Biography</string>
     <string name="country">Birth Country</string>
+    <string name="profilePicture">Profile picture</string>
     <string name="birthDatePicker">Select your birthdate</string>
     <string name="dateFormat">dd/mm/yyyy</string>
     <string name="submit">Submit</string>
@@ -45,6 +47,26 @@
     <string name="errorUsername">Username already exists</string>
 
     <string name="guest">Guest</string>
+    <string name="sendMessage">Send message</string>
+    <string name="update">Update</string>
+    <string name="editprofile">Edit your profile</string>
+
+    <string name="serverError">Server Error</string>
+    <string name="DBError">Database Error</string>
+    <string name="updateCorrect">Profile updated correctly</string>
+    <string name="JSONerror">JSON error</string>
+
+    <string name="by">by</string>
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="years">years</string>
+    <string name="second">second</string>
+    <string name="minute">minute</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="year">year</string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
@@ -292,4 +314,26 @@
     <string name="about">About</string>
     <string name="other">Other</string>
     <string name="rank">Rank</string>
+
+    <string-array name="image_codes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="image_pngs">
+        <item>@drawable/userprofile1</item>
+        <item>@drawable/userprofile2</item>
+        <item>@drawable/userprofile3</item>
+        <item>@drawable/userprofile4</item>
+        <item>@drawable/userprofile5</item>
+        <item>@drawable/userprofile6</item>
+        <item>@drawable/userprofile7</item>
+        <item>@drawable/userprofile8</item>
+    </string-array>
 </resources>

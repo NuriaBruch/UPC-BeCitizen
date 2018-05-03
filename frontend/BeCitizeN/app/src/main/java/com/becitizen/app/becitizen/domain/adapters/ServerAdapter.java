@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -24,12 +25,22 @@ public class ServerAdapter {
 
     private static ServerAdapter instance;
 
+    private String TOKEN;
+
     private ServerAdapter() {
     }
 
     public static ServerAdapter getInstance() {
         if(instance == null) instance = new ServerAdapter();
         return instance;
+    }
+
+    public void setTOKEN(String TOKEN) {
+        this.TOKEN = TOKEN;
+    }
+
+    public String getTOKEN() {
+        return TOKEN;
     }
 
     /**
@@ -99,6 +110,8 @@ public class ServerAdapter {
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
+                Header header = response.getFirstHeader("token");
+                if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
                 Log.w("Result", "Signed in as: " + responseBody);

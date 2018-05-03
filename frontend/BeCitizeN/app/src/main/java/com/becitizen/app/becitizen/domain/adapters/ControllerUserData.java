@@ -19,6 +19,12 @@ public class ControllerUserData {
     private static final String URI_REGISTER = "http://becitizen.cf/register";
     private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
 
+    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
+    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
+
+    private static final String URI_THREADS_CATEGORY = "http://10.0.2.2:1337/getAllThreadsCategory?category=";
+
     private static ControllerUserData instance = null;
 
     /**
@@ -36,6 +42,10 @@ public class ControllerUserData {
     public static ControllerUserData getInstance() {
         if(instance == null) instance = new ControllerUserData();
         return instance;
+    }
+
+    public String getToken() {
+        return ServerAdapter.getInstance().getTOKEN();
     }
 
     /**
@@ -60,7 +70,10 @@ public class ControllerUserData {
 
                 return response;
 
-            } else throw new ServerException("Server response status is not OK");
+            }
+            else if (resp.getString("status").equals("E1")) throw new ServerException("server error");
+            else if (resp.getString("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("unable to get user info from Facebook, wrong facebookId");
 
         } catch (JSONException e) {
             // TODO gestionar errors.
@@ -80,16 +93,16 @@ public class ControllerUserData {
      * @param mail Email a comprobar si esta registrado
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
-    public boolean existsMail(String mail) {
-        // TODO gestionar errors.
+    public boolean existsMail(String mail) throws ServerException {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
                 return !info.get("found").equals("No");
             }
-            return true;
+            else throw new ServerException("server error");
         }
         catch (JSONException e) {
+            // TODO gestionar errors.
             return true;
         }
     }
@@ -109,17 +122,18 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, boolean facebook, boolean google) {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException {
 
         JSONObject json = new JSONObject();
         try {
             json.put("username", username);
             json.put("password", password);
             json.put("email", email);
-            json.put("firstName", firstName);
-            json.put("lastName", lastName);
-            json.put("birthDate", birthDate);
+            json.put("name", firstName);
+            json.put("surname", lastName);
+            json.put("birthday", birthDate);
             json.put("country", country);
+            json.put("profilePicture", String.valueOf(image));
             json.put("facebook", String.valueOf(facebook));
             json.put("google", String.valueOf(google));
         } catch (JSONException e) {
@@ -132,7 +146,8 @@ public class ControllerUserData {
             if (info.get("status").equals("Ok")) {
                return true;
             }
-            return false;
+            else if (info.get("status").equals("E1")) throw new ServerException("server error");
+            else throw new ServerException("DB error");
         }
         catch (JSONException e) {
             // TODO gestionar errors.
@@ -145,4 +160,67 @@ public class ControllerUserData {
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
+    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("name", firstName);
+            json.put("surname", lastName);
+            json.put("biography", biography);
+            json.put("birthday", birthDate);
+            json.put("profilePicture", image);
+            json.put("country", country);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        /*String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
+        try {
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+            if (info.get("status").equals("Ok")) {
+                return true;
+            }
+            return false;
+        }
+        catch (JSONException e) {
+            // TODO gestionar errors.
+            return false;
+        }*/
+
+        return 0;
+    }
+
+
+    public boolean deactivateAccount(String username) {
+        /*try {
+            // TODO això es un put, en realitat i mirar si fa falta token
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_DEACTIVATE_ACCOUNT + "?username=" + username));
+
+            if (info.get("status").equals("Ok")) {
+                return true;
+            }
+            return false;
+        }
+        catch (JSONException e) {
+            return false;
+        }*/
+        return true;
+    }
+
+    public String viewProfile(String username) {
+        // TODO falta el token!
+        return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
+    }
+
+    public String getThreadsCategory(String category) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category);
+    }
+
+    public String getCategories() {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY);
+    }
+
+    public void setToken(String token) {
+        ServerAdapter.getInstance().setTOKEN(token);
+    }
 }
