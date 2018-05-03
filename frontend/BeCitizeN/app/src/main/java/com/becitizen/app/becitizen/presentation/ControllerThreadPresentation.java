@@ -1,14 +1,9 @@
 package com.becitizen.app.becitizen.presentation;
 
-import android.content.Context;
-import android.os.Bundle;
-
 import com.becitizen.app.becitizen.domain.ControllerThreadDomain;
-import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
-import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,5 +75,16 @@ public class ControllerThreadPresentation {
         //} catch (JSONException e) {
         //    return threads;
         //}
+    }
+
+    /**
+     * Metodo que crea un nuevo thread
+     *
+     * @return empty arraylist si ha ocurrido algun error
+     */
+    public boolean newThread(Thread t) throws ServerException {
+        //TODO: delete line below
+        //t = new Thread("hi","test", "justice");
+        return controllerThreadDomain.newThread(t);
     }
 }

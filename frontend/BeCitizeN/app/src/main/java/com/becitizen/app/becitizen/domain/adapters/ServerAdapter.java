@@ -151,6 +151,8 @@ public class ServerAdapter {
                 //add data
                 StringEntity entity = new StringEntity(json);
                 httppost.setEntity(entity);
+                if (getTOKEN() != null)
+                    httppost.setHeader("token", getTOKEN());
                 //execute http post
                 HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();

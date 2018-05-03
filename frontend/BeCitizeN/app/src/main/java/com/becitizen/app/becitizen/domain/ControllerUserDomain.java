@@ -21,7 +21,7 @@ public class ControllerUserDomain {
     private ControllerUserData controllerUserData;
     private User currentUser;
 
-    private String PREFS_KEY = "myPreferences";
+    public static String PREFS_KEY = "myPreferences";
 
     /**
      * Constructora por defecto para evitar que sea instanciado

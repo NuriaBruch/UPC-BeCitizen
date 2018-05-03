@@ -23,8 +23,6 @@ public class ControllerUserData {
     private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
     private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
 
-    private static final String URI_THREADS_CATEGORY = "http://10.0.2.2:1337/getAllThreadsCategory?category=";
-
     private static ControllerUserData instance = null;
 
     /**
@@ -44,7 +42,7 @@ public class ControllerUserData {
         return instance;
     }
 
-    public String getToken() {
+    public static String getToken() {
         return ServerAdapter.getInstance().getTOKEN();
     }
 
@@ -83,6 +81,14 @@ public class ControllerUserData {
         }
     }
 
+    /**
+     * Metodo que envia la solicitud de hacer login con Google a nuestro servidor,
+     * comprueba si ha sucedido algun error en el servidor y devuelve su respuesta.
+     *
+     * @param token token del usuario generado por Google
+     *
+     * @return La respuesta de nuestro servidor al hacer login con Google
+     */
     public String googleLogin(String token) {
         return ServerAdapter.getInstance().doGetRequest(URI_GOOGLE_LOGIN + token);
     }
@@ -91,6 +97,7 @@ public class ControllerUserData {
      * Metodo que envia la solicitud para comprovar si un email esta registrado en nuestro servidor
      *
      * @param mail Email a comprobar si esta registrado
+     *
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
     public boolean existsMail(String mail) throws ServerException {

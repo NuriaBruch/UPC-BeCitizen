@@ -14,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.MySharedPreferences;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -55,8 +59,20 @@ public class CategoryThreadActivity extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(), "New Thread Call", Toast.LENGTH_SHORT);
-                toast.show();
+                try {
+                    if (MySharedPreferences.getInstance().getValue(ControllerUserDomain.PREFS_KEY, "isLogged").equals("true")
+                            && !MySharedPreferences.getInstance().getValue(ControllerUserDomain.PREFS_KEY, "mode").equals("guest")) {
+                        try {
+                            ControllerThreadPresentation.getUniqueInstance().newThread(null);
+                        } catch (ServerException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    } else throw new SharedPreferencesException("User not logged in");
+                } catch (SharedPreferencesException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -71,6 +87,12 @@ public class CategoryThreadActivity extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
     }
 
 }
