@@ -1,13 +1,17 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -21,12 +25,22 @@ public class ServerAdapter {
 
     private static ServerAdapter instance;
 
+    private String TOKEN;
+
     private ServerAdapter() {
     }
 
     public static ServerAdapter getInstance() {
         if(instance == null) instance = new ServerAdapter();
         return instance;
+    }
+
+    public void setTOKEN(String TOKEN) {
+        this.TOKEN = TOKEN;
+    }
+
+    public String getTOKEN() {
+        return TOKEN;
     }
 
     /**
@@ -65,6 +79,24 @@ public class ServerAdapter {
     }
 
     /**
+     * Metodo que permite hacer un put a la url indicada con
+     * un objeto formado por los valores en los parametros
+     *
+     * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a hacer put
+     * @return Respuesta obtenida con el put
+     */
+    public String doPutRequest(String[] dataRequest) {
+        PutTask request = new PutTask();
+        String data = "";
+        try {
+            data = request.execute(dataRequest).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+    /**
      * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http get
      */
     private class sendUserDataToServer extends AsyncTask<String, Void, String> {
@@ -78,6 +110,8 @@ public class ServerAdapter {
 
             try {
                 HttpResponse response = httpClient.execute(httpGet);
+                Header header = response.getFirstHeader("token");
+                if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
                 Log.w("Result", "Signed in as: " + responseBody);
@@ -102,7 +136,7 @@ public class ServerAdapter {
          * que hay en data[1]
          *
          * @param data Array de strings que contiene en data[0] la url y en data[1] la entity que se va a usar en el post
-         * @return
+         * @return response
          */
         @Override
         protected String doInBackground(String... data) {
@@ -119,6 +153,47 @@ public class ServerAdapter {
                 httppost.setEntity(entity);
                 //execute http post
                 HttpResponse response = httpclient.execute(httppost);
+                int statusCode = response.getStatusLine().getStatusCode();
+                responseBody = EntityUtils.toString(response.getEntity());
+
+            } catch (ClientProtocolException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            } catch (IOException e) {
+                Log.e(TAG, "Error sending ID token to backend.", e);
+                return "Error sending ID token to backend.";
+            }
+            return responseBody;
+        }
+    }
+
+    /**
+     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http put
+     */
+    private class PutTask extends AsyncTask<String, String, String> {
+
+        /**
+         * Metodo para hacer un put en segundo plano a la url de data[0] con el contenido
+         * que hay en data[1]
+         *
+         * @param data Array de strings que contiene en data[0] la url y en data[1] la entity que se va a usar en el put
+         * @return response
+         */
+        @Override
+        protected String doInBackground(String... data) {
+            // Create a new HttpClient and Put Header
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPut httpput = new HttpPut(data[0]);
+            String responseBody;
+
+            String json = data[1];
+
+            try {
+                //add data
+                StringEntity entity = new StringEntity(json);
+                httpput.setEntity(entity);
+                //execute http put
+                HttpResponse response = httpclient.execute(httpput);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
 

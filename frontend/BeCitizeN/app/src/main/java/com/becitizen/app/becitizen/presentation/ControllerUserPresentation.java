@@ -4,10 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ControllerUserPresentation {
 
@@ -42,7 +49,7 @@ public class ControllerUserPresentation {
      * @param email Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String email) {
+    public boolean existsMail(String email) throws ServerException {
         return controllerUserDomain.existsMail(email);
     }
 
@@ -66,7 +73,7 @@ public class ControllerUserPresentation {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException{
         return controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
     }
 
@@ -77,7 +84,7 @@ public class ControllerUserPresentation {
      * @param password Contrasena
      * @return Cierto si las credenciales son correctas, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) {
+    public boolean checkCredentials(String email, String password) throws ServerException {
         return controllerUserDomain.checkCredentials(email,password);
     }
 
@@ -86,7 +93,7 @@ public class ControllerUserPresentation {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() {
+    public LoginResponse facebookLogin() throws ServerException {
         return controllerUserDomain.facebookLogin();
     }
 
@@ -96,7 +103,7 @@ public class ControllerUserPresentation {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException{
         return controllerUserDomain.googleLogin(account);
     }
 
@@ -162,16 +169,51 @@ public class ControllerUserPresentation {
         return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 
-    public Bundle getLoggerUserData() {
+    public Bundle getLoggedUserData() {
         return controllerUserDomain.getLoggedUserData();
     }
 
 
-    public Bundle getUserData(String username) {
-        return controllerUserDomain.getUserData(username);
+    public Bundle viewProfile(String username) throws ServerException {
+        return controllerUserDomain.viewProfile(username);
     }
 
-    public int deleteUser() {
-        return controllerUserDomain.deleteUser();
+    /**
+     * Metodo que retorna todos los threads de una categoria
+     *
+     * @param category name of the category
+     * @return empty arraylist si ha ocurrido algun error
+     */
+    public ArrayList<CategoryThread> getThreadsCategory(String category) {
+        JSONObject data = controllerUserDomain.getThreadsCategory(category);
+        ArrayList<CategoryThread> threads = new ArrayList<>();
+        try {
+            JSONArray array = (JSONArray)data.get("threads");
+            for(int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                threads.add(new CategoryThread(object.getString("title"), "test", "27-04-2018 09:20:54", object.getInt("votes"), object.getInt("id")));
+                object.get("title");
+            }
+            return threads;
+        } catch (JSONException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * Metodo que retorna todas las categorias
+     *
+     * @return empty arraylist si ha ocurrido algun error
+     */
+    public String[] getCategories() {
+        JSONObject data = controllerUserDomain.getCategories();
+        String[] threads = {};
+        //try {
+
+            return threads;
+        //} catch (JSONException e) {
+        //    return threads;
+        //}
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.becitizen.app.becitizen.domain.entities.User;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -48,7 +49,7 @@ public class ControllerUserDomain {
      * @param mail Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String mail) {
+    public boolean existsMail(String mail) throws ServerException {
         return controllerUserData.existsMail(mail);
     }
 
@@ -72,7 +73,7 @@ public class ControllerUserDomain {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
@@ -83,8 +84,16 @@ public class ControllerUserDomain {
         boolean result = controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
                 firstName, lastName, birthDate, country, currentUser.getImage(), currentUser.isFacebook(), currentUser.isGoogle());
         try {
-            if (result)
-                doLogin("mail", currentUser.getUsername());
+            if (result) {
+                if (!currentUser.isFacebook() && !currentUser.isGoogle()) {
+                    // Fem el login amb mail per obtenir el token de la sessió del usuari
+                    if (checkCredentials(currentUser.getMail(), currentUser.getPassword())) doLogin("mail", currentUser.getUsername());
+                }
+
+                else {
+                    doLogin("mail", currentUser.getUsername());
+                }
+            }
         } catch (SharedPreferencesException e) {
             // TODO gestionar errors.
             return false;
@@ -97,7 +106,7 @@ public class ControllerUserDomain {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() {
+    public LoginResponse facebookLogin() throws ServerException {
 
         JSONObject json = null;
         try {
@@ -121,7 +130,7 @@ public class ControllerUserDomain {
             }
             return LoginResponse.REGISTER;
         }
-        catch (Exception e) {
+        catch (JSONException | SharedPreferencesException e) {
             // TODO gestionar errors.
             Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;
@@ -134,7 +143,7 @@ public class ControllerUserDomain {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
 
@@ -156,13 +165,12 @@ public class ControllerUserDomain {
                     doLogin("google", currentUser.getUsername());
                     return LoginResponse.LOGGED_IN;
                 }
-            } else {
-                // TODO gestionar errors.
-                return LoginResponse.ERROR;
             }
-            //mGoogleSignInClient.signOut();
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);*/
+
+            else if (response.get("status").equals("E1")) throw new ServerException("unable to confirm access token");
+            else if (response.get("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("user not granted via google");
+
         }
         catch (JSONException | SharedPreferencesException e) {
             return LoginResponse.ERROR;
@@ -210,7 +218,11 @@ public class ControllerUserDomain {
             if(isLogged) {
                 String mode = preferences.getValue(PREFS_KEY, "mode");
                 json.put("mode", mode);
-                if (!mode.equals("guest")) json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                if (!mode.equals("guest")) {
+                    json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                    currentUser.setUsername(preferences.getValue(PREFS_KEY, "userName"));
+                    controllerUserData.setToken(preferences.getValue(PREFS_KEY, "token"));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -232,7 +244,10 @@ public class ControllerUserDomain {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "true");
         preferences.saveValue(PREFS_KEY, "mode", mode);
-        if(!mode.equals("guest")) preferences.saveValue(PREFS_KEY, "userName", userName);
+        if(!mode.equals("guest")) {
+            preferences.saveValue(PREFS_KEY, "userName", userName);
+            preferences.saveValue(PREFS_KEY, "token", controllerUserData.getToken());
+        }
     }
 
     /**
@@ -276,7 +291,7 @@ public class ControllerUserDomain {
      * @param password Contrasena a comprobar
      * @return True si el par {email, password} esta en el servidor, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) {
+    public boolean checkCredentials(String email, String password) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
 
@@ -294,8 +309,14 @@ public class ControllerUserDomain {
                 return true;
 
             }
-            return false;
+
+            else if (response.get("status").equals("E1")) throw new ServerException("DB error");
+            else if (response.get("status").equals("E2")) throw new ServerException("user not found");
+            else if (response.get("status").equals("E3")) throw new ServerException("server error");
+            else throw new ServerException("incorrect password");
+
         } catch (JSONException e) {
+            //TODO excepcions
             return false;
         } catch (SharedPreferencesException e) {
             return false;
@@ -326,48 +347,107 @@ public class ControllerUserDomain {
 
     public Bundle getLoggedUserData() {
         Bundle bundle = new Bundle();
-        /*bundle.putString("username", currentUser.getUsername());
+
+        bundle.putString("username", currentUser.getUsername());
         bundle.putString("firstName", currentUser.getFirstName());
         bundle.putString("lastName", currentUser.getLastName());
         bundle.putString("birthDate", currentUser.getBirthDate());
         bundle.putString("country", currentUser.getCountry());
         bundle.putString("biography", currentUser.getBiography());
-        bundle.putString("mai1", currentUser.getMail());
+        bundle.putString("rank", currentUser.getRank());
         bundle.putInt("image", currentUser.getImage());
-        bundle.putString("rank", currentUser.getRank());*/
-
-        bundle.putString("username", "nuria");
-        bundle.putString("firstName", "nuria");
-        bundle.putString("lastName", "bruch");
-        bundle.putString("birthDate", "16/10/1997");
-        bundle.putString("country", "British Virgin Islands");
-        bundle.putString("biography", "holiholi allioli");
-        bundle.putString("mai1", "nskkd");
-        bundle.putString("rank", "coal");
-        bundle.putInt("image", 5);
 
         return bundle;
     }
 
-    public Bundle getUserData(String username) {
+    public Bundle viewProfile(String username) throws ServerException {
+
         Bundle bundle = new Bundle();
 
-        //TODO fer request
+        if (username.isEmpty()) username = currentUser.getUsername();
 
-        bundle.putString("username", "nuria");
+        /*try {
+            JSONObject response = new JSONObject(controllerUserData.viewProfile(username));
+
+            if (response.get("status").equals("Ok")) {
+                JSONObject info = response.getJSONObject("info");
+                bundle.putString("username",username);
+                if(!info.isNull("name")) bundle.putString("firstName", info.getString("name"));
+                if(!info.isNull("surname")) bundle.putString("lastName", info.getString("surname"));
+                if(!info.isNull("birthday")) bundle.putString("birthDate", info.getString("birthday"));
+                if(!info.isNull("country")) bundle.putString("country", info.getString("country"));
+                if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
+                if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
+                if(!info.isNull("profilePicture")) bundle.putInt("image", info.isNull("profilePicture"));
+
+                if (username.equals(currentUser.getUsername())) {
+                    currentUser.setFirstName(info.getString("name"));
+                    currentUser.setLastName(info.getString("surname"));
+                    currentUser.setBirthDate(info.getString("birthday"));
+                    currentUser.setCountry(info.getString("country"));
+                    currentUser.setBiography(info.getString("biography"));
+                    currentUser.setRank(info.getString("rank"));
+                }
+
+                return bundle;
+            }
+
+            else if (response.get("status").equals("E1")){
+                throw new ServerException("Server Error");
+            }
+
+            else if (response.get("status").equals("E2")){
+                throw new ServerException("User not found");
+            }
+
+            else {
+                throw new ServerException("User deactivated");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new ServerException("JSONObject error");
+        }*/
+
+        bundle.putString("username", username);
         bundle.putString("firstName", "nuria");
         bundle.putString("lastName", "bruch");
         bundle.putString("birthDate", "16/10/1997");
         bundle.putString("country", "British Virgin Islands");
         bundle.putString("biography", "holiholi allioli");
-        bundle.putString("mai1", "nskkd");
         bundle.putString("rank", "coal");
         bundle.putInt("image", 5);
+
+        if (username.equals(currentUser.getUsername())) {
+            currentUser.setFirstName("nuria");
+            currentUser.setLastName("bruch");
+            currentUser.setBirthDate("16/10/1997");
+            currentUser.setCountry("British Virgin Islands");
+            currentUser.setBiography("holiholi allioli");
+            currentUser.setRank("coal");
+            currentUser.setImage(5);
+        }
 
         return bundle;
     }
 
-    public int deleteUser() {
-        return controllerUserData.deleteUser();
+    public JSONObject getThreadsCategory(String category) {
+        try {
+            JSONObject response = new JSONObject(controllerUserData.getThreadsCategory(category));
+            return response;
+        }
+        catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public JSONObject getCategories() {
+        try {
+            JSONObject response = new JSONObject(controllerUserData.getCategories());
+            return response;
+        }
+        catch (JSONException e) {
+            return null;
+        }
     }
 }

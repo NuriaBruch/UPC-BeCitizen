@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                app:srcCompat="@android:drawable/ic_menu_edit"
+                app:srcCompat="@drawable/edit_user"
                 android:background="@null" />
 
             <ImageButton
@@ -42,7 +42,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/ibEditProfile"
                 android:layout_marginTop="10dp"
-                app:srcCompat="@android:drawable/ic_menu_set_as"
+                app:srcCompat="@drawable/log_out"
                 android:background="@null"/>
 
             <TextView
@@ -91,18 +91,11 @@
                 android:text="Country" />
 
             <TextView
-                android:id="@+id/tvMail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCountry"
-                android:text="Mail"/>
-
-            <TextView
                 android:id="@+id/tvBiography"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/tvMail"
+                android:layout_below="@+id/tvCountry"
                 android:layout_marginTop="5dp"
                 android:text="Biography" />
 
@@ -120,6 +113,6 @@
         android:layout_marginEnd="20dp"
         android:text="@string/sendMessage"
         android:textAllCaps="false"
-        app:srcCompat="@drawable/ic_menu_private_messages" />
+        app:srcCompat="@drawable/private_message" />
 
 </RelativeLayout>
