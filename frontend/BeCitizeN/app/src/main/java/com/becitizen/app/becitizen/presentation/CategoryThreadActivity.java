@@ -43,7 +43,7 @@ public class CategoryThreadActivity extends Fragment {
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
-        dataModels = ControllerUserPresentation.getUniqueInstance().getThreadsCategory(category);
+        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
 
         if (dataModels.size() == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
