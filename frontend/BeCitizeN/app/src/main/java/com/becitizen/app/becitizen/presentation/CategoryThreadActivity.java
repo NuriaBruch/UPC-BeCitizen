@@ -81,7 +81,8 @@ public class CategoryThreadActivity extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CategoryThread dataModel= dataModels.get(position);
+                CategoryThread thread = dataModels.get(position);
+                //TODO: open thread activity with id = thread.getId()
             }
         });
 
