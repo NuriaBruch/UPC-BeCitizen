@@ -60,8 +60,7 @@ public class CategoryThreadActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 try {
-                    if (MySharedPreferences.getInstance().getValue(ControllerUserDomain.PREFS_KEY, "isLogged").equals("true")
-                            && !MySharedPreferences.getInstance().getValue(ControllerUserDomain.PREFS_KEY, "mode").equals("guest")) {
+                    if (ControllerUserDomain.getUniqueInstance().isLogged()) {
                         try {
                             ControllerThreadPresentation.getUniqueInstance().newThread(null);
                         } catch (ServerException e) {
