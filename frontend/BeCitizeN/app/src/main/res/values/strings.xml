@@ -314,6 +314,12 @@
     <string name="about">About</string>
     <string name="other">Other</string>
     <string name="rank">Rank</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="category">Category</string>
+    <string name="hintTitleThread">Provide a title for your new thread</string>
+    <string name="hintThreadContent">Describe your thread</string>
+    <string name="newThread">New Thread</string>
 
     <string-array name="image_codes">
         <item>1</item>
