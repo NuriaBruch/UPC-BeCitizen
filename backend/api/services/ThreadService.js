@@ -168,7 +168,7 @@ module.exports = {
         Thread.count({category: category}).exec(function(err,numThreads){
             if(numThreads==0){
                 response.status = "E4";
-                response.errors.push("There are no threads for this category");
+                response.errors.push("There aren't threads for this category");
                 callback(response);
             }else
             if(block >Math.ceil(numThreads/limit)){
@@ -182,7 +182,7 @@ module.exports = {
                 callback(response);
             }
             else{
-                Thread.find({category: category}).paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
+                Thread.find({category: category}).populate('postedBy').paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
                     if(err2 !== undefined && err2) {
                         response.status = "E2";
                         response.errors.push(err2);
@@ -192,9 +192,12 @@ module.exports = {
                             var threadInfo = {
                                 title:"",
                                 votes:"",
-                                id:""
-                
+                                id:"",
+                                username:"",
+                                createdAt: ""
                             };
+                            threadInfo.createdAt = thread.createdAt;
+                            threadInfo.username = thread.postedBy.username;
                             threadInfo.id = thread.id;
                             threadInfo.title = thread.title;
                             threadInfo.votes = thread.numberVotes; 
