@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    >
+
+    <ImageButton
+        android:id="@+id/commentVoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="11dp"
+        android:background="@null"
+        android:tint="@android:color/holo_green_dark"
+        app:srcCompat="@drawable/vote_icon" />
+
+    <TextView
+        android:id="@+id/commentVotesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/commentVoteButton"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_toStartOf="@id/relativeLayout"
+        android:layout_marginEnd="5dp"
+        android:text="Votes"
+        android:textAlignment="center"
+        android:textColor="@android:color/holo_green_dark"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/commentVoteButton"
+        android:background="@drawable/rectangle"
+        android:layout_marginStart="11dp"
+        android:layout_marginEnd="5dp"
+        android:elevation="3dp"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:id="@+id/threadContentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/commentReportButton"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/commentAuthorImage"
+            android:layout_marginBottom="7dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="11dp"
+            android:text="Content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="14sp" />
+
+        <ImageButton
+            android:id="@+id/commentReportButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/threadAuthorText"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:tint="@android:color/holo_red_dark"
+            app:srcCompat="@drawable/report_icon" />
+
+        <ImageView
+            android:id="@+id/commentAuthorImage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/com_facebook_profile_picture_blank_square"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/threadAuthorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/threadContentText"
+            android:layout_marginStart="13dp"
+            android:layout_toEndOf="@+id/commentAuthorImage"
+            android:text="Author"
+            android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commentAuthorRankText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/threadAuthorText"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/threadAuthorText"
+            android:text="rank" />
+
+        <ImageButton
+            android:id="@+id/commentQuoteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/commentReportButton"
+            android:layout_marginEnd="46dp"
+            android:layout_toStartOf="@+id/commentReportButton"
+            android:background="@null"
+            app:srcCompat="@drawable/quote_icon" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/commentTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginEnd="13dp"
+        android:layout_marginBottom="5dp"
+        android:text="createdAt" />
+
+
+</RelativeLayout>

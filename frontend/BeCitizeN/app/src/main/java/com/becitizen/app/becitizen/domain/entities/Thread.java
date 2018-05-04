@@ -26,6 +26,10 @@ public class Thread {
         this.canVote = canVote;
     }
 
+    public Thread() {
+
+    }
+
     public Thread(String title, String content, String category) {
         this.title = title;
         this.content = content;

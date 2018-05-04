@@ -11,6 +11,10 @@ public class ControllerThreadData {
     //URIs
     private static final String URI_THREADS_CATEGORY = "http://becitizen.cf/getAllThreadsCategory?category=";
     private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
+    private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
+    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments";
+    private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
+
 
     private static ControllerThreadData instance = null;
 
@@ -81,4 +85,32 @@ public class ControllerThreadData {
             return false;
         }
     }
+
+
+    public String getThreadContent(int id) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_CONTENT + String.valueOf(id));
+    }
+
+    public String getThreadComments(int id) {
+        /*
+        String threadComments = ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + "?email=" + token + "&threadId=" + id);
+        return threadComments;
+        */
+
+        // TODO UNCOMMENT
+        return "test";
+    }
+
+    public void newComment(String commentText, int threadId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("content", commentText);
+            json.put("threadId", threadId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_NEW_COMMENT, json.toString()};
+        ServerAdapter.getInstance().doPostRequest(dataRequest);
+    }
+
 }

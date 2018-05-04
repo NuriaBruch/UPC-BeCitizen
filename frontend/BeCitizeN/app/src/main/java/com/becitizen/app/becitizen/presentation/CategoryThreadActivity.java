@@ -82,6 +82,10 @@ public class CategoryThreadActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CategoryThread thread = dataModels.get(position);
+                ThreadActivity threadActivity = new ThreadActivity();
+                threadActivity.setThreadId(thread.getId());
+                // falta pasar de fragment
+
                 //TODO: open thread activity with id = thread.getId()
             }
         });
