@@ -23,6 +23,9 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+
+import org.json.JSONException;
 
 import java.lang.reflect.Array;
 import java.util.Calendar;
@@ -77,9 +80,7 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
         firstNameInput.setText(bundle.getString("firstName"));
         lastNameInput.setText(bundle.getString("lastName"));
         birthDateInput.setText(bundle.getString("birthDate"));
-        biographyInput.setText(bundle.getString("biography"));
-
-        SpinnerAdapter spinnerAdapter = countryInput.getAdapter();
+        if (!bundle.getString("biography").equals("null")) biographyInput.setText(bundle.getString("biography"));
 
         setCountry(bundle.getString("country"));
 
@@ -236,28 +237,29 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
             return;
         }
 
-        int res = controllerUserPresentation.editProfile(firstName, lastName, date, selection,
-                countryInput.getSelectedItem().toString().trim(), biography);
+        try {
 
-        if (res == 0) {
-            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.updateCorrect),Toast.LENGTH_LONG);
-            notificacion.show();
+            boolean res = controllerUserPresentation.editProfile(firstName, lastName, date, selection,
+                    countryInput.getSelectedItem().toString(), biography);
 
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            getActivity().getSupportFragmentManager().popBackStack();
-            transaction.remove(this);
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            transaction.commit();
+            if (res) {
+                Toast notificacion = Toast.makeText(rootView.getContext(), getString(R.string.updateCorrect), Toast.LENGTH_LONG);
+                notificacion.show();
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                getActivity().getSupportFragmentManager().popBackStack();
+                transaction.remove(this);
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+                transaction.commit();
+            }
         }
 
-        else if (res == 1) {
-            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.DBError),Toast.LENGTH_LONG);
-            notificacion.show();
+        catch (ServerException e) {
+            Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-        else {
-            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.serverError),Toast.LENGTH_LONG);
-            notificacion.show();
+        catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
         }
     }
 

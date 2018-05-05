@@ -167,34 +167,23 @@ public class ControllerUserData {
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
         JSONObject json = new JSONObject();
-        try {
-            json.put("name", firstName);
-            json.put("surname", lastName);
-            json.put("biography", biography);
-            json.put("birthday", birthDate);
-            json.put("profilePicture", image);
-            json.put("country", country);
+        json.put("name", firstName);
+        json.put("surname", lastName);
+        json.put("biography", biography);
+        json.put("birthday", birthDate);
+        json.put("profilePicture", image);
+        json.put("country", country);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-
-        /*String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
-        try {
-            JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
-            if (info.get("status").equals("Ok")) {
-                return true;
-            }
-            return false;
-        }
-        catch (JSONException e) {
-            // TODO gestionar errors.
-            return false;
-        }*/
-
-        return 0;
+        else if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else throw new ServerException("DB error");
     }
 
 

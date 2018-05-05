@@ -165,7 +165,7 @@ public class ControllerUserPresentation {
         return controllerUserDomain.deactivateAccount();
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
         return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 

@@ -246,7 +246,6 @@ public class ControllerUserDomain {
         preferences.saveValue(PREFS_KEY, "mode", mode);
         if(!mode.equals("guest")) {
             preferences.saveValue(PREFS_KEY, "userName", userName);
-            String token = controllerUserData.getToken();
             preferences.saveValue(PREFS_KEY, "token", controllerUserData.getToken());
         }
     }
@@ -334,10 +333,10 @@ public class ControllerUserDomain {
         return controllerUserData.deactivateAccount(currentUser.getUsername());
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
         // Poster sha de mirar el Json aqui en lloc de a controllerUserData
-        int i = controllerUserData.editProfile(firstName, lastName, birthDate, image, country, biography);
-        if (i == 0) {
+        boolean i = controllerUserData.editProfile(firstName, lastName, birthDate, image, country, biography);
+        if (i) {
             currentUser.setFirstName(firstName);
             currentUser.setLastName(lastName);
             currentUser.setBirthDate(birthDate);
@@ -389,6 +388,7 @@ public class ControllerUserDomain {
                 currentUser.setCountry(info.getString("country"));
                 currentUser.setBiography(info.getString("biography"));
                 currentUser.setRank(info.getString("rank"));
+                currentUser.setImage(info.getInt("profilePicture"));
             }
 
             return bundle;
