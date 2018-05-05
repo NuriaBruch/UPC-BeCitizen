@@ -317,8 +317,10 @@ public class ControllerUserDomain {
 
         } catch (JSONException e) {
             //TODO excepcions
+            e.printStackTrace();
             return false;
         } catch (SharedPreferencesException e) {
+            e.printStackTrace();
             return false;
         }
     }

@@ -342,4 +342,15 @@
         <item>@drawable/userprofile7</item>
         <item>@drawable/userprofile8</item>
     </string-array>
+
+    <string-array name="categories">
+        <item>Culture</item>
+        <item>Administration</item>
+        <item>Mobility</item>
+        <item>Sport</item>
+        <item>Education</item>
+        <item>Health</item>
+        <item>Employment</item>
+        <item>Justice</item>
+    </string-array>
 </resources>
