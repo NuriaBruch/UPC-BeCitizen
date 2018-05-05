@@ -89,4 +89,8 @@ public class ControllerThreadPresentation {
         controllerThreadDomain.newComment(commentText, threadId);
     }
 
+    public void voteThread(int threadId) {
+        controllerThreadDomain.voteThread(threadId);
+    }
+
 }

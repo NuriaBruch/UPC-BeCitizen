@@ -147,5 +147,9 @@ public class ControllerThreadDomain {
         */
     }
 
+    public void voteThread(int threadId) {
+        controllerThreadData.voteThread(threadId);
+    }
+
 
 }
