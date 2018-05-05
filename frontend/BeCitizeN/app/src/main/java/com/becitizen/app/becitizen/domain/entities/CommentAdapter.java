@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 
@@ -66,7 +67,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Comment Quoted", Snackbar.LENGTH_LONG).show();
+                Toast.makeText(context, "Quoting not implemented yet", Toast.LENGTH_LONG).show();
             }
         });
 

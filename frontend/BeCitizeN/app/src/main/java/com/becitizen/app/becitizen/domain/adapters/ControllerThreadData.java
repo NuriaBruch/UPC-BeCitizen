@@ -12,7 +12,7 @@ public class ControllerThreadData {
     private static final String URI_THREADS_CATEGORY = "http://becitizen.cf/getAllThreadsCategory?category=";
     private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
     private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
-    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments";
+    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?&threadId=";
     private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
     private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
     private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
@@ -96,13 +96,7 @@ public class ControllerThreadData {
     }
 
     public String getThreadComments(int id) {
-        /*
-        String threadComments = ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + "?email=" + token + "&threadId=" + id);
-        return threadComments;
-        */
-
-        // TODO UNCOMMENT
-        return "test";
+        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id));
     }
 
     public void newComment(String commentText, int threadId) {

@@ -5,6 +5,7 @@ package com.becitizen.app.becitizen.domain.entities;
  */
 
 public class Comment {
+    private int id;
     private String content;
     private String author;
     private String authorRank;
@@ -19,11 +20,12 @@ public class Comment {
 
     }
 
-    public Comment(String content, String author, String createdAt, int votes) {
-        this.content = content;
-        this.author = author;
-        this.createdAt = createdAt;
-        this.votes = votes;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getContent() {

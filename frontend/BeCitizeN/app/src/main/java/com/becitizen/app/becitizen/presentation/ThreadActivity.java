@@ -58,33 +58,14 @@ public class ThreadActivity extends Fragment {
         threadVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO vote thread
-                Snackbar.make(view, "Comment Voted", Snackbar.LENGTH_LONG)
-                        //.setActionTextColor(R.color.colorAccent)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar.make(view, "Vote Undone", Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                controllerThreadPresentation.voteThread(threadId);
             }
         });
 
         threadReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO report thread
-
-                Snackbar.make(view, "Comment Reported", Snackbar.LENGTH_LONG)
-                        //.setActionTextColor(R.color.colorAccent)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar.make(view, "Report Undone", Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                controllerThreadPresentation.reportThread(threadId);
             }
         });
 
