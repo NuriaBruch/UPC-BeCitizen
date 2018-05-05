@@ -151,5 +151,9 @@ public class ControllerThreadDomain {
         controllerThreadData.voteThread(threadId);
     }
 
+    public void voteComment(int commentId) {
+        controllerThreadData.voteComment(commentId);
+    }
+
 
 }

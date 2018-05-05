@@ -15,6 +15,7 @@ public class ControllerThreadData {
     private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments";
     private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
     private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
+    private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
 
 
     private static ControllerThreadData instance = null;
@@ -122,6 +123,17 @@ public class ControllerThreadData {
             e.printStackTrace();
         }
         String[] dataRequest = {URI_VOTE_THREAD, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
+    }
+
+    public void voteComment(int commentId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("commentId", commentId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_VOTE_COMMENT, json.toString()};
         ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
