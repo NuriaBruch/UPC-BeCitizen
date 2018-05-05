@@ -23,19 +23,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     private List<Comment> commentList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView commentAuthor, commentTime, commentContent, commentVotes;
-        public ImageButton commentVote, commentReport, commentQuote;
+        public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank;
+        public ImageButton commentVote, commentReport, commentQuote, commentAuthorImage;
 
         public MyViewHolder(View view) {
             super(view);
-            commentAuthor = view.findViewById(R.id.threadAuthorText);
+            commentAuthor = view.findViewById(R.id.commentAuthorText);
             commentTime = view.findViewById(R.id.commentTime);
-            commentContent = view.findViewById(R.id.threadContentText);
+            commentContent = view.findViewById(R.id.commentContentText);
             commentVotes = view.findViewById(R.id.commentVotesText);
+            commentAuthorRank = view.findViewById(R.id.commentAuthorRankText);
 
             commentVote = view.findViewById(R.id.commentVoteButton);
             commentReport = view.findViewById(R.id.commentReportButton);
             commentQuote = view.findViewById(R.id.commentQuoteButton);
+            commentAuthorImage = view.findViewById(R.id.commentAuthorImage);
         }
     }
 
@@ -47,7 +49,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.comment, parent, false);
+                .inflate(R.layout.thread_comment, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -59,6 +61,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentTime.setText(comment.getCreatedAt());
         holder.commentContent.setText(comment.getContent());
         holder.commentVotes.setText(comment.getVotes());
+        holder.commentAuthorRank.setText(comment.getAuthorRank());
 
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +100,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             }
         });
 
-        //holder.commentVote.setVisibility(View.INVISIBLE);
-        //holder.commentVote.setEnabled(false);
-        holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+        if (!comment.isVotable()) {
+            holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+            holder.commentVote.setEnabled(false);
+        }
+        if (!comment.isReportable()) {
+            //holder.commentReport.setImageResource();
+            holder.commentReport.setEnabled(false);
+        }
     }
 
     @Override
