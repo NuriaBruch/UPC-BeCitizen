@@ -101,4 +101,8 @@ public class ControllerThreadPresentation {
         controllerThreadDomain.voteComment(commentId);
     }
 
+    public void reportComment(int commentId) {
+        controllerThreadDomain.reportComment(commentId);
+    }
+
 }

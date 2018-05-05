@@ -150,4 +150,15 @@ public class ControllerThreadData {
         ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    public void reportComment(int commentId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("commentId", commentId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_REPORT_COMMENT, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
+    }
+
 }

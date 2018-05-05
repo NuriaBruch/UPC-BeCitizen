@@ -159,5 +159,9 @@ public class ControllerThreadDomain {
         controllerThreadData.voteComment(commentId);
     }
 
+    public void reportComment(int commentId) {
+        controllerThreadData.reportComment(commentId);
+    }
+
 
 }
