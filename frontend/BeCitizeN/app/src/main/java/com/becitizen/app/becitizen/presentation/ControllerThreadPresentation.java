@@ -6,7 +6,6 @@ import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,20 +46,7 @@ public class ControllerThreadPresentation {
      * @return empty arraylist si ha ocurrido algun error
      */
     public ArrayList<CategoryThread> getThreadsCategory(String category) {
-        JSONObject data = controllerThreadDomain.getThreadsCategory(category);
-        ArrayList<CategoryThread> threads = new ArrayList<>();
-        try {
-            JSONArray array = (JSONArray)data.get("threads");
-            for(int i = 0; i < array.length(); i++)
-            {
-                JSONObject object = array.getJSONObject(i);
-                threads.add(new CategoryThread(object.getString("title"), "test", "27-04-2018 09:20:54", object.getInt("votes"), object.getInt("id")));
-                object.get("title");
-            }
-            return threads;
-        } catch (JSONException e) {
-            return new ArrayList<>();
-        }
+        return controllerThreadDomain.getThreadsCategory(category);
     }
 
     /**

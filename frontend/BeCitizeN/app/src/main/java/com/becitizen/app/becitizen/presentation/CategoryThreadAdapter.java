@@ -69,7 +69,7 @@ public class CategoryThreadAdapter extends ArrayAdapter<CategoryThread> implemen
         String dateString;
         try{
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             cal.setTime(sdf.parse(dataSet.get(position).getCreatedAt()));
 
             Calendar calendar = Calendar.getInstance();

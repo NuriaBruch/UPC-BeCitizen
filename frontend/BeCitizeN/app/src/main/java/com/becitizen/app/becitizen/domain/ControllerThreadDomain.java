@@ -2,9 +2,9 @@ package com.becitizen.app.becitizen.domain;
 
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerThreadData;
+import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.domain.entities.Thread;
-import com.becitizen.app.becitizen.domain.entities.User;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONArray;
@@ -47,13 +47,21 @@ public class ControllerThreadDomain {
      *
      * @return JSONObject que contiene los posts de una categoria
      */
-    public JSONObject getThreadsCategory(String category) {
+    public ArrayList<CategoryThread> getThreadsCategory(String category) {
         try {
-            JSONObject response = new JSONObject(controllerThreadData.getThreadsCategory(category));
-            return response;
+            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category));
+            ArrayList<CategoryThread> threads = new ArrayList<>();
+            JSONArray array = (JSONArray)data.get("threads");
+            for(int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
+                object.get("title");
+            }
+            return threads;
         }
         catch (JSONException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
