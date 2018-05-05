@@ -11,7 +11,7 @@ describe('UserModel', function () {
       let birthday = "29/02/1975";
       let country = "Argentina";
       let rank = "diamond";
-      let profilePicture = "http://images/omar.png";
+      let profilePicture = "1";
       let hasFacebook = true;
       let hasGoogle = false;
       User.create({

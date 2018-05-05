@@ -26,8 +26,7 @@ describe('UserController', function () {
                 "email": "test@Email.com"
               })
             .exec(function (err, userCreated){
-                if(!err) {
-                    console.log("*******************+");
+                if(!err) {  
                     done();
                 }
             });
@@ -35,15 +34,12 @@ describe('UserController', function () {
 
         it('should log in the user created', function (done) {
             request(sails.hooks.http.app)
-            .get('/loginMail')
-            .send({
-                "password": "testPass",
-                "email": "test@Email.com"
+            .get('/loginMail?email=test@Email.com&password=testPass')
+            .expect(200)
+            .then(res => {
+                if(res.body.status == 'Ok') done();
+                else done(res.body);
             })
-            .expect(200, {
-                status: 'Ok',
-                errors: []
-            }, done);
             
         });
     });
