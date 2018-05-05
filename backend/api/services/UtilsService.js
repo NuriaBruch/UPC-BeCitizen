@@ -44,8 +44,10 @@ increaseUserKarma: function(points,mail,callback){
             callback(null);
         }
         else{
-            userFound.karma = userFound.karma + points;
-            userFound.save();
+            if(userFound.karma + points >= 0){
+                userFound.karma = userFound.karma + points;
+                userFound.save();
+            }
             callback(userFound.karma);
         }
     });
