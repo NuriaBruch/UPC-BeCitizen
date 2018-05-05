@@ -42,7 +42,7 @@ public class ControllerUserData {
         return instance;
     }
 
-    public static String getToken() {
+    public String getToken() {
         return ServerAdapter.getInstance().getTOKEN();
     }
 
@@ -215,7 +215,6 @@ public class ControllerUserData {
     }
 
     public String viewProfile(String username) {
-        // TODO falta el token!
         return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 

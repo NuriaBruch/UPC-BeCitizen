@@ -107,6 +107,8 @@ public class ServerAdapter {
             String responseBody;
 
             try {
+                if (getTOKEN() != null)
+                    httpGet.setHeader("token", getTOKEN());
                 HttpResponse response = httpClient.execute(httpGet);
                 Header header = response.getFirstHeader("token");
                 if (header != null) TOKEN = header.getValue();
@@ -193,6 +195,8 @@ public class ServerAdapter {
                 //add data
                 StringEntity entity = new StringEntity(json);
                 httpput.setEntity(entity);
+                if (getTOKEN() != null)
+                    httpput.setHeader("token", getTOKEN());
                 //execute http put
                 HttpResponse response = httpclient.execute(httpput);
                 int statusCode = response.getStatusLine().getStatusCode();
