@@ -93,6 +93,10 @@ public class ControllerThreadPresentation {
         controllerThreadDomain.voteThread(threadId);
     }
 
+    public void reportThread(int threadId) {
+        controllerThreadDomain.reportThread(threadId);
+    }
+
     public void voteComment(int commentId) {
         controllerThreadDomain.voteComment(commentId);
     }

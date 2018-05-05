@@ -151,6 +151,10 @@ public class ControllerThreadDomain {
         controllerThreadData.voteThread(threadId);
     }
 
+    public void reportThread(int threadId) {
+        controllerThreadData.reportThread(threadId);
+    }
+
     public void voteComment(int commentId) {
         controllerThreadData.voteComment(commentId);
     }
