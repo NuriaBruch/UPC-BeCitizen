@@ -2,6 +2,7 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.MySharedPreferences;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -43,12 +48,32 @@ public class CategoryThreadActivity extends Fragment {
 
         listView = (ListView)rootView.findViewById(R.id.list);
 
-        dataModels = ControllerUserPresentation.getUniqueInstance().getThreadsCategory(category);
+        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
 
         if (dataModels.size() == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        FloatingActionButton fab = rootView.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (ControllerUserDomain.getUniqueInstance().isLogged()) {
+                        try {
+                            ControllerThreadPresentation.getUniqueInstance().newThread(null);
+                        } catch (ServerException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    } else throw new SharedPreferencesException("User not logged in");
+                } catch (SharedPreferencesException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        });
 
         adapter = new CategoryThreadAdapter(dataModels, getApplicationContext());
 
@@ -56,11 +81,22 @@ public class CategoryThreadActivity extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CategoryThread dataModel= dataModels.get(position);
+                CategoryThread thread = dataModels.get(position);
+                ThreadActivity threadActivity = new ThreadActivity();
+                threadActivity.setThreadId(thread.getId());
+                // falta pasar de fragment
+
+                //TODO: open thread activity with id = thread.getId()
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
     }
 
 }

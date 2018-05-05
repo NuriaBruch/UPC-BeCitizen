@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.NewThreadActivity">
+
+    <TextView
+        android:id="@+id/NewThreadText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/newThread"
+        android:textSize="30sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textStyle="bold" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/newThreadTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/NewThreadText"
+        android:layout_alignStart="@+id/NewThreadText"
+        android:layout_below="@+id/NewThreadText"
+        android:layout_marginTop="20dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/newThreadTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hintTitleThread"
+            android:inputType="textEmailSubject"
+            android:maxLength="@dimen/MAX_LENGTH_THREAD_TITLE"
+            android:singleLine="true" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/newThreadContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/NewThreadText"
+        android:layout_alignStart="@+id/NewThreadText"
+        android:layout_below="@+id/newThreadTitleLayout"
+        android:layout_marginTop="20dp">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/newThreadContent"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:hint="@string/hintThreadContent"
+            android:maxLength="@dimen/MAX_LENGTH_THREAD_CONTENT"
+            android:inputType="text|textMultiLine"
+            android:gravity="top"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/newThreadCategoryLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/NewThreadText"
+        android:layout_alignStart="@+id/NewThreadText"
+        android:layout_below="@+id/newThreadContentLayout"
+        android:layout_marginTop="20dp"
+        android:hint="@string/category">
+
+        <TextView
+            android:id="@+id/newThreadCategoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/category" />
+
+        <Spinner
+            android:id="@+id/newThreadCategorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:entries="@array/categories"
+            android:spinnerMode="dialog" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/newThreadSubmit"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/NewThreadText"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@id/NewThreadText"
+        android:layout_marginBottom="20dp"
+        android:text="@string/submit"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>

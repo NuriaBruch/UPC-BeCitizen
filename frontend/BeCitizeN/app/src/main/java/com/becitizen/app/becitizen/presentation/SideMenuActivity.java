@@ -12,11 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.MySharedPreferences;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,23 +66,10 @@ public class SideMenuActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            int fragments = getSupportFragmentManager().getBackStackEntryCount();
-            if (fragments == 1) {
-                ControllerUserPresentation.getUniqueInstance().logout();
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                this.startActivity(intent);
-            } else {
-                if (getFragmentManager().getBackStackEntryCount() > 1) {
-                    getFragmentManager().popBackStack();
-                } else {
-                    super.onBackPressed();
-                }
-            }
-        }
+        else if (getFragmentManager().getBackStackEntryCount() > 1)
+            getFragmentManager().popBackStack();
     }
 
     @Override
@@ -145,10 +129,10 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                /*
-                Fragment fragment = new PrivateMessagesActivity();
-                fragmentTransaction(fragment);
-                */
+
+                fragment = new NewThreadActivity();
+                fragmentTransaction(fragment, "NEW_THREAD_ACTIVITY");
+
                 break;
             case R.id.nav_settings:
                 /*
@@ -174,4 +158,6 @@ public class SideMenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

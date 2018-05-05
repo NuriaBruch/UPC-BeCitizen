@@ -47,7 +47,7 @@ module.exports = {
                     res.send(status);
                 });
             }
-            res.send(status);
+            else res.send(status);
         });
     },
 
@@ -61,7 +61,7 @@ module.exports = {
                     res.send(status);
                 });
             }
-            res.send(status);
+            else res.send(status);
         });
     },
 

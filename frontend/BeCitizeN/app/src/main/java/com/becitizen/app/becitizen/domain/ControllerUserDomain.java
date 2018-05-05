@@ -317,8 +317,10 @@ public class ControllerUserDomain {
 
         } catch (JSONException e) {
             //TODO excepcions
+            e.printStackTrace();
             return false;
         } catch (SharedPreferencesException e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -429,25 +431,5 @@ public class ControllerUserDomain {
         }
 
         return bundle;
-    }
-
-    public JSONObject getThreadsCategory(String category) {
-        try {
-            JSONObject response = new JSONObject(controllerUserData.getThreadsCategory(category));
-            return response;
-        }
-        catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public JSONObject getCategories() {
-        try {
-            JSONObject response = new JSONObject(controllerUserData.getCategories());
-            return response;
-        }
-        catch (JSONException e) {
-            return null;
-        }
     }
 }

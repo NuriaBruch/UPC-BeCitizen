@@ -177,43 +177,4 @@ public class ControllerUserPresentation {
     public Bundle viewProfile(String username) throws ServerException {
         return controllerUserDomain.viewProfile(username);
     }
-
-    /**
-     * Metodo que retorna todos los threads de una categoria
-     *
-     * @param category name of the category
-     * @return empty arraylist si ha ocurrido algun error
-     */
-    public ArrayList<CategoryThread> getThreadsCategory(String category) {
-        JSONObject data = controllerUserDomain.getThreadsCategory(category);
-        ArrayList<CategoryThread> threads = new ArrayList<>();
-        try {
-            JSONArray array = (JSONArray)data.get("threads");
-            for(int i = 0; i < array.length(); i++)
-            {
-                JSONObject object = array.getJSONObject(i);
-                threads.add(new CategoryThread(object.getString("title"), "test", "27-04-2018 09:20:54", object.getInt("votes"), object.getInt("id")));
-                object.get("title");
-            }
-            return threads;
-        } catch (JSONException e) {
-            return new ArrayList<>();
-        }
-    }
-
-    /**
-     * Metodo que retorna todas las categorias
-     *
-     * @return empty arraylist si ha ocurrido algun error
-     */
-    public String[] getCategories() {
-        JSONObject data = controllerUserDomain.getCategories();
-        String[] threads = {};
-        //try {
-
-            return threads;
-        //} catch (JSONException e) {
-        //    return threads;
-        //}
-    }
 }

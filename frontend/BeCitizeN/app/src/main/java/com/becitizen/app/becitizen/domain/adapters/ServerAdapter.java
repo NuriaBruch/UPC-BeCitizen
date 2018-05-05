@@ -1,8 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import org.apache.http.Header;
@@ -151,10 +149,13 @@ public class ServerAdapter {
                 //add data
                 StringEntity entity = new StringEntity(json);
                 httppost.setEntity(entity);
+                if (getTOKEN() != null)
+                    httppost.setHeader("token", getTOKEN());
                 //execute http post
                 HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
+                Log.d(TAG, "Post response: " + responseBody);
 
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);

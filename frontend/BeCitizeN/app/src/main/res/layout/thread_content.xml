@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/layoutThread"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle"
+            android:layout_margin="2dp"
+            android:elevation="3dp"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/threadAuthorImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/com_facebook_profile_picture_blank_square"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/threadTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="7dp"
+                android:layout_toEndOf="@id/threadAuthorImage"
+                android:text="Thread Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/threadAuthorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/threadAuthorImage"
+                android:layout_alignStart="@+id/threadTitleText"
+                android:text="Author"
+                android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/threadReportButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/threadContentText"
+                android:layout_marginEnd="13dp"
+                android:background="@null"
+                android:tint="@android:color/holo_red_dark"
+                app:srcCompat="@drawable/report_icon" />
+
+            <ImageButton
+                android:id="@+id/threadVoteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/threadReportButton"
+                android:layout_marginEnd="17dp"
+                android:layout_toStartOf="@+id/threadReportButton"
+                android:background="@null"
+                android:tint="@android:color/holo_green_dark"
+                app:srcCompat="@drawable/vote_icon" />
+
+            <TextView
+                android:id="@+id/threadContentText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/threadReportButton"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/threadAuthorImage"
+                android:layout_marginBottom="7dp"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="11dp"
+                android:text="Content"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/threadVotesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/threadVoteButton"
+                android:layout_marginEnd="11dp"
+                android:layout_toStartOf="@+id/threadVoteButton"
+                android:text="Votes"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/threadTimeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/threadVotesText"
+                android:layout_alignBottom="@+id/threadVotesText"
+                android:layout_alignStart="@+id/threadContentText"
+                android:layout_marginBottom="5dp"
+                android:text="createdAt" />
+
+            <TextView
+                android:id="@+id/threadAuthorRankText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/threadAuthorText"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/threadAuthorText"
+                android:text="rank" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="8sp"
+            android:text="Comments"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"
+            android:textStyle="bold"
+            android:background="#F4F4F4"/>
+
+        <include
+            android:id="@+id/listComments"
+            layout="@layout/thread_comments"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="45dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/newCommentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/newCommentInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:hint="Write a comment"
+            android:textColor="#CFD8DC"
+            android:textColorHint="#CFD8DC" />
+
+        <ImageButton
+            android:id="@+id/newCommentButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:background="@null"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_icons8_sent_96"
+            android:tint="#CFD8DC" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
