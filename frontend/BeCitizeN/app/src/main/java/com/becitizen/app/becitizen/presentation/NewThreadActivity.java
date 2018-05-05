@@ -44,7 +44,7 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
         newThreadSubmit = (Button) rootView.findViewById(R.id.newThreadSubmit);
 
         newThreadSubmit.setOnClickListener(this);
-        
+
         categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_forum_category, categories);

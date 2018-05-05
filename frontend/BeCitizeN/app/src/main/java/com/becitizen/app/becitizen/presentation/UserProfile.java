@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
+import org.json.JSONException;
+
 public class UserProfile extends Fragment implements View.OnClickListener {
 
     private View rootView;
@@ -113,6 +115,10 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             else {
                 Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
+        }
+
+        catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
         }
     }
 

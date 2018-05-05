@@ -174,7 +174,7 @@ public class ControllerUserPresentation {
     }
 
 
-    public Bundle viewProfile(String username) throws ServerException {
+    public Bundle viewProfile(String username) throws ServerException, JSONException {
         return controllerUserDomain.viewProfile(username);
     }
 }
