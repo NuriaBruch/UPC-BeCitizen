@@ -1,8 +1,9 @@
 package com.becitizen.app.becitizen.presentation;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -72,7 +73,12 @@ public class ThreadActivity extends Fragment {
         threadAuthorImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO should go to profile activity
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("loggeduser", false);
+                bundle.putString("username", threadAuthor.getText().toString());
+                Fragment fragment = new UserProfile();
+                fragment.setArguments(bundle);
+                fragmentTransaction(fragment, "USER_PROFILE");
             }
         });
 
@@ -135,8 +141,7 @@ public class ThreadActivity extends Fragment {
             }
             threadReport = rootView.findViewById(R.id.threadReportButton);
             if (!thread.isCanReport()) {
-                // TODO reported icon
-                //threadReport.setImageResource();
+                threadReport.setImageResource(R.drawable.ic_reported);
                 threadReport.setEnabled(false);
             }
 
@@ -161,6 +166,13 @@ public class ThreadActivity extends Fragment {
 
     public void setThreadId(int threadId) {
         this.threadId = threadId;
+    }
+
+    private void fragmentTransaction(Fragment fragment, String tag) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
     }
 
 }

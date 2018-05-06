@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,9 +85,8 @@ public class CategoryThreadActivity extends Fragment {
                 CategoryThread thread = dataModels.get(position);
                 ThreadActivity threadActivity = new ThreadActivity();
                 threadActivity.setThreadId(thread.getId());
-                // falta pasar de fragment
-
-                //TODO: open thread activity with id = thread.getId()
+                Fragment fragment = threadActivity;
+                fragmentTransaction(fragment, "THREAD_ACTIVITY");
             }
         });
 
@@ -97,6 +97,13 @@ public class CategoryThreadActivity extends Fragment {
     public void onResume(){
         super.onResume();
         dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
+    }
+
+    private void fragmentTransaction(Fragment fragment, String tag) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
     }
 
 }
