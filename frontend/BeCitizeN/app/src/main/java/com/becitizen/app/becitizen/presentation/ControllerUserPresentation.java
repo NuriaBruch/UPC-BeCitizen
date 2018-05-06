@@ -161,7 +161,7 @@ public class ControllerUserPresentation {
         ControllerUserDomain.getUniqueInstance().initializeMySharedPreferences(context);
     }
 
-    public boolean deactivateAccount() {
+    public boolean deactivateAccount() throws ServerException, JSONException {
         return controllerUserDomain.deactivateAccount();
     }
 

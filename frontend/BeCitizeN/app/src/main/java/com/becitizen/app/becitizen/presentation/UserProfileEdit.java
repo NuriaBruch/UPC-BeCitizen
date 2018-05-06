@@ -122,16 +122,34 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
     }
 
     private void deleteUser() {
-        boolean ret = controllerUserPresentation.deactivateAccount();
+        new AlertDialog.Builder(rootView.getContext())
+                .setTitle(getResources().getString(R.string.deleteAccount))
+                .setMessage(getResources().getString(R.string.deleteAccountMsg))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-        if (ret) {
-            controllerUserPresentation.logout();
-            goToLogin();
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        deactivateAccount();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    public void deactivateAccount() {
+        try {
+            boolean ret = controllerUserPresentation.deactivateAccount();
+
+            if (ret) {
+                controllerUserPresentation.logout();
+                goToLogin();
+            }
         }
 
-        else {
-            Toast notificacion=Toast.makeText(rootView.getContext(),getString(R.string.serverError),Toast.LENGTH_LONG);
-            notificacion.show();
+        catch (ServerException e) {
+            Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
+        catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
         }
     }
 

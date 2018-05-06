@@ -187,20 +187,17 @@ public class ControllerUserData {
     }
 
 
-    public boolean deactivateAccount(String username) {
-        /*try {
-            // TODO això es un put, en realitat i mirar si fa falta token
-            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_DEACTIVATE_ACCOUNT + "?username=" + username));
+    public boolean deactivateAccount(String username) throws ServerException, JSONException{
+        JSONObject json = new JSONObject();
+        json.put("username", username);
 
-            if (info.get("status").equals("Ok")) {
-                return true;
-            }
-            return false;
+        String[] dataRequest = {URI_DEACTIVATE_ACCOUNT, json.toString()};
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-        catch (JSONException e) {
-            return false;
-        }*/
-        return true;
+        else throw new ServerException("Server Error");
     }
 
     public String viewProfile(String username) {

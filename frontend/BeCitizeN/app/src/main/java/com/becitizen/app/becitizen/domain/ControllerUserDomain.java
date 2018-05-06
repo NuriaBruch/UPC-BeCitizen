@@ -329,7 +329,7 @@ public class ControllerUserDomain {
         MySharedPreferences.init(context);
     }
 
-    public boolean deactivateAccount() {
+    public boolean deactivateAccount() throws ServerException, JSONException{
         return controllerUserData.deactivateAccount(currentUser.getUsername());
     }
 
