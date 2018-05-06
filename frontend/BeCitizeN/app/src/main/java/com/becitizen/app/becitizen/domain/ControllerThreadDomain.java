@@ -152,6 +152,13 @@ public class ControllerThreadDomain {
         else if (info.get("status").equals("E1")) throw new ServerException("server error");
     }
 
+    /**
+     * Metodo que otorga un voto un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere votar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void voteThread(int threadId) throws JSONException, ServerException {
         JSONObject info = new JSONObject(controllerThreadData.voteThread(threadId));
 
@@ -162,6 +169,13 @@ public class ControllerThreadDomain {
 
     }
 
+    /**
+     * Metodo que reporta un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere reportar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void reportThread(int threadId) throws ServerException, JSONException {
         JSONObject info = new JSONObject(controllerThreadData.reportThread(threadId));
 
@@ -171,6 +185,13 @@ public class ControllerThreadDomain {
         else if (info.get("status").equals("E4")) throw new ServerException("already reported");
     }
 
+    /**
+     * Metodo que otorga un voto a un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere votar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void voteComment(int commentId) throws ServerException, JSONException {
         JSONObject info = new JSONObject(controllerThreadData.voteComment(commentId));
 
@@ -180,6 +201,13 @@ public class ControllerThreadDomain {
         else if (info.get("status").equals("E4")) throw new ServerException("already voted");
     }
 
+    /**
+     * Metodo que reporta un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere reportar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void reportComment(int commentId) throws ServerException, JSONException {
         JSONObject info = new JSONObject(controllerThreadData.reportComment(commentId));
 

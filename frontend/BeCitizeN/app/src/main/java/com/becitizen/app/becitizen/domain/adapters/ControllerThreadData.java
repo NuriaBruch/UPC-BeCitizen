@@ -112,24 +112,48 @@ public class ControllerThreadData {
         return ServerAdapter.getInstance().doPostRequest(dataRequest);
     }
 
+    /**
+     * Metodo que otorga un voto un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere votar
+     * @return Server response
+     */
     public String voteThread(int threadId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    /**
+     * Metodo que reporta un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere reportar
+     * @return Server response
+     */
     public String reportThread(int threadId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    /**
+     * Metodo que otorga un voto a un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere votar
+     * @return Server response
+     */
     public String voteComment(int commentId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_COMMENT + "?commentId=" + commentId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    /**
+     * Metodo que reporta un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere reportar
+     * @return Server response
+     */
     public String reportComment(int commentId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_COMMENT + "?commentId=" + commentId, json.toString()};

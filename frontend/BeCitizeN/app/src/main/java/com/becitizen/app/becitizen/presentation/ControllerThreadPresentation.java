@@ -7,7 +7,6 @@ import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,18 +75,46 @@ public class ControllerThreadPresentation {
         controllerThreadDomain.newComment(commentText, threadId);
     }
 
+    /**
+     * Metodo que otorga un voto un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere votar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void voteThread(int threadId) throws ServerException, JSONException {
         controllerThreadDomain.voteThread(threadId);
     }
 
+    /**
+     * Metodo que reporta un thread por el usuario identificado.
+     *
+     * @param threadId  Identificador del thread que se quiere reportar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void reportThread(int threadId) throws ServerException, JSONException {
         controllerThreadDomain.reportThread(threadId);
     }
 
+    /**
+     * Metodo que otorga un voto a un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere votar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void voteComment(int commentId) throws ServerException, JSONException {
         controllerThreadDomain.voteComment(commentId);
     }
 
+    /**
+     * Metodo que reporta un comentario por el usuario identificado.
+     *
+     * @param commentId  Identificador del comentario que se quiere reportar
+     * @throws ServerException Si el servidor devuelve algún error
+     * @throws JSONException Si se produce algún error al crear o leer JSONs
+     */
     public void reportComment(int commentId) throws ServerException, JSONException {
         controllerThreadDomain.reportComment(commentId);
     }
