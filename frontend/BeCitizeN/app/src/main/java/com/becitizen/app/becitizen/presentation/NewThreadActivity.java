@@ -77,9 +77,13 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
 
         try {
             ControllerThreadPresentation.getUniqueInstance().newThread(t);
-            CategoryThreadActivity fragment = new CategoryThreadActivity();
-            fragment.setCategory(category);
-            fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            getActivity().getSupportFragmentManager().popBackStack();
+            transaction.remove(this);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            transaction.commit();
+
         } catch (ServerException e) {
             Toast.makeText(rootView.getContext(), getResources().getText(R.string.serverError), Toast.LENGTH_LONG).show();
             e.printStackTrace();

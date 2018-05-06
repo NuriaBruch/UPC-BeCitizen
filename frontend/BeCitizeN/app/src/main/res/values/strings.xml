@@ -54,6 +54,8 @@
     <string name="biographyUP">Biography:</string>
     <string name="deactived">Deactived user</string>
 
+    <string name="votes">votes</string>
+
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
 
