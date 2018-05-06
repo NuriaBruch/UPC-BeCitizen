@@ -52,55 +52,6 @@ public class ThreadActivity extends Fragment {
 
         setCommentList();
 
-
-        threadVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                controllerThreadPresentation.voteThread(threadId);
-                threadVote.setImageResource(R.drawable.ic_voted_icon);
-                threadVote.setEnabled(false);
-                threadVotes.setText(String.valueOf( Integer.valueOf(threadVotes.getText().toString()) + 1) );
-            }
-        });
-
-        threadReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                controllerThreadPresentation.reportThread(threadId);
-                threadReport.setImageResource(R.drawable.ic_reported);
-                threadReport.setEnabled(false);
-            }
-        });
-
-        threadAuthorImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("loggeduser", false);
-                bundle.putString("username", threadAuthor.getText().toString());
-                Fragment fragment = new UserProfile();
-                fragment.setArguments(bundle);
-                fragmentTransaction(fragment, "USER_PROFILE");
-            }
-        });
-
-        newCommentText = rootView.findViewById(R.id.newCommentInput);
-        newCommentButton = rootView.findViewById(R.id.newCommentButton);
-        newCommentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String commentText = newCommentText.getText().toString().trim();
-                if (commentText.isEmpty())
-                    Snackbar.make(view, "Your reply is empty", Snackbar.LENGTH_LONG).show();
-                else {
-                    controllerThreadPresentation.newComment(commentText, threadId);
-                    prepareComments();
-                    Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG);
-                    newCommentText.clearFocus();
-                }
-            }
-        });
-
         return rootView;
     }
 
@@ -118,7 +69,7 @@ public class ThreadActivity extends Fragment {
 
     private void prepareContent() {
         try {
-            Thread thread = controllerThreadPresentation.getThreadContent(threadId);
+            final Thread thread = controllerThreadPresentation.getThreadContent(threadId);
 
             threadAuthor = rootView.findViewById(R.id.threadAuthorText);
             threadAuthor.setText("@" + thread.getAuthor());
@@ -150,6 +101,54 @@ public class ThreadActivity extends Fragment {
             }
             threadAuthorImage = rootView.findViewById(R.id.threadAuthorImage);
             setAuthorImage(thread.getAuthorImage());
+
+            threadVote.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controllerThreadPresentation.voteThread(threadId);
+                    threadVote.setImageResource(R.drawable.ic_voted_icon);
+                    threadVote.setEnabled(false);
+                    threadVotes.setText(String.valueOf( Integer.valueOf(threadVotes.getText().toString()) + 1) );
+                }
+            });
+
+            threadReport.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    controllerThreadPresentation.reportThread(threadId);
+                    threadReport.setImageResource(R.drawable.ic_reported);
+                    threadReport.setEnabled(false);
+                }
+            });
+
+            threadAuthorImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("loggeduser", false);
+                    bundle.putString("username", thread.getAuthor());
+                    Fragment fragment = new UserProfile();
+                    fragment.setArguments(bundle);
+                    fragmentTransaction(fragment, "USER_PROFILE");
+                }
+            });
+
+            newCommentText = rootView.findViewById(R.id.newCommentInput);
+            newCommentButton = rootView.findViewById(R.id.newCommentButton);
+            newCommentButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String commentText = newCommentText.getText().toString().trim();
+                    if (commentText.isEmpty())
+                        Snackbar.make(view, "Your reply is empty", Snackbar.LENGTH_LONG).show();
+                    else {
+                        controllerThreadPresentation.newComment(commentText, threadId);
+                        prepareComments();
+                        Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG);
+                        newCommentText.clearFocus();
+                    }
+                }
+            });
 
         }
         catch (JSONException e) {
