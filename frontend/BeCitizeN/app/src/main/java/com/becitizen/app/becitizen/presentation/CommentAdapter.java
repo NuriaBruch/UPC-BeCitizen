@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -77,7 +78,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Quoting not implemented yet", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, Resources.getSystem().getString(R.string.quotingError), Toast.LENGTH_LONG).show();
             }
         });
 

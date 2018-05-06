@@ -23,7 +23,6 @@ public class ControllerThreadDomain {
 
     /**
      * Constructora por defecto para evitar que sea instanciado
-     *
      **/
     private ControllerThreadDomain() {
         controllerThreadData = ControllerThreadData.getInstance();
@@ -31,7 +30,6 @@ public class ControllerThreadDomain {
 
     /**
      * Metodo para obtener la instancia del singleton
-     *
      * @return La instancia de ControllerThreadDomain
      */
     public static ControllerThreadDomain getUniqueInstance() {
@@ -42,9 +40,7 @@ public class ControllerThreadDomain {
 
     /**
      * Metodo para obtener los posts de una categoria
-     *
      * @param category nombre de la categoria
-     *
      * @return JSONObject que contiene los posts de una categoria
      */
     public ArrayList<CategoryThread> getThreadsCategory(String category) {
