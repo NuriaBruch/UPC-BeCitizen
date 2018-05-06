@@ -49,7 +49,7 @@ public class ControllerThreadDomain {
      */
     public ArrayList<CategoryThread> getThreadsCategory(String category) {
         try {
-            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category));
+            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category.replace(" ", "%20")));
             ArrayList<CategoryThread> threads = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("threads");
             for(int i = 0; i < array.length(); i++)
