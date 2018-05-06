@@ -44,9 +44,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/ibEditProfile"
-                android:layout_marginTop="10dp"
-                android:background="@null"
-                app:srcCompat="@drawable/log_out" />
+                android:layout_marginTop="20dp"
+                app:srcCompat="@drawable/log_out"
+                android:background="@null"/>
 
             <TextView
                 android:id="@+id/tvUsername"

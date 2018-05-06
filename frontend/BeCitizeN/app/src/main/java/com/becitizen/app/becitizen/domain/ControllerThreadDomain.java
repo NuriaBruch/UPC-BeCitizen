@@ -101,16 +101,17 @@ public class ControllerThreadDomain {
         JSONObject info = new JSONObject(controllerThreadData.getThreadContent(id));
         Thread thread = new Thread();
         if (info.get("status").equals("Ok")) {
-            thread.setTitle(info.getString("title"));
-            thread.setContent(info.getString("content"));
-            thread.setCategory(info.getString("category"));
-            thread.setAuthor(info.getString("username"));
-            thread.setAuthorRank(info.getString("rank"));
-            thread.setAuthorImage(Integer.valueOf(info.getString("profilePicture")));
-            thread.setCreatedAt(info.getString("createdAt"));
-            thread.setVotes(info.getInt("votes"));
-            thread.setCanVote(info.getBoolean("canVote"));
-            thread.setCanReport(info.getBoolean("canReport"));
+            JSONObject threadData = info.getJSONObject("info");
+            thread.setTitle(threadData.getString("title"));
+            thread.setContent(threadData.getString("content"));
+            thread.setCategory(threadData.getString("category"));
+            thread.setAuthor(threadData.getString("username"));
+            thread.setAuthorRank(threadData.getString("rank"));
+            thread.setAuthorImage(Integer.valueOf(threadData.getString("profilePicture")));
+            thread.setCreatedAt(threadData.getString("createdAt"));
+            thread.setVotes(threadData.getInt("votes"));
+            thread.setCanVote(threadData.getBoolean("canVote"));
+            thread.setCanReport(threadData.getBoolean("canReport"));
         }
         //TODO throw new exception
 
@@ -121,7 +122,7 @@ public class ControllerThreadDomain {
         JSONObject info = new JSONObject(controllerThreadData.getThreadComments(id));
         List<Comment> commentList = new ArrayList<>();
         if (info.get("status").equals("Ok")) {
-            JSONArray commentsDataArray = (JSONArray)info.get("comments");
+            JSONArray commentsDataArray = (JSONArray)info.get("comment");
             for(int i = 0; i < commentsDataArray.length(); i++) {
                 JSONObject commentData = commentsDataArray.getJSONObject(i);
 

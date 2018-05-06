@@ -109,7 +109,7 @@ public class ControllerThreadData {
             e.printStackTrace();
         }
         String[] dataRequest = {URI_NEW_COMMENT, json.toString()};
-        ServerAdapter.getInstance().doPostRequest(dataRequest);
+        String result = ServerAdapter.getInstance().doPostRequest(dataRequest);
     }
 
     public void voteThread(int threadId) {

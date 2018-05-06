@@ -49,6 +49,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
+        controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -59,7 +60,6 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             }
         }
 
-        controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
         tvUsername = rootView.findViewById(R.id.tvUsername);
         tvRank = rootView.findViewById(R.id.tvRank);
         rankIcon = rootView.findViewById(R.id.rankIcon);

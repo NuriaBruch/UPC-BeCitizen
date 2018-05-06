@@ -35,6 +35,15 @@ update_deactivated: function(userFound, callback){
     });
 },
 
+updateRank: function(points){
+    if(points <= 500) return "coal";
+    else if(points <= 1000) return "bronze";
+    else if(points <= 2000) return "silver";
+    else if(points <= 4000) return "gold";
+    else if(poits <= 8000) return "platinum";
+    else return "diamond";
+},
+
 increaseUserKarma: function(points,mail,callback){
     User.findOne({email: mail}).exec(function(err1, userFound){
         if(err1 !== undefined && err1) {
@@ -44,13 +53,11 @@ increaseUserKarma: function(points,mail,callback){
             callback(null);
         }
         else{
-            if(userFound.karma + points >= 0){
-                userFound.karma = userFound.karma + points;
-                userFound.save();
-            }
+            userFound.karma = userFound.karma + points;
+            userFound.rank = UtilsService.updateRank(userFound.karma + points);
+            userFound.save();
             callback(userFound.karma);
         }
     });
 }
-
 }

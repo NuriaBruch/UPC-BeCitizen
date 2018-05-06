@@ -52,7 +52,9 @@
     <string name="birthdateUP">Birthdate:</string>
     <string name="countryUP">Country:</string>
     <string name="biographyUP">Biography:</string>
-    <string name="deactived">Deactived user</string>
+    <string name="deactived">Deactivated user</string>
+
+    <string name="votes">votes</string>
 
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
@@ -63,6 +65,7 @@
     <string name="JSONerror">JSON error</string>
     <string name="deleteAccount">Delete account</string>
     <string name="deleteAccountMsg">Do you really want to delete your account?</string>
+    <string name="logoutMsg">Do you really want to exit BeCitizeN?</string>
 
     <string name="by">by</string>
     <string name="seconds">seconds</string>
