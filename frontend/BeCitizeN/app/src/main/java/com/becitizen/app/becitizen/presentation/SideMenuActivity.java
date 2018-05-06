@@ -130,26 +130,27 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-
-                fragment = new NewThreadActivity();
-                fragmentTransaction(fragment, "NEW_THREAD_ACTIVITY");
+                /*
+                fragment = new PrivateMessagesActivity();
+                fragmentTransaction(fragment, "PRIVATE_MESSAGES_ACTIVITY");
 
                 break;
+                */
             case R.id.nav_settings:
                 /*
-                Fragment fragment = new SettingsActivity();
+                fragment = new SettingsActivity();
                 fragmentTransaction(fragment);
                 */
                 break;
             case R.id.nav_help:
                 /*
-                Fragment fragment = new HelpActivity();
+                fragment = new HelpActivity();
                 fragmentTransaction(fragment);
                 */
                 break;
             case R.id.nav_about:
                 /*
-                Fragment fragment = new AboutActivity();
+                fragment = new AboutActivity();
                 fragmentTransaction(fragment);
                 */
                 break;

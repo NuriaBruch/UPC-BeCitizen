@@ -3,7 +3,7 @@ package com.becitizen.app.becitizen.presentation;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +23,12 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
 
     private View rootView;
 
-    TextInputEditText titleEditText;
-    TextInputEditText contentEditText;
-    Spinner spinner;
-    Button newThreadSubmit;
+    private TextInputEditText titleEditText;
+    private TextInputEditText contentEditText;
+    private Spinner spinner;
+    private Button newThreadSubmit;
+
+    private String default_category;
 
     List<String> categories = new ArrayList<>();
 
@@ -51,6 +53,9 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
 
         spinner.setAdapter(adapter);
 
+        int i = categories.indexOf(default_category);
+        if (i >= 0) spinner.setSelection(i);
+
         return rootView;
     }
 
@@ -72,10 +77,23 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
 
         try {
             ControllerThreadPresentation.getUniqueInstance().newThread(t);
-
+            CategoryThreadActivity fragment = new CategoryThreadActivity();
+            fragment.setCategory(category);
+            fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
         } catch (ServerException e) {
             Toast.makeText(rootView.getContext(), getResources().getText(R.string.serverError), Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+    }
+
+    public void setCategory(String category) {
+        this.default_category = category;
+    }
+
+    private void fragmentTransaction(Fragment fragment, String tag) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
     }
 }

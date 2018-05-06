@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
-import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
 import java.util.ArrayList;
@@ -58,12 +57,9 @@ public class CategoryThreadActivity extends Fragment {
             public void onClick(View view) {
                 try {
                     if (ControllerUserDomain.getUniqueInstance().isLogged()) {
-                        try {
-                            ControllerThreadPresentation.getUniqueInstance().newThread(null);
-                        } catch (ServerException e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
+                        NewThreadActivity fragment = new NewThreadActivity();
+                        fragment.setCategory(category);
+                        fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
                     } else throw new SharedPreferencesException("User not logged in");
                 } catch (SharedPreferencesException e) {
                     Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
