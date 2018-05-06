@@ -55,18 +55,7 @@ public class ControllerThreadPresentation {
      * @return empty arraylist si ha ocurrido algun error
      */
     public ArrayList<String> getCategories() {
-<<<<<<< HEAD
         return controllerThreadDomain.getCategories();
-=======
-        JSONObject data = controllerThreadDomain.getCategories();
-        ArrayList<String> threads = new ArrayList<>();
-        //try {
-
-            return threads;
-        //} catch (JSONException e) {
-        //    return threads;
-        //}
->>>>>>> 087b527a2646fd1dc2661d4dae172a57edb3deed
     }
 
     /**
