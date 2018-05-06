@@ -135,12 +135,22 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
             else {
                 Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                finishFragment();
             }
         }
 
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
+            finishFragment();
         }
+    }
+
+    private void finishFragment() {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        getActivity().getSupportFragmentManager().popBackStack();
+        transaction.remove(this);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        transaction.commit();
     }
 
     private void setTextView(String text, TextView tv) {
@@ -156,22 +166,22 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         if (userData.get("rank") != null) {
             switch (userData.get("rank").toString()) {
                 case "coal":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_coal));
+                    rankIcon.setImageResource(R.drawable.rank_coal);
                     break;
                 case "bronze":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_bronze));
+                    rankIcon.setImageResource(R.drawable.rank_bronze);
                     break;
                 case "silver":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_silver));
+                    rankIcon.setImageResource(R.drawable.rank_silver);
                     break;
                 case "gold":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_gold));
+                    rankIcon.setImageResource(R.drawable.rank_gold);
                     break;
                 case "platinum":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_platinum));
+                    rankIcon.setImageResource(R.drawable.rank_platinum);
                     break;
                 case "diamond":
-                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_diamond));
+                    rankIcon.setImageResource(R.drawable.rank_diamond);
                     break;
             }
         } else rankIcon.setVisibility(View.GONE);
