@@ -47,7 +47,13 @@
     <string name="errorUsername">Username already exists</string>
 
     <string name="guest">Guest</string>
-    <string name="sendMessage">Send message</string>
+
+    <string name="rankUP">Rank:</string>
+    <string name="birthdateUP">Birthdate:</string>
+    <string name="countryUP">Country:</string>
+    <string name="biographyUP">Biography:</string>
+    <string name="deactived">Deactived user</string>
+
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
 
