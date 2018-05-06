@@ -1,6 +1,5 @@
 package com.becitizen.app.becitizen.presentation;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -11,17 +10,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
-import com.becitizen.app.becitizen.domain.MySharedPreferences;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
