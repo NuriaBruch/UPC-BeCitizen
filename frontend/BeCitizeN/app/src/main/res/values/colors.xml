@@ -5,9 +5,9 @@
     <color name="colorAccent">#0f299d</color>
 
     <color name="diamond">#9efcf4</color>
-    <color name="platinum">#e3ebf1</color>
+    <color name="platinum">#E5E4E2</color>
     <color name="gold">#e9bc35</color>
-    <color name="silver">#e1e6e5</color>
-    <color name="bronze">#8b7123</color>
-    <color name="coal">#131313</color>
+    <color name="silver">#bebebe</color>
+    <color name="bronze">#CD7F32</color>
+    <color name="coal">#1C1C1C</color>
 </resources>
