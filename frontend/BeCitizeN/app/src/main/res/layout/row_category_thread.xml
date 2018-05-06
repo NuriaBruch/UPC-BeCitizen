@@ -22,6 +22,7 @@
         android:layout_marginStart="5dp"
         android:layout_below="@+id/threadTitle"
         android:textSize="15sp"
+        android:textColor="#000000"
         android:text="@string/by" />
 
     <TextView
