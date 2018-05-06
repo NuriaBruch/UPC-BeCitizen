@@ -20,7 +20,7 @@
                 android:id="@+id/ivUserImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/userprofile1"
+                app:srcCompat="@drawable/deactivated_user"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:background="#000000"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/ibEditProfile"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 app:srcCompat="@drawable/log_out"
                 android:background="@null"/>
 
