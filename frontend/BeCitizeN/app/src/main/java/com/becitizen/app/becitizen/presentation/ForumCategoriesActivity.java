@@ -21,7 +21,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class ForumCategoriesActivity extends Fragment {
 
     private View rootView;
-    private String[] categories;
+    private ArrayList<String> categories;
 
     public ForumCategoriesActivity() {
     }
@@ -35,16 +35,15 @@ public class ForumCategoriesActivity extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category);
         list.setAdapter(adapter);
 
-        categories = new String[]{"justice", "test"};
-        //categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
-        for (int i = 0; i < categories.length; ++i)
-            adapter.add(categories[i]);
+        categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+        for (int i = 0; i < categories.size(); ++i)
+            adapter.add(categories.get(i));
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CategoryThreadActivity cta = new CategoryThreadActivity();
-                cta.setCategory(categories[position]);
+                cta.setCategory(categories.get(position));
                 Fragment fragment = cta;
                 fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
             }

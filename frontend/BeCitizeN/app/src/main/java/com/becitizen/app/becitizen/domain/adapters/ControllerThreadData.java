@@ -10,6 +10,7 @@ public class ControllerThreadData {
 
     //URIs
     private static final String URI_THREADS_CATEGORY = "http://becitizen.cf/getAllThreadsCategory?category=";
+    private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
     private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
     private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
     private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments";
@@ -52,7 +53,7 @@ public class ControllerThreadData {
      * @return La respuesta de nuestro servidor
      */
     public String getCategories() {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY);
+        return ServerAdapter.getInstance().doGetRequest(URI_CATEGORIES);
     }
 
     /**

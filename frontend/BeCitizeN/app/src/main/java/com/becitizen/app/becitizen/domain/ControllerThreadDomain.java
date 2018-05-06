@@ -70,13 +70,19 @@ public class ControllerThreadDomain {
      *
      * @return JSONObject que contiene los nombres de todas las categorias
      */
-    public JSONObject getCategories() {
+    public ArrayList<String> getCategories() {
         try {
             JSONObject response = new JSONObject(controllerThreadData.getCategories());
-            return response;
+            ArrayList<String> categories = new ArrayList<String>();
+            JSONArray array = (JSONArray)response.get("categories");
+            for(int i = 0; i < array.length(); i++)
+            {
+                categories.add(array.getString(i));
+            }
+            return categories;
         }
         catch (JSONException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
