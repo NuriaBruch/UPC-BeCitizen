@@ -97,7 +97,8 @@ module.exports = {
                         createdAt:"",
                         votes:"",
                         canVote:"false",
-                        canReport:"false"
+                        canReport:"false",
+                        id: ""
                     };
                     var userHasVoted = _.find(comment.votedBy,{email:email});
                             if(userHasVoted == undefined) commentInfo.canVote = "true";
@@ -107,6 +108,7 @@ module.exports = {
                             commentInfo.votes = comment.numberVotes;
                             commentInfo.createdAt = comment.createdAt;
                             commentInfo.content = comment.content;
+                            commentInfo.id = comment.id;
                     User.findOne({email: comment.postedBy}).exec(function(err2,userOwner){
                         if(err2 !== undefined && err2) {
                             response.status = "E2";

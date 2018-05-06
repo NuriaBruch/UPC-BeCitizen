@@ -13,8 +13,12 @@ public class ControllerThreadData {
     private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
     private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
     private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
-    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments";
+    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?&threadId=";
     private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
+    private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
+    private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
+    private static final String URI_REPORT_THREAD = "http://becitizen.cf/reportThread";
+    private static final String URI_REPORT_COMMENT = "http://becitizen.cf/reportComment";
 
 
     private static ControllerThreadData instance = null;
@@ -93,13 +97,7 @@ public class ControllerThreadData {
     }
 
     public String getThreadComments(int id) {
-        /*
-        String threadComments = ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + "?email=" + token + "&threadId=" + id);
-        return threadComments;
-        */
-
-        // TODO UNCOMMENT
-        return "test";
+        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id));
     }
 
     public void newComment(String commentText, int threadId) {
@@ -112,6 +110,50 @@ public class ControllerThreadData {
         }
         String[] dataRequest = {URI_NEW_COMMENT, json.toString()};
         ServerAdapter.getInstance().doPostRequest(dataRequest);
+    }
+
+    public void voteThread(int threadId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("threadId", threadId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_VOTE_THREAD, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
+    }
+
+    public void reportThread(int threadId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("threadId", threadId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_REPORT_THREAD, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
+    }
+
+    public void voteComment(int commentId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("commentId", commentId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_VOTE_COMMENT, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
+    }
+
+    public void reportComment(int commentId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("commentId", commentId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_REPORT_COMMENT, json.toString()};
+        ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
 }

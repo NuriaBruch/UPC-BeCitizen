@@ -161,11 +161,11 @@ public class ControllerUserPresentation {
         ControllerUserDomain.getUniqueInstance().initializeMySharedPreferences(context);
     }
 
-    public boolean deactivateAccount() {
+    public boolean deactivateAccount() throws ServerException, JSONException {
         return controllerUserDomain.deactivateAccount();
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
         return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 
@@ -174,7 +174,11 @@ public class ControllerUserPresentation {
     }
 
 
-    public Bundle viewProfile(String username) throws ServerException {
+    public Bundle viewProfile(String username) throws ServerException, JSONException {
         return controllerUserDomain.viewProfile(username);
+    }
+
+    public boolean checkUsername(String username) {
+        return controllerUserDomain.checkUsername(username);
     }
 }

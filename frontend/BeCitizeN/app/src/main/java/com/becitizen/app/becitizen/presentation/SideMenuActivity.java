@@ -70,6 +70,7 @@ public class SideMenuActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         else if (getFragmentManager().getBackStackEntryCount() > 1)
             getFragmentManager().popBackStack();
+        else super.onBackPressed();
     }
 
     @Override

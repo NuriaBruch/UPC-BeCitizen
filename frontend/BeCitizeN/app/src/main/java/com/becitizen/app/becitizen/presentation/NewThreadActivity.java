@@ -3,10 +3,12 @@ package com.becitizen.app.becitizen.presentation;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -17,15 +19,16 @@ import com.becitizen.app.becitizen.exceptions.ServerException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewThreadActivity extends Fragment {
+public class NewThreadActivity extends Fragment implements View.OnClickListener {
 
     private View rootView;
 
     TextInputEditText titleEditText;
     TextInputEditText contentEditText;
     Spinner spinner;
+    Button newThreadSubmit;
 
-    private String[] categories;
+    List<String> categories = new ArrayList<>();
 
     public NewThreadActivity() {
     }
@@ -35,16 +38,14 @@ public class NewThreadActivity extends Fragment {
 
         rootView = inflater.inflate(R.layout.activity_new_thread, container, false);
 
-        titleEditText = (TextInputEditText) rootView.findViewById(R.id.usernameInput);
-        contentEditText = (TextInputEditText) rootView.findViewById(R.id.firstNameInput);
+        titleEditText = (TextInputEditText) rootView.findViewById(R.id.newThreadTitle);
+        contentEditText = (TextInputEditText) rootView.findViewById(R.id.newThreadContent);
         spinner = (Spinner) rootView.findViewById(R.id.newThreadCategorySpinner);
+        newThreadSubmit = (Button) rootView.findViewById(R.id.newThreadSubmit);
 
-        //TODO: Do not have categories hardcoded.
-        List<String> categories = new ArrayList<>();
-        categories.add("Justice");
-        categories.add("Test");
-        categories.add("Education");
-        //categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+        newThreadSubmit.setOnClickListener(this);
+
+        categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_forum_category, categories);
 
@@ -53,7 +54,16 @@ public class NewThreadActivity extends Fragment {
         return rootView;
     }
 
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.newThreadSubmit:
+                newThread();
+                break;
+        }
+    }
+
     public void newThread() {
+
         String title = titleEditText.getText().toString();
         String content = contentEditText.getText().toString();
         String category = spinner.getSelectedItem().toString();

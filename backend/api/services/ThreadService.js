@@ -40,10 +40,21 @@ function reportAndEvaluateThread(threadId,email,callback){
                  }
             
                 else {
+                    
                     if(threadFound.numberReports > 20 && (threadFound.numberReports > threadFound.numberVotes)){
-                        return destroyThread(threadId,function(response){
-                            callback(response);
+                        var userMail = threadFound.postedBy;
+                        UtilsService.increaseUserKarma(-100,userMail, function(result){
+                            if(result === null){
+                                response.status = 'E2';
+                                response.errors.push("Unable to update user karma");
+                            }
+                            else {
+                                return destroyThread(threadId,function(response){
+                                    callback(response);
+                                });
+                            }
                         });
+                        
                     }
                     else callback(response);
                     

@@ -55,7 +55,18 @@ public class ControllerThreadPresentation {
      * @return empty arraylist si ha ocurrido algun error
      */
     public ArrayList<String> getCategories() {
+<<<<<<< HEAD
         return controllerThreadDomain.getCategories();
+=======
+        JSONObject data = controllerThreadDomain.getCategories();
+        ArrayList<String> threads = new ArrayList<>();
+        //try {
+
+            return threads;
+        //} catch (JSONException e) {
+        //    return threads;
+        //}
+>>>>>>> 087b527a2646fd1dc2661d4dae172a57edb3deed
     }
 
     /**
@@ -80,6 +91,22 @@ public class ControllerThreadPresentation {
 
     public void newComment(String commentText, int threadId) {
         controllerThreadDomain.newComment(commentText, threadId);
+    }
+
+    public void voteThread(int threadId) {
+        controllerThreadDomain.voteThread(threadId);
+    }
+
+    public void reportThread(int threadId) {
+        controllerThreadDomain.reportThread(threadId);
+    }
+
+    public void voteComment(int commentId) {
+        controllerThreadDomain.voteComment(commentId);
+    }
+
+    public void reportComment(int commentId) {
+        controllerThreadDomain.reportComment(commentId);
     }
 
 }

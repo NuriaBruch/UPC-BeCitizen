@@ -106,7 +106,7 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
                     firstNameInput.getText().toString().trim(),
                     lastNameInput.getText().toString().trim(),
                     birthDateInput.getText().toString().trim(),
-                    countryInput.getSelectedItem().toString().trim()
+                    countryInput.getSelectedItem().toString()
             );
 
             if (result) {

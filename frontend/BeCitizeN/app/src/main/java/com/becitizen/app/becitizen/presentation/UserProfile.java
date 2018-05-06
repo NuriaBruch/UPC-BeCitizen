@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+
+import org.json.JSONException;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -48,7 +51,10 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             loggedUser = bundle.getBoolean("loggeduser");
-            if (!loggedUser) username = bundle.getString("username");
+            if (!loggedUser) {
+                username = bundle.getString("username");
+                if (controllerUserPresentation.checkUsername(username)) loggedUser = true;
+            }
         }
 
         controllerUserPresentation = ControllerUserPresentation.getUniqueInstance();
@@ -106,13 +112,30 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             fbPrivateMessage.setVisibility(View.GONE);
 
             if (e.getMessage().equals("User deactivated")) {
-                fbPrivateMessage.setVisibility(View.GONE);
-                // TODO posar les coses per al usuari desactivat
+
+                tvUsername.setText(username);
+                tvName.setText(getResources().getString(R.string.deactived));
+                tvName.setTextColor(Color.RED);
+
+                tvRank.setVisibility(View.GONE);
+                tvBirthDate.setVisibility(View.GONE);
+                tvBiography.setVisibility(View.GONE);
+                tvCountry.setVisibility(View.GONE);
+
+                rootView.findViewById(R.id.labelRank).setVisibility(View.GONE);
+                rootView.findViewById(R.id.labelBirthdate).setVisibility(View.GONE);
+                rootView.findViewById(R.id.labelBiography).setVisibility(View.GONE);
+                rootView.findViewById(R.id.labelCountry).setVisibility(View.GONE);
+
             }
 
             else {
                 Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
+        }
+
+        catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
         }
     }
 

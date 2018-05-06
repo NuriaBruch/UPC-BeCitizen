@@ -42,7 +42,7 @@ public class ControllerUserData {
         return instance;
     }
 
-    public static String getToken() {
+    public String getToken() {
         return ServerAdapter.getInstance().getTOKEN();
     }
 
@@ -167,55 +167,40 @@ public class ControllerUserData {
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    public int editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
         JSONObject json = new JSONObject();
-        try {
-            json.put("name", firstName);
-            json.put("surname", lastName);
-            json.put("biography", biography);
-            json.put("birthday", birthDate);
-            json.put("profilePicture", image);
-            json.put("country", country);
+        json.put("name", firstName);
+        json.put("surname", lastName);
+        json.put("biography", biography);
+        json.put("birthday", birthDate);
+        json.put("profilePicture", image);
+        json.put("country", country);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-
-        /*String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
-        try {
-            JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
-            if (info.get("status").equals("Ok")) {
-                return true;
-            }
-            return false;
-        }
-        catch (JSONException e) {
-            // TODO gestionar errors.
-            return false;
-        }*/
-
-        return 0;
+        else if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else throw new ServerException("DB error");
     }
 
 
-    public boolean deactivateAccount(String username) {
-        /*try {
-            // TODO això es un put, en realitat i mirar si fa falta token
-            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_DEACTIVATE_ACCOUNT + "?username=" + username));
+    public boolean deactivateAccount(String username) throws ServerException, JSONException{
+        JSONObject json = new JSONObject();
+        json.put("username", username);
 
-            if (info.get("status").equals("Ok")) {
-                return true;
-            }
-            return false;
+        String[] dataRequest = {URI_DEACTIVATE_ACCOUNT, json.toString()};
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-        catch (JSONException e) {
-            return false;
-        }*/
-        return true;
+        else throw new ServerException("Server Error");
     }
 
     public String viewProfile(String username) {
-        // TODO falta el token!
         return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 
