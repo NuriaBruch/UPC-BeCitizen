@@ -57,6 +57,8 @@ public class ThreadActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 controllerThreadPresentation.voteThread(threadId);
+                threadVote.setImageResource(R.drawable.ic_voted_icon);
+                threadVote.setEnabled(false);
             }
         });
 
@@ -64,6 +66,8 @@ public class ThreadActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 controllerThreadPresentation.reportThread(threadId);
+                threadReport.setImageResource(R.drawable.ic_reported);
+                threadReport.setEnabled(false);
             }
         });
 

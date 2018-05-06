@@ -81,6 +81,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 ControllerThreadPresentation.getUniqueInstance().reportComment(comment.getId());
+                holder.commentReport.setImageResource(R.drawable.ic_reported);
+                holder.commentReport.setEnabled(false);
             }
         });
 
@@ -88,6 +90,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             @Override
             public void onClick(View view) {
                 ControllerThreadPresentation.getUniqueInstance().voteComment(comment.getId());
+                holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+                holder.commentVote.setEnabled(false);
             }
         });
 
