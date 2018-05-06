@@ -1,7 +1,10 @@
-package com.becitizen.app.becitizen.domain.entities;
+package com.becitizen.app.becitizen.presentation;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.entities.Comment;
 
 import java.util.List;
 
@@ -26,6 +30,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank;
         public ImageButton commentVote, commentReport, commentQuote, commentAuthorImage;
+        public View commentView;
 
         public MyViewHolder(View view) {
             super(view);
@@ -39,6 +44,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             commentReport = view.findViewById(R.id.commentReportButton);
             commentQuote = view.findViewById(R.id.commentQuoteButton);
             commentAuthorImage = view.findViewById(R.id.commentAuthorImage);
+            commentView = view;
         }
     }
 
@@ -57,7 +63,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder (final MyViewHolder holder, int position) {
-        Comment comment = commentList.get(position);
+        final Comment comment = commentList.get(position);
         holder.commentAuthor.setText(comment.getAuthor());
         holder.commentTime.setText(comment.getCreatedAt());
         holder.commentContent.setText(comment.getContent());
@@ -74,30 +80,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Comment Reported", Snackbar.LENGTH_LONG)
-                        //.setActionTextColor(R.color.colorAccent)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar.make(view, "Report Undone", Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                ControllerThreadPresentation.getUniqueInstance().reportComment(comment.getId());
             }
         });
 
         holder.commentVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Comment Voted", Snackbar.LENGTH_LONG)
-                        //.setActionTextColor(R.color.colorAccent)
-                        .setAction("UNDO", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Snackbar.make(view, "Vote Undone", Snackbar.LENGTH_LONG).show();
-                            }
-                        })
-                        .show();
+                ControllerThreadPresentation.getUniqueInstance().voteComment(comment.getId());
+            }
+        });
+
+        holder.commentAuthorImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("loggeduser", false);
+                bundle.putString("username", comment.getAuthor());
+                Fragment fragment = new UserProfile();
+                fragment.setArguments(bundle);
+                fragmentTransaction(fragment, "USER_PROFILE", holder.commentView);
+
+
             }
         });
 
@@ -106,14 +110,64 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             holder.commentVote.setEnabled(false);
         }
         if (!comment.isReportable()) {
-            //holder.commentReport.setImageResource();
+            holder.commentReport.setImageResource(R.drawable.ic_reported);
             holder.commentReport.setEnabled(false);
         }
+
+        setAuthorImage(holder, comment.getAuthorImage());
     }
 
     @Override
     public int getItemCount() {
         return commentList.size();
+    }
+
+    private void fragmentTransaction(Fragment fragment, String tag, View view) {
+        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
+    }
+
+    private void setAuthorImage(MyViewHolder holder, int number) {
+        switch (number) {
+            case 1:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile1);
+                break;
+
+            case 2:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile2);
+                break;
+
+            case 3:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile3);
+                break;
+
+            case 4:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile4);
+                break;
+
+            case 5:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile5);
+                break;
+
+            case 6:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile6);
+                break;
+
+            case 7:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile7);
+                break;
+
+            case 8:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile8);
+                break;
+
+            default:
+                holder.commentAuthorImage.setImageResource(R.drawable.userprofile1);
+                break;
+        }
     }
 }
 

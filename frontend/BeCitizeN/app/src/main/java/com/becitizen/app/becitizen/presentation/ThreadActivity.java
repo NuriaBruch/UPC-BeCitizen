@@ -1,9 +1,9 @@
 package com.becitizen.app.becitizen.presentation;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +17,8 @@ import com.becitizen.app.becitizen.domain.entities.Thread;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Comment;
-import com.becitizen.app.becitizen.domain.entities.CommentAdapter;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +70,12 @@ public class ThreadActivity extends Fragment {
         threadAuthorImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO should go to profile activity
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("loggeduser", false);
+                bundle.putString("username", threadAuthor.getText().toString());
+                Fragment fragment = new UserProfile();
+                fragment.setArguments(bundle);
+                fragmentTransaction(fragment, "USER_PROFILE");
             }
         });
 
@@ -135,10 +138,11 @@ public class ThreadActivity extends Fragment {
             }
             threadReport = rootView.findViewById(R.id.threadReportButton);
             if (!thread.isCanReport()) {
-                // TODO reported icon
-                //threadReport.setImageResource();
+                threadReport.setImageResource(R.drawable.ic_reported);
                 threadReport.setEnabled(false);
             }
+
+            setAuthorImage(thread.getAuthorImage());
 
         }
         catch (JSONException e) {
@@ -161,6 +165,53 @@ public class ThreadActivity extends Fragment {
 
     public void setThreadId(int threadId) {
         this.threadId = threadId;
+    }
+
+    private void fragmentTransaction(Fragment fragment, String tag) {
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
+    }
+
+    private void setAuthorImage(int number) {
+        switch (number) {
+            case 1:
+                threadAuthorImage.setImageResource(R.drawable.userprofile1);
+                break;
+
+            case 2:
+                threadAuthorImage.setImageResource(R.drawable.userprofile2);
+                break;
+
+            case 3:
+                threadAuthorImage.setImageResource(R.drawable.userprofile3);
+                break;
+
+            case 4:
+                threadAuthorImage.setImageResource(R.drawable.userprofile4);
+                break;
+
+            case 5:
+                threadAuthorImage.setImageResource(R.drawable.userprofile5);
+                break;
+
+            case 6:
+                threadAuthorImage.setImageResource(R.drawable.userprofile6);
+                break;
+
+            case 7:
+                threadAuthorImage.setImageResource(R.drawable.userprofile7);
+                break;
+
+            case 8:
+                threadAuthorImage.setImageResource(R.drawable.userprofile8);
+                break;
+
+            default:
+                threadAuthorImage.setImageResource(R.drawable.userprofile1);
+                break;
+        }
     }
 
 }
