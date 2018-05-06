@@ -80,7 +80,7 @@ module.exports = class GestionUser {
         var{name, surname, biography, birthday, country, profilePicture} = req.body;
 
         User.update({email:userMail}, 
-            {name:name, surname:surname, biography:biography, 
+            {name:name, surname:surname, biography:biography, birthday:birthday,
             country:country, profilePicture}).exec(function(err1,userFound){
                 if(err1 !== undefined && err1){
                     response.status = "Error";
