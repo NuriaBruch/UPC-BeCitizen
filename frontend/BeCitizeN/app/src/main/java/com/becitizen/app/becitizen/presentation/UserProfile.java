@@ -2,10 +2,11 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private FloatingActionButton fbPrivateMessage;
     private ImageButton ibEditProfile;
     private ImageButton ibSignOut;
+    private ImageView rankIcon;
 
     private boolean loggedUser;
     private String username;
@@ -60,6 +62,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
         tvUsername = rootView.findViewById(R.id.tvUsername);
         tvRank = rootView.findViewById(R.id.tvRank);
+        rankIcon = rootView.findViewById(R.id.rankIcon);
         tvName = rootView.findViewById(R.id.tvName);
         tvBirthDate = rootView.findViewById(R.id.tvBirthday);
         tvCountry = rootView.findViewById(R.id.tvCountry);
@@ -102,6 +105,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             setTextView("country", tvCountry);
             setTextView("biography", tvBiography);
             setTextView("rank", tvRank);
+            setRankColor();
 
             setImage(userData.getInt("image"));
         }
@@ -140,10 +144,37 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     }
 
     private void setTextView(String text, TextView tv) {
-        if (userData.get(text) != null) tv.setText(userData.get(text).toString());
+        if (userData.get(text) != null) {
+            tv.setText(userData.get(text).toString());
+        }
         else {
             tv.setVisibility(View.GONE);
         }
+    }
+
+    private void setRankColor() {
+        if (userData.get("rank") != null) {
+            switch (userData.get("rank").toString()) {
+                case "coal":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_coal));
+                    break;
+                case "bronze":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_bronze));
+                    break;
+                case "silver":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_silver));
+                    break;
+                case "gold":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_gold));
+                    break;
+                case "platinum":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_platinum));
+                    break;
+                case "diamond":
+                    rankIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.rank_diamond));
+                    break;
+            }
+        } else rankIcon.setVisibility(View.GONE);
     }
 
     private void setImage(int number) {
