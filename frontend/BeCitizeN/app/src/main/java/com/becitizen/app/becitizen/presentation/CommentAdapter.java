@@ -14,7 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.adapters.ServerAdapter;
 import com.becitizen.app.becitizen.domain.entities.Comment;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -80,19 +84,35 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ControllerThreadPresentation.getUniqueInstance().reportComment(comment.getId());
-                holder.commentReport.setImageResource(R.drawable.ic_reported);
-                holder.commentReport.setEnabled(false);
+                try {
+                    ControllerThreadPresentation.getUniqueInstance().reportComment(comment.getId());
+                    holder.commentReport.setImageResource(R.drawable.ic_reported);
+                    holder.commentReport.setEnabled(false);
+                }
+                catch (JSONException e) {
+                    Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                }
+                catch (ServerException e) {
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
         holder.commentVote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ControllerThreadPresentation.getUniqueInstance().voteComment(comment.getId());
-                holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
-                holder.commentVote.setEnabled(false);
-                holder.commentVotes.setText(String.valueOf( Integer.valueOf(holder.commentVotes.getText().toString()) + 1) );
+                try {
+                    ControllerThreadPresentation.getUniqueInstance().voteComment(comment.getId());
+                    holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+                    holder.commentVote.setEnabled(false);
+                    holder.commentVotes.setText(String.valueOf(Integer.valueOf(holder.commentVotes.getText().toString()) + 1));
+                }
+                catch (JSONException e) {
+                    Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                }
+                catch (ServerException e) {
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
         });
 
