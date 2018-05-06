@@ -48,6 +48,12 @@
 
     <string name="guest">Guest</string>
 
+    <string name="newComment">Write a comment</string>
+    <string name="comments">Comments</string>
+    <string name="quotingError">Quoting not implemented yet</string>
+
+    <string name="tokenError">Token error</string>
+
     <string name="rankUP">Rank:</string>
     <string name="birthdateUP">Birthdate:</string>
     <string name="countryUP">Country:</string>
@@ -83,7 +89,6 @@
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>
-        <item>American Samoa</item>
         <item>Andorra</item>
         <item>Angola</item>
         <item>Antigua and Barbuda</item>
@@ -125,8 +130,7 @@
         <item>China</item>
         <item>Colombia</item>
         <item>Comoros</item>
-        <item>Congo [DRC]</item>
-        <item>Congo [Republic]</item>
+        <item>Congo</item>
         <item>Costa Rica</item>
         <item>Croatia</item>
         <item>Cuba</item>
@@ -145,7 +149,6 @@
         <item>Eritrea</item>
         <item>Estonia</item>
         <item>Ethiopia</item>
-        <item>Europe</item>
         <item>Faroe Islands</item>
         <item>Fiji</item>
         <item>Finland</item>
@@ -157,7 +160,6 @@
         <item>Georgia</item>
         <item>Germany</item>
         <item>Ghana</item>
-        <item>Gibraltar</item>
         <item>Greece</item>
         <item>Greenland</item>
         <item>Grenada</item>
@@ -201,7 +203,7 @@
         <item>Lithuania</item>
         <item>Luxembourg</item>
         <item>Macau</item>
-        <item>Macedonia [FYROM]</item>
+        <item>Macedonia</item>
         <item>Madagascar</item>
         <item>Malawi</item>
         <item>Malaysia</item>
@@ -220,7 +222,7 @@
         <item>Montenegro</item>
         <item>Morocco</item>
         <item>Mozambique</item>
-        <item>Myanmar [Burma]</item>
+        <item>Myanmar</item>
         <item>Namibia</item>
         <item>Nepal</item>
         <item>Netherlands</item>
