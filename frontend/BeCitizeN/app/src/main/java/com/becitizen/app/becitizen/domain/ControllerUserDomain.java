@@ -406,4 +406,8 @@ public class ControllerUserDomain {
             throw new ServerException("User deactivated");
         }
     }
+
+    public boolean checkUsername(String username) {
+        return username.equals(currentUser.getUsername());
+    }
 }
