@@ -64,10 +64,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public void onBindViewHolder (final MyViewHolder holder, int position) {
         final Comment comment = commentList.get(position);
-        holder.commentAuthor.setText(comment.getAuthor());
+        holder.commentAuthor.setText("@" + comment.getAuthor());
         holder.commentTime.setText(comment.getCreatedAt());
         holder.commentContent.setText(comment.getContent());
-        holder.commentVotes.setText(comment.getVotes());
+        holder.commentVotes.setText(String.valueOf(comment.getVotes()));
         holder.commentAuthorRank.setText(comment.getAuthorRank());
 
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +92,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 ControllerThreadPresentation.getUniqueInstance().voteComment(comment.getId());
                 holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
                 holder.commentVote.setEnabled(false);
+                holder.commentVotes.setText(String.valueOf( Integer.valueOf(holder.commentVotes.getText().toString()) + 1) );
             }
         });
 

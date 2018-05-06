@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.becitizen.app.becitizen.domain.entities.Thread;
 
 import com.becitizen.app.becitizen.R;
@@ -40,8 +42,6 @@ public class ThreadActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         rootView = inflater.inflate(R.layout.thread_content, container, false);
 
         controllerThreadPresentation = ControllerThreadPresentation.getUniqueInstance();
@@ -59,6 +59,7 @@ public class ThreadActivity extends Fragment {
                 controllerThreadPresentation.voteThread(threadId);
                 threadVote.setImageResource(R.drawable.ic_voted_icon);
                 threadVote.setEnabled(false);
+                threadVotes.setText(String.valueOf( Integer.valueOf(threadVotes.getText().toString()) + 1) );
             }
         });
 
@@ -94,6 +95,8 @@ public class ThreadActivity extends Fragment {
                 else {
                     controllerThreadPresentation.newComment(commentText, threadId);
                     prepareComments();
+                    Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG);
+                    newCommentText.clearFocus();
                 }
             }
         });
@@ -118,7 +121,7 @@ public class ThreadActivity extends Fragment {
             Thread thread = controllerThreadPresentation.getThreadContent(threadId);
 
             threadAuthor = rootView.findViewById(R.id.threadAuthorText);
-            threadAuthor.setText(thread.getAuthor());
+            threadAuthor.setText("@" + thread.getAuthor());
 
             threadTime = rootView.findViewById(R.id.threadTimeText);
             threadTime.setText(thread.getCreatedAt());
@@ -145,7 +148,7 @@ public class ThreadActivity extends Fragment {
                 threadReport.setImageResource(R.drawable.ic_reported);
                 threadReport.setEnabled(false);
             }
-
+            threadAuthorImage = rootView.findViewById(R.id.threadAuthorImage);
             setAuthorImage(thread.getAuthorImage());
 
         }
@@ -163,7 +166,7 @@ public class ThreadActivity extends Fragment {
             adapter.notifyDataSetChanged();
         }
         catch (JSONException e) {
-            // TODO show toast
+            Toast.makeText(getContext(), "Comments couldn't be loaded", Toast.LENGTH_LONG).show();
         }
     }
 
