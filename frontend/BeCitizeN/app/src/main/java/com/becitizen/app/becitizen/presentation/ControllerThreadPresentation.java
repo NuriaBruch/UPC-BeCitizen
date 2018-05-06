@@ -28,7 +28,6 @@ public class ControllerThreadPresentation {
 
     /**
      * Metodo para obtener la instancia del singleton
-     *
      * @return Instancia
      */
     public static ControllerThreadPresentation getUniqueInstance() {
@@ -41,7 +40,6 @@ public class ControllerThreadPresentation {
 
     /**
      * Metodo que retorna todos los threads de una categoria
-     *
      * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
@@ -51,7 +49,6 @@ public class ControllerThreadPresentation {
 
     /**
      * Metodo que retorna todas las categorias
-     *
      * @return empty arraylist si ha ocurrido algun error
      */
     public ArrayList<String> getCategories() {
@@ -60,41 +57,38 @@ public class ControllerThreadPresentation {
 
     /**
      * Metodo que crea un nuevo thread
-     *
      * @return empty arraylist si ha ocurrido algun error
      */
     public boolean newThread(Thread t) throws ServerException {
-        //TODO: delete line below
-        //t = new Thread("hi","test", "justice");
         return controllerThreadDomain.newThread(t);
     }
 
 
-    public Thread getThreadContent(int id) throws JSONException {
+    public Thread getThreadContent(int id) throws JSONException, ServerException {
         return controllerThreadDomain.getThreadContent(id);
     }
 
-    public List<Comment> getThreadComments(int id) throws JSONException {
+    public List<Comment> getThreadComments(int id) throws JSONException, ServerException {
         return controllerThreadDomain.getThreadComments(id);
     }
 
-    public void newComment(String commentText, int threadId) {
+    public void newComment(String commentText, int threadId) throws ServerException, JSONException {
         controllerThreadDomain.newComment(commentText, threadId);
     }
 
-    public void voteThread(int threadId) {
+    public void voteThread(int threadId) throws ServerException, JSONException {
         controllerThreadDomain.voteThread(threadId);
     }
 
-    public void reportThread(int threadId) {
+    public void reportThread(int threadId) throws ServerException, JSONException {
         controllerThreadDomain.reportThread(threadId);
     }
 
-    public void voteComment(int commentId) {
+    public void voteComment(int commentId) throws ServerException, JSONException {
         controllerThreadDomain.voteComment(commentId);
     }
 
-    public void reportComment(int commentId) {
+    public void reportComment(int commentId) throws ServerException, JSONException {
         controllerThreadDomain.reportComment(commentId);
     }
 

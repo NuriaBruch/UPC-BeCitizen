@@ -100,7 +100,7 @@ public class ControllerThreadData {
         return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id));
     }
 
-    public void newComment(String commentText, int threadId) {
+    public String newComment(String commentText, int threadId) {
         JSONObject json = new JSONObject();
         try {
             json.put("content", commentText);
@@ -109,31 +109,31 @@ public class ControllerThreadData {
             e.printStackTrace();
         }
         String[] dataRequest = {URI_NEW_COMMENT, json.toString()};
-        String result = ServerAdapter.getInstance().doPostRequest(dataRequest);
+        return ServerAdapter.getInstance().doPostRequest(dataRequest);
     }
 
-    public void voteThread(int threadId) {
+    public String voteThread(int threadId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_THREAD + "?threadId=" + threadId, json.toString()};
-        ServerAdapter.getInstance().doPutRequest(dataRequest);
+        return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
-    public void reportThread(int threadId) {
+    public String reportThread(int threadId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_THREAD + "?threadId=" + threadId, json.toString()};
-        ServerAdapter.getInstance().doPutRequest(dataRequest);
+        return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
-    public void voteComment(int commentId) {
+    public String voteComment(int commentId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_COMMENT + "?commentId=" + commentId, json.toString()};
-        ServerAdapter.getInstance().doPutRequest(dataRequest);
+        return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
-    public void reportComment(int commentId) {
+    public String reportComment(int commentId) {
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_COMMENT + "?commentId=" + commentId, json.toString()};
-        ServerAdapter.getInstance().doPutRequest(dataRequest);
+        return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
 }

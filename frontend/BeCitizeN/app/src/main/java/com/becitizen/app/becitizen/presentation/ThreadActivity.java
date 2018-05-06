@@ -19,6 +19,7 @@ import com.becitizen.app.becitizen.domain.entities.Thread;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Comment;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
 
@@ -105,19 +106,36 @@ public class ThreadActivity extends Fragment {
             threadVote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    controllerThreadPresentation.voteThread(threadId);
-                    threadVote.setImageResource(R.drawable.ic_voted_icon);
-                    threadVote.setEnabled(false);
-                    threadVotes.setText(String.valueOf( Integer.valueOf(threadVotes.getText().toString()) + 1) );
+                    try {
+                        controllerThreadPresentation.voteThread(threadId);
+                        threadVote.setImageResource(R.drawable.ic_voted_icon);
+                        threadVote.setEnabled(false);
+                        threadVotes.setText(String.valueOf(Integer.valueOf(threadVotes.getText().toString()) + 1));
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
+                    }
+                    catch (ServerException e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
             });
 
             threadReport.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    controllerThreadPresentation.reportThread(threadId);
-                    threadReport.setImageResource(R.drawable.ic_reported);
-                    threadReport.setEnabled(false);
+                    try {
+                        controllerThreadPresentation.reportThread(threadId);
+                        threadReport.setImageResource(R.drawable.ic_reported);
+                        threadReport.setEnabled(false);
+                    }
+                    catch (JSONException e) {
+                        Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
+                    }
+                    catch (ServerException e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -142,18 +160,34 @@ public class ThreadActivity extends Fragment {
                     if (commentText.isEmpty())
                         Snackbar.make(view, "Your reply is empty", Snackbar.LENGTH_LONG).show();
                     else {
-                        controllerThreadPresentation.newComment(commentText, threadId);
-                        prepareComments();
-                        Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG);
-                        newCommentText.clearFocus();
+                        try {
+                            controllerThreadPresentation.newComment(commentText, threadId);
+                            prepareComments();
+                            Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG).show();
+                            newCommentText.clearFocus();
+                            newCommentText.setText(null);
+                        }
+                        catch (JSONException e) {
+                            Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
+                        }
+                        catch (ServerException e) {
+                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });
 
         }
         catch (JSONException e) {
-            //TODO TOAST OR LOG THAT JSON BROKE MY PROGRAM, TY.
-            //TODO RETURN TO THE LIST OF THREADS PLS
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            getActivity().getSupportFragmentManager().popBackStack();
+            transaction.remove(this);
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            transaction.commit();
+        }
+        catch (ServerException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
@@ -161,11 +195,15 @@ public class ThreadActivity extends Fragment {
     private void prepareComments () {
         try {
             List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(threadId);
+            commentList.clear();
             commentList.addAll(newCommentList);
             adapter.notifyDataSetChanged();
         }
         catch (JSONException e) {
             Toast.makeText(getContext(), "Comments couldn't be loaded", Toast.LENGTH_LONG).show();
+        }
+        catch (ServerException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

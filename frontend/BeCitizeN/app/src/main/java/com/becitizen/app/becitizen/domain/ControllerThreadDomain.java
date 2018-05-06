@@ -97,7 +97,8 @@ public class ControllerThreadDomain {
         return controllerThreadData.newThread(t);
     }
 
-    public Thread getThreadContent(int id) throws JSONException {
+
+    public Thread getThreadContent(int id) throws JSONException, ServerException {
         JSONObject info = new JSONObject(controllerThreadData.getThreadContent(id));
         Thread thread = new Thread();
         if (info.get("status").equals("Ok")) {
@@ -113,12 +114,13 @@ public class ControllerThreadDomain {
             thread.setCanVote(threadData.getBoolean("canVote"));
             thread.setCanReport(threadData.getBoolean("canReport"));
         }
-        //TODO throw new exception
-
+        else {
+            if (info.get("status").equals("E2")) throw new ServerException("DB error");
+        }
         return thread;
     }
 
-    public List<Comment> getThreadComments(int id) throws JSONException {
+    public List<Comment> getThreadComments(int id) throws JSONException, ServerException {
         JSONObject info = new JSONObject(controllerThreadData.getThreadComments(id));
         List<Comment> commentList = new ArrayList<>();
         if (info.get("status").equals("Ok")) {
@@ -130,44 +132,61 @@ public class ControllerThreadDomain {
                 comment.setContent(commentData.getString("content"));
                 comment.setAuthor(commentData.getString("username"));
                 comment.setAuthorRank(commentData.getString("rank"));
-                comment.setAuthorImage(Integer.valueOf(commentData.getString("profilePicture")));
+                comment.setAuthorImage(commentData.getInt("profilePicture"));
                 comment.setCreatedAt(commentData.getString("createdAt"));
                 comment.setVotes(commentData.getInt("votes"));
                 comment.setVotable(commentData.getBoolean("canVote"));
                 comment.setReportable(commentData.getBoolean("canReport"));
+                comment.setId(commentData.getInt("id"));
                 commentList.add(comment);
             }
         }
-        //TODO throw new exception
-
+        else if (info.get("status").equals("E2")) throw new ServerException("DB error");
 
        return commentList;
+    }
+
+    public void newComment(String commentText, int threadId) throws JSONException, ServerException {
+        JSONObject info = new JSONObject(controllerThreadData.newComment(commentText, threadId));
+        if (info.get("status").equals("E2")) throw new ServerException("DB error");
+        else if (info.get("status").equals("E1")) throw new ServerException("server error");
+    }
+
+    public void voteThread(int threadId) throws JSONException, ServerException {
+        JSONObject info = new JSONObject(controllerThreadData.voteThread(threadId));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("token error");
+        else if (info.get("status").equals("E3")) throw new ServerException("thread not found");
+        else if (info.get("status").equals("E4")) throw new ServerException("already voted");
 
     }
 
-    public void newComment(String commentText, int threadId) {
-        controllerThreadData.newComment(commentText, threadId);
-        /*
-        if (!info.get("status").equals("Ok")) {
-            // TODO throw exception.
-        }
-        */
+    public void reportThread(int threadId) throws ServerException, JSONException {
+        JSONObject info = new JSONObject(controllerThreadData.reportThread(threadId));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("token error");
+        else if (info.get("status").equals("E3")) throw new ServerException("thread not found");
+        else if (info.get("status").equals("E4")) throw new ServerException("already reported");
     }
 
-    public void voteThread(int threadId) {
-        controllerThreadData.voteThread(threadId);
+    public void voteComment(int commentId) throws ServerException, JSONException {
+        JSONObject info = new JSONObject(controllerThreadData.voteComment(commentId));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("token error");
+        else if (info.get("status").equals("E3")) throw new ServerException("comment not found");
+        else if (info.get("status").equals("E4")) throw new ServerException("already voted");
     }
 
-    public void reportThread(int threadId) {
-        controllerThreadData.reportThread(threadId);
-    }
+    public void reportComment(int commentId) throws ServerException, JSONException {
+        JSONObject info = new JSONObject(controllerThreadData.reportComment(commentId));
 
-    public void voteComment(int commentId) {
-        controllerThreadData.voteComment(commentId);
-    }
-
-    public void reportComment(int commentId) {
-        controllerThreadData.reportComment(commentId);
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("token error");
+        else if (info.get("status").equals("E3")) throw new ServerException("comment not found");
+        else if (info.get("status").equals("E4")) throw new ServerException("already reported");
     }
 
 
