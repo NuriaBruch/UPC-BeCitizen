@@ -7,6 +7,8 @@ module.exports = class GestionUser {
            status: "Ok",
            errors: []
         };
+
+        if (pass === undefined) pass = UtilsService.getRandomString();
         
         const saltRounds = 10;
 
