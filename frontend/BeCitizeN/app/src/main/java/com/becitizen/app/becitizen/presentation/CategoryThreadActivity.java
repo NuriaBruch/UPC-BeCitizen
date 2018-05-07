@@ -47,7 +47,7 @@ public class CategoryThreadActivity extends Fragment {
         dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
 
         if (dataModels.size() == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
             toast.show();
         }
 
