@@ -27,7 +27,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="#000000"
                 android:padding="1dp"
-                app:srcCompat="@drawable/userprofile1" />
+                app:srcCompat="@drawable/deactivated_user" />
 
             <ImageButton
                 android:id="@+id/ibEditProfile"

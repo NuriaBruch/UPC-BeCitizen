@@ -130,6 +130,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
                 rootView.findViewById(R.id.labelBiography).setVisibility(View.GONE);
                 rootView.findViewById(R.id.labelCountry).setVisibility(View.GONE);
 
+                rootView.findViewById(R.id.rankIcon).setVisibility(View.GONE);
+
+
             }
 
             else {
