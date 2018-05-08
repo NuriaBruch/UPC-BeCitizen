@@ -131,6 +131,10 @@ module.exports = {
                         }
                     });
                 },function(){
+                    var sortedList  = _.sortBy(response.comment, function(l){
+                        return l.id;
+                    });
+                    response.comment = sortedList;
                     callback(response);
                 });
             }
