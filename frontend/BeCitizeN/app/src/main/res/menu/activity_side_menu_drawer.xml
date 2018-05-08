@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_information"
+                android:icon="@drawable/ic_menu_information"
+                android:title="@string/information" />
+            <item
+                android:id="@+id/nav_faq"
+                android:icon="@drawable/ic_menu_faq"
+                android:title="@string/faq" />
+            <item
+                android:id="@+id/nav_utilities"
+                android:icon="@drawable/ic_menu_utilities"
+                android:title="@string/utilities" />
+        </menu>
+    </item>
+
+    <item android:title="@string/social">
+        <menu>
+            <item
+                android:id="@+id/nav_forum"
+                android:icon="@drawable/ic_menu_forum"
+                android:title="@string/forum" />
+            <item
+                android:id="@+id/nav_private_messages"
+                android:icon="@drawable/ic_menu_private_messages"
+                android:title="@string/private_messages" />
+        </menu>
+    </item>
+
+    <item android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="@string/settings" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_menu_help"
+                android:title="@string/help" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/about" />
+        </menu>
+    </item>
+
+</menu>

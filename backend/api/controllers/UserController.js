@@ -8,13 +8,13 @@
 module.exports = {
 
 	register: function(req,res){
-        var {username, password, email, name, surname, birthday, country, facebook, google} = req.body;
+        var {username, password, email, name, surname, birthday, country, profilePicture, facebook, google} = req.body;
         
         var hasFace = (facebook ==='true');
         var hasGoogle = (google === 'true');
         var gestionUser = new GestionUser();
 
-        gestionUser.register(username, password, email, name, surname, birthday, country, hasFace, hasGoogle, function(status){
+        gestionUser.register(username, password, email, name, surname, birthday, country, profilePicture, hasFace, hasGoogle, function(status){
             res.send(status);
         });
     },
@@ -26,10 +26,14 @@ module.exports = {
         var mailAuth = new MailAuth();
         mailAuth.login(id, password, function(status){
             if(status.status === 'Ok') {
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
+                    res.set("token", token);
+                    res.send(status);
+                });
+
             }
-            res.send(status);
+            else res.send(status);
         });
     },
     loginGoogle: function(req,res){
@@ -37,10 +41,13 @@ module.exports = {
         var accessToken = req.param('idToken');
         googleAuth.loginViaGoogle(accessToken, function(status){
             if(status.status === 'Ok') {
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
+                    res.set("token", token);
+                    res.send(status);
+                });
             }
-            res.send(status);
+            else res.send(status);
         });
     },
 
@@ -48,10 +55,13 @@ module.exports = {
         var accessToken = req.param('accessToken');
         FacebookAuthService.loginFace(accessToken, function(status){
             if(status.status === 'Ok') {
-                req.session.authenticated = true;
-                req.session.userEmail = status.info.email;
+                var jwt = require('jsonwebtoken');
+                jwt.sign({ email: status.info.email }, "bienquesito", function(err, token) {
+                    res.set("token", token);
+                    res.send(status);
+                });
             }
-            res.send(status);
+            else res.send(status);
         });
     },
 
@@ -59,6 +69,33 @@ module.exports = {
         var{email} = req.query;
         var gestionUser = new GestionUser();
         gestionUser.checkMail(email,function(status){
+            res.send(status);
+        });
+    },
+
+    deactivateAccount: function(req,res){
+        var gestionUser = new GestionUser();
+        var userMail = UtilsService.getEmailFromHeader(req);
+
+        gestionUser.deactivate(userMail,function(status){
+            res.send(status);
+        });
+    },
+
+    updateProfile: function(req,res){
+        var gestionUser = new GestionUser();
+        
+        gestionUser.update(req,function(status){
+            res.send(status);
+        });
+    },
+
+    viewProfile: function(req, res){
+        var gestionUser = new GestionUser();
+
+        var username = req.query.username;
+        
+        gestionUser.view(username,function(status){
             res.send(status);
         });
     }

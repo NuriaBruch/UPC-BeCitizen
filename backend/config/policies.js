@@ -30,6 +30,22 @@ module.exports.policies = {
   /*UserController: {
     changePass: 'sessionAuth'
   }*/
+  ThreadController: {
+    createThread: 'tokenAuth',
+    deleteThread: 'tokenAuth',
+    reportThread: 'tokenAuth',
+    voteThread: 'tokenAuth'
+  },
+  CommentController: {
+    reportComment: 'tokenAuth',
+    createComment: 'tokenAuth',
+    voteComment: 'tokenAuth'
+  },
+  UserController: {
+    deactivateAccount: 'tokenAuth',
+    updateProfile: 'tokenAuth',
+    viewProfile: 'tokenAuth'
+  }
 
   /***************************************************************************
   *                                                                          *

@@ -13,7 +13,7 @@
     <string name="youAreIn">You are in!</string>
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
-    <string name="errorIncorrEmail">Incorrect email</string>
+    <string name="errorUserNotFound">User not found</string>
     <string name="errorIncorrPassw">Incorrect password</string>
 
     <string name="enter">Enter</string>
@@ -24,6 +24,7 @@
 
     <string name="signUpTitle">Sign up</string>
     <string name="enterEmail">Enter your email</string>
+    <string name="enterEmailUsername">Enter your email or username</string>
     <string name="enterPassw">Enter your password</string>
     <string name="repeatPassw">Repeat your password</string>
     <string name="Accept">Accept</string>
@@ -31,13 +32,14 @@
     <string name="errorPassw">Passwords do not match</string>
     <string name="errorMail">Mail already registered</string>
 
-
     <string name="checkInfo">Check your information</string>
     <string name="username">Username</string>
     <string name="firstName">First Name</string>
     <string name="lastName">Last Name</string>
     <string name="birthDate">Birth Date</string>
+    <string name="biography">Biography</string>
     <string name="country">Birth Country</string>
+    <string name="profilePicture">Profile picture</string>
     <string name="birthDatePicker">Select your birthdate</string>
     <string name="dateFormat">dd/mm/yyyy</string>
     <string name="submit">Submit</string>
@@ -46,11 +48,47 @@
 
     <string name="guest">Guest</string>
 
+    <string name="newComment">Write a comment</string>
+    <string name="comments">Comments</string>
+    <string name="quotingError">Quoting not implemented yet</string>
+
+    <string name="tokenError">Token error</string>
+
+    <string name="rankUP">Rank:</string>
+    <string name="birthdateUP">Birthdate:</string>
+    <string name="countryUP">Country:</string>
+    <string name="biographyUP">Biography:</string>
+    <string name="deactived">Deactivated user</string>
+
+    <string name="votes">votes</string>
+
+    <string name="update">Update</string>
+    <string name="editprofile">Edit your profile</string>
+
+    <string name="serverError">Server Error</string>
+    <string name="DBError">Database Error</string>
+    <string name="updateCorrect">Profile updated correctly</string>
+    <string name="JSONerror">JSON error</string>
+    <string name="deleteAccount">Delete account</string>
+    <string name="deleteAccountMsg">Do you really want to delete your account?</string>
+    <string name="logoutMsg">Do you really want to exit BeCitizeN?</string>
+
+    <string name="by">by</string>
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="years">years</string>
+    <string name="second">second</string>
+    <string name="minute">minute</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="year">year</string>
+
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>
-        <item>American Samoa</item>
         <item>Andorra</item>
         <item>Angola</item>
         <item>Antigua and Barbuda</item>
@@ -92,8 +130,7 @@
         <item>China</item>
         <item>Colombia</item>
         <item>Comoros</item>
-        <item>Congo [DRC]</item>
-        <item>Congo [Republic]</item>
+        <item>Congo</item>
         <item>Costa Rica</item>
         <item>Croatia</item>
         <item>Cuba</item>
@@ -112,7 +149,6 @@
         <item>Eritrea</item>
         <item>Estonia</item>
         <item>Ethiopia</item>
-        <item>Europe</item>
         <item>Faroe Islands</item>
         <item>Fiji</item>
         <item>Finland</item>
@@ -124,7 +160,6 @@
         <item>Georgia</item>
         <item>Germany</item>
         <item>Ghana</item>
-        <item>Gibraltar</item>
         <item>Greece</item>
         <item>Greenland</item>
         <item>Grenada</item>
@@ -168,7 +203,7 @@
         <item>Lithuania</item>
         <item>Luxembourg</item>
         <item>Macau</item>
-        <item>Macedonia [FYROM]</item>
+        <item>Macedonia</item>
         <item>Madagascar</item>
         <item>Malawi</item>
         <item>Malaysia</item>
@@ -187,7 +222,7 @@
         <item>Montenegro</item>
         <item>Morocco</item>
         <item>Mozambique</item>
-        <item>Myanmar [Burma]</item>
+        <item>Myanmar</item>
         <item>Namibia</item>
         <item>Nepal</item>
         <item>Netherlands</item>
@@ -273,5 +308,62 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
         <item>Åland Islands</item>
+    </string-array>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="profile">Profile</string>
+    <string name="information">Information</string>
+    <string name="faq">FAQ</string>
+    <string name="utilities">Utilities</string>
+    <string name="social">Social</string>
+    <string name="private_messages">Private messages</string>
+    <string name="forum">Forum</string>
+    <string name="settings">Settings</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
+    <string name="other">Other</string>
+    <string name="rank">Rank</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="category">Category</string>
+    <string name="hintTitleThread">Provide a title for your new thread</string>
+    <string name="hintThreadContent">Describe your thread</string>
+    <string name="newThread">New Thread</string>
+
+    <string-array name="image_codes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+
+    <string-array name="image_pngs">
+        <item>@drawable/userprofile1</item>
+        <item>@drawable/userprofile2</item>
+        <item>@drawable/userprofile3</item>
+        <item>@drawable/userprofile4</item>
+        <item>@drawable/userprofile5</item>
+        <item>@drawable/userprofile6</item>
+        <item>@drawable/userprofile7</item>
+        <item>@drawable/userprofile8</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>Culture</item>
+        <item>Administration</item>
+        <item>Mobility</item>
+        <item>Sport</item>
+        <item>Education</item>
+        <item>Health</item>
+        <item>Employment</item>
+        <item>Justice</item>
     </string-array>
 </resources>

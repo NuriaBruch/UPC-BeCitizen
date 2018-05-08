@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -40,7 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
+                try {
+                    handleExternalLoginResult(ControllerUserPresentation.getUniqueInstance().facebookLogin());
+                } catch (ServerException e) {
+                    // TODO revisar el getApplicationContext
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -74,7 +80,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (requestCode) {
             case GoogleLogIn.RC_SIGN_IN:
                 // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-                handleExternalLoginResult(googleLogIn.onResult(data));
+                try {
+                    handleExternalLoginResult(googleLogIn.onResult(data));
+                } catch (ServerException e) {
+                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
                 break;
             case 64206:
                 //Facebook
@@ -92,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, DataRegisterView.class));
                 break;
             case LOGGED_IN:
-                Intent intent = new Intent(this, InsideActivity.class);
+                Intent intent = new Intent(this, SideMenuActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 break;
@@ -105,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void logInGuestMainMenu(View view) {
         ControllerUserPresentation.getUniqueInstance().guestLogin();
-        goToActivity(InsideActivity.class, new Bundle(), 0);
+        goToActivity(SideMenuActivity.class, new Bundle(), 0);
     }
 
     public void logInMailMainMenu(View view) {

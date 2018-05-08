@@ -1,31 +1,13 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.facebook.AccessToken;
 import com.facebook.FacebookException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static android.content.ContentValues.TAG;
 
 public class ControllerUserData {
 
@@ -36,6 +18,10 @@ public class ControllerUserData {
     private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
     private static final String URI_REGISTER = "http://becitizen.cf/register";
     private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
+
+    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
+    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
 
     private static ControllerUserData instance = null;
 
@@ -52,10 +38,12 @@ public class ControllerUserData {
      * @return La instancia de ControllerUserData
      */
     public static ControllerUserData getInstance() {
-        if(instance == null) {
-            instance = new ControllerUserData();
-        }
+        if(instance == null) instance = new ControllerUserData();
         return instance;
+    }
+
+    public String getToken() {
+        return ServerAdapter.getInstance().getTOKEN();
     }
 
     /**
@@ -69,7 +57,7 @@ public class ControllerUserData {
         String response, token;
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
-            response = doGetRequest(URI_FB_LOGIN + "?accessToken=" + token);
+            response = ServerAdapter.getInstance().doGetRequest(URI_FB_LOGIN + "?accessToken=" + token);
         else throw new FacebookException("You are not logged with Facebook");
 
         JSONObject resp = null;
@@ -80,7 +68,10 @@ public class ControllerUserData {
 
                 return response;
 
-            } else throw new ServerException("Server response status is not OK");
+            }
+            else if (resp.getString("status").equals("E1")) throw new ServerException("server error");
+            else if (resp.getString("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("unable to get user info from Facebook, wrong facebookId");
 
         } catch (JSONException e) {
             // TODO gestionar errors.
@@ -90,26 +81,35 @@ public class ControllerUserData {
         }
     }
 
+    /**
+     * Metodo que envia la solicitud de hacer login con Google a nuestro servidor,
+     * comprueba si ha sucedido algun error en el servidor y devuelve su respuesta.
+     *
+     * @param token token del usuario generado por Google
+     *
+     * @return La respuesta de nuestro servidor al hacer login con Google
+     */
     public String googleLogin(String token) {
-        return doGetRequest(URI_GOOGLE_LOGIN + token);
+        return ServerAdapter.getInstance().doGetRequest(URI_GOOGLE_LOGIN + token);
     }
 
     /**
      * Metodo que envia la solicitud para comprovar si un email esta registrado en nuestro servidor
      *
      * @param mail Email a comprobar si esta registrado
+     *
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
-    public boolean existsMail(String mail) {
-        // TODO gestionar errors.
+    public boolean existsMail(String mail) throws ServerException {
         try {
-            JSONObject info = new JSONObject(doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
                 return !info.get("found").equals("No");
             }
-            return true;
+            else throw new ServerException("server error");
         }
         catch (JSONException e) {
+            // TODO gestionar errors.
             return true;
         }
     }
@@ -129,15 +129,32 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, boolean facebook, boolean google) {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException {
 
-        String[] dataRequest = {URI_REGISTER, username, password, email, firstName, lastName, birthDate, country, String.valueOf(facebook), String.valueOf(google)};
+        JSONObject json = new JSONObject();
         try {
-            JSONObject info = new JSONObject(doPostRequest(dataRequest));
+            json.put("username", username);
+            json.put("password", password);
+            json.put("email", email);
+            json.put("name", firstName);
+            json.put("surname", lastName);
+            json.put("birthday", birthDate);
+            json.put("country", country);
+            json.put("profilePicture", String.valueOf(image));
+            json.put("facebook", String.valueOf(facebook));
+            json.put("google", String.valueOf(google));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String[] dataRequest = {URI_REGISTER, json.toString()};
+        try {
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
             if (info.get("status").equals("Ok")) {
                return true;
             }
-            return false;
+            else if (info.get("status").equals("E1")) throw new ServerException("server error");
+            else throw new ServerException("DB error");
         }
         catch (JSONException e) {
             // TODO gestionar errors.
@@ -147,110 +164,47 @@ public class ControllerUserData {
     }
 
     public String checkCredentials(String email, String password) {
-        return doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
+        return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    /**
-     * Metodo que permite hacer un get a la url indicada
-     *
-     * @param url Direccion en la que se quiere hacer el get
-     * @return Respuesta obtenida con el get
-     */
-    private String doGetRequest(String url) {
-        sendUserDataToServer request = new sendUserDataToServer();
-        String data = "";
-        try {
-            data = request.execute(new String[]{url}).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+        JSONObject json = new JSONObject();
+        json.put("name", firstName);
+        json.put("surname", lastName);
+        json.put("biography", biography);
+        json.put("birthday", birthDate);
+        json.put("profilePicture", image);
+        json.put("country", country);
+
+        String[] dataRequest = {URI_UPDATE_PROFILE, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-        return data;
+        else if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else throw new ServerException("DB error");
     }
 
-    /**
-     * Metodo que permite hacer un post a la url indicada con
-     * un objeto formado por los valores en los parametros
-     *
-     * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a postear
-     * @return Respuesta obtenida con el post
-     */
-    public String doPostRequest(String[] dataRequest) {
-        PostTask request = new PostTask();
-        String data = "";
-        try {
-            data = request.execute(dataRequest).get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+
+    public boolean deactivateAccount(String username) throws ServerException, JSONException{
+        JSONObject json = new JSONObject();
+        json.put("username", username);
+
+        String[] dataRequest = {URI_DEACTIVATE_ACCOUNT, json.toString()};
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+
+        if (info.get("status").equals("Ok")) {
+            return true;
         }
-        return data;
+        else throw new ServerException("Server Error");
     }
 
-    /**
-     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http get
-     */
-    private class sendUserDataToServer extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... data) {
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(data[0]);
-            String responseBody;
-
-            try {
-                HttpResponse response = httpClient.execute(httpGet);
-                int statusCode = response.getStatusLine().getStatusCode();
-                responseBody = EntityUtils.toString(response.getEntity());
-                Log.w("Result", "Signed in as: " + responseBody);
-            } catch (ClientProtocolException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            }
-            return responseBody;
-        }
+    public String viewProfile(String username) {
+        return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 
-    /**
-     * Clase que permite realizar tareas en segundo plano, en este caso peticiones Http post
-     */
-    private class PostTask extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... data) {
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(data[0]);
-            String responseBody;
-
-            try {
-                //add data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("username", data[1]));
-                nameValuePairs.add(new BasicNameValuePair("password", data[2]));
-                nameValuePairs.add(new BasicNameValuePair("email", data[3]));
-                nameValuePairs.add(new BasicNameValuePair("name", data[4]));
-                nameValuePairs.add(new BasicNameValuePair("surname", data[5]));
-                nameValuePairs.add(new BasicNameValuePair("birthday", data[6]));
-                nameValuePairs.add(new BasicNameValuePair("country", data[7]));
-                nameValuePairs.add(new BasicNameValuePair("facebook", data[8]));
-                nameValuePairs.add(new BasicNameValuePair("google", data[9]));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                //execute http post
-                HttpResponse response = httpclient.execute(httppost);
-                int statusCode = response.getStatusLine().getStatusCode();
-                responseBody = EntityUtils.toString(response.getEntity());
-
-            } catch (ClientProtocolException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
-            }
-            return responseBody;
-        }
+    public void setToken(String token) {
+        ServerAdapter.getInstance().setTOKEN(token);
     }
-
 }

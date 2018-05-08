@@ -7,10 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-
-import static android.util.Patterns.EMAIL_ADDRESS;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 
 public class MailLoginActivity extends AppCompatActivity {
@@ -38,22 +38,32 @@ public class MailLoginActivity extends AppCompatActivity {
         if (!validatePassw()) return;
 
         String email = tietMail.getText().toString().trim();
-        boolean i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
+        try {
+            boolean i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
 
-        if(i) {
-            Intent intent = new Intent(this, InsideActivity.class);
-            startActivity(intent);
+            if (i) {
+                Intent intent = new Intent(this, SideMenuActivity.class);
+                startActivity(intent);
+            }
+
+            else {
+                Toast.makeText(this, getResources().getString(R.string.JSONerror), Toast.LENGTH_LONG).show();
+            }
         }
 
-        else {
-            if (controllerUserPresentation.existsMail(email)) {
+        catch (ServerException e) {
+            if (e.getMessage().equals("user not found")) {
+                tietMail.setError(getString(R.string.errorUserNotFound));
+                requestFocus(tietMail);
+            }
+
+            else if (e.getMessage().equals("incorrect password")) {
                 tietPassw.setError(getString(R.string.errorIncorrPassw));
                 requestFocus(tietPassw);
             }
 
             else {
-                tietMail.setError(getString(R.string.errorIncorrEmail));
-                requestFocus(tietMail);
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -62,7 +72,7 @@ public class MailLoginActivity extends AppCompatActivity {
     private boolean validateEmail() {
         String email = tietMail.getText().toString();
 
-        if (email.trim().isEmpty() || !EMAIL_ADDRESS.matcher(email).matches()) {
+        if (email.trim().isEmpty()) {
             tietMail.setError(getString(R.string.errorMsgName));
             requestFocus(tietMail);
             return false;

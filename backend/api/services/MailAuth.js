@@ -13,6 +13,7 @@ module.exports = class MailAuth {
                 surname:"",
                 biography: "",
                 birthday:"",
+                profilePicture: "",
                 country:"",
                 rank:"",
             }
@@ -38,7 +39,7 @@ module.exports = class MailAuth {
             else{
                 bcrypt.compare(pass, userFound.password, function(err2, result) {
                     if(err1 !== undefined && err1){
-                        response.status = "E3";
+                        response.status = "E1";
                         response.errors.push("Server error");
                     }
                     else if(result == false){
@@ -53,12 +54,24 @@ module.exports = class MailAuth {
                         response.info.surname = userFound.surname;
                         response.info.biography = userFound.biography;
                         response.info.birthday = userFound.birthday;
+                        response.info.profilePicture = userFound.profilePicture;
                         response.info.country = userFound.country;
                         response.info.rank = userFound.rank;
+
+                        if(userFound.deactivated){
+                            UtilsService.update_deactivated(userFound,function(err1){
+                                if(err1 !== undefined && err1) {
+                                    response.status = "E1";
+                                    response.errors.push(err1);
+                                }
+                            })
+                        }
                     }
                     callback(response);
                 });
             }
         });
-    }
+    };
+
+    
 };

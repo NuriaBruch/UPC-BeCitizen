@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import java.util.regex.Pattern;
 
@@ -52,16 +53,19 @@ public class ViewSignUpMail extends AppCompatActivity {
     private boolean validateEmail() {
         String email = tietMail.getText().toString();
 
-        if (email.trim().isEmpty() || !EMAIL_ADDRESS.matcher(email).matches()) {
-            tietMail.setError(getString(R.string.errorMsgName));
-            requestFocus(tietMail);
-            return false;
-        }
+        try {
 
-        else if (controllerUserPresentation.existsMail(email)) {
-            tietMail.setError(getString(R.string.errorMail));
-            requestFocus(tietMail);
-            return false;
+            if (email.trim().isEmpty() || !EMAIL_ADDRESS.matcher(email).matches()) {
+                tietMail.setError(getString(R.string.errorMsgName));
+                requestFocus(tietMail);
+                return false;
+            } else if (controllerUserPresentation.existsMail(email)) {
+                tietMail.setError(getString(R.string.errorMail));
+                requestFocus(tietMail);
+                return false;
+            }
+        } catch (ServerException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         return true;

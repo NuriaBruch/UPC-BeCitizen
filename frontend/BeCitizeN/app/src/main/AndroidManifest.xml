@@ -2,48 +2,56 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.becitizen.app.becitizen">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
-        <activity android:name=".presentation.InsideActivity"
+        <activity
+            android:name=".presentation.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.DataRegisterView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.ViewSignUpMail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.MailLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:screenOrientation="portrait"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name=".presentation.SideMenuActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
-        <activity android:name=".presentation.MainActivity"
+
+        <activity android:name=".presentation.ImageSelection"
+            android:theme="@style/NgDialogTheme"
+            android:noHistory="true"
+            android:label="Pick your image"
             android:screenOrientation="portrait">
         </activity>
-        
-        <activity android:name=".presentation.DataRegisterView"
-            android:screenOrientation="portrait"/>
-        
-        <activity android:name=".presentation.ViewSignUpMail"
-            android:screenOrientation="portrait"/>
-        
-        <activity android:name=".presentation.MailLoginActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
-        
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"
-            android:screenOrientation="portrait"/>
-        
-
     </application>
 
 </manifest>

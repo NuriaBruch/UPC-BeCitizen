@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.w3c.dom.Text;
 
@@ -99,22 +100,24 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
         }
 
 
-        boolean result = controllerUserPresentation.registerData(
-                usernameInput.getText().toString().trim(),
-                firstNameInput.getText().toString().trim(),
-                lastNameInput.getText().toString().trim(),
-                birthDateInput.getText().toString().trim(),
-                countryInput.getSelectedItem().toString().trim()
-        );
+        try {
+            boolean result = controllerUserPresentation.registerData(
+                    usernameInput.getText().toString().trim(),
+                    firstNameInput.getText().toString().trim(),
+                    lastNameInput.getText().toString().trim(),
+                    birthDateInput.getText().toString().trim(),
+                    countryInput.getSelectedItem().toString()
+            );
 
-        if (result) {
-            Intent i = new Intent(this,InsideActivity.class);
-            startActivity(i);
-        }
-
-        else {
-            usernameInput.setError(getString(R.string.errorUsername));
-            requestFocus(usernameInput);
+            if (result) {
+                Intent i = new Intent(this, SideMenuActivity.class);
+                startActivity(i);
+            } else {
+                usernameInput.setError(getString(R.string.errorUsername));
+                requestFocus(usernameInput);
+            }
+        } catch (ServerException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

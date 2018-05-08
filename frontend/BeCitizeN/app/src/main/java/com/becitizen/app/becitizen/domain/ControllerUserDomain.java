@@ -1,12 +1,14 @@
 package com.becitizen.app.becitizen.domain;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerUserData;
 import com.becitizen.app.becitizen.domain.entities.User;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
@@ -27,7 +29,7 @@ public class ControllerUserDomain {
      **/
     private ControllerUserDomain() {
         controllerUserData = ControllerUserData.getInstance();
-        currentUser = null;
+        currentUser = new User();
     }
 
     /**
@@ -47,7 +49,7 @@ public class ControllerUserDomain {
      * @param mail Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String mail) {
+    public boolean existsMail(String mail) throws ServerException {
         return controllerUserData.existsMail(mail);
     }
 
@@ -71,18 +73,27 @@ public class ControllerUserDomain {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
         currentUser.setBirthDate(birthDate);
         currentUser.setCountry(country);
+        currentUser.setImage((int) (Math.random() * 8) + 1);
 
         boolean result = controllerUserData.registerData(currentUser.getMail(), currentUser.getPassword(), username,
-                firstName, lastName, birthDate, country, currentUser.isFacebook(), currentUser.isGoogle());
+                firstName, lastName, birthDate, country, currentUser.getImage(), currentUser.isFacebook(), currentUser.isGoogle());
         try {
-            if (result)
-                doLogin("mail", currentUser.getUsername());
+            if (result) {
+                if (!currentUser.isFacebook() && !currentUser.isGoogle()) {
+                    // Fem el login amb mail per obtenir el token de la sessió del usuari
+                    if (checkCredentials(currentUser.getMail(), currentUser.getPassword())) doLogin("mail", currentUser.getUsername());
+                }
+
+                else {
+                    doLogin("mail", currentUser.getUsername());
+                }
+            }
         } catch (SharedPreferencesException e) {
             // TODO gestionar errors.
             return false;
@@ -95,7 +106,7 @@ public class ControllerUserDomain {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() {
+    public LoginResponse facebookLogin() throws ServerException {
 
         JSONObject json = null;
         try {
@@ -109,6 +120,8 @@ public class ControllerUserDomain {
             if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
             if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
             if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+            if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+            if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
             currentUser.setFacebook(true);
 
             if (json.getBoolean("loggedIn")) {
@@ -117,7 +130,7 @@ public class ControllerUserDomain {
             }
             return LoginResponse.REGISTER;
         }
-        catch (Exception e) {
+        catch (JSONException | SharedPreferencesException e) {
             // TODO gestionar errors.
             Log.e("Error", e.getMessage());
             return LoginResponse.ERROR;
@@ -130,7 +143,7 @@ public class ControllerUserDomain {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
 
@@ -142,6 +155,8 @@ public class ControllerUserDomain {
                 if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
                 if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
                 if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+                if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
                 currentUser.setGoogle(true);
 
                 if (!response.getBoolean("loggedIn"))
@@ -150,13 +165,12 @@ public class ControllerUserDomain {
                     doLogin("google", currentUser.getUsername());
                     return LoginResponse.LOGGED_IN;
                 }
-            } else {
-                // TODO gestionar errors.
-                return LoginResponse.ERROR;
             }
-            //mGoogleSignInClient.signOut();
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);*/
+
+            else if (response.get("status").equals("E1")) throw new ServerException("unable to confirm access token");
+            else if (response.get("status").equals("E2")) throw new ServerException("DB error");
+            else throw new ServerException("user not granted via google");
+
         }
         catch (JSONException | SharedPreferencesException e) {
             return LoginResponse.ERROR;
@@ -204,7 +218,11 @@ public class ControllerUserDomain {
             if(isLogged) {
                 String mode = preferences.getValue(PREFS_KEY, "mode");
                 json.put("mode", mode);
-                if (!mode.equals("guest")) json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                if (!mode.equals("guest")) {
+                    json.put("userName", preferences.getValue(PREFS_KEY, "userName"));
+                    currentUser.setUsername(preferences.getValue(PREFS_KEY, "userName"));
+                    controllerUserData.setToken(preferences.getValue(PREFS_KEY, "token"));
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -226,7 +244,10 @@ public class ControllerUserDomain {
         MySharedPreferences preferences = MySharedPreferences.getInstance();
         preferences.saveValue(PREFS_KEY, "isLogged", "true");
         preferences.saveValue(PREFS_KEY, "mode", mode);
-        if(!mode.equals("guest")) preferences.saveValue(PREFS_KEY, "userName", userName);
+        if(!mode.equals("guest")) {
+            preferences.saveValue(PREFS_KEY, "userName", userName);
+            preferences.saveValue(PREFS_KEY, "token", controllerUserData.getToken());
+        }
     }
 
     /**
@@ -264,40 +285,129 @@ public class ControllerUserDomain {
     }
 
     /**
-     *
-     *
-     * @param email
-     * @return
-     */
-    /**
      * Retorna si un par {email, password} ya esta registrado en nuestro servidor
      *
      * @param email Email a comprobar
      * @param password Contrasena a comprobar
      * @return True si el par {email, password} esta en el servidor, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) {
+    public boolean checkCredentials(String email, String password) throws ServerException {
         try {
             JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
 
             if (response.get("status").equals("Ok")) {
                 JSONObject info = response.getJSONObject("info");
                 currentUser = new User(email, null);
-                currentUser.setUsername(info.getString("username"));
-                currentUser.setFirstName(info.getString("name"));
-                currentUser.setLastName(info.getString("surname"));
-                currentUser.setBirthDate(info.getString("birthday"));
-                currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("username")) currentUser.setUsername(info.getString("username"));
+                if(!info.isNull("name")) currentUser.setFirstName(info.getString("name"));
+                if(!info.isNull("surname")) currentUser.setLastName(info.getString("surname"));
+                if(!info.isNull("birthday")) currentUser.setBirthDate(info.getString("birthday"));
+                if(!info.isNull("country")) currentUser.setCountry(info.getString("country"));
+                if(!info.isNull("biography")) currentUser.setBiography(info.getString("biography"));
+                if(!info.isNull("rank")) currentUser.setRank(info.getString("rank"));
                 doLogin("mail", currentUser.getUsername());
                 return true;
 
             }
-            return false;
+
+            else if (response.get("status").equals("E1")) throw new ServerException("DB error");
+            else if (response.get("status").equals("E2")) throw new ServerException("user not found");
+            else if (response.get("status").equals("E3")) throw new ServerException("server error");
+            else throw new ServerException("incorrect password");
+
         } catch (JSONException e) {
+            //TODO excepcions
+            e.printStackTrace();
             return false;
         } catch (SharedPreferencesException e) {
+            e.printStackTrace();
             return false;
         }
     }
 
+    public void initializeMySharedPreferences(Context context) {
+        MySharedPreferences.init(context);
+    }
+
+    public boolean deactivateAccount() throws ServerException, JSONException{
+        return controllerUserData.deactivateAccount(currentUser.getUsername());
+    }
+
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+        // Poster sha de mirar el Json aqui en lloc de a controllerUserData
+        boolean i = controllerUserData.editProfile(firstName, lastName, birthDate, image, country, biography);
+        if (i) {
+            currentUser.setFirstName(firstName);
+            currentUser.setLastName(lastName);
+            currentUser.setBirthDate(birthDate);
+            currentUser.setCountry(country);
+            currentUser.setBiography(biography);
+            currentUser.setImage(image);
+        }
+        return i;
+    }
+
+    public Bundle getLoggedUserData() {
+        Bundle bundle = new Bundle();
+
+        bundle.putString("username", currentUser.getUsername());
+        bundle.putString("firstName", currentUser.getFirstName());
+        bundle.putString("lastName", currentUser.getLastName());
+        bundle.putString("birthDate", currentUser.getBirthDate());
+        bundle.putString("country", currentUser.getCountry());
+        bundle.putString("biography", currentUser.getBiography());
+        bundle.putString("rank", currentUser.getRank());
+        bundle.putInt("image", currentUser.getImage());
+
+        return bundle;
+    }
+
+    public Bundle viewProfile(String username) throws ServerException, JSONException {
+
+        Bundle bundle = new Bundle();
+
+        if (username.isEmpty()) username = currentUser.getUsername();
+
+        JSONObject response = new JSONObject(controllerUserData.viewProfile(username));
+
+        if (response.get("status").equals("Ok")) {
+            JSONObject info = response.getJSONObject("info");
+            bundle.putString("username",username);
+            if(!info.isNull("name")) bundle.putString("firstName", info.getString("name"));
+            if(!info.isNull("surname")) bundle.putString("lastName", info.getString("surname"));
+            if(!info.isNull("birthday")) bundle.putString("birthDate", info.getString("birthday"));
+            if(!info.isNull("country")) bundle.putString("country", info.getString("country"));
+            if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
+            if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
+            if(!info.isNull("profilePicture")) bundle.putInt("image", info.getInt("profilePicture"));
+
+            if (username.equals(currentUser.getUsername())) {
+                currentUser.setFirstName(info.getString("name"));
+                currentUser.setLastName(info.getString("surname"));
+                currentUser.setBirthDate(info.getString("birthday"));
+                currentUser.setCountry(info.getString("country"));
+                currentUser.setBiography(info.getString("biography"));
+                currentUser.setRank(info.getString("rank"));
+                currentUser.setImage(info.getInt("profilePicture"));
+            }
+
+            return bundle;
+        }
+
+        else if (response.get("status").equals("E1")){
+            throw new ServerException("Server Error");
+        }
+
+        else if (response.get("status").equals("E2")){
+            throw new ServerException("User not found");
+        }
+
+        else {
+            throw new ServerException("User deactivated");
+        }
+    }
+
+    public boolean checkUsername(String username) {
+        return username.equals(currentUser.getUsername());
+    }
 }

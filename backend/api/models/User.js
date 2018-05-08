@@ -42,7 +42,7 @@ module.exports = {
       defaultsTo: 'coal'
     },
     profilePicture:{
-      type: 'string'
+      type: 'integer'
     },
     hasFacebook:{
       type:'boolean',
@@ -51,6 +51,36 @@ module.exports = {
     hasGoogle:{
       type: 'boolean',
       defaultsTo: false
+    },
+    deactivated:{
+      type: 'boolean',
+      defaultsTo: false
+    },
+    karma:{
+      type: 'integer',
+      defaultsTo: 0
+    },
+    posts: {
+      collection: 'thread',
+      via: 'postedBy'
+    },
+    votes: {
+      collection: 'thread',
+      via: 'votedBy',
+      dominant: true
+    },
+    reports: {
+      collection: 'thread',
+      via: 'reportedBy',
+      dominant: true
+    },
+    reportedComments: {
+      collection: 'comment',
+      via: 'reportedBy'
+    },
+    votedComments: {
+      collection: 'comment',
+      via: 'votedBy'
     }
   }
 };
