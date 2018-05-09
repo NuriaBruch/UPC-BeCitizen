@@ -18,8 +18,9 @@ module.exports = {
 
     getThreadComments: function(req,res){
         var id = req.query.threadId;
+        var sortedByVotes = req.query.sortedByVotes;
         var email = UtilsService.getEmailFromHeader(req);
-        CommentService.getThreadComments(id,email,function(status){
+        CommentService.getThreadComments(id,email,sortedByVotes,function(status){
             res.send(status);
         });
     },
