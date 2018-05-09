@@ -168,7 +168,7 @@ module.exports = {
         });
     },
 
-    getAllThreadsCategory: function(block,category,callback){
+    getAllThreadsCategory: function(block,category,sortedByVotes,callback){
         var limit = 10;
         block++; // los blocks 0 y 1 son los mismos, dejemos que front empieze a iterar con block=0
         var response = {
@@ -193,7 +193,10 @@ module.exports = {
                 callback(response);
             }
             else{
-                Thread.find({category: category}).populate('postedBy').paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
+                var orderBy;
+                if(sortedByVotes === 'true') orderBy= 'numberVotes DESC';
+                else orderBy='createdAt DESC';
+                Thread.find({category: category}).sort(orderBy).populate('postedBy').paginate({page: block, limit: limit}).exec(function(err2,threadsFound){
                     if(err2 !== undefined && err2) {
                         response.status = "E2";
                         response.errors.push(err2);
@@ -207,7 +210,8 @@ module.exports = {
                                 username:"",
                                 createdAt: ""
                             };
-                            threadInfo.createdAt = thread.createdAt;
+                            threadInfo.createdAt = thread.createdAt +"";
+                            if(thread.postedBy)
                             threadInfo.username = thread.postedBy.username;
                             threadInfo.id = thread.id;
                             threadInfo.title = thread.title;
@@ -224,7 +228,6 @@ module.exports = {
             }
         });
     },
-
     voteThread: function(id, email, callback){
         var response = {
             status: "Ok",

@@ -53,7 +53,8 @@ module.exports = {
     getAllThreadsCategory: function(req,res){
         var block = req.query.block;
         var category = req.query.category;
-        ThreadService.getAllThreadsCategory(block,category,function(status){
+        var sortedByVotes = req.query.sortedByVotes; 
+        ThreadService.getAllThreadsCategory(block,category,sortedByVotes,function(status){
             res.send(status);
         });
     },
