@@ -43,9 +43,9 @@ public class ControllerThreadDomain {
      * @param category nombre de la categoria
      * @return JSONObject que contiene los posts de una categoria
      */
-    public ArrayList<CategoryThread> getThreadsCategory(String category) {
+    public ArrayList<CategoryThread> getThreadsCategory(String category, int block) {
         try {
-            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category.replace(" ", "%20")));
+            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category.replace(" ", "%20"), block));
             ArrayList<CategoryThread> threads = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("threads");
             for(int i = 0; i < array.length(); i++)

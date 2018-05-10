@@ -47,8 +47,8 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getThreadsCategory(String category) {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category);
+    public String getThreadsCategory(String category, int block) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category + "&block=" + block);
     }
 
     /**

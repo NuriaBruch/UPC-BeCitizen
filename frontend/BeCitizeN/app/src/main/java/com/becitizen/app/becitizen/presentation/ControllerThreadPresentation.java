@@ -42,8 +42,8 @@ public class ControllerThreadPresentation {
      * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<CategoryThread> getThreadsCategory(String category) {
-        return controllerThreadDomain.getThreadsCategory(category);
+    public ArrayList<CategoryThread> getThreadsCategory(String category, int block) {
+        return controllerThreadDomain.getThreadsCategory(category, block);
     }
 
     /**
