@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -38,12 +39,14 @@ public class CategoryThreadActivity extends Fragment  {
         @Override
         public void handleMessage(Message msg) {
             adapter.addAll(dataChunk);
+            progressBar.setVisibility(View.GONE);
             if (adapter.getCount() == 0) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
     };
+    private ProgressBar progressBar;
 
     private Runnable loadThreads = new Runnable() {
         public void run() {
@@ -66,6 +69,8 @@ public class CategoryThreadActivity extends Fragment  {
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
 
         listView = (ListView)rootView.findViewById(R.id.list);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBar.setIndeterminate(true);
 
         dataModels = new ArrayList<CategoryThread>();
 
@@ -119,6 +124,7 @@ public class CategoryThreadActivity extends Fragment  {
                             if(preLast!=lastItem)
                             {
                                 preLast = lastItem;
+                                progressBar.setVisibility(View.VISIBLE);
                                 if (threadLoadThreads != null && threadLoadThreads.isAlive())
                                     threadLoadThreads.interrupt();
                                 threadLoadThreads = new Thread(loadThreads);
@@ -135,6 +141,7 @@ public class CategoryThreadActivity extends Fragment  {
     @Override
     public void onResume() {
         super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
         if (threadLoadThreads != null && threadLoadThreads.isAlive())
             threadLoadThreads.interrupt();
         threadLoadThreads = new Thread(loadThreads);
@@ -150,6 +157,7 @@ public class CategoryThreadActivity extends Fragment  {
         if (threadLoadThreads != null && threadLoadThreads.isAlive())
             threadLoadThreads.interrupt();
     }
+
     private void fragmentTransaction(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment, tag);
