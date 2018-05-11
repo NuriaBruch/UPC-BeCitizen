@@ -32,7 +32,7 @@ module.exports = {
                 response.status = "E2";
                 response.errors.push(err2);
             }
-            if(infosFound){
+            if(infosFound.length>0){
                 infosFound.forEach(info => {
                     var informationInfo = {
                         title:"",

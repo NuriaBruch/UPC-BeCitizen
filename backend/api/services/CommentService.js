@@ -86,7 +86,7 @@ module.exports = {
                 response.errors.push(err2);
                 callback(response);
             }
-            if(commentsFound){
+            if(commentsFound.length>0){
                 async.each(commentsFound,function(comment,eachCb){
                     var commentInfo = {
                         content:"",
