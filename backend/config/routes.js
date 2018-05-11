@@ -115,8 +115,11 @@ module.exports.routes = {
     action: 'voteComment'
   },  
 
-
-
+  //############ WORD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getWord':{
+    controller: 'WordController',
+    action: 'getWord'
+  },
 
 
   /***************************************************************************
