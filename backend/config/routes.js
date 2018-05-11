@@ -113,10 +113,16 @@ module.exports.routes = {
   'PUT /voteComment': {
     controller: 'CommentController',
     action: 'voteComment'
-  },  
-
-
-
+  },
+  //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newInfo':{
+    controller: 'InformationController',
+    action: 'createInfo'
+  },
+  'GET /getAllInfoCategory':{
+    controller: 'InformationController',
+    action: 'getAllInfoCategory'
+  }
 
 
   /***************************************************************************
