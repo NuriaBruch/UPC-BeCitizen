@@ -25,7 +25,9 @@ module.exports = class WordService {
                         let innerDef = $(".innerdef").eq(0);
                         let gold = innerDef.find("p").eq(0);
                         word.definition = gold.text();
-                        callback(false, word);
+
+                        if(word.word == "" || word.definition == "") callback(true, null);
+                        else callback(false, word);
                     }
                     else {
                         callback(true, null);
