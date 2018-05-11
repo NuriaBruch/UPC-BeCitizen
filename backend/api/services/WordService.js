@@ -2,7 +2,10 @@
 module.exports = class WordService {
 
     scrappingWord(callback){
-        callback(false, "Pole");
+        callback(false, {
+            word: "Pole",
+            definition: "Subpole"
+        });
     }
 
     prettyWord(word){
@@ -16,11 +19,16 @@ module.exports = class WordService {
         // callback(error, need) where error && need are booleans
 
         var today = new Date();
-        var yesterday = new Date()
-        yesterday.setDate(today.getDate() - 1);
-        console.log(today);
-        console.log(yesterday);
-        Word.findOne({createdAt: {">": yesterday}})
+        today.setHours(0);
+        today.setMinutes(0);
+        today.setSeconds(0);
+        today.setMilliseconds(1);
+        
+        Word.find({
+            createdAt: {">=": today}, 
+            limit: 1,
+            sort: 'createdAt DESC'
+        })
         .then(function(word){
             if(word){
                 callback(false, false);
@@ -40,7 +48,7 @@ module.exports = class WordService {
 
         Word.find({
             limit: 1,
-            sort: 'createdAt ASC'
+            sort: 'createdAt DESC'
         })
         .then(function(word){
             console.log(word);
