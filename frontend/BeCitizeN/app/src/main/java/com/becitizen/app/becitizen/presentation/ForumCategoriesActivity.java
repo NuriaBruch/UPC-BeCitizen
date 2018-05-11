@@ -1,6 +1,8 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -8,20 +10,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 
 import java.util.ArrayList;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ForumCategoriesActivity extends Fragment {
 
     private View rootView;
     private ArrayList<String> categories;
+    ArrayAdapter<String> adapter;
+    private Handler UIUpdater = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            for (int i = 0; i < categories.size(); ++i)
+                adapter.add(categories.get(i));
+            progressBar.setVisibility(View.GONE);
+        }
+    };
+    private ProgressBar progressBar;
 
     public ForumCategoriesActivity() {
     }
@@ -32,12 +41,11 @@ public class ForumCategoriesActivity extends Fragment {
         rootView = inflater.inflate(R.layout.activity_forum_categories, container, false);
 
         ListView list = (ListView)rootView.findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category);
-        list.setAdapter(adapter);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBar.setIndeterminate(true);
 
-        categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
-        for (int i = 0; i < categories.size(); ++i)
-            adapter.add(categories.get(i));
+        adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category);
+        list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,8 +57,21 @@ public class ForumCategoriesActivity extends Fragment {
             }
         });
 
+        Runnable loadCategories = new Runnable() {
+            public void run() {
+                categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+                UIUpdater.sendEmptyMessage(0);
+            }
+        };
+
+        progressBar.setVisibility(View.VISIBLE);
+        Thread threadLoadCategories = new Thread(loadCategories);
+        threadLoadCategories.start();
+
         return rootView;
     }
+
+
 
     private void fragmentTransaction(Fragment fragment, String tag) {
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
