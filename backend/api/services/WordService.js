@@ -2,9 +2,39 @@
 module.exports = class WordService {
 
     scrappingWord(callback){
-        callback(false, {
-            word: "Pole",
-            definition: "Subpole"
+        //callback(err, word)
+        var word = {
+            word: "",
+            definition: ""
+        }
+        const request = require('request');
+        const cheerio = require("cheerio");
+
+        request("http://rodamots.cat/", function(err, res, html) {
+            if(!err){
+                let $ = cheerio.load(html);
+                let main = $("#main");
+                let article = main.find("article").eq(0); // We got the last one
+                let gold = article.find("h2 > a");
+
+                word.word = gold.text();
+                var wordUrl = gold.attr("href");
+                request(wordUrl, function(err2, res2, html2){
+                    if(!err2){
+                        let $ = cheerio.load(html2);
+                        let innerDef = $(".innerdef").eq(0);
+                        let gold = innerDef.find("p").eq(0);
+                        word.definition = gold.text();
+                        callback(false, word);
+                    }
+                    else {
+                        callback(true, null);
+                    }
+                });
+            }
+            else{
+                callback(true, null);
+            }
         });
     }
 
@@ -31,7 +61,7 @@ module.exports = class WordService {
         })
         .then(function(word){
             if(word){
-                callback(false, false);
+                callback(false, false); // from false to true just for test scrapping
             }
             else{
                 callback(false, true);
