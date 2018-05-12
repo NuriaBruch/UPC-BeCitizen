@@ -1,6 +1,20 @@
 
 module.exports = class WordService {
 
+    insertWordOnDB(word, callback){
+        //callback(err)
+        Word.create({
+            word: word.word,
+            definition: word.definition
+        })
+        .then(wordGenerated => {
+            callback(false)
+        })
+        .catch(err => {
+            callback(true);
+        })
+    }
+
     scrappingWord(callback){
         //callback(err, word)
         var word = {
@@ -10,7 +24,7 @@ module.exports = class WordService {
         const request = require('request');
         const cheerio = require("cheerio");
 
-        request("http://rodamots.cat/", function(err, res, html) {
+        request("http://rodamots.cat/", (err, res, html) => {
             if(!err){
                 let $ = cheerio.load(html);
                 let main = $("#main");
@@ -19,7 +33,7 @@ module.exports = class WordService {
 
                 word.word = gold.text();
                 var wordUrl = gold.attr("href");
-                request(wordUrl, function(err2, res2, html2){
+                request(wordUrl, (err2, res2, html2) => {
                     if(!err2){
                         let $ = cheerio.load(html2);
                         let innerDef = $(".innerdef").eq(0);
@@ -27,7 +41,11 @@ module.exports = class WordService {
                         word.definition = gold.text();
 
                         if(word.word == "" || word.definition == "") callback(true, null);
-                        else callback(false, word);
+                        else {
+                            this. insertWordOnDB(word, (err3) => {
+                                callback(false, word);
+                            });
+                        }
                     }
                     else {
                         callback(true, null);
@@ -47,22 +65,26 @@ module.exports = class WordService {
         }
     }
 
+    convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date);
+        newDate.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+        return newDate;
+    }
+
     needUpdateServer(callback){
         // callback(error, need) where error && need are booleans
 
         var today = new Date();
-        today.setHours(0);
-        today.setMinutes(0);
-        today.setSeconds(0);
-        today.setMilliseconds(1);
-        
+        today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 1);
+        today = this.convertUTCDateToLocalDate(today);
+        //console.log(today);
         Word.find({
             createdAt: {">=": today}, 
             limit: 1,
             sort: 'createdAt DESC'
         })
         .then(function(word){
-            if(word){
+            if(word.length > 0){
                 callback(false, false); // from false to true just for test scrapping
             }
             else{
@@ -83,7 +105,7 @@ module.exports = class WordService {
             sort: 'createdAt DESC'
         })
         .then(function(word){
-            console.log(word);
+            //console.log(word);
             if(word)
                 callback(false, true, word[0]);
             else 
@@ -109,6 +131,7 @@ module.exports = class WordService {
                 callback(response);
             }
             else if(need){
+                console.log("SCRAPPING");
                 this.scrappingWord((err2, word) => {
                     if(!err2){
                         response.info = word;
