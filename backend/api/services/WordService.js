@@ -40,7 +40,10 @@ module.exports = class WordService {
                         let gold = innerDef.find("p").eq(0);
                         word.definition = gold.text();
 
-                        if(word.word == "" || word.definition == "") callback(true, null);
+                        if(word.word == "" || word.definition == "" || 
+                        word.word == undefined || word.definition == undefined) {
+                            callback(true, null);
+                        }     
                         else {
                             this. insertWordOnDB(word, (err3) => {
                                 callback(false, word);
@@ -65,19 +68,13 @@ module.exports = class WordService {
         }
     }
 
-    convertUTCDateToLocalDate(date) {
-        var newDate = new Date(date);
-        newDate.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-        return newDate;
-    }
-
     needUpdateServer(callback){
         // callback(error, need) where error && need are booleans
 
         var today = new Date();
         today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 1);
-        today = this.convertUTCDateToLocalDate(today);
-        //console.log(today);
+        today = UtilsService.convertUTCDateToLocalDate(today);
+
         Word.find({
             createdAt: {">=": today}, 
             limit: 1,
