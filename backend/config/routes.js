@@ -118,12 +118,18 @@ module.exports.routes = {
     controller: 'MonetaryExchangeController',
     action: 'getExchange'
   },
+  'GET /getAllCurrencies':{
+    controller: 'MonetaryExchangeController',
+    action: 'getAllCurrencies'
+  },
 
   //############ WORD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'GET /getWord':{
     controller: 'WordController',
     action: 'getWord'
   },
+  
+
 
 
   /***************************************************************************
