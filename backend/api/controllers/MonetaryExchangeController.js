@@ -13,6 +13,10 @@ module.exports = {
         MonetaryExchangeService.exchange(currencyFrom,currencyTo,amount,function(response){
             res.send(response);
         });
+    },
+    getAllCurrencies: function(req, res){
+        MonetaryExchangeService.getAllCurrencies();
+        res.ok()
     }
 };
 
