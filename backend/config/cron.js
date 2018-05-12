@@ -4,5 +4,11 @@ module.exports.cron = {
       onTick: function () {
         MonetaryExchangeService.getAllCurrencies();
       }
-    }
+    },
+    exchangeActualization2: {
+        schedule: '* * 12 * * *',
+        onTick: function () {
+          MonetaryExchangeService.getAllCurrencies();
+        }
+      }
   };

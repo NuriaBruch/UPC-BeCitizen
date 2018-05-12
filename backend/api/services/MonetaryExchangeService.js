@@ -36,7 +36,46 @@ function getExchanges(query, callback){
 module.exports = {
 
     exchange:function(currencyFrom,currencyTo,amount,callback){
-        query = currencyFrom.concat("_").concat(currencyTo)
+        var response = {
+            status: "Ok",
+            errors: [] ,
+            conversion: ""
+        };
+        Currency.findOne({name: currencyFrom}).exec(function(err, currencyFromDB){
+            if(err !== undefined && err) {
+                response.status = "E1";
+                response.errors.push(err);
+                callback(resposne);
+            }
+            else if(currencyFromDB){
+                Currency.findOne({name: currencyTo}).exec(function(err, currencyToDB){
+                    if(err !== undefined && err) {
+                        response.status = "E1";
+                        response.errors.push(err);
+                        callback(resposne);
+                    }
+                    else if(currencyFromDB){
+                        
+                        fromToEur = parseFloat(currencyFromDB['rateToEur']) * parseFloat(amount);
+                        eurToTo = fromToEur/parseFloat(currencyToDB['rateToEur']);
+                        response.conversion = eurToTo;
+                        callback(response);
+                    }
+                    else{
+                        response.status = "E2";
+                        response.errors.push("One currency was not found");
+                        callback(response);
+                    }
+                });
+                
+            }
+            else{
+                response.status = "E2";
+                response.errors.push("One currency was not found");
+                callback(response);
+            }
+        });
+        /*query = currencyFrom.concat("_").concat(currencyTo)
         getExchanges(query,function(response){
             if(response.status != "Ok"){
                 callback(response)
@@ -47,7 +86,7 @@ module.exports = {
                 response.conversion = conversion1;
                 callback(response);
             }
-        });
+        });*/
     },
 
     getAllCurrencies:function(){
@@ -65,14 +104,16 @@ module.exports = {
                 
                 var parsed = JSON.parse(body);
                 var currencies = parsed['results'];
+                
                 if(currencies === undefined){
                    
                 }
                 else{
                     Object.keys(currencies).forEach(function(key) {
+                       
                         Currency.findOne({name: key}).exec(function(err, currencyFound){
                             if(err !== undefined && err) {
-                                
+                                sails.log("server error")
                             }
                             else if(currencyFound){
                                 lastUpdate = currencyFound['updatedAt']
@@ -82,10 +123,17 @@ module.exports = {
                                     query = currencyFound['name'].concat("_EUR")
                                     getExchanges(query,function(response){
                                         if(response.status != "Ok"){
+                                            sails.log("incorrect exchange")
                                         }
                                         else{
                                             currencyFound['rateToEur'] = response.conversion;
-                                            currencyFound.save();
+                                            currencyFound.save(function(error) {
+                                                if(error) {
+                                                    sails.log(error);
+                                                } else {
+                                                }
+                                            });
+                                            
                                         }
 
                                     });
