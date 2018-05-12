@@ -81,7 +81,16 @@ module.exports = {
     votedComments: {
       collection: 'comment',
       via: 'votedBy'
-    }
+    },
+    initiatedConversations: {
+      collection: 'conversation',
+      via: 'user1'
+    },
+    recievedConversations: {
+      collection: 'conversation',
+      via: 'user2'
+    },
+    
   }
 };
 

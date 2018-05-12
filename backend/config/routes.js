@@ -115,6 +115,12 @@ module.exports.routes = {
     action: 'voteComment'
   },  
 
+  //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
+  'POST /newConversation':{
+    controller: 'ConversationController',
+    action: 'newConversation'
+  },
+  
 
 
 
