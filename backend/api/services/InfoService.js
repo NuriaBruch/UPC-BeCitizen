@@ -80,5 +80,23 @@ module.exports = {
             }
             callback(response);
         });
+    },
+
+    deleteInfo: function(infoId,callback){
+        var response = {
+            status: "Ok",
+            errors: []
+         };
+         Information.destroy({id: infoId}).exec(function (err2,destroyedInfo) {
+            if(err2 !== undefined && err2) {
+                response.status = "E2";
+                response.errors.push(err2);
+            }
+            if(destroyedInfo<=0){
+                response.status = "Error";
+                response.errors.push("No information for the given id");
+            }
+            callback(response);
+        });
     }
 }

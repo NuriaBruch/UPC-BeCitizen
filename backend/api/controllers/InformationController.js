@@ -27,6 +27,16 @@ module.exports = {
         InfoService.getInfo(infoId,function(status){
             res.send(status);
         })
+    },
+    deleteInfo: function(req,res){
+        var superpass = req.query.superpass;
+        if(superpass === 'Bienquisto123H'){
+            var infoId = req.query.infoId;
+            InfoService.deleteInfo(infoId,function(status){
+                res.send(status);
+            })
+        }
+        else return res.badRequest();
     }
     
 };
