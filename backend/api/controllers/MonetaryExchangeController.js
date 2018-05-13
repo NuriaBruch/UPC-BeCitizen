@@ -15,8 +15,11 @@ module.exports = {
         });
     },
     getAllCurrencies: function(req, res){
-        MonetaryExchangeService.getAllCurrencies();
-        res.ok()
+        MonetaryExchangeService.returnAllCurrencies(function(response){
+            res.send(response);
+        })
+       
     }
+
 };
 

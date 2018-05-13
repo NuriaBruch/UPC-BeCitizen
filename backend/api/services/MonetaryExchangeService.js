@@ -159,5 +159,28 @@ module.exports = {
                 } 
             }
         });
+    },
+    
+    returnAllCurrencies:function(callback){
+        var response = {
+            status: "Ok",
+            errors: [] ,
+            currencies: []
+        };
+
+        Currency.find().exec(function(err,currencyFound){
+            if(err !== undefined && err) {
+                response.status = "E1";
+                response.errors.push(err);
+                callback(response);
+            }
+            else {
+                Object.keys(currencyFound).forEach(function(key) {
+                    response.currencies.push(currencyFound[key]['name']);
+                });
+                callback(response);
+            }
+        });
+        
     }
 }
