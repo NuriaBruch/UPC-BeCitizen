@@ -22,5 +22,12 @@ module.exports = {
             res.send(status);
         })
     },
+    getInfo: function(req,res){
+        var infoId = req.query.infoId;
+        InfoService.getInfo(infoId,function(status){
+            res.send(status);
+        })
+    }
+    
 };
 

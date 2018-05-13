@@ -49,5 +49,36 @@ module.exports = {
             }
             callback(response);
         });
+    },
+
+
+    getInfo: function(infoId,callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            info:{
+                title: "",
+                content: "",
+                url: "",
+                category: ""
+            }
+         };
+        Information.findOne({id: infoId}).exec(function(err2,infoFound){
+            if(err2 !== undefined && err2) {
+                response.status = "E2";
+                response.errors.push(err2);
+            }
+            if(infoFound){
+               response.info.title = infoFound.title;
+               response.info.content = infoFound.content;
+               response.info.url = infoFound.url;
+               response.info.category = infoFound.category;
+            }
+            else{
+                response.status = "Error";
+                response.errors.push("No information for the given id");
+            }
+            callback(response);
+        });
     }
 }

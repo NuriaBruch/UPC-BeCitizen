@@ -122,6 +122,10 @@ module.exports.routes = {
   'GET /getAllInfoCategory':{
     controller: 'InformationController',
     action: 'getAllInfoCategory'
+  },
+  'GET /getInfo':{
+    controller: 'InformationController',
+    action: 'getInfo'
   }
 
 
