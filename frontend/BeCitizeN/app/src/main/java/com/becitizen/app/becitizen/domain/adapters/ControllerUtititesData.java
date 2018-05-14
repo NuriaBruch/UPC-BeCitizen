@@ -43,7 +43,9 @@ public class ControllerUtititesData {
     public int getConversion(String currencyFrom, String currencyTo, String amount) {
         try{
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_EXCHANGE+"?currencyFrom="+currencyFrom+"&currencyTo="+currencyTo+"&amount="+amount));
-            return (int) info.get("conversion");
+            if(info.get("conversion") != null)
+                return (int) info.get("conversion");
+            else return 0;
         }
         catch (JSONException e){
             return 0;
