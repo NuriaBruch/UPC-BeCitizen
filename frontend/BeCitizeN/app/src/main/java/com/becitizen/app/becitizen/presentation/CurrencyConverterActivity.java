@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,9 +33,6 @@ public class CurrencyConverterActivity extends AppCompatActivity{
         currencyList = new ArrayList<>();
         linkStuff();
         getCurrencyList();
-        for(int i = 0; i < 10; ++i){
-            currencyList.add(String.valueOf(i));
-        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.row_forum_category, currencyList);
 
         spinnerFrom.setAdapter(adapter);
@@ -53,6 +51,15 @@ public class CurrencyConverterActivity extends AppCompatActivity{
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.convertButton:
+                        if(currencyList.size() <= 0) {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Sorry we couldn't convert that";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                            break;
+                        }
                         String currencyFrom = spinnerFrom.getSelectedItem().toString();
                         String currencyTo = spinnerTo.getSelectedItem().toString();
                         String amount = editTextAmount.getText().toString();
