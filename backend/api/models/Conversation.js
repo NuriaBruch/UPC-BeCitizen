@@ -14,12 +14,6 @@ module.exports = {
     user2: {
       model: "user"
     },
-    email1:{
-      type: "string"
-    },
-    email2:{
-      type: "string"
-    },
     newMessage1: {
       type: "boolean",
       defaultsTo: false

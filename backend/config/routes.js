@@ -120,6 +120,10 @@ module.exports.routes = {
     controller: 'ConversationController',
     action: 'newConversation'
   },
+  'GET /getConversations':{
+    controller: 'ConversationController',
+    action: 'getConversations'
+  },
   
 
 

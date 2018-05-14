@@ -24,7 +24,7 @@ module.exports = {
         var {title, content, category} = req.body;
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
-        })
+        });
     },
 
     deleteThread: function(req,res){
