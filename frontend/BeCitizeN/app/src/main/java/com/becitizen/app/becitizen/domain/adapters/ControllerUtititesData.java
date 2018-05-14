@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ControllerUtititesData {
     private static final String URI_GET_ALL_CURRENCIES = "http://becitizen.cf/getAllCurrencies";
+    private static final String URI_GET_EXCHANGE = "http://becitizen.cf/getExchange";
     private static final ControllerUtititesData ourInstance = new ControllerUtititesData();
 
     public static ControllerUtititesData getInstance() {
@@ -37,5 +38,15 @@ public class ControllerUtititesData {
             return;
         }
 
+    }
+
+    public int getConversion(String currencyFrom, String currencyTo, String amount) {
+        try{
+            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_EXCHANGE+"?currencyFrom="+currencyFrom+"&currencyTo="+currencyTo+"&amount="+amount));
+            return (int) info.get("conversion");
+        }
+        catch (JSONException e){
+            return 0;
+        }
     }
 }

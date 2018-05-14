@@ -338,6 +338,7 @@
     <string name="hintTitleThread">Provide a title for your new thread</string>
     <string name="hintThreadContent">Describe your thread</string>
     <string name="newThread">New Thread</string>
+    <string name="convert">Convert</string>
 
     <string-array name="image_codes">
         <item>1</item>

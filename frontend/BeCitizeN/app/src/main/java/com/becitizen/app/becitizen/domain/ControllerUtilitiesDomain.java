@@ -17,4 +17,8 @@ public class ControllerUtilitiesDomain {
     public void getCurrencyList(List<String> currencyList){
         ControllerUtititesData.getInstance().getCurrencyList(currencyList);
     }
+
+    public int getConversion(String currencyFrom, String currencyTo, String amount) {
+        return ControllerUtititesData.getInstance().getConversion(currencyFrom,currencyTo,amount);
+    }
 }
