@@ -90,6 +90,14 @@ module.exports = {
       collection: 'conversation',
       via: 'user2'
     },
+    reportsUser: {
+      collection: 'user',
+      via: 'reportedByUser'
+    },
+    reportedByUser: {
+      collection: 'user',
+      via: 'reportsUser'
+    }
     
   }
 };

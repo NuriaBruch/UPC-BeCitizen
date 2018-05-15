@@ -68,6 +68,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'updateProfile'
   }, 
+  'POST /reportUser':{
+    controller: 'UserController',
+    action: 'reportUser'
+  },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
     controller: 'ThreadController',

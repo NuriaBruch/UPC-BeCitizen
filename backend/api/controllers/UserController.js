@@ -98,6 +98,16 @@ module.exports = {
         gestionUser.view(username,function(status){
             res.send(status);
         });
+    },
+    reportUser: function(req, res){
+        var reporter = req.body.reporterEmail;
+        var reported = req.body.reportedEmail;
+        sails.log(reporter);
+        sails.log(reported);
+        var gestionUser = new GestionUser();
+        gestionUser.report(reporter,reported,function(status){
+            res.send(status);
+        });
     }
 };
 

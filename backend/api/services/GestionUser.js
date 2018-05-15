@@ -134,5 +134,69 @@ module.exports = class GestionUser {
             }
             callback(response);
         });
+    };
+    
+    report(reporterEmail, reportedEmail, callback){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        if(reportedEmail === reporterEmail){
+            response.status = "E3";
+            response.errors.push("You can't report yourself dumbass");
+            callback(response);
+        }
+        else{
+
+            User.findOne({email: reporterEmail}).populate("reportsUser")
+            .then(function(userReporter){
+            if(userReporter === undefined){
+                response.status = "E2";
+                response.errors.push("Couldn't find the user.");
+                callback(response);
+            }
+            else{
+                User.findOne({email: reportedEmail}).populate("reportedByUser")
+                .then(function(userReported){
+                    
+                    if(userReported === undefined){
+                        response.status = "E2";
+                        response.errors.push("Couldn't find the user.");
+                        callback(response);
+                    }
+                    else{
+                        var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
+                        if(found == -1){
+                            userReporter.reportsUser.add(reportedEmail);
+                            userReported.reportedByUser.add(reporterEmail);
+                            userReported.save(function(err){
+                                userReporter.save(function(err2){
+                                    if(err || err2){
+                                        sails.log(err, err2);
+                                    }
+                                    callback(response);
+                                });
+                            });
+                        }
+                        else{
+                            response.status = "E4";
+                            response.errors.push("The user has already reported the user.");
+                            callback(response);
+                        }
+                    }
+                })
+                .catch(function(error){
+                    response.status = "E1";
+                    response.errors.push(error);
+                    callback(response);
+                });
+            }
+            })
+            .catch(function(error){
+            response.status = "E1";
+            response.errors.push("Server error.");
+            callback(response);
+            });
+        }
     }
 };
