@@ -59,11 +59,7 @@ public class InformationCategoriesActivity extends Fragment {
 
         Runnable loadCategories = new Runnable() {
             public void run() {
-                //categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
-                categories = new ArrayList<String>() {{
-                    add("TMB");
-                    add("test");
-                }};
+                categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
                 UIUpdater.sendEmptyMessage(0);
             }
         };

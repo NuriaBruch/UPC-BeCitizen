@@ -40,20 +40,23 @@ public class ControllerInformationDomain {
     }
 
     /**
-     * Metodo para obtener los nombres de todas las categorias
-     *
-     * @return JSONObject que contiene los nombres de todas las categorias
+     * Metodo para obtener las informaciones de una categoria
+     * @param category nombre de la categoria
+     * @param block numero de bloque (cada bloque contiene x informaciones)
+     * @return JSONObject que contiene las informaciones de una categoria
      */
-    public ArrayList<String> getCategories() {
+    public ArrayList<CategoryThread> getInformationsCategory(String category, int block) {
         try {
-            JSONObject response = new JSONObject(controllerInformationData.getCategories());
-            ArrayList<String> categories = new ArrayList<String>();
-            JSONArray array = (JSONArray)response.get("categories");
+            JSONObject data = new JSONObject(controllerInformationData.getInformationsCategory(category.replace(" ", "%20"), block));
+            ArrayList<CategoryThread> threads = new ArrayList<>();
+            JSONArray array = (JSONArray)data.get("infos");
             for(int i = 0; i < array.length(); i++)
             {
-                categories.add(array.getString(i));
+                JSONObject object = array.getJSONObject(i);
+                threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
+                object.get("title");
             }
-            return categories;
+            return threads;
         }
         catch (JSONException e) {
             return new ArrayList<>();

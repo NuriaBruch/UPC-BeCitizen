@@ -41,6 +41,7 @@ public class ControllerThreadDomain {
     /**
      * Metodo para obtener los posts de una categoria
      * @param category nombre de la categoria
+     * @param block number of info block (each block contains x threads)
      * @return JSONObject que contiene los posts de una categoria
      */
     public ArrayList<CategoryThread> getThreadsCategory(String category, int block) {

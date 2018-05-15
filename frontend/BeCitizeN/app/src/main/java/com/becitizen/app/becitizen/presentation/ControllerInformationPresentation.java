@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.becitizen.app.becitizen.domain.ControllerInformationDomain;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
+import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,10 +43,11 @@ public class ControllerInformationPresentation {
     }
 
     /**
-     * Metodo que retorna todas las categorias
+     * Metodo que retorna todas las informaciones de una categoria
+     * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<String> getCategories() {
-        return controllerInformationDomain.getCategories();
+    public ArrayList<CategoryThread> getInformationsCategory(String category, int block) {
+        return controllerInformationDomain.getInformationsCategory(category, block);
     }
 }

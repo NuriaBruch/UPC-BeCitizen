@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class ControllerInformationData {
 
     //URIs
-    private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
+    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/categories";
 
 
     private static ControllerInformationData instance = null;
@@ -32,11 +32,13 @@ public class ControllerInformationData {
     }
 
     /**
-     * Metodo que solicita los nombres de todas las categorias.
+     * Metodo que solicita las informaciones de una categoria.
+     *
+     * @param category nombre de la categoria
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getCategories() {
-        return ServerAdapter.getInstance().doGetRequest(URI_CATEGORIES);
+    public String getInformationsCategory(String category, int block) {
+        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category + "&block=" + block);
     }
 }
