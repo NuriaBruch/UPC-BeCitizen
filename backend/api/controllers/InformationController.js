@@ -9,7 +9,7 @@ module.exports = {
 	createInfo: function(req,res){
         var superpass = req.query.superpass;
         if(superpass === 'Bienquisto123H'){
-            var {category,title,content,url} = req.body;
+            var {category,title,content,url,type} = req.body;
             InfoService.createInfo(category,title,content,url,function(status){
                 res.send(status);
             })
