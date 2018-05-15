@@ -10,4 +10,7 @@
     <color name="silver">#bebebe</color>
     <color name="bronze">#CD7F32</color>
     <color name="coal">#1C1C1C</color>
+
+    <color name="messageReceived">#7e7e7b</color>
+    <color name="messageSent">#cacaba</color>
 </resources>
