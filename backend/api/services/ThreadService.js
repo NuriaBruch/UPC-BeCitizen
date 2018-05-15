@@ -210,7 +210,7 @@ module.exports = {
                                 username:"",
                                 createdAt: ""
                             };
-                            threadInfo.createdAt = thread.createdAt +"";
+                            threadInfo.createdAt = thread.createdAt;
                             if(thread.postedBy)
                             threadInfo.username = thread.postedBy.username;
                             threadInfo.id = thread.id;
