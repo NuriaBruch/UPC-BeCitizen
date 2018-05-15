@@ -116,14 +116,20 @@ module.exports.routes = {
   },  
 
   //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
-  'POST /newConversation':{
+  'POST /conversation':{
     controller: 'ConversationController',
     action: 'newConversation'
   },
-  'GET /getConversations':{
+  'GET /conversations':{
     controller: 'ConversationController',
     action: 'getConversations'
   },
+
+  //############ MESSAGE CONTROLLER ################# ordered as POST>GET
+  'POST /message':{
+    controller: 'MessageController',
+    action: 'newMessage'
+  }
   
 
 

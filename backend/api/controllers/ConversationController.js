@@ -16,7 +16,7 @@ module.exports = {
         }
         else{
             var response = {
-                status: "Error",
+                status: "E3",
                 errors: "Trying to create a conversation with yourself"
              };
             res.send(response);
