@@ -2,10 +2,13 @@ package com.becitizen.app.becitizen.presentation;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +21,10 @@ import com.becitizen.app.becitizen.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CurrencyConverterActivity extends AppCompatActivity{
+public class CurrencyConverterActivity extends Fragment {
+
+    private View rootView;
+
     EditText editTextAmount;
     TextView textViewResultado;
     Spinner spinnerFrom, spinnerTo;
@@ -26,33 +32,39 @@ public class CurrencyConverterActivity extends AppCompatActivity{
     Button convertButton;
     TextView resultado;
 
+    public CurrencyConverterActivity() {
+
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_currency_converter);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.activity_currency_converter, container, false);
+
         currencyList = new ArrayList<>();
         linkStuff();
         getCurrencyList();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.row_forum_category, currencyList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category, currencyList);
 
         spinnerFrom.setAdapter(adapter);
         spinnerTo.setAdapter(adapter);
+
+        return rootView;
     }
 
     private void linkStuff(){
-        editTextAmount = findViewById(R.id.editTextAmount);
-        textViewResultado = findViewById(R.id.textViewResultado);
-        spinnerFrom = findViewById(R.id.spinnerFrom);
-        spinnerTo = findViewById(R.id.spinnerTo);
-        convertButton = findViewById(R.id.convertButton);
-        textViewResultado = findViewById(R.id.textViewResultado);
+        editTextAmount = rootView.findViewById(R.id.editTextAmount);
+        textViewResultado = rootView.findViewById(R.id.textViewResultado);
+        spinnerFrom = rootView.findViewById(R.id.spinnerFrom);
+        spinnerTo = rootView.findViewById(R.id.spinnerTo);
+        convertButton = rootView.findViewById(R.id.convertButton);
+        textViewResultado = rootView.findViewById(R.id.textViewResultado);
         convertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.convertButton:
                         if(currencyList.size() <= 0) {
-                            Context context = getApplicationContext();
+                            Context context = rootView.getContext();
                             CharSequence text = "Sorry we couldn't convert that";
                             int duration = Toast.LENGTH_SHORT;
 
