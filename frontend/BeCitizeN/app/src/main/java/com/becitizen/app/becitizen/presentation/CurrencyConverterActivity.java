@@ -67,8 +67,8 @@ public class CurrencyConverterActivity extends AppCompatActivity{
                             editTextAmount.setText("0");
                             amount = "0";
                         }
-                        int resultado = ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom,currencyTo,amount);
-                        textViewResultado.setText(resultado);
+                        double resultado = ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom,currencyTo,amount);
+                        textViewResultado.setText(String.valueOf((float)resultado));
                         break;
                 }
             }

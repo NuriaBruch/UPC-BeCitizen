@@ -20,7 +20,7 @@ public class ControllerUtilitiesPresentation {
         ControllerUtilitiesDomain.getInstance().getCurrencyList(currencyList);
     }
 
-    public int getConversion(String currencyFrom, String currencyTo, String amount) {
+    public double getConversion(String currencyFrom, String currencyTo, String amount) {
         return ControllerUtilitiesDomain.getInstance().getConversion(currencyFrom,currencyTo,amount);
     }
 }
