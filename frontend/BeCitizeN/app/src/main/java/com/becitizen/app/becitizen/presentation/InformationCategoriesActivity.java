@@ -50,10 +50,10 @@ public class InformationCategoriesActivity extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //CategoryThreadActivity cta = new CategoryThreadActivity();
-                //cta.setCategory(categories.get(position));
-                //Fragment fragment = cta;
-                //fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
+                CategoryInformationActivity cia = new CategoryInformationActivity();
+                cia.setCategory(categories.get(position));
+                Fragment fragment = cia;
+                fragmentTransaction(fragment, "CATEGORY_INFORMATION_ACTIVITY");
             }
         });
 
