@@ -65,5 +65,9 @@ module.exports = {
         var newDate = new Date(date);
         newDate.setMinutes(date.getMinutes() - date.getTimezoneOffset());
         return newDate;
+    },
+
+    isEmptyOrBlank: function(str){
+       return (!str || 0 === str.length || !str.trim());
     }
 }

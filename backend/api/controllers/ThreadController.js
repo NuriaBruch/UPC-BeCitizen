@@ -65,6 +65,14 @@ module.exports = {
         ThreadService.voteThread(id, email,function(status){
             res.send(status);
         });
+    },
+
+    getThreadWords: function(req,res){
+        var words = req.query.words;
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.getThreadWords(words,email,function(status){
+            res.send(status);
+        });
     }
 };
 

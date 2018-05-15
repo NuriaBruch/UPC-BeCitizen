@@ -85,6 +85,10 @@ module.exports.routes = {
     controller: 'ThreadController',
     action: 'getThread'
   },
+  'GET /getThreadWords':{
+    controller: 'ThreadController',
+    action: 'getThreadWords'
+  },
   'PUT /reportThread':{
     controller: 'ThreadController',
     action: 'reportThread'
