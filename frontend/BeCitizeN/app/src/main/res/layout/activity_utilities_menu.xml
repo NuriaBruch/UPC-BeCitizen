@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.becitizen.app.becitizen.presentation.UtilitiesMenu"
     android:weightSum="10"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_weight="2"
@@ -54,7 +53,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:padding="16dp"
+                android:background="@drawable/card_button_1">
 
                 <ImageView
                     android:id="@+id/ivCurrency"
@@ -104,7 +104,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:padding="16dp"
+                android:background="@drawable/card_button_2">
 
                 <ImageView
                     android:id="@+id/ivTranslator"
@@ -139,7 +140,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cvMot"
+            android:id="@+id/cvWord"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_columnWeight="1"
@@ -151,30 +152,27 @@
             app:cardCornerRadius="8dp"
             >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:padding="16dp"
+                android:background="@drawable/card_button_3">
 
                 <ImageView
-                    android:id="@+id/ivMot"
+                    android:id="@+id/ivWord"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/mot_icon" />
+                    android:src="@drawable/word_icon" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignTop="@+id/ivMot"
-                    android:layout_margin="5dp"
-                    android:layout_toEndOf="@+id/ivMot" >
+                    android:layout_margin="5dp" >
 
                     <TextView
-                        android:text="@string/buttonMot"
+                        android:text="@string/buttonWord"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -185,7 +183,7 @@
                         android:textStyle="bold" />
 
                 </RelativeLayout>
-            </RelativeLayout>
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
     </GridLayout>

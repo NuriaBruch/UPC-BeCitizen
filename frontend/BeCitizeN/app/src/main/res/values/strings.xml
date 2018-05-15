@@ -87,7 +87,7 @@
 
     <string name="buttonCurrency">Currency Converter</string>
     <string name="buttonTranslator">Translator</string>
-    <string name="buttonMot">Mot del dia</string>
+    <string name="buttonWord">Word of the day</string>
 
     <string-array name="currencies" translatable="false">
         <item>coin1</item>
