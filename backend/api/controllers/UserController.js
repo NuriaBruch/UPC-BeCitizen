@@ -102,10 +102,16 @@ module.exports = {
     reportUser: function(req, res){
         var reporter = req.body.reporterEmail;
         var reported = req.body.reportedEmail;
-        sails.log(reporter);
-        sails.log(reported);
         var gestionUser = new GestionUser();
         gestionUser.report(reporter,reported,function(status){
+            res.send(status);
+        });
+    },
+    unreportUser: function(req,res){
+        var reporter = req.body.reporterEmail;
+        var reported = req.body.reportedEmail;
+        var gestionUser = new GestionUser();
+        gestionUser.unreport(reporter,reported,function(status){
             res.send(status);
         });
     }
