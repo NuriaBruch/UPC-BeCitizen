@@ -130,11 +130,7 @@ module.exports.routes = {
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
-  },
-  'GET /test':{
-    controller: 'InformationController',
-    action: 'test'
-  },
+  }
 
 
   /***************************************************************************
