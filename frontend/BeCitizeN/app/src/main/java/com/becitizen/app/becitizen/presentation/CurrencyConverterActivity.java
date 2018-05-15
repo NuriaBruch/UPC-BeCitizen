@@ -63,7 +63,7 @@ public class CurrencyConverterActivity extends AppCompatActivity{
                         String currencyFrom = spinnerFrom.getSelectedItem().toString();
                         String currencyTo = spinnerTo.getSelectedItem().toString();
                         String amount = editTextAmount.getText().toString();
-                        if(amount.equals("0")){
+                        if(amount.equals("")){
                             editTextAmount.setText("0");
                             amount = "0";
                         }
