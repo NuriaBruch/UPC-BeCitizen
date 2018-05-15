@@ -7,6 +7,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,30 +21,33 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
+import com.becitizen.app.becitizen.domain.entities.Information;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class CategoryInformationActivity extends Fragment  {
+public class CategoryInformationActivity extends Fragment implements CategoryInformationAdapter.ItemClickListener {
 
     private View rootView;
-    ArrayList<CategoryThread> dataModels;
-    ArrayList<CategoryThread> dataChunk;
+    List<Information> dataModels;
+    ArrayList<Information> dataChunk;
     private int block = -1;
     ListView listView;
     private int preLast;
     private static CategoryInformationAdapter adapter;
     private String category = "";
-    private Thread threadLoadThreads;
+    private Thread threadLoadInformations;
 
     private Handler UIUpdater = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            adapter.addAll(dataChunk);
+            dataModels.addAll(dataChunk);
+            adapter.notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
-            if (adapter.getCount() == 0) {
+            if (dataModels.size() == 0) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -50,12 +55,10 @@ public class CategoryInformationActivity extends Fragment  {
     };
     private ProgressBar progressBar;
 
-    private Runnable loadThreads = new Runnable() {
+    private Runnable loadInformations = new Runnable() {
         public void run() {
             ++block;
             dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategory(category, block);
-            for (int i = 0; i < 10; ++i)
-                dataChunk.add(new CategoryThread("title", "asdasdsadas", "", 0, 0));
             UIUpdater.sendEmptyMessage(0);
         }
     };
@@ -70,28 +73,28 @@ public class CategoryInformationActivity extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
+        rootView = inflater.inflate(R.layout.activity_category_information, container, false);
 
         listView = (ListView)rootView.findViewById(R.id.list);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
 
-        dataModels = new ArrayList<CategoryThread>();
+        dataModels = new ArrayList<Information>();
 
-        FloatingActionButton fab = rootView.findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        if (threadLoadInformations != null && threadLoadInformations.isAlive())
+            threadLoadInformations.interrupt();
+        threadLoadInformations = new Thread(loadInformations);
+        threadLoadInformations.start();
 
-        adapter = new CategoryInformationAdapter(dataModels, getApplicationContext());
+        RecyclerView recyclerView = rootView.findViewById(R.id.rvInfomation);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new CategoryInformationAdapter(getContext(), dataModels);
+        adapter.setClickListener(this);
+        recyclerView.setAdapter(adapter);
 
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-        });
-
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        /*listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int i) {
 
@@ -119,12 +122,12 @@ public class CategoryInformationActivity extends Fragment  {
                         }
                 }
             }
-        });
+        });*/
 
         return rootView;
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         progressBar.setVisibility(View.VISIBLE);
@@ -132,16 +135,15 @@ public class CategoryInformationActivity extends Fragment  {
             threadLoadThreads.interrupt();
         threadLoadThreads = new Thread(loadThreads);
         threadLoadThreads.start();
-    }
+    }*/
 
     @Override
     public void onPause() {
         super.onPause();
         block = -1;
         preLast = 0;
-        adapter.clear();
-        if (threadLoadThreads != null && threadLoadThreads.isAlive())
-            threadLoadThreads.interrupt();
+        if (threadLoadInformations != null && threadLoadInformations.isAlive())
+            threadLoadInformations.interrupt();
     }
 
     private void fragmentTransaction(Fragment fragment, String tag) {
@@ -151,4 +153,8 @@ public class CategoryInformationActivity extends Fragment  {
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
 }

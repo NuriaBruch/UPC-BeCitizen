@@ -5,6 +5,7 @@ import com.becitizen.app.becitizen.domain.adapters.ControllerInformationData;
 import com.becitizen.app.becitizen.domain.adapters.ControllerThreadData;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
+import com.becitizen.app.becitizen.domain.entities.Information;
 import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
@@ -45,18 +46,17 @@ public class ControllerInformationDomain {
      * @param block numero de bloque (cada bloque contiene x informaciones)
      * @return JSONObject que contiene las informaciones de una categoria
      */
-    public ArrayList<CategoryThread> getInformationsCategory(String category, int block) {
+    public ArrayList<Information> getInformationsCategory(String category, int block) {
         try {
             JSONObject data = new JSONObject(controllerInformationData.getInformationsCategory(category.replace(" ", "%20"), block));
-            ArrayList<CategoryThread> threads = new ArrayList<>();
+            ArrayList<Information> informations = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("infos");
             for(int i = 0; i < array.length(); i++)
             {
                 JSONObject object = array.getJSONObject(i);
-                threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
-                object.get("title");
+                informations.add(new Information(object.getInt("id"), object.getString("title")));
             }
-            return threads;
+            return informations;
         }
         catch (JSONException e) {
             return new ArrayList<>();

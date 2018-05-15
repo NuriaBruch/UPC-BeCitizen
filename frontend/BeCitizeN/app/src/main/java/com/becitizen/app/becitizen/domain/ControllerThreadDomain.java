@@ -53,7 +53,6 @@ public class ControllerThreadDomain {
             {
                 JSONObject object = array.getJSONObject(i);
                 threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
-                object.get("title");
             }
             return threads;
         }

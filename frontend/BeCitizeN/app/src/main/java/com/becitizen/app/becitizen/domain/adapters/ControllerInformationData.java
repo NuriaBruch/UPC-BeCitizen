@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class ControllerInformationData {
 
     //URIs
-    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/categories";
+    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory";
 
 
     private static ControllerInformationData instance = null;
