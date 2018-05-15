@@ -34,9 +34,6 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
     private View rootView;
     List<Information> dataModels;
     ArrayList<Information> dataChunk;
-    private int block = -1;
-    ListView listView;
-    private int preLast;
     private static CategoryInformationAdapter adapter;
     private String category = "";
     private Thread threadLoadInformations;
@@ -57,8 +54,7 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
 
     private Runnable loadInformations = new Runnable() {
         public void run() {
-            ++block;
-            dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategory(category, block);
+            dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategory(category);
             UIUpdater.sendEmptyMessage(0);
         }
     };
@@ -75,7 +71,6 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
 
         rootView = inflater.inflate(R.layout.activity_category_information, container, false);
 
-        listView = (ListView)rootView.findViewById(R.id.list);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
 
@@ -93,33 +88,18 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
-
-        /*listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        /* CODE FOR GETTING MORE DATA ONCE USER REACHED END OF LIST
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                switch(absListView.getId())
-                {
-                    case R.id.list:
-                        // Sample calculation to determine if the last
-                        // item is fully visible.
-                        final int lastItem = firstVisibleItem + visibleItemCount;
-                        if(lastItem == totalItemCount)
-                        {
-                            if(preLast!=lastItem)
-                            {
-                                preLast = lastItem;
-                                progressBar.setVisibility(View.VISIBLE);
-                                if (threadLoadThreads != null && threadLoadThreads.isAlive())
-                                    threadLoadThreads.interrupt();
-                                threadLoadThreads = new Thread(loadThreads);
-                                threadLoadThreads.start();
-                            }
-                        }
+                if (!recyclerView.canScrollVertically(1)) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    if (threadLoadInformations != null && threadLoadInformations.isAlive())
+                        threadLoadInformations.interrupt();
+                    threadLoadInformations = new Thread(loadInformations);
+                    threadLoadInformations.start();
                 }
             }
         });*/
@@ -140,8 +120,6 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
     @Override
     public void onPause() {
         super.onPause();
-        block = -1;
-        preLast = 0;
         if (threadLoadInformations != null && threadLoadInformations.isAlive())
             threadLoadInformations.interrupt();
     }

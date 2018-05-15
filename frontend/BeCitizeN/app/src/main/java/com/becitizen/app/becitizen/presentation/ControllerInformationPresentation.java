@@ -48,7 +48,7 @@ public class ControllerInformationPresentation {
      * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<Information> getInformationsCategory(String category, int block) {
-        return controllerInformationDomain.getInformationsCategory(category, block);
+    public ArrayList<Information> getInformationsCategory(String category) {
+        return controllerInformationDomain.getInformationsCategory(category);
     }
 }

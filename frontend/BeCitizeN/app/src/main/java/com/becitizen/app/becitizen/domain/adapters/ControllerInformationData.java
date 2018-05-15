@@ -9,7 +9,8 @@ import org.json.JSONObject;
 public class ControllerInformationData {
 
     //URIs
-    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory";
+    //TODO: change back to server
+    private static final String URI_INFORMATIONS_CATEGORY = "http://10.0.2.2:1337/getAllInfoCategory?category=";
 
 
     private static ControllerInformationData instance = null;
@@ -38,7 +39,7 @@ public class ControllerInformationData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getInformationsCategory(String category, int block) {
-        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category + "&block=" + block);
+    public String getInformationsCategory(String category) {
+        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category);
     }
 }

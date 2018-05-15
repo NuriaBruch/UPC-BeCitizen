@@ -43,12 +43,11 @@ public class ControllerInformationDomain {
     /**
      * Metodo para obtener las informaciones de una categoria
      * @param category nombre de la categoria
-     * @param block numero de bloque (cada bloque contiene x informaciones)
      * @return JSONObject que contiene las informaciones de una categoria
      */
-    public ArrayList<Information> getInformationsCategory(String category, int block) {
+    public ArrayList<Information> getInformationsCategory(String category) {
         try {
-            JSONObject data = new JSONObject(controllerInformationData.getInformationsCategory(category.replace(" ", "%20"), block));
+            JSONObject data = new JSONObject(controllerInformationData.getInformationsCategory(category.replace(" ", "%20")));
             ArrayList<Information> informations = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("infos");
             for(int i = 0; i < array.length(); i++)

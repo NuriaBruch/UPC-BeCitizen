@@ -65,36 +65,20 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View rowView = mInflater.inflate(R.layout.row_category_information, parent, false);
         return new ViewHolder(rowView);
-
-        /*
-        if (rowView.findViewById(R.id.infoContent).getVisibility() == View.VISIBLE) {
-            rowView.findViewById(R.id.expander).setRotation(0);
-            Log.d("info", "expanded");
-            rowView.findViewById(R.id.infoContent).setVisibility(View.GONE);
-        }
-        else {
-            rowView.findViewById(R.id.expander).setRotation(0);
-            Log.d("info", "collapsed");
-            rowView.findViewById(R.id.infoContent).setVisibility(View.VISIBLE);
-        }*/
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        //TODO: check if open
         holder.content.setVisibility(View.GONE);
 
-        holder.title.setText(mData.get(position).getTitle());
-
-        // 4. Set the text for textView
-        /*if (dataSet.get(position).getTitle().length() < 22)
-            holder.title.setText(dataSet.get(position).getTitle());
+        if (mData.get(position).getTitle().length() < 22)
+            holder.title.setText(mData.get(position).getTitle());
         else
-            holder.title.setText(dataSet.get(position).getTitle().substring(0, 22) + "...");*/
+            holder.title.setText(mData.get(position).getTitle().substring(0, 22) + "...");
 
-        holder.content.setText(mData.get(position).getTitle());
+        holder.content.setText(mData.get(position).getContent());
     }
 
     // total number of rows
