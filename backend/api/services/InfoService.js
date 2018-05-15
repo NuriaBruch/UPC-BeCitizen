@@ -1,7 +1,7 @@
 
 module.exports = {
 
-    createInfo: function(category,title,content,url,callback){
+    createInfo: function(category,title,content,url,type,callback){
         var response = {
             status: "Ok",
             errors: []
@@ -10,7 +10,8 @@ module.exports = {
             category: category,
             title: title,
             content: content,
-            url: url
+            url: url,
+            type: type
         }).exec(function(err2, newInfo){
             if(err2 !== undefined && err2){
                 response.status = "E2";
@@ -60,7 +61,8 @@ module.exports = {
                 title: "",
                 content: "",
                 url: "",
-                category: ""
+                category: "",
+                type: ""
             }
          };
         Information.findOne({id: infoId}).exec(function(err2,infoFound){
@@ -73,6 +75,7 @@ module.exports = {
                response.info.content = infoFound.content;
                response.info.url = infoFound.url;
                response.info.category = infoFound.category;
+               response.info.type = infoFound.type;
             }
             else{
                 response.status = "Error";

@@ -12,7 +12,7 @@ module.exports = {
       type: 'string',
       enum: [ "culture", "education and formation",
         "emergencies", "language", "justice", "public administration", "housing",
-        "health", "work", "tourism", "off topic"],
+        "health", "work", "tourism", "off topic"]
     },
     title: {
       type: 'string',
@@ -24,6 +24,14 @@ module.exports = {
     },
     url: {
       type: 'string'
+    },
+    type: {
+      type: 'string',
+      enum: ['text','list']
+    },
+    isTarifa: {
+      type: 'boolean',
+      defaultsTo: false
     }
 
   }
