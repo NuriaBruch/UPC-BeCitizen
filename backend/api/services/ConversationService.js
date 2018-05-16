@@ -93,12 +93,12 @@ module.exports = {
                     };
                     converInfo.id = conver.id;
                     converInfo.lastMessageTime = conver.lastMessageTime;
-                    if(conver.user1.email !== userMail){
-                        converInfo.username = conver.user1.username;
+                    if(conver.user1.email === userMail){
+                        converInfo.username = conver.user2.username;
                         converInfo.newMessage = conver.newMessage1;
                     }
-                    else if(conver.user2 !== userMail){
-                        converInfo.username = conver.user2.username;
+                    else if(conver.user2.email === userMail){
+                        converInfo.username = conver.user1.username;
                         converInfo.newMessage = conver.newMessage2;
                     }
                     response.conversations.push(converInfo);
@@ -126,8 +126,8 @@ module.exports = {
             ]
         }).populate('user1').populate('user2').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
-                status = "E1";
-                errors.push(err1);
+                response.status = "E1";
+                response.errors.push(err1);
                 callback(response);
             }
             else if(conversationFound){
@@ -158,8 +158,8 @@ module.exports = {
             ]
         }).populate('user1').populate('user2').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
-                status = "E1";
-                errors.push("Server error");
+                response.status = "E1";
+                response.errors.push("Server error");
                 callback(response);
             }
             else if(conversationFound){
