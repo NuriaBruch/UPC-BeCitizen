@@ -143,7 +143,7 @@ module.exports = class GestionUser {
         }
         if(reportedEmail === reporterEmail){
             response.status = "E3";
-            response.errors.push("You can't report yourself dumbass");
+            response.errors.push("You can't report yourself");
             callback(response);
         }
         else{
@@ -167,16 +167,27 @@ module.exports = class GestionUser {
                     else{
                         var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
                         if(found == -1){
-                            userReporter.reportsUser.add(reportedEmail);
-                            userReported.reportedByUser.add(reporterEmail);
-                            userReported.save(function(err){
-                                userReporter.save(function(err2){
-                                    if(err || err2){
-                                        sails.log(err, err2);
-                                    }
+                            ConversationService.blockConversation(reporterEmail, reportedEmail, function(satus){
+                                if(status.status !== "OK"){
+                                    response.status = "E1";
+                                    response.errors = status.errors;
                                     callback(response);
-                                });
-                            });
+                                }
+                                else{
+                                    userReporter.reportsUser.add(reportedEmail);
+                                    userReported.reportedByUser.add(reporterEmail);
+                                    userReported.save(function(err){
+                                        userReporter.save(function(err2){
+                                            if(err || err2){
+                                                response.status = "E1";
+                                                response.push(err);
+                                                response.push(err2);
+                                            }
+                                            callback(response);
+                                        });
+                                    });
+                                }
+                            });  
                         }
                         else{
                             response.status = "E4";
@@ -224,23 +235,29 @@ module.exports = class GestionUser {
                     else{
                         var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
                         if(found != -1){
-                            userReporter.reportsUser.remove(reportedEmail);
-                            userReported.reportedByUser.remove(reporterEmail);
-                            userReported.save(function(err){
-                                userReporter.save(function(err2){
+                            ConversationService.unblockConversation(reporterEmail, reportedEmail, function(satus){
+                                if(status.status !== "OK"){
+                                    response.status = "Meu error";
+                                    response.errors = status.errors;
+                                    callback(response);
+                                }
+                                else{
+                                    userReporter.reportsUser.remove(reportedEmail);
+                                    userReported.reportedByUser.remove(reporterEmail);
+                                    userReported.save(function(err){
+                                    userReporter.save(function(err2){
                                     if(err || err2){
                                         response.status = "E1";
                                         response.push(err);
                                         response.push(err2);
-                                        callback(response);
+                                        
                                     }
-                                    else{
-                                        callback(response);
-                                    }
-                                    
+                                    callback(response);
+                                    });
                                 });
-                            });
-                        }
+                            }
+                        }); 
+                    }
                         else{
                             response.status = "E5";
                             response.errors.push("The user has not been reported.");

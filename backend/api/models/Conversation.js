@@ -24,6 +24,18 @@ module.exports = {
     },
     lastMessageTime:{
       type: "datetime"
+    },
+    blockedByUser1:{
+      type: "boolean",
+      defaultsTo: false
+    },
+    blockedByUser2:{
+      type: "boolean",
+      defaultsTo: false
+    },
+    messages: {
+      collection: 'message',
+      via: 'belongsTo'
     }
   }
 };

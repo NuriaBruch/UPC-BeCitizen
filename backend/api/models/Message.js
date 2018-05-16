@@ -13,6 +13,9 @@ module.exports = {
     },
     user: {
       model: "user"
+    },
+    belongsTo: {
+      model: "conversation"
     }
   }
 };
