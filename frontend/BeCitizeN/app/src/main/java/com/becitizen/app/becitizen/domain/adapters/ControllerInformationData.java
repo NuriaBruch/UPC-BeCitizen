@@ -11,6 +11,7 @@ public class ControllerInformationData {
     //URIs
     //TODO: change back to server
     private static final String URI_INFORMATIONS_CATEGORY = "http://10.0.2.2:1337/getAllInfoCategory?category=";
+    private static final String URI_INFORMATION_CONTENT = "http://10.0.2.2:1337/getInfo?infoId=";
 
 
     private static ControllerInformationData instance = null;
@@ -41,5 +42,16 @@ public class ControllerInformationData {
      */
     public String getInformationsCategory(String category) {
         return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category);
+    }
+
+    /**
+     * Metodo que solicita una informacion.
+     *
+     * @param id id de la informacion
+     *
+     * @return La respuesta de nuestro servidor
+     */
+    public String getInformation(int id) {
+        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATION_CONTENT + id);
     }
 }

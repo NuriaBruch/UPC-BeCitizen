@@ -62,4 +62,21 @@ public class ControllerInformationDomain {
         }
     }
 
+    /**
+     * Metodo para obtener la una informacion
+     * @param id de la informacion
+     * @return null si ha ocurrido algun error
+     */
+    public Information getInformation(int id) {
+        try {
+            JSONObject data = new JSONObject(controllerInformationData.getInformation(id));
+            data = data.getJSONObject("info");
+
+            return new Information(id, data.getString("title"), data.getString("content"),
+                    data.getString("url"), data.getString("type"));
+        }
+        catch (JSONException e) {
+            return null;
+        }
+    }
 }

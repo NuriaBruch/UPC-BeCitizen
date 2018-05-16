@@ -45,10 +45,19 @@ public class ControllerInformationPresentation {
 
     /**
      * Metodo que retorna todas las informaciones de una categoria
-     * @param category name of the category
-     * @return empty arraylist si ha ocurrido algun error
+     * @param category nombre de la categoria
+     * @return null si ha ocurrido algun error
      */
     public ArrayList<Information> getInformationsCategory(String category) {
         return controllerInformationDomain.getInformationsCategory(category);
+    }
+
+    /**
+     * Metodo que retorna una informacion
+     * @param id de la informacion
+     * @return information vacia si hay algun error
+     */
+    public Information getInformation(int id) {
+        return controllerInformationDomain.getInformation(id);
     }
 }

@@ -43,6 +43,12 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
         @Override
         public void onClick(View view) {
             if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+
+            Information info = ControllerInformationPresentation.getUniqueInstance().getInformation(mData.get(getAdapterPosition()).getId());
+            if (info != null) {
+                content.setText(info.getContent());
+            }
+
             if (content.getVisibility() == View.VISIBLE) {
                 expander.setRotation(0);
                 content.setVisibility(View.GONE);
