@@ -9,7 +9,7 @@ module.exports = {
 
 	register: function(req,res){
         var {username, password, email, name, surname, birthday, country, profilePicture, facebook, google} = req.body;
-        
+
         var hasFace = (facebook ==='true');
         var hasGoogle = (google === 'true');
         var gestionUser = new GestionUser();
@@ -84,7 +84,7 @@ module.exports = {
 
     updateProfile: function(req,res){
         var gestionUser = new GestionUser();
-        
+
         gestionUser.update(req,function(status){
             res.send(status);
         });
@@ -94,13 +94,13 @@ module.exports = {
         var gestionUser = new GestionUser();
 
         var username = req.query.username;
-        
+
         gestionUser.view(username,function(status){
             res.send(status);
         });
     },
     reportUser: function(req, res){
-        var reporter = req.body.reporterEmail;
+        var reporter = UtilsService.getEmailFromHeader(req);
         var reported = req.body.reportedEmail;
         var gestionUser = new GestionUser();
         gestionUser.report(reporter,reported,function(status){
