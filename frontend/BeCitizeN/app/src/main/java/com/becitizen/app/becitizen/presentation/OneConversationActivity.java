@@ -1,31 +1,48 @@
 package com.becitizen.app.becitizen.presentation;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.domain.entities.Message;
 
 import java.util.List;
 
-public class OneConversationActivity extends AppCompatActivity {
+public class OneConversationActivity extends Fragment {
+
+    private View rootView;
 
     private RecyclerView mMessageRecycler;
     private ConversationAdapter mMessageAdapter;
 
-    List<Message> messageList;
+    private Conversation conversation;
+    private List<Message> messageList;
+
+    public OneConversationActivity() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_one_conversation);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //messageList = ControllerMsgPresentation.getConversation();
+        rootView = inflater.inflate(R.layout.activity_one_conversation, container, false);
 
-        mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        mMessageAdapter = new ConversationAdapter(this, messageList);
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        conversation = ControllerMsgPresentation.getInstance().getConversation();
+        messageList = conversation.getMessages();
+
+        Log.i("MESSAGES", messageList.toString());
+
+        mMessageRecycler = (RecyclerView) rootView.findViewById(R.id.reyclerview_message_list);
+        mMessageAdapter = new ConversationAdapter(getContext(), messageList);
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mMessageRecycler.setAdapter(mMessageAdapter);
+
+        return rootView;
     }
 }
