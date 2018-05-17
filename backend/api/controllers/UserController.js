@@ -107,6 +107,7 @@ module.exports = {
             res.send(status);
         });
     },
+    
     unreportUser: function(req,res){
         var reporter = UtilsService.getEmailFromHeader(req);
         var reported = req.body.reportedEmail;
