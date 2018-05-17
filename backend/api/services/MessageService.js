@@ -22,18 +22,11 @@ module.exports = {
                     response.errors.push("User doesn't belong to the conversation");
                 }
                 else {
-                    var blocked = false;
                     var nUser;
-                    if(conversationFound.user1.email === email){
-                        blocked = conversationFound.blockedByUser2;
-                        nUser = 1;
-                    } 
-                    else{
-                        blocked = conversationFound.blockedByUser1;
-                        nUser = 2;
-                    }
-
-                    if(blocked){
+                    if(conversationFound.user1.email === email) nUser = 1;
+                    else nUser = 2;
+                    
+                    if(conversationFound.blockedByUser1 || conversationFound.blockedByUser2){
                         response.status = "E4";
                         response.errors.push("Blocked conversation");
                     }

@@ -167,25 +167,18 @@ module.exports = class GestionUser {
                     else{
                         var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
                         if(found == -1){
-                            if(status.status !== "OK"){
-                                response.status = "E1";
-                                response.errors = status.errors;
-                                callback(response);
-                                }
-                            else{
-                                userReporter.reportsUser.add(reportedEmail);
-                                userReported.reportedByUser.add(reporterEmail);
-                                userReported.save(function(err){
-                                    userReporter.save(function(err2){
-                                        if(err || err2){
-                                            response.status = "E1";
-                                            response.push(err);
-                                            response.push(err2);
-                                        }
-                                        callback(response);
+                            userReporter.reportsUser.add(reportedEmail);
+                            userReported.reportedByUser.add(reporterEmail);
+                            userReported.save(function(err){
+                                userReporter.save(function(err2){
+                                    if(err || err2){
+                                        response.status = "E1";
+                                        response.push(err);
+                                        response.push(err2);
+                                    }
+                                    callback(response);
                                     });
                                 });
-                            }
                         }
                         else{
                             response.status = "E4";
@@ -196,7 +189,7 @@ module.exports = class GestionUser {
                 })
                 .catch(function(error){
                     response.status = "E1";
-                    response.errors.push(error);
+                    response.errors.push("Fail");
                     callback(response);
                 });
             }
@@ -234,26 +227,21 @@ module.exports = class GestionUser {
                         var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
                         if(found != -1){
                             ConversationService.unblockConversation(reporterEmail, reportedEmail, function(satus){
-                                if(status.status !== "OK"){
-                                    response.status = "Meu error";
-                                    response.errors = status.errors;
-                                    callback(response);
-                                }
-                                else{
-                                    userReporter.reportsUser.remove(reportedEmail);
-                                    userReported.reportedByUser.remove(reporterEmail);
-                                    userReported.save(function(err){
-                                    userReporter.save(function(err2){
-                                    if(err || err2){
-                                        response.status = "E1";
-                                        response.push(err);
-                                        response.push(err2);
+                                
+                                userReporter.reportsUser.remove(reportedEmail);
+                                userReported.reportedByUser.remove(reporterEmail);
+                                userReported.save(function(err){
+                                userReporter.save(function(err2){
+                                if(err || err2){
+                                    response.status = "E1";
+                                    response.push(err);
+                                    response.push(err2);
                                         
-                                    }
-                                    callback(response);
-                                    });
+                                }
+                                callback(response);
                                 });
-                            }
+                            });
+                           
                         }); 
                     }
                         else{

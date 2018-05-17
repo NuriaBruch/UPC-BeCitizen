@@ -106,7 +106,7 @@ module.exports = {
         var gestionUser = new GestionUser();
         gestionUser.report(reporter,reported,function(status){
             
-            if(status.status !== "OK") res.send(status);
+            if(status.status !== "Ok") res.send(status);
             else{
                 ConversationService.blockConversation(reporter,reported,function(status2){
                     res.send(status2);
