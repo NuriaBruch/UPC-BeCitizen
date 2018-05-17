@@ -148,7 +148,7 @@ module.exports = class GestionUser {
         }
         else{
 
-            User.findOne({email: reporterEmail}).populate("reportsUser")
+            User.findOne({email: reporterEmail}).populate('reportsUser')
             .then(function(userReporter){
             if(userReporter === undefined){
                 response.status = "E2";
@@ -161,33 +161,31 @@ module.exports = class GestionUser {
                     
                     if(userReported === undefined){
                         response.status = "E2";
-                        response.errors.push("Couldn't find the user.");
+                        response.errors.push("Couldn't find the user");
                         callback(response);
                     }
                     else{
                         var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
                         if(found == -1){
-                            ConversationService.blockConversation(reporterEmail, reportedEmail, function(satus){
-                                if(status.status !== "OK"){
-                                    response.status = "E1";
-                                    response.errors = status.errors;
-                                    callback(response);
+                            if(status.status !== "OK"){
+                                response.status = "E1";
+                                response.errors = status.errors;
+                                callback(response);
                                 }
-                                else{
-                                    userReporter.reportsUser.add(reportedEmail);
-                                    userReported.reportedByUser.add(reporterEmail);
-                                    userReported.save(function(err){
-                                        userReporter.save(function(err2){
-                                            if(err || err2){
-                                                response.status = "E1";
-                                                response.push(err);
-                                                response.push(err2);
-                                            }
-                                            callback(response);
-                                        });
+                            else{
+                                userReporter.reportsUser.add(reportedEmail);
+                                userReported.reportedByUser.add(reporterEmail);
+                                userReported.save(function(err){
+                                    userReporter.save(function(err2){
+                                        if(err || err2){
+                                            response.status = "E1";
+                                            response.push(err);
+                                            response.push(err2);
+                                        }
+                                        callback(response);
                                     });
-                                }
-                            });  
+                                });
+                            }
                         }
                         else{
                             response.status = "E4";

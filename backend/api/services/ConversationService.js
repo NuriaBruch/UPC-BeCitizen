@@ -133,12 +133,16 @@ module.exports = {
             else if(conversationFound){
                 if(conversationFound.user1.email == userMail){
                     conversationFound.blockedByUser1 = true;
-                    conversationFound.save();
                 }
                 else{
                     conversationFound.blockedByUser2 = true;
-                    conversationFound.save();
                 }
+                conversation.save(function(err){
+                    if(err && err !== undefined){
+                        response.status = "E1";
+                        response.errors.push("Server error");
+                    }
+                });
             }
             callback(response);
         });
@@ -165,12 +169,16 @@ module.exports = {
             else if(conversationFound){
                 if(conversationFound.user1.email){
                     conversationFound.blockedByUser1 = false;
-                    conversationFound.save();
                 }
                 else{
                     conversationFound.blockedByUser2 = false;
-                    conversationFound.save();
                 }
+                conversationFound.save(function(err){
+                    if(err && err !== undefined){
+                        response.status = "E1";
+                        response.errors.push("Server error");
+                    }
+                });
             }
             callback(response);
         });
