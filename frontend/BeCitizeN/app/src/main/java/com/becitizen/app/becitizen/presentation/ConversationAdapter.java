@@ -3,6 +3,7 @@ package com.becitizen.app.becitizen.presentation;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Message;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class ConversationAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(DateUtils.formatSameDayTime(message.getDate().getTime(), (new Date()).getTime(), DateUtils.LENGTH_SHORT, DateUtils.LENGTH_SHORT));
+            timeText.setText(DateUtils.formatSameDayTime(message.getDate().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
         }
     }
 
@@ -113,7 +115,7 @@ public class ConversationAdapter extends RecyclerView.Adapter {
             messageText.setText(message.getContent());
 
             // Format the stored timestamp into a readable String using method.
-            timeText.setText(DateUtils.formatSameDayTime(message.getDate().getTime(), (new Date()).getTime(), DateUtils.LENGTH_SHORT, DateUtils.LENGTH_SHORT));
+            timeText.setText(DateUtils.formatSameDayTime(message.getDate().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT));
 
             nameText.setText("Hardcoded Gonzalez");
 
