@@ -89,6 +89,10 @@
     <string name="buttonTranslator">Translator</string>
     <string name="buttonWord">Word of the day</string>
 
+    <string name="textDevelopedBy">This application has been developed by a group of students of the Computer Engineering degree from the Universitat Politècnica de Catalunya (UPC) and more specifically from the Facultat d\'Informàtica de Barcelona (FIB).</string>
+    <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
+    <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
+
     <string-array name="currencies" translatable="false">
         <item>coin1</item>
         <item>coin2</item>
@@ -376,5 +380,22 @@
         <item>Employment</item>
         <item>Justice</item>
     </string-array>
+
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="tab_text_1">Principal</string>
+    <string name="tab_text_2">Information</string>
+    <string name="tab_text_3">FAQ</string>
+    <string name="tab_text_4">Forum</string>
+    <string name="tab_text_5">Messaging</string>
+    <string name="tab_text_6">Utilities</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
+    <string name="helpPrincipal_2">Information about the city</string>
+    <string name="helpPrincipal_3">FAQ (frequently asked question)</string>
+    <string name="helpPrincipal_4">A forum</string>
+    <string name="helpPrincipal_5">Private messaging</string>
+    <string name="helpPrincipal_6">Other utilities</string>
+    <string name="helpPrincipal_7">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
 
 </resources>

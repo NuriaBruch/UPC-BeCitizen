@@ -48,7 +48,7 @@ public class UtilitiesMenu extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.cvTranslator:
-                Toast.makeText(rootView.getContext(), "Translator not yet implemented", Toast.LENGTH_LONG).show();
+                Toast.makeText(rootView.getContext(), "Translator not implemented yet", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.cvWord:
