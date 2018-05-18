@@ -68,13 +68,13 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'updateProfile'
   }, 
-  'POST /reportUser':{
+  'POST /blockUser':{
     controller: 'UserController',
-    action: 'reportUser'
+    action: 'blockUser'
   },
-  'POST /unreportUser':{
+  'POST /unblockUser':{
     controller: 'UserController',
-    action: 'unreportUser'
+    action: 'unblockUser'
   },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
@@ -138,7 +138,7 @@ module.exports.routes = {
     controller: 'MessageController',
     action: 'newMessage'
   },
-  'GET /messages':{
+  'GET /conversationMessages':{
     controller: 'MessageController',
     action: 'getMessages'
   }
