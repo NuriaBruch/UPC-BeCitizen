@@ -207,4 +207,12 @@ public class ControllerUserData {
     public void setToken(String token) {
         ServerAdapter.getInstance().setTOKEN(token);
     }
+
+    public void blockUser(String mail) {
+        // TODO fer la request
+    }
+
+    public void unblockUser(String mail) {
+        // TODO fer la request
+    }
 }
