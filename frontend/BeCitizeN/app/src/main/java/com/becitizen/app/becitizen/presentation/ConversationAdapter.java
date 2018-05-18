@@ -3,11 +3,9 @@ package com.becitizen.app.becitizen.presentation;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.becitizen.app.becitizen.R;
@@ -99,16 +97,16 @@ public class ConversationAdapter extends RecyclerView.Adapter {
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText, nameText;
-        ImageView profileImage;
+        TextView messageText, timeText;//, nameText;
+        //ImageView profileImage;
 
         ReceivedMessageHolder(View itemView) {
             super(itemView);
 
             messageText = (TextView) itemView.findViewById(R.id.text_message_body);
             timeText = (TextView) itemView.findViewById(R.id.text_message_time);
-            nameText = (TextView) itemView.findViewById(R.id.text_message_name);
-            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);
+            /*nameText = (TextView) itemView.findViewById(R.id.text_message_name);
+            profileImage = (ImageView) itemView.findViewById(R.id.image_message_profile);*/
         }
 
         void bind(Message message) {
@@ -117,10 +115,10 @@ public class ConversationAdapter extends RecyclerView.Adapter {
             // Format the stored timestamp into a readable String using method.
             timeText.setText(DateUtils.formatSameDayTime(message.getDate().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT));
 
-            nameText.setText("Hardcoded Gonzalez");
+            //nameText.setText("Hardcoded Gonzalez");
 
             // Insert the profile image from the URL into the ImageView.
-            profileImage.setImageResource(R.drawable.userprofile1);
+            //profileImage.setImageResource(R.drawable.userprofile1);
             //Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
         }
     }
