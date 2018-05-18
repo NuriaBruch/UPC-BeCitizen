@@ -380,6 +380,7 @@ public class ControllerUserDomain {
             if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
             if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
             if(!info.isNull("profilePicture")) bundle.putInt("image", info.getInt("profilePicture"));
+            if(!info.isNull("email")) bundle.putInt("email", info.getInt("email"));
 
             if (username.equals(currentUser.getUsername())) {
                 currentUser.setFirstName(info.getString("name"));
@@ -409,5 +410,13 @@ public class ControllerUserDomain {
 
     public boolean checkUsername(String username) {
         return username.equals(currentUser.getUsername());
+    }
+
+    public void blockUser(String mail) /*throws ServerException, JSONException*/ {
+        controllerUserData.blockUser(mail);
+    }
+
+    public void unblockUser(String mail) /*throws ServerException, JSONException*/ {
+        controllerUserData.unblockUser(mail);
     }
 }
