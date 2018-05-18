@@ -44,11 +44,18 @@ module.exports.policies = {
   UserController: {
     deactivateAccount: 'tokenAuth',
     updateProfile: 'tokenAuth',
-    viewProfile: 'tokenAuth'
+    viewProfile: 'tokenAuth',
+    blockUser: 'tokenAuth',
+    unblockUser: 'tokenAuth'
   },
   ConversationController: {
     newConversation: 'tokenAuth',
     getConversation: 'tokenAuth'
+  },
+
+  MessageController: {
+    newMessage: 'tokenAuth',
+    getMessage: 'tokenAuth'
   }
 
   /***************************************************************************

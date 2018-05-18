@@ -88,6 +88,7 @@ module.exports = {
                     var converInfo = {
                         id: "",
                         username: "",
+                        profilePicture: "",
                         newMessage: "",
                         lastMessageTime: ""
                     };
@@ -96,10 +97,12 @@ module.exports = {
                     if(conver.user1.email === userMail){
                         converInfo.username = conver.user2.username;
                         converInfo.newMessage = conver.newMessage1;
+                        converInfo.profilePicture = conver.user2.profilePicture;
                     }
                     else if(conver.user2.email === userMail){
                         converInfo.username = conver.user1.username;
                         converInfo.newMessage = conver.newMessage2;
+                        converInfo.profilePicture = conver.user1.profilePicture;
                     }
                     response.conversations.push(converInfo);
                 });
