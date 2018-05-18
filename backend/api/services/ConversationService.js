@@ -7,8 +7,7 @@ module.exports = {
             errors: [],
             conversationId: "",
         }
-        User.findOne({email: recieverMail}).populate('reportsUser',{ 
-            where: {email: senderMail}}).exec(function(err1, userFound){
+        User.findOne({email: recieverMail}).populate('reportsUser').populate('reportedByUser').exec(function(err1, userFound){
             if(err1 !== undefined && err1){
                 response.status = "E1";
                 response.errors.push(err1);
@@ -19,9 +18,10 @@ module.exports = {
                 response.errors.push("User not found");
                 callback(response);
             }
-            else if(userFound.reportsUser.email === senderMail){
+            else if(_.chain(userFound.reportsUser).pluck("email").indexOf(senderMail) != -1 ||
+                    _.chain(userFound.reportedByUser).pluck("email").indexOf(senderMail) != -1){
                 response.status = "E3";
-                response.errors.push("You have been blocked by this user");
+                response.errors.push("You have blocked this user or been blocked by this user");
                 callback(response);
             }
             else{
@@ -119,26 +119,30 @@ module.exports = {
         }
         Conversation.findOne({
             or:[
-                {user1: senderMail,
-                user2: recieverMail},
-                {user1: recieverMail,
-                user2: senderMail}
+                {user1: userMail,
+                user2: blockedMail},
+                {user1: userMail,
+                user2: blockedMail}
             ]
-        }).populate('user1').populate('user2').exec(function(err1, conversationFound){
+        }).populate('user1').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
                 response.status = "E1";
                 response.errors.push(err1);
                 callback(response);
             }
-            else if(conversationFound){
+            else if(conversationFound !== undefined){
                 if(conversationFound.user1.email == userMail){
                     conversationFound.blockedByUser1 = true;
-                    conversationFound.save();
                 }
                 else{
                     conversationFound.blockedByUser2 = true;
-                    conversationFound.save();
                 }
+                conversationFound.save(function(err){
+                    if(err && err !== undefined){
+                        response.status = "E1";
+                        response.errors.push("Server error");
+                    }
+                });
             }
             callback(response);
         });
@@ -151,10 +155,10 @@ module.exports = {
         }
         Conversation.findOne({
             or:[
-                {user1: senderMail,
-                user2: recieverMail},
-                {user1: recieverMail,
-                user2: senderMail}
+                {user1: userMail,
+                user2: blockedMail},
+                {user1: userMail,
+                user2: blockedMail}
             ]
         }).populate('user1').populate('user2').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
@@ -165,12 +169,16 @@ module.exports = {
             else if(conversationFound){
                 if(conversationFound.user1.email){
                     conversationFound.blockedByUser1 = false;
-                    conversationFound.save();
                 }
                 else{
                     conversationFound.blockedByUser2 = false;
-                    conversationFound.save();
                 }
+                conversationFound.save(function(err){
+                    if(err && err !== undefined){
+                        response.status = "E1";
+                        response.errors.push("Server error");
+                    }
+                });
             }
             callback(response);
         });

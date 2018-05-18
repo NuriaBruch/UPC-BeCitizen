@@ -15,6 +15,15 @@ module.exports = {
         MessageService.newMessage(mail,content,idConver,function(status){
             res.send(status);
         });
+    },
+
+    getMessages: function(req, res){
+        var mail = UtilsService.getEmailFromHeader(req);
+        var idConver = req.query.idConver;
+
+        MessageService.getMessages(mail, idConver, function(status){
+            res.send(status);
+        });
     }
 };
 

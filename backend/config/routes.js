@@ -137,6 +137,10 @@ module.exports.routes = {
   'POST /message':{
     controller: 'MessageController',
     action: 'newMessage'
+  },
+  'GET /messages':{
+    controller: 'MessageController',
+    action: 'getMessages'
   }
   
 

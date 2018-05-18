@@ -22,18 +22,11 @@ module.exports = {
                     response.errors.push("User doesn't belong to the conversation");
                 }
                 else {
-                    var blocked = false;
                     var nUser;
-                    if(conversationFound.user1.email === email){
-                        blocked = conversationFound.blockedByUser2;
-                        nUser = 1;
-                    } 
-                    else{
-                        blocked = conversationFound.blockedByUser1;
-                        nUser = 2;
-                    }
-
-                    if(blocked){
+                    if(conversationFound.user1.email === email) nUser = 1;
+                    else nUser = 2;
+                    
+                    if(conversationFound.blockedByUser1 || conversationFound.blockedByUser2){
                         response.status = "E4";
                         response.errors.push("Blocked conversation");
                     }
@@ -53,11 +46,69 @@ module.exports = {
                                         conversationFound.newMessage1 = true;
                                     }
                                     conversationFound.lastMessageTime = newMessage.createdAt;
-                                    conversationFound.save();
+                                    conversationFound.save(function(err){
+                                        if(err && err !== undefined){
+                                            response.status = "E1";
+                                            response.errors.push("Server error");
+                                        }
+                                    });
                                 }
                         });
                     }
                 }
+            }
+            callback(response);
+        });
+    },
+
+    getMessages: function(mail, idConver, callback){
+        var response = {
+            status: "OK",
+            errors: [],
+            messages: []
+        }
+
+        var order = 'createdAt DESC'
+
+        Conversation.findOne({
+            or:[
+                {user1: mail,
+                id: idConver},
+                {user2: mail,
+                id: idConver}
+            ]
+        }).populate('user1').populate('messages', {sort: order}).exec(function(err, conversationFound){
+            if(err && err !== undefined){
+                response.status = "E1";
+                response.errors.push("Server error");
+            }
+            else if(conversationFound === undefined){
+                response.status = "E2";
+                response.errors.push("There's no conversation belonging to the user for the given id");
+            }
+            else{
+                conversationFound.messages.forEach( message => {
+                    var infoMessage = {
+                        sendedByMe: "",
+                        content: "",
+                        date: ""
+                    }
+                    infoMessage.content = message.content;
+                    infoMessage.date = message.createdAt;
+                    if(mail === message.user) infoMessage.sendedByMe = true;
+                    else infoMessage.sendedByMe = false;
+                    response.messages.push(infoMessage);
+                });
+                if(conversationFound.user1.email === mail) conversationFound.newMessage1 = false;
+                else{
+                    conversationFound.newMessage2 = false;
+                } 
+                conversationFound.save(function(err){
+                    if(err && err !== undefined){
+                        response.status = "E1";
+                        response.errors.push("Server error");
+                    }
+                });
             }
             callback(response);
         });

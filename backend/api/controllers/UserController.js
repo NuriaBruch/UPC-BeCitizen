@@ -99,14 +99,22 @@ module.exports = {
             res.send(status);
         });
     },
+
     reportUser: function(req, res){
         var reporter = UtilsService.getEmailFromHeader(req);
         var reported = req.body.reportedEmail;
         var gestionUser = new GestionUser();
         gestionUser.report(reporter,reported,function(status){
-            res.send(status);
+            
+            if(status.status !== "Ok") res.send(status);
+            else{
+                ConversationService.blockConversation(reporter,reported,function(status2){
+                    res.send(status2);
+                });
+            }
         });
     },
+
     
     unreportUser: function(req,res){
         var reporter = UtilsService.getEmailFromHeader(req);

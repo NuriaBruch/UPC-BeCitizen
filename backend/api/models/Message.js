@@ -12,7 +12,7 @@ module.exports = {
       type: "string"
     },
     user: {
-      model: "user"
+      type: "string"
     },
     belongsTo: {
       model: "conversation"
