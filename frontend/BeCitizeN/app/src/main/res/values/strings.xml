@@ -85,6 +85,8 @@
     <string name="day">day</string>
     <string name="year">year</string>
 
+    <string name="openInBrowser">Open in Browser</string>
+
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
