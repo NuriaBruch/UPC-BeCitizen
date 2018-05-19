@@ -13,4 +13,6 @@
 
     <color name="messageReceived">#7e7e7b</color>
     <color name="messageSent">#cacaba</color>
+
+    <color name="round_green">#0aea07</color>
 </resources>

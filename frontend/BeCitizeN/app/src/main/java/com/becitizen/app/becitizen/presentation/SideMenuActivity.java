@@ -153,8 +153,8 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                Intent intent = new Intent(this, OneConversationActivity.class);
-                startActivity(intent);
+                fragment = new AllConversationsActivity();
+                fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
                 break;
             case R.id.nav_settings:
                 /*

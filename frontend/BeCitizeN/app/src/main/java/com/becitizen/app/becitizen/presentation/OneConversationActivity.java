@@ -17,7 +17,7 @@ import java.util.List;
 public class OneConversationActivity extends AppCompatActivity {
 
     private RecyclerView mMessageRecycler;
-    private ConversationAdapter mMessageAdapter;
+    private MessageAdapter mMessageAdapter;
 
     private Conversation conversation;
     private List<Message> messageList;
@@ -42,7 +42,7 @@ public class OneConversationActivity extends AppCompatActivity {
         Log.i("MESSAGES", messageList.toString());
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        mMessageAdapter = new ConversationAdapter(this, messageList);
+        mMessageAdapter = new MessageAdapter(this, messageList);
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setAdapter(mMessageAdapter);
     }
