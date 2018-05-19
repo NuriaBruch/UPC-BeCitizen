@@ -30,4 +30,16 @@ public class ControllerMsgDomain {
 
         return new Conversation(1, 2, "Alex", new Date(18,5,16,22,57, 10), messages);
     }
+
+    public List<Conversation> getConversations() {
+        List<Conversation> conversations = new ArrayList<>();
+        conversations.add(new Conversation(1, 1, "ram", new Date(18,5,19,12,45, 30)));
+        conversations.add(new Conversation(2, 2, "Cr0s4k", new Date(18,5,19,9,45, 30)));
+        conversations.add(new Conversation(3, 3, "alioli", new Date(18,5,18,18,45, 30)));
+        conversations.add(new Conversation(4, 4, "eloiiroca", new Date(18,5,18,16,45, 30)));
+        conversations.add(new Conversation(5, 5, "nico222", new Date(18,5,18,10,45, 30)));
+        conversations.add(new Conversation(6, 6, "bun", new Date(18,5,17,20,45, 30)));
+
+        return conversations;
+    }
 }

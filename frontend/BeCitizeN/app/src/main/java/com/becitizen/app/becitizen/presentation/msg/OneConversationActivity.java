@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.presentation.msg;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

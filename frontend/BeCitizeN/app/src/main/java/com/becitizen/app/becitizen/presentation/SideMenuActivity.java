@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

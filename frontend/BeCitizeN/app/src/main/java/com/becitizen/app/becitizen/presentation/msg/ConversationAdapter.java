@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.presentation.msg;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

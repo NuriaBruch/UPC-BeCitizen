@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.presentation.msg;
 
 import com.becitizen.app.becitizen.domain.ControllerMsgDomain;
 import com.becitizen.app.becitizen.domain.entities.Conversation;

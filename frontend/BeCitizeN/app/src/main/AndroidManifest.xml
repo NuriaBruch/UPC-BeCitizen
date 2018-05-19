@@ -24,7 +24,7 @@
             android:name=".presentation.MailLoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.OneConversationActivity"
+            android:name=".presentation.msg.OneConversationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
