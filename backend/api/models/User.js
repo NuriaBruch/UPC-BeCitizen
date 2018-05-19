@@ -90,13 +90,13 @@ module.exports = {
       collection: 'conversation',
       via: 'user2'
     },
-    reportsUser: {
+    blocksUser: {
       collection: 'user',
-      via: 'reportedByUser'
+      via: 'blockedByUser'
     },
-    reportedByUser: {
+    blockedByUser: {
       collection: 'user',
-      via: 'reportsUser'
+      via: 'blocksUser'
     }
     
   }

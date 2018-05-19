@@ -93,9 +93,10 @@ module.exports = {
     viewProfile: function(req, res){
         var gestionUser = new GestionUser();
 
+        var myEmail = UtilsService.getEmailFromHeader(req);
         var username = req.query.username;
 
-        gestionUser.view(username,function(status){
+        gestionUser.view(myEmail,username,function(status){
             res.send(status);
         });
     },
@@ -120,7 +121,12 @@ module.exports = {
         var reported = req.body.reportedEmail;
         var gestionUser = new GestionUser();
         gestionUser.unreport(reporter,reported,function(status){
-            res.send(status);
+            if(status.status !== "Ok") res.send(status);
+            else{
+                ConversationService.unblockConversation(reporter,reported,function(status2){
+                    res.send(status2);
+                });
+            }
         });
     }
 };
