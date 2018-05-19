@@ -135,14 +135,11 @@ module.exports = class GestionUser {
             callback(response);
         });
     };
-    resetPassword(userMail,callback){
-        var response = {
-            status: "Ok",
-            errors: []
-        }
+    sendNewPass(userFound,callback){
+        var randomPass = UtilsService.getRandomString();
         var to = '';
         var smtpTransport = nodemailer.createTransport({
-            service: 'gmail',
+            service: '',
             auth: {
                    user: '',
                    pass: ''
@@ -150,9 +147,9 @@ module.exports = class GestionUser {
            });
         var mailOptions = {
             from: "Borja Fernández",
-            to: to, 
+            to: userMail, 
             subject: 'Sent via BeCitizeN server',
-            text: "this is america"
+            text: "This is your new password: " + randomPass
         }
         smtpTransport.sendMail(mailOptions, function(error, response){
             if(error){
@@ -161,11 +158,33 @@ module.exports = class GestionUser {
                     errors: []
                 }
                 response2.errors.push(error);
-                callback(response);
+                callback(response2);
             }else{
                 callback(response);
             }
         });
-
+    }
+    resetPassword(userMail,callback){
+        var response = {
+            status: "Ok",
+            errors: []
         }
+        User.findOne({email:email}).exec(function(err1,userFound){
+            if(err1 !== undefined && err1){
+                response.status = "E1";
+                response.errors.push(err1);
+                callback(response);
+            }
+            else if(userFound === undefined){
+                response.status = "E2";
+                response.errors.push("User not found");
+                callback(response);
+            }
+            else{
+                sendNewPass(userFound,function(response){
+                    callback(response);
+                })
+            }
+        }); 
+    }
 };

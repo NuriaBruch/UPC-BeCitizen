@@ -100,7 +100,7 @@ module.exports = {
         });
     },
     resetPassword: function(req,res){
-        var userMail = UtilsService.getEmailFromHeader(req);
+        var userMail = req.query.userEmail;
         var gestionUser = new GestionUser();
         gestionUser.resetPassword(userMail, function(status){
             res.send(status);
