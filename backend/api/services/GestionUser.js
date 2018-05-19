@@ -1,4 +1,6 @@
 var bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
+
 
 module.exports = class GestionUser {
 
@@ -132,5 +134,38 @@ module.exports = class GestionUser {
             }
             callback(response);
         });
-    }
+    };
+    resetPassword(userMail,callback){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        var to = '';
+        var smtpTransport = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                   user: '',
+                   pass: ''
+               }
+           });
+        var mailOptions = {
+            from: "Borja Fernández",
+            to: to, 
+            subject: 'Sent via BeCitizeN server',
+            text: "this is america"
+        }
+        smtpTransport.sendMail(mailOptions, function(error, response){
+            if(error){
+                var response2 = {
+                    status: "E6",
+                    errors: []
+                }
+                response2.errors.push(error);
+                callback(response);
+            }else{
+                callback(response);
+            }
+        });
+
+        }
 };
