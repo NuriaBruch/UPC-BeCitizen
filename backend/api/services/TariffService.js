@@ -13,7 +13,7 @@ module.exports = class TariffService {
                 Information.create({
                     category: "justice", 
                     title: "Tariffs",
-                    content: tariffs,
+                    content: JSON.stringify(tariffs),
                     isTarifa: true
                 })
                 .then(info => {
@@ -44,17 +44,17 @@ module.exports = class TariffService {
         paragraphs = paragraphs.slice(1);
         paragraphs.each((i, p) => {
             p = $(p).text();
-            console.log(p.length);
+            //console.log(p.length);
             if(p.length <= 25 && !isNaN(p[0])){
                 let tariff = {
                     zone: 0,
                     price: 0
                 }
                 let pString = p.replace(/\u00A0/g, '');
-                console.log("*************");
-                console.log(pString);
+                //console.log("*************");
+                //console.log(pString);
                 let pSplit = pString.split(" ");
-                console.log(pSplit);
+                //console.log(pSplit);
                 tariff.zone = pSplit[0];
                 tariff.price = pSplit[pSplit.length - 1];
                 res.value.tariffs.push(tariff);
@@ -86,7 +86,7 @@ module.exports = class TariffService {
 
         request("http://rodalies.gencat.cat/ca/tarifes/servei_rodalia_barcelona/servei_integrat_atm/", (err, res, html) => {
             if(!err){
-                console.log("We are in da request");
+                //console.log("We are in da request");
                 let $ = cheerio.load(html);
                 let main = $("#acordio_distribuidora");
                 let panels = main.find("div.panel.panel-default").slice(0, 7);
@@ -113,19 +113,17 @@ module.exports = class TariffService {
     }
 
     updateTariffs(callback){
-        // callback(tariffs)
+        // callback(err, tariffs)
         this.scrappingTariffs((err, tariffs) => {
             if(!err){
-                this.updateInfo(tariffs, (err) => {
-                    if(err) console.log("Error!");
-                    else console.log("No error!");
-                    callback(tariffs);
+                this.updateInfo(tariffs, (err2) => {
+                    if(err2) console.log("Error updating!");
+                    callback(err2, tariffs);
                 });
             }
             else{
-                callback(tariffs);
+                callback(true, null);
             }
-            //console.log(tariffs);
         });
     }
 }
