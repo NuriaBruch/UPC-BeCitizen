@@ -12,16 +12,18 @@ import org.json.JSONObject;
 public class ControllerUserData {
 
     //URIs
-    private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
-    private static final String URI_GOOGLE_LOGIN = "http://becitizen.cf/loginGoogle?idToken=";
+    private static final String URI_BCN = "http://becitizen.cf";
 
-    private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
-    private static final String URI_REGISTER = "http://becitizen.cf/register";
-    private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
+    private static final String URI_FB_LOGIN = URI_BCN + "/loginFacebook";
+    private static final String URI_GOOGLE_LOGIN = URI_BCN + "/loginGoogle?idToken=";
 
-    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
-    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
-    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
+    private static final String URI_EXISTS_EMAIL = URI_BCN + "/existsEmail";
+    private static final String URI_REGISTER = URI_BCN + "/register";
+    private static final String URI_LOGIN_MAIL = URI_BCN + "/loginMail";
+
+    private static final String URI_DEACTIVATE_ACCOUNT = URI_BCN + "/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = URI_BCN + "/updateProfile";
+    private static final String URI_VIEW_PROFILE = URI_BCN + "/viewProfile";
 
     private static ControllerUserData instance = null;
 
