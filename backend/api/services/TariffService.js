@@ -1,4 +1,32 @@
 module.exports = class TariffService {
+    updateInfo(tariffs, callback){
+        // callback(err);
+        var err = false;
+
+        Information.findOne({isTarifa : true})
+        .then(info => {
+            if(info !== undefined){
+                info.content = tariffs;
+                info.save(err => callback(err));
+            }
+            else{
+                Information.create({
+                    category: "justice", 
+                    title: "Tariffs",
+                    content: tariffs,
+                    isTarifa: true
+                })
+                .then(info => {
+                    callback(err);
+                })
+                .catch(err => {
+                    err = true;
+                    callback(err);
+                })
+            }
+        });
+    }
+
     getInfoFromPanel(panel, $){
         var res = {
             error: false,
@@ -85,16 +113,19 @@ module.exports = class TariffService {
     }
 
     updateTariffs(callback){
-        
+        // callback(tariffs)
         this.scrappingTariffs((err, tariffs) => {
-            /*if(!err){
-                updateTariffs(tariffs, (err) => {
+            if(!err){
+                this.updateInfo(tariffs, (err) => {
                     if(err) console.log("Error!");
                     else console.log("No error!");
+                    callback(tariffs);
                 });
-            }*/
-            console.log(err);
-            callback(tariffs);
+            }
+            else{
+                callback(tariffs);
+            }
+            //console.log(tariffs);
         });
     }
 }
