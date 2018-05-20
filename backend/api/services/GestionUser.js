@@ -1,7 +1,88 @@
 var bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
+function sendNewPass(userFound,callback){
+    var response = {
+        status: "Ok",
+        errors: []
+    }
+    var randomPass = UtilsService.getRandomString();
+    var to = userFound.email;
+    var smtpTransport = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+               user: '',
+               pass: ''
+           }
+       });
+    var mailOptions = {
+        from: "Borja Fernández",
+        to: userFound.email, 
+        subject: 'BeCitizeN password recovery service',
+        text: "",
+        html: '<div id="main">'+
+        '<li#k rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">'+
+        '<div class="form-gap"></div>'+
+        '<div class="container">'+
+        '	<div class="row">'+
+        '		<div class="col-md-4 col-md-offset-4">'+
+        '            <div class="panel panel-default">'+
+        '              <div class="panel-body">'+
+        '                <div class="text-center">'+
+        '                  <h3><i class="fa fa-lock fa-4x"></i></h3>'+
+        '                  <h2 class="text-center">Forgot Password?</h2>'+
+        '                  <p>For your security erase this mail as soon as you log into the app. This is your new BeCitizeN password:</p>'+
+        '                    GRbrEXhXQBBxol7S34xFtyXo8oz4exp0'+
+        '                </div>'+
+        '              </div>'+
+        '            </div>'+
+        '          </div>'+
+        '	</div>'+
+        '</div>'
 
+
+            
+        
+    }
+    const saltRounds = 10;
+
+    bcrypt.hash(randomPass, saltRounds, function(err1, hash) {
+        if(err1 !== undefined && err1) {
+            response.status = "E1";
+            response.errors.push("Server error");
+            callback(response);
+        }
+        else{
+            var oldPass = userFound.password;
+            userFound.password = hash;
+            userFound.save(function(error){
+                if(error !== undefined && error){
+                    response.errors.push(error);
+                    response.status = "E1";
+                    callback(response);
+                }
+                else{
+                    smtpTransport.sendMail(mailOptions, function(error, response){
+                        if(error){
+                            var response2 = {
+                                status: "E6",
+                                errors: []
+                            }
+                            response2.errors.push(error);
+                            userFound.pass = oldPass;
+                            userFound.save();
+                            callback(response2);
+                        }else{
+                            callback(response);
+                        }
+                    });
+                }
+            });
+            
+        }
+    });
+   
+};
 module.exports = class GestionUser {
 
     register(username, pass, email, name, surname, birthday, country, profilePicture, hasFace, hasGoogle, callback){
@@ -135,41 +216,13 @@ module.exports = class GestionUser {
             callback(response);
         });
     };
-    sendNewPass(userFound,callback){
-        var randomPass = UtilsService.getRandomString();
-        var to = '';
-        var smtpTransport = nodemailer.createTransport({
-            service: '',
-            auth: {
-                   user: '',
-                   pass: ''
-               }
-           });
-        var mailOptions = {
-            from: "Borja Fernández",
-            to: userMail, 
-            subject: 'Sent via BeCitizeN server',
-            text: "This is your new password: " + randomPass
-        }
-        smtpTransport.sendMail(mailOptions, function(error, response){
-            if(error){
-                var response2 = {
-                    status: "E6",
-                    errors: []
-                }
-                response2.errors.push(error);
-                callback(response2);
-            }else{
-                callback(response);
-            }
-        });
-    }
+    
     resetPassword(userMail,callback){
         var response = {
             status: "Ok",
             errors: []
         }
-        User.findOne({email:email}).exec(function(err1,userFound){
+        User.findOne({email:userMail}).exec(function(err1,userFound){
             if(err1 !== undefined && err1){
                 response.status = "E1";
                 response.errors.push(err1);
@@ -181,10 +234,10 @@ module.exports = class GestionUser {
                 callback(response);
             }
             else{
-                sendNewPass(userFound,function(response){
-                    callback(response);
+                sendNewPass(userFound,function(response2){
+                    callback(response2);
                 })
             }
         }); 
-    }
+    };
 };
