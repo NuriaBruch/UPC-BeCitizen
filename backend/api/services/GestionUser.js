@@ -92,7 +92,7 @@ module.exports = class GestionUser {
             });
     };
 
-    view(username,callback){
+    view(myEmail,username,callback){
         var response = {
             status: "Ok",
             errors: [],
@@ -104,10 +104,11 @@ module.exports = class GestionUser {
                 birthday: "",
                 profilePicture: "",
                 country: "",
-                rank: ""
+                rank: "",
+                blocked: ""
             }
         }
-        User.findOne({username:username}).exec(function(err1,userFound){
+        User.findOne({username:username}).populate('blockedByUser').exec(function(err1,userFound){
             if(err1 !== undefined && err1) {
                 // DB error
                 response.status = "E1";
@@ -131,6 +132,10 @@ module.exports = class GestionUser {
                 response.info.profilePicture = userFound.profilePicture;
                 response.info.country = userFound.country;
                 response.info.rank = userFound.rank;
+                if(_.chain(userFound.blockedByUser).pluck("email").indexOf(myEmail) != -1){
+                    response.info.blocked = true;
+                }
+                else response.info.blocked = false;
             }
             callback(response);
         });
@@ -148,7 +153,7 @@ module.exports = class GestionUser {
         }
         else{
 
-            User.findOne({email: reporterEmail}).populate('reportsUser')
+            User.findOne({email: reporterEmail}).populate('blocksUser')
             .then(function(userReporter){
             if(userReporter === undefined){
                 response.status = "E2";
@@ -156,7 +161,7 @@ module.exports = class GestionUser {
                 callback(response);
             }
             else{
-                User.findOne({email: reportedEmail}).populate("reportedByUser")
+                User.findOne({email: reportedEmail}).populate("blockedByUser")
                 .then(function(userReported){
                     
                     if(userReported === undefined){
@@ -165,10 +170,10 @@ module.exports = class GestionUser {
                         callback(response);
                     }
                     else{
-                        var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
+                        var found = _.chain(userReporter.blocksUser).pluck("email").indexOf(reportedEmail).value();
                         if(found == -1){
-                            userReporter.reportsUser.add(reportedEmail);
-                            userReported.reportedByUser.add(reporterEmail);
+                            userReporter.blocksUser.add(reportedEmail);
+                            userReported.blockedByUser.add(reporterEmail);
                             userReported.save(function(err){
                                 userReporter.save(function(err2){
                                     if(err || err2){
@@ -207,7 +212,7 @@ module.exports = class GestionUser {
             status: "Ok",
             errors: []
         }
-        User.findOne({email: reporterEmail}).populate("reportsUser")
+        User.findOne({email: reporterEmail}).populate("blocksUser")
             .then(function(userReporter){
             if(userReporter === undefined){
                 response.status = "E2";
@@ -215,7 +220,7 @@ module.exports = class GestionUser {
                 callback(response);
             }
             else{
-                User.findOne({email: reportedEmail}).populate("reportedByUser")
+                User.findOne({email: reportedEmail}).populate("blockedByUser")
                 .then(function(userReported){
                     
                     if(userReported === undefined){
@@ -224,12 +229,12 @@ module.exports = class GestionUser {
                         callback(response);
                     }
                     else{
-                        var found = _.chain(userReporter.reportsUser).pluck("email").indexOf(reportedEmail).value();
+                        var found = _.chain(userReporter.blocksUser).pluck("email").indexOf(reportedEmail).value();
                         if(found != -1){
                             ConversationService.unblockConversation(reporterEmail, reportedEmail, function(satus){
                                 
-                                userReporter.reportsUser.remove(reportedEmail);
-                                userReported.reportedByUser.remove(reporterEmail);
+                                userReporter.blocksUser.remove(reportedEmail);
+                                userReported.blockedByUser.remove(reporterEmail);
                                 userReported.save(function(err){
                                 userReporter.save(function(err2){
                                 if(err || err2){

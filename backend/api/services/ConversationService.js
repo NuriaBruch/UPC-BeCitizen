@@ -7,7 +7,7 @@ module.exports = {
             errors: [],
             conversationId: "",
         }
-        User.findOne({email: recieverMail}).populate('reportsUser').populate('reportedByUser').exec(function(err1, userFound){
+        User.findOne({email: recieverMail}).populate('blocksUser').populate('blockedByUser').exec(function(err1, userFound){
             if(err1 !== undefined && err1){
                 response.status = "E1";
                 response.errors.push(err1);
@@ -18,8 +18,8 @@ module.exports = {
                 response.errors.push("User not found");
                 callback(response);
             }
-            else if(_.chain(userFound.reportsUser).pluck("email").indexOf(senderMail) != -1 ||
-                    _.chain(userFound.reportedByUser).pluck("email").indexOf(senderMail) != -1){
+            else if(_.chain(userFound.blocksUser).pluck("email").indexOf(senderMail) != -1 ||
+                    _.chain(userFound.blockedByUser).pluck("email").indexOf(senderMail) != -1){
                 response.status = "E3";
                 response.errors.push("You have blocked this user or been blocked by this user");
                 callback(response);
@@ -124,8 +124,8 @@ module.exports = {
             or:[
                 {user1: userMail,
                 user2: blockedMail},
-                {user1: userMail,
-                user2: blockedMail}
+                {user1: blockedMail,
+                user2: userMail}
             ]
         }).populate('user1').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
@@ -160,8 +160,8 @@ module.exports = {
             or:[
                 {user1: userMail,
                 user2: blockedMail},
-                {user1: userMail,
-                user2: blockedMail}
+                {user1: blockedMail,
+                user2: userMail}
             ]
         }).populate('user1').populate('user2').exec(function(err1, conversationFound){
             if(err1 && err1 !== undefined){
@@ -170,7 +170,7 @@ module.exports = {
                 callback(response);
             }
             else if(conversationFound){
-                if(conversationFound.user1.email){
+                if(conversationFound.user1.email == userMail){
                     conversationFound.blockedByUser1 = false;
                 }
                 else{
