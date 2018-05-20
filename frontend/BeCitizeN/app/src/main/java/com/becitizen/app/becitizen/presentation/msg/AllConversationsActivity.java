@@ -9,19 +9,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.ControllerMsgDomain;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AllConversationsActivity extends Fragment {
 
     public static final String EXTRA_TAB_NAME = "tab_name";
     private String mTabName;
+
+    View rootView;
 
     public AllConversationsActivity() {
     }
@@ -35,15 +37,22 @@ public class AllConversationsActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.activity_all_conversations, container, false);
-        return view;
+        rootView = inflater.inflate(R.layout.activity_all_conversations, container, false);
+        return rootView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
-        List<Conversation> conversations = ControllerMsgDomain.getInstance().getConversations();
+        List<Conversation> conversations = null;
+        try {
+            conversations = ControllerMsgPresentation.getInstance().getConversations();
+        } catch (ServerException e) {
+            e.printStackTrace();
+            conversations = new ArrayList<>();
+            Toast.makeText(rootView.getContext(), getContext().getResources().getString(R.string.serverError), Toast.LENGTH_LONG).show();
+        }
         mAdapter = new ConversationAdapter(getContext(), conversations);
         mRecyclerView.setAdapter(mAdapter);
     }

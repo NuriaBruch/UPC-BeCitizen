@@ -114,7 +114,7 @@ public class ServerAdapter {
                 if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-                Log.w("Result", "Signed in as: " + responseBody);
+                Log.d("SERVER_RESPONSE", responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
@@ -151,8 +151,10 @@ public class ServerAdapter {
                 //add data
                 StringEntity entity = new StringEntity(json);
                 httppost.setEntity(entity);
-                if (getTOKEN() != null)
+                if (getTOKEN() != null) {
                     httppost.setHeader("token", getTOKEN());
+                    Log.d("TOKEN", getTOKEN());
+                }
                 //execute http post
                 HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();
