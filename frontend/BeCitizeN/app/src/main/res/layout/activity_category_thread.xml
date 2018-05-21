@@ -15,11 +15,51 @@
         android:visibility="gone">
     </ProgressBar>
 
+    <LinearLayout
+        android:id="@+id/TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingTop="5dp"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/categoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:textColor="@color/platinum"
+            android:textSize="18sp"
+            android:paddingBottom="5dp"/>
+
+        <ImageButton
+            android:id="@+id/threadsSortButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_icons8_descending_sorting_96" />
+
+        <ImageButton
+            android:id="@+id/threadsSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_icons8_search_96" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </ListView>
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/TopLayout"></ListView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CurrencyConverterActivity extends Fragment {
@@ -43,6 +44,7 @@ public class CurrencyConverterActivity extends Fragment {
         currencyList = new ArrayList<>();
         linkStuff();
         getCurrencyList();
+        Collections.sort(currencyList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category, currencyList);
 
         spinnerFrom.setAdapter(adapter);

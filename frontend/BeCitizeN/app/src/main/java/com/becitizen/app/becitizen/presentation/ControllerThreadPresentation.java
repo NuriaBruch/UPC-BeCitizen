@@ -42,8 +42,8 @@ public class ControllerThreadPresentation {
      * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<CategoryThread> getThreadsCategory(String category, int block) {
-        return controllerThreadDomain.getThreadsCategory(category, block);
+    public ArrayList<CategoryThread> getThreadsCategory(String category, int block, boolean sortedByVotes) {
+        return controllerThreadDomain.getThreadsCategory(category, block, sortedByVotes);
     }
 
     /**
@@ -67,8 +67,8 @@ public class ControllerThreadPresentation {
         return controllerThreadDomain.getThreadContent(id);
     }
 
-    public List<Comment> getThreadComments(int id) throws JSONException, ServerException {
-        return controllerThreadDomain.getThreadComments(id);
+    public List<Comment> getThreadComments(int id, boolean sortedByVotes) throws JSONException, ServerException {
+        return controllerThreadDomain.getThreadComments(id, sortedByVotes);
     }
 
     public void newComment(String commentText, int threadId) throws ServerException, JSONException {

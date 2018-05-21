@@ -48,9 +48,12 @@
 
     <string name="guest">Guest</string>
 
+    <string name="quoting">Quoting comment:</string>
+
     <string name="newComment">Write a comment</string>
     <string name="comments">Comments</string>
     <string name="quotingError">Quoting not implemented yet</string>
+    <string name="commentCreated">Comment created</string>
 
     <string name="tokenError">Token error</string>
 
@@ -59,6 +62,10 @@
     <string name="countryUP">Country:</string>
     <string name="biographyUP">Biography:</string>
     <string name="deactived">Deactivated user</string>
+
+    <string name="send">Send</string>
+
+    <string name="emptyreply">Your reply is empty</string>
 
     <string name="votes">votes</string>
 

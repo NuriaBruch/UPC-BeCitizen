@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -27,6 +29,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class CategoryThreadActivity extends Fragment  {
 
     private View rootView;
+    boolean sortedByVotes;
     ArrayList<CategoryThread> dataModels;
     ArrayList<CategoryThread> dataChunk;
     private int block = -1;
@@ -51,7 +54,7 @@ public class CategoryThreadActivity extends Fragment  {
     private Runnable loadThreads = new Runnable() {
         public void run() {
             ++block;
-            dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block);
+            dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block, sortedByVotes);
             UIUpdater.sendEmptyMessage(0);
         }
     };
@@ -68,9 +71,14 @@ public class CategoryThreadActivity extends Fragment  {
 
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
 
+        sortedByVotes = false;
+
         listView = (ListView)rootView.findViewById(R.id.list);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
+
+        TextView categoryText = rootView.findViewById(R.id.categoryText);
+        categoryText.setText(category);
 
         dataModels = new ArrayList<CategoryThread>();
 
@@ -88,6 +96,22 @@ public class CategoryThreadActivity extends Fragment  {
                     Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            }
+        });
+
+        ImageButton sortButton = rootView.findViewById(R.id.threadsSortButton);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortedByVotes = !sortedByVotes;
+                block = -1;
+                preLast = 0;
+                adapter.clear();
+                if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                    threadLoadThreads.interrupt();
+                threadLoadThreads = new Thread(loadThreads);
+                threadLoadThreads.start();
+
             }
         });
 
@@ -119,10 +143,8 @@ public class CategoryThreadActivity extends Fragment  {
                         // Sample calculation to determine if the last
                         // item is fully visible.
                         final int lastItem = firstVisibleItem + visibleItemCount;
-                        if(lastItem == totalItemCount)
-                        {
-                            if(preLast!=lastItem)
-                            {
+                        if (lastItem == totalItemCount) {
+                            if(preLast!=lastItem) {
                                 preLast = lastItem;
                                 progressBar.setVisibility(View.VISIBLE);
                                 if (threadLoadThreads != null && threadLoadThreads.isAlive())
