@@ -7,49 +7,52 @@
     tools:context=".presentation.CurrencyConverterActivity">
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/ccTitleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Currency Converter"
+        android:text="@string/ccTitle"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:textColor="@android:color/black"
+        android:layout_marginTop="26dp"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/llconverter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="119dp"
+        android:layout_below="@id/ccTitleText"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:baselineAligned="true"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginEnd="7dp">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="From:"
+                    android:text="@string/ccFrom"
                     android:textSize="24sp" />
 
                 <Spinner
                     android:id="@+id/spinnerFrom"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:entries="@array/currencies" />
 
             </LinearLayout>
@@ -58,21 +61,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginStart="7dp">
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="To:"
+                    android:text="@string/ccTo"
                     android:textSize="24sp" />
 
                 <Spinner
                     android:id="@+id/spinnerTo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:entries="@array/currencies" />
             </LinearLayout>
 
@@ -87,9 +89,8 @@
                 android:id="@+id/editTextAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ems="10"
-                android:hint="Amount"
+                android:hint="@string/ccConvertText"
                 android:inputType="numberDecimal"
                 android:textSize="24sp" />
 
@@ -97,30 +98,35 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/convertButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="66dp"
-        android:elevation="0dp"
-        android:text="@string/convert"
-        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/textViewResultado"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="198dp"
-        android:layout_weight="1"
-        android:text="Result"
+        android:layout_below="@id/llconverter"
+        android:layout_marginTop="30dp"
+        android:text="@string/ccResult"
         android:textAlignment="center"
         android:textColor="@android:color/holo_green_dark"
+        android:layout_alignStart="@id/llconverter"
+        android:layout_alignEnd="@id/llconverter"
         android:textSize="42sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/convertButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewResultado"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:elevation="0dp"
+        android:text="@string/convert"
+        android:textStyle="bold"
+        android:layout_alignStart="@id/llconverter"
+        android:layout_alignEnd="@id/llconverter"/>
+
 
 </RelativeLayout>

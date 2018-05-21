@@ -67,10 +67,9 @@ public class CurrencyConverterActivity extends Fragment {
                     case R.id.convertButton:
                         if(currencyList.size() <= 0) {
                             Context context = rootView.getContext();
-                            CharSequence text = "Sorry we couldn't convert that";
                             int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, text, duration);
+                            Toast toast = Toast.makeText(context, R.string.ccErrorConvert, duration);
                             toast.show();
                             break;
                         }

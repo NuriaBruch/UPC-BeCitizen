@@ -73,6 +73,14 @@
     <string name="editprofile">Edit your profile</string>
 
 
+    <string name="ccTitle">Currency Converter</string>
+    <string name="ccFrom">From:</string>
+    <string name="ccTo">To:</string>
+    <string name="ccConvertText">Write Amount to Convert</string>
+    <string name="ccResult">Result</string>
+    <string name="ccErrorConvert">Sorry we couldn\'t convert that</string>
+
+
     <string name="wordOfTheDayTitle">Word of the Day</string>
     <string name="wordOfTheDayMeans">means</string>
     <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
