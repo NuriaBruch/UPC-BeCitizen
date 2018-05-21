@@ -13,6 +13,7 @@ import java.util.List;
 public class ControllerUtititesData {
     private static final String URI_GET_ALL_CURRENCIES = "http://becitizen.cf/getAllCurrencies";
     private static final String URI_GET_EXCHANGE = "http://becitizen.cf/getExchange";
+    private static final String URI_GET_WORD = "http://becitizen.cf/getWord";
     private static final ControllerUtititesData ourInstance = new ControllerUtititesData();
 
     public static ControllerUtititesData getInstance() {
@@ -50,5 +51,19 @@ public class ControllerUtititesData {
         catch (JSONException e){
             return 0;
         }
+    }
+
+    public String[] getWordOfTheDay() throws JSONException, ServerException {
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_WORD));
+        if (info.get("status").equals("Ok")) {
+            JSONObject data = info.getJSONObject("info");
+            return new String[]{data.getString("word"), data.getString("definition")};
+
+        }
+        else if (info.get("status").equals("E1")) throw new ServerException("Server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("Scrapping error");
+        else if (info.get("status").equals("E3")) throw new ServerException("Missing words in database");
+        else if (info.get("status").equals("E23")) throw new ServerException("Scrapping error and missing words in database");
+        else throw new ServerException("Error");
     }
 }

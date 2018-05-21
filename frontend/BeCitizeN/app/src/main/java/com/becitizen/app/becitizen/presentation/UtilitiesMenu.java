@@ -52,7 +52,8 @@ public class UtilitiesMenu extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.cvWord:
-
+                Fragment fragmentWord = new WordOfTheDayActivity();
+                fragmentTransaction(fragmentWord, "WORD_OF_THE_DAY");
                 break;
         }
     }

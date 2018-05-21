@@ -72,6 +72,13 @@
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
 
+
+    <string name="wordOfTheDayTitle">Word of the Day</string>
+    <string name="wordOfTheDayMeans">means</string>
+    <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
+    <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
+    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
+
     <string name="serverError">Server Error</string>
     <string name="DBError">Database Error</string>
     <string name="updateCorrect">Profile updated correctly</string>

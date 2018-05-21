@@ -60,11 +60,13 @@
         android:id="@+id/quote_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/comment_text"
+        android:layout_alignStart="@id/comment_text"
         android:layout_below="@id/quote_id_text"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-
         android:text="quote_content"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 

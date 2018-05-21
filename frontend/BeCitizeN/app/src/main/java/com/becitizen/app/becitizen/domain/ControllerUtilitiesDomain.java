@@ -1,6 +1,9 @@
 package com.becitizen.app.becitizen.domain;
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerUtititesData;
+import com.becitizen.app.becitizen.exceptions.ServerException;
+
+import org.json.JSONException;
 
 import java.util.List;
 
@@ -20,5 +23,9 @@ public class ControllerUtilitiesDomain {
 
     public double getConversion(String currencyFrom, String currencyTo, String amount) {
         return ControllerUtititesData.getInstance().getConversion(currencyFrom,currencyTo,amount);
+    }
+
+    public String[] getWordOfTheDay() throws ServerException, JSONException {
+        return ControllerUtititesData.getInstance().getWordOfTheDay();
     }
 }
