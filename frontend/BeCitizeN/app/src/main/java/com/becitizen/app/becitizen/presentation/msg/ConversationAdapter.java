@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation.msg;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -65,10 +66,21 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
             username = (TextView) itemView.findViewById(R.id.conversation_username);
             last_message_date = (TextView) itemView.findViewById(R.id.conversation_last_message_date);
             unread = (TextView) itemView.findViewById(R.id.conversation_unread);
-            //row_conversation.setOnClickListener(this);
         }
 
-        void bind(Conversation conversation) {
+        void bind(final Conversation conversation) {
+
+            row_conversation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, OneConversationActivity.class);
+                    intent.putExtra("id", conversation.getId());
+                    intent.putExtra("username", conversation.getUserName());
+                    intent.putExtra("profilePicture", conversation.getUserImage());
+                    intent.putExtra("lastMessageTime", conversation.getLastMessage().toString());
+                    mContext.startActivity(intent);
+                }
+            });
 
             profile_photo.setImageResource(mContext.getResources().getIdentifier("userprofile" + conversation.getUserImage(), "drawable", null));
             // TODO: set the user name + lastname
