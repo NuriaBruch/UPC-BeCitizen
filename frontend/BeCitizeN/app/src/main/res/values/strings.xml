@@ -119,6 +119,7 @@
         <item>coin1</item>
         <item>coin2</item>
     </string-array>
+    <string name="openInBrowser">Open in Browser</string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>

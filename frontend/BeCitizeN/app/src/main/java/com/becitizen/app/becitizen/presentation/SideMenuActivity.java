@@ -133,14 +133,12 @@ public class SideMenuActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_information:
-                fragment = new InsideActivity();
-                fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+                fragment = new InformationCategoriesActivity();
+                fragmentTransaction(fragment, "INFORMATION_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_faq:
-                /*
-                fragment = new FaqActivity();
-                fragmentTransaction(fragment);
-                */
+                fragment = new InsideActivity();
+                fragmentTransaction(fragment, "INSIDE_ACTIVITY");
                 break;
             case R.id.nav_utilities:
                 fragment = new UtilitiesMenu();

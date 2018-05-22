@@ -259,7 +259,7 @@ module.exports = {
                         response.status = "E2";
                         response.errors.push(err2);
                     }
-                    if(threadsFound.length >0){
+                    if(threadsFound.length > 0){
                         threadsFound.forEach(thread => {
                             var threadInfo = {
                                 title:"",

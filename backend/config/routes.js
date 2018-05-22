@@ -138,6 +138,23 @@ module.exports.routes = {
   },
   
 
+  //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newInfo':{
+    controller: 'InformationController',
+    action: 'createInfo'
+  },
+  'GET /getAllInfoCategory':{
+    controller: 'InformationController',
+    action: 'getAllInfoCategory'
+  },
+  'GET /getInfo':{
+    controller: 'InformationController',
+    action: 'getInfo'
+  },
+  'DELETE /deleteInfo':{
+    controller: 'InformationController',
+    action: 'deleteInfo'
+  }
 
 
   /***************************************************************************

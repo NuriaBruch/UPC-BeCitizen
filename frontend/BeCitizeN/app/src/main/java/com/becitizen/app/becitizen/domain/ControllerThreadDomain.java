@@ -41,6 +41,7 @@ public class ControllerThreadDomain {
     /**
      * Metodo para obtener los posts de una categoria
      * @param category nombre de la categoria
+     * @param block number of info block (each block contains x threads)
      * @return JSONObject que contiene los posts de una categoria
      */
     public ArrayList<CategoryThread> getThreadsCategory(String category, int block, boolean sortedByVotes) {
@@ -52,7 +53,6 @@ public class ControllerThreadDomain {
             {
                 JSONObject object = array.getJSONObject(i);
                 threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
-                object.get("title");
             }
             return threads;
         }
