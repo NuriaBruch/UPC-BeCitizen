@@ -9,7 +9,7 @@ module.exports = class GestionUser {
         };
 
         if (pass === undefined) pass = UtilsService.getRandomString();
-        
+
         const saltRounds = 10;
 
         bcrypt.hash(pass, saltRounds, function(err1, hash) {
@@ -21,8 +21,8 @@ module.exports = class GestionUser {
             else{
                 User.create({
                     email: email,
-                    username: username, 
-                    password: hash, 
+                    username: username,
+                    password: hash,
                     name: name,
                     surname: surname,
                     birthday: birthday,
@@ -56,9 +56,9 @@ module.exports = class GestionUser {
                 response.errors.push("User not found");
             }
             callback(response);
-        }); 
-    }; 
-    
+        });
+    };
+
     deactivate(userMail,callback){
         var response = {
             status: "Ok",
@@ -81,14 +81,14 @@ module.exports = class GestionUser {
         var userMail = UtilsService.getEmailFromHeader(req);
         var{name, surname, biography, birthday, country, profilePicture} = req.body;
 
-        User.update({email:userMail}, 
+        User.update({email:userMail},
             {name:name, surname:surname, biography:biography, birthday:birthday,
             country:country, profilePicture}).exec(function(err1,userFound){
                 if(err1 !== undefined && err1){
                     response.status = "Error";
                     response.errors.push("Server error");
                 }
-                callback(response); 
+                callback(response);
             });
     };
 
@@ -140,8 +140,8 @@ module.exports = class GestionUser {
             callback(response);
         });
     };
-    
-    report(reporterEmail, reportedEmail, callback){
+
+    block(reporterEmail, reportedEmail, callback){
         var response = {
             status: "Ok",
             errors: []
@@ -163,7 +163,7 @@ module.exports = class GestionUser {
             else{
                 User.findOne({email: reportedEmail}).populate("blockedByUser")
                 .then(function(userReported){
-                    
+
                     if(userReported === undefined){
                         response.status = "E2";
                         response.errors.push("Couldn't find the user");
@@ -207,7 +207,7 @@ module.exports = class GestionUser {
         }
     };
 
-    unreport(reporterEmail,reportedEmail,callback){
+    unblock(reporterEmail,reportedEmail,callback){
         var response = {
             status: "Ok",
             errors: []
@@ -222,7 +222,7 @@ module.exports = class GestionUser {
             else{
                 User.findOne({email: reportedEmail}).populate("blockedByUser")
                 .then(function(userReported){
-                    
+
                     if(userReported === undefined){
                         response.status = "E2";
                         response.errors.push("Couldn't find the user.");
@@ -232,7 +232,7 @@ module.exports = class GestionUser {
                         var found = _.chain(userReporter.blocksUser).pluck("email").indexOf(reportedEmail).value();
                         if(found != -1){
                             ConversationService.unblockConversation(reporterEmail, reportedEmail, function(satus){
-                                
+
                                 userReporter.blocksUser.remove(reportedEmail);
                                 userReported.blockedByUser.remove(reporterEmail);
                                 userReported.save(function(err){
@@ -241,13 +241,13 @@ module.exports = class GestionUser {
                                     response.status = "E1";
                                     response.push(err);
                                     response.push(err2);
-                                        
+
                                 }
                                 callback(response);
                                 });
                             });
-                           
-                        }); 
+
+                        });
                     }
                         else{
                             response.status = "E5";

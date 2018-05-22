@@ -6,7 +6,7 @@ module.exports = {
             status: "OK",
             errors: []
         }
-        
+
         Conversation.findOne({id: idConver}).populate('user1').populate('user2').exec(function(err,conversationFound){
             if(err && err !== undefined){
                 response.status = "E1";
@@ -25,7 +25,7 @@ module.exports = {
                     var nUser;
                     if(conversationFound.user1.email === email) nUser = 1;
                     else nUser = 2;
-                    
+
                     if(conversationFound.blockedByUser1 || conversationFound.blockedByUser2){
                         response.status = "E4";
                         response.errors.push("Blocked conversation");
@@ -46,6 +46,7 @@ module.exports = {
                                         conversationFound.newMessage1 = true;
                                     }
                                     conversationFound.lastMessageTime = newMessage.createdAt;
+                                    conversationFound.lastMessageContent = newMessage.content;
                                     conversationFound.save(function(err){
                                         if(err && err !== undefined){
                                             response.status = "E1";
@@ -102,7 +103,7 @@ module.exports = {
                 if(conversationFound.user1.email === mail) conversationFound.newMessage1 = false;
                 else{
                     conversationFound.newMessage2 = false;
-                } 
+                }
                 conversationFound.save(function(err){
                     if(err && err !== undefined){
                         response.status = "E1";

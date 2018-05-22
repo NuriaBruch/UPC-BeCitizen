@@ -60,9 +60,9 @@ module.exports = {
                 }
             });
             }
-            
+
         });
-       
+
     },
 
     getAll: function(userMail, callback){
@@ -90,10 +90,12 @@ module.exports = {
                         username: "",
                         profilePicture: "",
                         newMessage: "",
-                        lastMessageTime: ""
+                        lastMessageTime: "",
+                        lastMessageContent: ""
                     };
                     converInfo.id = conver.id;
                     converInfo.lastMessageTime = conver.lastMessageTime;
+                    converInfo.lastMessageContent = conver.lastMessageContent;
                     if(conver.user1.email === userMail){
                         converInfo.username = conver.user2.username;
                         converInfo.newMessage = conver.newMessage1;

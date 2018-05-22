@@ -105,7 +105,7 @@ module.exports = {
         var reporter = UtilsService.getEmailFromHeader(req);
         var reported = req.body.reportedEmail;
         var gestionUser = new GestionUser();
-        gestionUser.report(reporter,reported,function(status){
+        gestionUser.block(reporter,reported,function(status){
             if(status.status !== "Ok") res.send(status);
             else{
                 ConversationService.blockConversation(reporter,reported,function(status2){
@@ -115,12 +115,12 @@ module.exports = {
         });
     },
 
-    
+
     unblockUser: function(req,res){
         var reporter = UtilsService.getEmailFromHeader(req);
         var reported = req.body.reportedEmail;
         var gestionUser = new GestionUser();
-        gestionUser.unreport(reporter,reported,function(status){
+        gestionUser.unblock(reporter,reported,function(status){
             if(status.status !== "Ok") res.send(status);
             else{
                 ConversationService.unblockConversation(reporter,reported,function(status2){

@@ -25,6 +25,9 @@ module.exports = {
     lastMessageTime:{
       type: "datetime"
     },
+    lastMessageContent:{
+      type: "string"
+    },
     blockedByUser1:{
       type: "boolean",
       defaultsTo: false
