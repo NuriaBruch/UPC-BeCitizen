@@ -122,6 +122,7 @@ module.exports.routes = {
     controller: 'CommentController',
     action: 'voteComment'
   },
+  //############ MONETARYEXCHANGE CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'GET /getExchange':{
     controller: 'MonetaryExchangeController',
     action: 'getExchange'
