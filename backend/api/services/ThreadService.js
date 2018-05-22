@@ -192,7 +192,7 @@ module.exports = {
             if(sortedByVotes === 'true') orderBy= 'numberVotes DESC';
             else orderBy='createdAt DESC';
             words.split('+').join(' ');
-            Thread.find({category: category,title:{ contains: words}}).sort(orderBy).populate('reportedBy',{where:{email:email}}).populate('postedBy').populate('votedBy',{where:{email:email}}).exec(function(err2,threadsFound){
+            Thread.find({category: category,title:{ contains: words}}).sort(orderBy).populate('postedBy').exec(function(err2,threadsFound){
                 if(err2 !== undefined && err2) {
                     response.status = "E2";
                     response.errors.push(err2);
@@ -201,28 +201,14 @@ module.exports = {
                     threadsFound.forEach(thread => {
                         var threadInfo = {
                             title:"",
-                            content:"",
-                            category:"",
-                            postedBy:"",
-                            username:"",
-                            rank:"",
-                            profilePicture:"",
-                            createdAt:"",
                             votes:"",
-                            canVote:"false",
-                            canReport:"false"
+                            id:"",
+                            username:"",
+                            createdAt: ""
                         };
-                        var userHasVoted = _.find(thread.votedBy,{email:email});
-                        if(userHasVoted == undefined) threadInfo.canVote = "true";
-                        var userHasReported = _.find(thread.reportedBy, {email:email});
-                        if(userHasReported == undefined) threadInfo.canReport = "true";
+                        threadInfo.id = thread.id;
                         threadInfo.title = thread.title;
-                        threadInfo.content = thread.content;
-                        threadInfo.category = thread.category;
-                        threadInfo.postedBy = thread.postedBy.email;
                         threadInfo.username = thread.postedBy.username;
-                        threadInfo.rank = thread.postedBy.rank;
-                        threadInfo.profilePicture = thread.postedBy.profilePicture;
                         threadInfo.createdAt = thread.createdAt;
                         threadInfo.votes = thread.numberVotes;
                         response.threads.push(threadInfo);
