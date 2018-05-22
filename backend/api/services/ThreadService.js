@@ -171,58 +171,60 @@ module.exports = {
             response.errors.push("No words for search in threads titles");
             callback(response);
         }
-        Thread.count({category: category,title:{ contains: words}}).exec(function(err,numThreads){
-            if(numThreads==0){
-                response.status = "E4";
-                response.errors.push("There aren't threads matching");
-                callback(response);
-            }else
-            if(block >Math.ceil(numThreads/limit)){
-                response.status = "E1";
-                response.errors.push("Block out of bound");
-                callback(response);
-            }
-            else if( block<=0){
-                response.status = "E3";
-                response.errors.push("Block should be positive, like you when reading this error");
-                callback(response);
-            }
-            else{
-            var orderBy;
-            if(sortedByVotes === 'true') orderBy= 'numberVotes DESC';
-            else orderBy='createdAt DESC';
-            words.split('+').join(' ');
-            Thread.find({category: category,title:{ contains: words}}).sort(orderBy).populate('postedBy').exec(function(err2,threadsFound){
-                if(err2 !== undefined && err2) {
-                    response.status = "E2";
-                    response.errors.push(err2);
+        else{
+            Thread.count({category: category,title:{ contains: words}}).exec(function(err,numThreads){
+                if(numThreads==0){
+                    response.status = "E4";
+                    response.errors.push("There aren't threads matching");
+                    callback(response);
                 }
-                if(threadsFound.length>0){
-                    threadsFound.forEach(thread => {
-                        var threadInfo = {
-                            title:"",
-                            votes:"",
-                            id:"",
-                            username:"",
-                            createdAt: ""
-                        };
-                        threadInfo.id = thread.id;
-                        threadInfo.title = thread.title;
-                        threadInfo.username = thread.postedBy.username;
-                        threadInfo.createdAt = thread.createdAt;
-                        threadInfo.votes = thread.numberVotes;
-                        response.threads.push(threadInfo);
-                    });
+                else if(block >Math.ceil(numThreads/limit)){
+                    response.status = "E1";
+                    response.errors.push("Block out of bound");
+                    callback(response);
+                }
+                else if( block<=0){
+                    response.status = "E3";
+                    response.errors.push("Block should be positive, like you when reading this error");
                     callback(response);
                 }
                 else{
-                    response.status = "Error";
-                    response.errors.push("Couldn't find the thread");
-                    callback(response);
+                    var orderBy;
+                    if(sortedByVotes === 'true') orderBy= 'numberVotes DESC';
+                    else orderBy='createdAt DESC';
+                    words.split('+').join(' ');
+                    Thread.find({category: category,title:{ contains: words}}).sort(orderBy).populate('postedBy').exec(function(err2,threadsFound){
+                        if(err2 !== undefined && err2) {
+                            response.status = "E2";
+                            response.errors.push(err2);
+                        }
+                        if(threadsFound.length>0){
+                            threadsFound.forEach(thread => {
+                                var threadInfo = {
+                                    title:"",
+                                    votes:"",
+                                    id:"",
+                                    username:"",
+                                    createdAt: ""
+                                };
+                                threadInfo.id = thread.id;
+                                threadInfo.title = thread.title;
+                                threadInfo.username = thread.postedBy.username;
+                                threadInfo.createdAt = thread.createdAt;
+                                threadInfo.votes = thread.numberVotes;
+                                response.threads.push(threadInfo);
+                            });
+                            callback(response);
+                        }
+                        else{
+                            response.status = "Error";
+                            response.errors.push("Couldn't find the thread");
+                            callback(response);
+                        }
+                    });
                 }
             });
-            }
-        });
+        }
 
     },
 

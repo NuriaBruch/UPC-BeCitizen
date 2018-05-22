@@ -163,7 +163,7 @@ module.exports.routes = {
   'GET /conversationMessages':{
     controller: 'MessageController',
     action: 'getMessages'
-  }
+  },
   
 
 

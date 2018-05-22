@@ -346,7 +346,7 @@ module.exports = class GestionUser {
                 });
             }
             })
-    },
+    };
     
     resetPassword(userMail,callback){
         var response = {
