@@ -180,6 +180,7 @@ module.exports = class GestionUser {
             status: "Ok",
             errors: [],
             info: {
+                email: "",
                 name: "",
                 surname: "",
                 biography: "",
@@ -205,6 +206,7 @@ module.exports = class GestionUser {
             }
             else{
                 //Status == Ok
+                response.info.email = userFound.email;
                 response.info.name = userFound.name;
                 response.info.surname = userFound.surname;
                 response.info.biography = userFound.biography;

@@ -136,7 +136,18 @@ module.exports.routes = {
     controller: 'WordController',
     action: 'getWord'
   },
+
+  //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
+  'POST /newConversation':{
+    controller: 'ConversationController',
+    action: 'newConversation'
+  },
+  'GET /getConversations':{
+    controller: 'ConversationController',
+    action: 'getConversations'
+  },
   
+
 
   //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newInfo':{

@@ -45,6 +45,10 @@ module.exports.policies = {
     deactivateAccount: 'tokenAuth',
     updateProfile: 'tokenAuth',
     viewProfile: 'tokenAuth'
+  },
+  ConversationController: {
+    newConversation: 'tokenAuth',
+    getConversation: 'tokenAuth'
   }
 
   /***************************************************************************
