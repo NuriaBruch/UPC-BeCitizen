@@ -45,6 +45,7 @@
     <string name="submit">Submit</string>
     <string name="errorMsgName">Not a valid input</string>
     <string name="errorUsername">Username already exists</string>
+    <string name="errorBiography">Biography too long</string>
 
     <string name="guest">Guest</string>
 
@@ -120,6 +121,13 @@
         <item>coin2</item>
     </string-array>
     <string name="openInBrowser">Open in Browser</string>
+
+    <string name="blockUser">Block user</string>
+    <string name="unblockUser">Unblock user</string>
+    <string name="blockUserMsg">Do you really want to block this user?</string>
+    <string name="unblockUserMsg">Do you really want to unblock this user?</string>
+
+    <string name="errorBlock">It is not possible to block / unblock this user </string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>

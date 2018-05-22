@@ -92,7 +92,7 @@ module.exports = class GestionUser {
         };
 
         if (pass === undefined) pass = UtilsService.getRandomString();
-        
+
         const saltRounds = 10;
 
         bcrypt.hash(pass, saltRounds, function(err1, hash) {
@@ -104,8 +104,8 @@ module.exports = class GestionUser {
             else{
                 User.create({
                     email: email,
-                    username: username, 
-                    password: hash, 
+                    username: username,
+                    password: hash,
                     name: name,
                     surname: surname,
                     birthday: birthday,
@@ -139,9 +139,9 @@ module.exports = class GestionUser {
                 response.errors.push("User not found");
             }
             callback(response);
-        }); 
-    }; 
-    
+        });
+    };
+
     deactivate(userMail,callback){
         var response = {
             status: "Ok",
@@ -164,18 +164,18 @@ module.exports = class GestionUser {
         var userMail = UtilsService.getEmailFromHeader(req);
         var{name, surname, biography, birthday, country, profilePicture} = req.body;
 
-        User.update({email:userMail}, 
+        User.update({email:userMail},
             {name:name, surname:surname, biography:biography, birthday:birthday,
             country:country, profilePicture}).exec(function(err1,userFound){
                 if(err1 !== undefined && err1){
                     response.status = "Error";
                     response.errors.push("Server error");
                 }
-                callback(response); 
+                callback(response);
             });
     };
 
-    view(username,callback){
+    view(myEmail,username,callback){
         var response = {
             status: "Ok",
             errors: [],
@@ -187,10 +187,11 @@ module.exports = class GestionUser {
                 birthday: "",
                 profilePicture: "",
                 country: "",
-                rank: ""
+                rank: "",
+                blocked: ""
             }
         }
-        User.findOne({username:username}).exec(function(err1,userFound){
+        User.findOne({username:username}).populate('blockedByUser').exec(function(err1,userFound){
             if(err1 !== undefined && err1) {
                 // DB error
                 response.status = "E1";
@@ -214,10 +215,138 @@ module.exports = class GestionUser {
                 response.info.profilePicture = userFound.profilePicture;
                 response.info.country = userFound.country;
                 response.info.rank = userFound.rank;
+                if(_.chain(userFound.blockedByUser).pluck("email").indexOf(myEmail) != -1){
+                    response.info.blocked = true;
+                }
+                else response.info.blocked = false;
             }
             callback(response);
         });
     };
+
+    block(reporterEmail, reportedEmail, callback){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        if(reportedEmail === reporterEmail){
+            response.status = "E3";
+            response.errors.push("You can't report yourself");
+            callback(response);
+        }
+        else{
+
+            User.findOne({email: reporterEmail}).populate('blocksUser')
+            .then(function(userReporter){
+            if(userReporter === undefined){
+                response.status = "E2";
+                response.errors.push("Couldn't find the user.");
+                callback(response);
+            }
+            else{
+                User.findOne({email: reportedEmail}).populate("blockedByUser")
+                .then(function(userReported){
+
+                    if(userReported === undefined){
+                        response.status = "E2";
+                        response.errors.push("Couldn't find the user");
+                        callback(response);
+                    }
+                    else{
+                        var found = _.chain(userReporter.blocksUser).pluck("email").indexOf(reportedEmail).value();
+                        if(found == -1){
+                            userReporter.blocksUser.add(reportedEmail);
+                            userReported.blockedByUser.add(reporterEmail);
+                            userReported.save(function(err){
+                                userReporter.save(function(err2){
+                                    if(err || err2){
+                                        response.status = "E1";
+                                        response.push(err);
+                                        response.push(err2);
+                                    }
+                                    callback(response);
+                                    });
+                                });
+                        }
+                        else{
+                            response.status = "E4";
+                            response.errors.push("The user has already reported the user.");
+                            callback(response);
+                        }
+                    }
+                })
+                .catch(function(error){
+                    response.status = "E1";
+                    response.errors.push("Fail");
+                    callback(response);
+                });
+            }
+            })
+            .catch(function(error){
+            response.status = "E1";
+            response.errors.push("Server error.");
+            callback(response);
+            });
+        }
+    };
+
+    unblock(reporterEmail,reportedEmail,callback){
+        var response = {
+            status: "Ok",
+            errors: []
+        }
+        User.findOne({email: reporterEmail}).populate("blocksUser")
+            .then(function(userReporter){
+            if(userReporter === undefined){
+                response.status = "E2";
+                response.errors.push("Couldn't find the user.");
+                callback(response);
+            }
+            else{
+                User.findOne({email: reportedEmail}).populate("blockedByUser")
+                .then(function(userReported){
+
+                    if(userReported === undefined){
+                        response.status = "E2";
+                        response.errors.push("Couldn't find the user.");
+                        callback(response);
+                    }
+                    else{
+                        var found = _.chain(userReporter.blocksUser).pluck("email").indexOf(reportedEmail).value();
+                        if(found != -1){
+                            ConversationService.unblockConversation(reporterEmail, reportedEmail, function(satus){
+
+                                userReporter.blocksUser.remove(reportedEmail);
+                                userReported.blockedByUser.remove(reporterEmail);
+                                userReported.save(function(err){
+                                userReporter.save(function(err2){
+                                if(err || err2){
+                                    response.status = "E1";
+                                    response.push(err);
+                                    response.push(err2);
+
+                                }
+                                callback(response);
+                                });
+                            });
+
+                        });
+                    }
+                        else{
+                            response.status = "E5";
+                            response.errors.push("The user has not been reported.");
+                            callback(response);
+                        }
+                    }
+                })
+                .catch(function(error){
+                    response.status = "E1";
+                    response.errors.push(error);
+                    callback(response);
+                });
+            }
+            })
+    },
     
     resetPassword(userMail,callback){
         var response = {

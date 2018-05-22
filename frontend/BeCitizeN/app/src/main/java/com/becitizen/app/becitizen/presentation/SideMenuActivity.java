@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -149,10 +150,8 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                /*
-                fragment = new PrivateMessagesActivity();
-                fragmentTransaction(fragment, "PRIVATE_MESSAGES_ACTIVITY");
-                */
+                fragment = new AllConversationsActivity();
+                fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
                 break;
             case R.id.nav_settings:
                 /*

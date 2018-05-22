@@ -9,16 +9,18 @@ import org.json.JSONObject;
 public class ControllerThreadData {
 
     //URIs
-    private static final String URI_THREADS_CATEGORY = "http://becitizen.cf/getAllThreadsCategory?category=";
-    private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
-    private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
-    private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
-    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?threadId=";
-    private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
-    private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
-    private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
-    private static final String URI_REPORT_THREAD = "http://becitizen.cf/reportThread";
-    private static final String URI_REPORT_COMMENT = "http://becitizen.cf/reportComment";
+    private static final String URI_BCN = "http://becitizen.cf";
+
+    private static final String URI_THREADS_CATEGORY = URI_BCN + "/getAllThreadsCategory?category=";
+    private static final String URI_CATEGORIES = URI_BCN + "/categories";
+    private static final String URI_NEW_THREAD = URI_BCN + "/newThread";
+    private static final String URI_THREAD_CONTENT = URI_BCN + "/getThread?threadId=";
+    private static final String URI_THREAD_COMMENTS = URI_BCN + "/getThreadComments?&threadId=";
+    private static final String URI_NEW_COMMENT = URI_BCN + "/newComment";
+    private static final String URI_VOTE_THREAD = URI_BCN + "/voteThread";
+    private static final String URI_VOTE_COMMENT = URI_BCN + "/voteComment";
+    private static final String URI_REPORT_THREAD = URI_BCN + "/reportThread";
+    private static final String URI_REPORT_COMMENT = URI_BCN + "/reportComment";
 
 
     private static ControllerThreadData instance = null;

@@ -12,16 +12,21 @@ import org.json.JSONObject;
 public class ControllerUserData {
 
     //URIs
-    private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
-    private static final String URI_GOOGLE_LOGIN = "http://becitizen.cf/loginGoogle?idToken=";
+    private static final String URI_BCN = "http://becitizen.cf";
 
-    private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
-    private static final String URI_REGISTER = "http://becitizen.cf/register";
-    private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
+    private static final String URI_FB_LOGIN = URI_BCN + "/loginFacebook";
+    private static final String URI_GOOGLE_LOGIN = URI_BCN + "/loginGoogle?idToken=";
 
-    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
-    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
-    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
+    private static final String URI_EXISTS_EMAIL = URI_BCN + "/existsEmail";
+    private static final String URI_REGISTER = URI_BCN + "/register";
+    private static final String URI_LOGIN_MAIL = URI_BCN + "/loginMail";
+
+    private static final String URI_DEACTIVATE_ACCOUNT = URI_BCN + "/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = URI_BCN + "/updateProfile";
+    private static final String URI_VIEW_PROFILE = URI_BCN + "/viewProfile";
+
+    private static final String URI_BLOCK = URI_BCN + "/blockUser";
+    private static final String URI_UNBLOCK = URI_BCN + "/unblockUser";
 
     private static ControllerUserData instance = null;
 
@@ -206,5 +211,33 @@ public class ControllerUserData {
 
     public void setToken(String token) {
         ServerAdapter.getInstance().setTOKEN(token);
+    }
+
+    public void blockUser(String mail) throws ServerException, JSONException {
+        JSONObject json = new JSONObject();
+        json.put("reportedEmail", mail);
+
+        String[] dataRequest = {URI_BLOCK, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User not found");
+        else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
+        else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
+    }
+
+    public void unblockUser(String mail) throws ServerException, JSONException {
+        JSONObject json = new JSONObject();
+        json.put("reportedEmail", mail);
+
+        String[] dataRequest = {URI_UNBLOCK, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User not found");
+        else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
+        else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
     }
 }

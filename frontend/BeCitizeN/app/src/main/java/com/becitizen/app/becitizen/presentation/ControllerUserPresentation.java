@@ -181,4 +181,12 @@ public class ControllerUserPresentation {
     public boolean checkUsername(String username) {
         return controllerUserDomain.checkUsername(username);
     }
+
+    public void blockUser(String mail) throws ServerException, JSONException {
+        controllerUserDomain.blockUser(mail);
+    }
+
+    public void unblockUser(String mail) throws ServerException, JSONException {
+        controllerUserDomain.unblockUser(mail);
+    }
 }

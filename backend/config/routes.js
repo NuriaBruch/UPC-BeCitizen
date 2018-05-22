@@ -72,6 +72,14 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'resetPassword'
   },
+  'POST /blockUser':{
+    controller: 'UserController',
+    action: 'blockUser'
+  },
+  'POST /unblockUser':{
+    controller: 'UserController',
+    action: 'unblockUser'
+  },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
     controller: 'ThreadController',
@@ -138,14 +146,24 @@ module.exports.routes = {
   },
 
   //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
-  'POST /newConversation':{
+  'POST /conversation':{
     controller: 'ConversationController',
     action: 'newConversation'
   },
-  'GET /getConversations':{
+  'GET /conversations':{
     controller: 'ConversationController',
     action: 'getConversations'
   },
+
+  //############ MESSAGE CONTROLLER ################# ordered as POST>GET
+  'POST /message':{
+    controller: 'MessageController',
+    action: 'newMessage'
+  },
+  'GET /conversationMessages':{
+    controller: 'MessageController',
+    action: 'getMessages'
+  }
   
 
 

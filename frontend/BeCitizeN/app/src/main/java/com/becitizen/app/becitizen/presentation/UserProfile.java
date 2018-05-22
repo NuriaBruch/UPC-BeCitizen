@@ -1,11 +1,13 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -34,14 +37,17 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private ImageButton ibEditProfile;
     private ImageButton ibSignOut;
     private ImageView rankIcon;
+    private ImageButton blockButton;
 
+
+    private String userMail;
     private boolean loggedUser;
     private String username;
-    private boolean activeUser;
+    private boolean blockedUser;
     Bundle userData;
 
     public UserProfile() {
-        activeUser = true;
+        blockedUser = false;
         username = "";
     }
 
@@ -74,7 +80,11 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         ibSignOut = rootView.findViewById(R.id.ibSignOut);
         ibSignOut.setOnClickListener(this);
 
+        blockButton = rootView.findViewById(R.id.blockButton);
+        blockButton.setOnClickListener(this);
+
         fbPrivateMessage = rootView.findViewById(R.id.fbPrivateMessage);
+        fbPrivateMessage.setOnClickListener(this);
 
         setValues();
 
@@ -85,6 +95,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
         if (loggedUser) {
             fbPrivateMessage.setVisibility(View.GONE);
+            blockButton.setVisibility(View.GONE);
         }
         else {
             ibEditProfile.setVisibility(View.GONE);
@@ -107,6 +118,24 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             setRankColor();
 
             setImage(userData.getInt("image"));
+
+            if (userData.get("email") != null) {
+                userMail = userData.get("email").toString();
+            }
+
+            if (userData.get("blocked") != null) {
+                blockedUser = userData.getBoolean("blocked");
+            }
+
+            if (!loggedUser) {
+                if (blockedUser) {
+                    blockButton.setImageResource(R.drawable.unblock_user);
+                }
+
+                else {
+                    blockButton.setImageResource(R.drawable.block_user);
+                }
+            }
         }
 
         catch (ServerException e) {
@@ -233,11 +262,84 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibEditProfile:
-                editProfile(rootView);
+                editProfile();
                 break;
             case R.id.ibSignOut:
                 signOut();
                 break;
+            case R.id.blockButton:
+                askConfirmation();
+                break;
+            case R.id.fbPrivateMessage:
+                startConversation();
+                break;
+        }
+    }
+
+    private void askConfirmation() {
+        if(!blockedUser) {
+            new AlertDialog.Builder(rootView.getContext())
+                    .setTitle(getResources().getString(R.string.blockUser))
+                    .setMessage(getResources().getString(R.string.blockUserMsg))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            blockUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+
+        else {
+            new AlertDialog.Builder(rootView.getContext())
+                    .setTitle(getResources().getString(R.string.unblockUser))
+                    .setMessage(getResources().getString(R.string.unblockUserMsg))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            blockUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+    }
+
+    private void startConversation() {
+        // TODO començar nova conversa
+    }
+
+    private void blockUser() {
+        if (userMail == null) {
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorBlock), Toast.LENGTH_LONG).show();
+        }
+        if (!blockedUser) {
+            try {
+                controllerUserPresentation.blockUser(userMail);
+                blockButton.setImageResource(R.drawable.unblock_user);
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            }
+        }
+
+        else {
+            try {
+                controllerUserPresentation.unblockUser(userMail);
+                blockButton.setImageResource(R.drawable.block_user);
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+                catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -253,7 +355,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         this.startActivity(intent);
     }
 
-    public void editProfile(View view) {
+    public void editProfile() {
         Fragment fragment = new UserProfileEdit();
         fragmentTransaction(fragment, "USER_EDIT_PROFILE");
     }

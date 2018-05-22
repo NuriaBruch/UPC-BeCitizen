@@ -82,14 +82,14 @@ module.exports = {
       collection: 'comment',
       via: 'votedBy'
     },
-    initiatedConversations: {
-      collection: 'conversation',
-      via: 'user1'
+    blocksUser: {
+      collection: 'user',
+      via: 'blockedByUser'
     },
-    recievedConversations: {
-      collection: 'conversation',
-      via: 'user2'
-    },
+    blockedByUser: {
+      collection: 'user',
+      via: 'blocksUser'
+    }
     
   }
 };
