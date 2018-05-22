@@ -381,6 +381,7 @@ public class ControllerUserDomain {
             if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
             if(!info.isNull("profilePicture")) bundle.putInt("image", info.getInt("profilePicture"));
             if(!info.isNull("email")) bundle.putInt("email", info.getInt("email"));
+            if(!info.isNull("blocked")) bundle.putInt("blocked", info.getInt("blocked"));
 
             if (username.equals(currentUser.getUsername())) {
                 currentUser.setFirstName(info.getString("name"));
@@ -412,11 +413,11 @@ public class ControllerUserDomain {
         return username.equals(currentUser.getUsername());
     }
 
-    public void blockUser(String mail) /*throws ServerException, JSONException*/ {
+    public void blockUser(String mail) throws ServerException, JSONException {
         controllerUserData.blockUser(mail);
     }
 
-    public void unblockUser(String mail) /*throws ServerException, JSONException*/ {
+    public void unblockUser(String mail) throws ServerException, JSONException {
         controllerUserData.unblockUser(mail);
     }
 }

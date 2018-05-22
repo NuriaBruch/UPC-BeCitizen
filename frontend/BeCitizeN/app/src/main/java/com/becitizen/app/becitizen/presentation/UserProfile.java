@@ -20,6 +20,7 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -122,7 +123,19 @@ public class UserProfile extends Fragment implements View.OnClickListener {
                 userMail = userData.get("email").toString();
             }
 
-            // TODO definir si posem icono de bloquejar o de desbloquejar
+            if (userData.get("blocked") != null) {
+                blockedUser = userData.getBoolean("blocked");
+            }
+
+            if (!loggedUser) {
+                if (blockedUser) {
+                    blockButton.setImageResource(R.drawable.unblock_user);
+                }
+
+                else {
+                    blockButton.setImageResource(R.drawable.block_user);
+                }
+            }
         }
 
         catch (ServerException e) {
@@ -302,14 +315,32 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorBlock), Toast.LENGTH_LONG).show();
         }
         if (!blockedUser) {
-            controllerUserPresentation.blockUser(userMail);
+            try {
+                controllerUserPresentation.blockUser(userMail);
+                blockButton.setImageResource(R.drawable.unblock_user);
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            }
         }
 
         else {
-            controllerUserPresentation.unblockUser(userMail);
+            try {
+                controllerUserPresentation.unblockUser(userMail);
+                blockButton.setImageResource(R.drawable.block_user);
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+                catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            }
         }
-        // TODO fer la request
-        // TODO canviar la icona
     }
 
     private void signOut() {
