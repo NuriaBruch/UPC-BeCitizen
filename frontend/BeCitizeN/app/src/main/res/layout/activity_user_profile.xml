@@ -31,8 +31,9 @@
 
             <ImageButton
                 android:id="@+id/ibEditProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:background="@null"
@@ -40,8 +41,9 @@
 
             <ImageButton
                 android:id="@+id/ibSignOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
                 android:layout_alignParentEnd="true"
                 android:layout_below="@+id/ibEditProfile"
                 android:layout_marginTop="20dp"
@@ -57,7 +59,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Username"
                 android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -67,7 +70,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:text="Firstname Lastname"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/labelRank"
@@ -77,7 +81,8 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/rankUP"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvRank"
@@ -87,7 +92,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/labelRank"
                 android:text="UserRank"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <ImageView
                 android:id="@+id/rankIcon"
@@ -96,7 +102,8 @@
                 android:layout_alignTop="@+id/tvRank"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/tvRank"
-                android:src="@drawable/rank_coal" />
+                android:src="@drawable/rank_coal"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/labelBirthdate"
@@ -105,7 +112,8 @@
                 android:layout_below="@+id/labelRank"
                 android:text="@string/birthdateUP"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvBirthday"
@@ -115,7 +123,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/labelBirthdate"
                 android:text="Birthdate"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/labelCountry"
@@ -124,7 +133,8 @@
                 android:layout_below="@+id/labelBirthdate"
                 android:text="@string/countryUP"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvCountry"
@@ -134,7 +144,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/labelCountry"
                 android:text="Country"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/labelBiography"
@@ -143,7 +154,8 @@
                 android:layout_below="@+id/labelCountry"
                 android:text="@string/biographyUP"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@android:color/black"/>
 
             <TextView
                 android:id="@+id/tvBiography"
@@ -152,7 +164,8 @@
                 android:layout_below="@+id/labelBiography"
                 android:layout_gravity="right"
                 android:text="Biography"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textColor="@android:color/black"/>
 
 
         </RelativeLayout>
@@ -172,13 +185,14 @@
 
     <ImageButton
         android:id="@+id/blockButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="20dp"
         android:layout_marginStart="20dp"
-        app:srcCompat="@drawable/delete_user"
+        app:srcCompat="@drawable/block_user"
         android:background="@null"
         />
 

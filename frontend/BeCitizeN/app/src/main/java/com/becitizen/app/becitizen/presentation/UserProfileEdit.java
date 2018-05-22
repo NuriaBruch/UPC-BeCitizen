@@ -249,8 +249,8 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
         }
 
         String biography = biographyInput.getText().toString().trim();
-        if (!validateStringInput(biography) || biography.length() > 150) {
-            biographyInput.setError(getString(R.string.errorMsgName));
+        if (biography.length() > 150) {
+            biographyInput.setError(getString(R.string.errorBiography));
             requestFocus(biographyInput);
             return;
         }
