@@ -175,12 +175,13 @@
         android:id="@+id/fbPrivateMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="@color/colorPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:textAllCaps="false"
+        app:backgroundTint="@color/colorAccent"
+        app:fabSize="normal"
         app:srcCompat="@drawable/private_message" />
 
     <ImageButton
