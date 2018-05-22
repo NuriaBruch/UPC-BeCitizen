@@ -6,6 +6,7 @@ import com.becitizen.app.becitizen.domain.adapters.ControllerThreadData;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.domain.entities.Information;
+import com.becitizen.app.becitizen.domain.entities.Marker;
 import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
@@ -71,9 +72,22 @@ public class ControllerInformationDomain {
         try {
             JSONObject data = new JSONObject(controllerInformationData.getInformation(id));
             data = data.getJSONObject("info");
+            String type = data.getString("type");
+            String content;
+            ArrayList<Marker> markers = new ArrayList<>();
+            if (type.equals("map")) {
+                JSONArray markersArray = data.getJSONArray("content");
+                for (int i = 0; i < markersArray.length(); ++i) {
+                    JSONObject marker = markersArray.getJSONObject(i);
+                    markers.add(new Marker(marker.getString("tooltip"), marker.getDouble("latitude"), marker.getDouble("longitude")));
+                }
+                content = "";
+            } else {
+                content = data.getString("content");
+            }
 
-            return new Information(id, data.getString("title"), data.getString("content"),
-                    data.getString("url"), data.getString("type"));
+            return new Information(id, data.getString("title"), content,
+                    data.getString("url"), type, markers);
         }
         catch (JSONException e) {
             return null;
