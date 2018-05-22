@@ -158,7 +158,9 @@ module.exports = {
         });
     },
 
-    getThreadWords: function(words,email,callback){
+    getThreadWords: function(words,email,block,category,sortedByVotes,callback){
+        var limit = 10;
+        block++; // los blocks 0 y 1 son los mismos, dejemos que front empieze a iterar con block=0
         var response = {
             status: "Ok",
             errors: [],
@@ -169,9 +171,28 @@ module.exports = {
             response.errors.push("No words for search in threads titles");
             callback(response);
         }
-        else{
+        Thread.count({category: category,title:{ contains: words}}).exec(function(err,numThreads){
+            if(numThreads==0){
+                response.status = "E4";
+                response.errors.push("There aren't threads matching");
+                callback(response);
+            }else
+            if(block >Math.ceil(numThreads/limit)){
+                response.status = "E1";
+                response.errors.push("Block out of bound");
+                callback(response);
+            }
+            else if( block<=0){
+                response.status = "E3";
+                response.errors.push("Block should be positive, like you when reading this error");
+                callback(response);
+            }
+            else{
+            var orderBy;
+            if(sortedByVotes === 'true') orderBy= 'numberVotes DESC';
+            else orderBy='createdAt DESC';
             words.split('+').join(' ');
-            Thread.find({title:{ contains: words}}).populate('reportedBy',{where:{email:email}}).populate('postedBy').populate('votedBy',{where:{email:email}}).exec(function(err2,threadsFound){
+            Thread.find({category: category,title:{ contains: words}}).sort(orderBy).populate('reportedBy',{where:{email:email}}).populate('postedBy').populate('votedBy',{where:{email:email}}).exec(function(err2,threadsFound){
                 if(err2 !== undefined && err2) {
                     response.status = "E2";
                     response.errors.push(err2);
@@ -214,7 +235,8 @@ module.exports = {
                     callback(response);
                 }
             });
-        }
+            }
+        });
 
     },
 
