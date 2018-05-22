@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Information;
+import com.becitizen.app.becitizen.domain.entities.Marker;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import java.util.ArrayList;
@@ -51,9 +52,15 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
             if (content.getVisibility() == View.GONE)
                 info = ControllerInformationPresentation.getUniqueInstance().getInformation(mData.get(getAdapterPosition()).getId());
 
+            String url = "";
+            ArrayList<Marker> markers = new ArrayList<>();
+            markers.add(new Marker("test", 41.405663, 2.138554));
+
             if (info != null) {
                 content.setText(info.getContent());
-                openInBrowser.setOnClickListener(new OpenInBrowserOnClick(info.getUrl()));
+                url = info.getUrl();
+                //markers = info.getMarkers();
+                openInBrowser.setOnClickListener(new OpenInBrowserOnClick(url, markers));
             }
 
             if (content.getVisibility() == View.VISIBLE) {
@@ -64,8 +71,10 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
             else {
                 expander.setRotation(180);
                 content.setVisibility(View.VISIBLE);
-                String url = info.getUrl();
                 if (url.startsWith("http://") || url.startsWith("https://")) {
+                    openInBrowser.setVisibility(View.VISIBLE);
+                } else if (markers.size() > 0) {
+                    openInBrowser.setText(mContext.getResources().getString(R.string.openMap));
                     openInBrowser.setVisibility(View.VISIBLE);
                 }
             }
@@ -76,15 +85,23 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
     {
 
         String url;
-        public OpenInBrowserOnClick(String url) {
+        ArrayList<Marker> markers;
+        public OpenInBrowserOnClick(String url, ArrayList<Marker> markers) {
             this.url = url;
+            this.markers = markers;
         }
 
         @Override
         public void onClick(View v)
         {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            mContext.startActivity(browserIntent);
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                mContext.startActivity(browserIntent);
+            } else {
+                Intent mapsIntent = new Intent(mContext, MapsActivity.class);
+                mapsIntent.putExtra("markers", markers);
+                mContext.startActivity(mapsIntent);
+            }
         }
 
     };

@@ -86,6 +86,7 @@
     <string name="year">year</string>
 
     <string name="openInBrowser">Open in Browser</string>
+    <string name="openMap">Open Map</string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
@@ -368,4 +369,5 @@
         <item>Employment</item>
         <item>Justice</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
 </resources>
