@@ -98,6 +98,13 @@ module.exports = {
         gestionUser.view(username,function(status){
             res.send(status);
         });
+    },
+    resetPassword: function(req,res){
+        var userMail = req.query.userEmail;
+        var gestionUser = new GestionUser();
+        gestionUser.resetPassword(userMail, function(status){
+            res.send(status);
+        });
     }
 };
 

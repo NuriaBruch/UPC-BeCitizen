@@ -32,12 +32,13 @@ public class ThreadActivity extends Fragment {
     private CommentAdapter adapter;
     private List<Comment> commentList;
     private int threadId;
-    ControllerThreadPresentation controllerThreadPresentation;
+    private ControllerThreadPresentation controllerThreadPresentation;
 
     TextView threadAuthor, threadTime, threadContent, threadTitle, threadVotes, threadAuthorRank;
-    ImageButton threadVote, threadReport, threadAuthorImage;
+    ImageButton threadVote, threadReport, threadAuthorImage, commentSort;
     EditText newCommentText;
     ImageButton newCommentButton;
+    boolean sortedByVotes;
 
     public ThreadActivity() {}
 
@@ -48,6 +49,8 @@ public class ThreadActivity extends Fragment {
         controllerThreadPresentation = ControllerThreadPresentation.getUniqueInstance();
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
+
+        sortedByVotes = false;
 
         prepareContent();
 
@@ -151,6 +154,15 @@ public class ThreadActivity extends Fragment {
                 }
             });
 
+            commentSort = rootView.findViewById(R.id.commentSortButton);
+            commentSort.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sortedByVotes = !sortedByVotes;
+                    prepareComments();
+                }
+            });
+
             newCommentText = rootView.findViewById(R.id.newCommentInput);
             newCommentButton = rootView.findViewById(R.id.newCommentButton);
             newCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -158,12 +170,12 @@ public class ThreadActivity extends Fragment {
                 public void onClick(View view) {
                     String commentText = newCommentText.getText().toString().trim();
                     if (commentText.isEmpty())
-                        Snackbar.make(view, "Your reply is empty", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.emptyreply, Snackbar.LENGTH_LONG).show();
                     else {
                         try {
                             controllerThreadPresentation.newComment(commentText, threadId);
                             prepareComments();
-                            Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.commentCreated, Toast.LENGTH_LONG).show();
                             newCommentText.clearFocus();
                             newCommentText.setText(null);
                         }
@@ -194,7 +206,7 @@ public class ThreadActivity extends Fragment {
 
     private void prepareComments () {
         try {
-            List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(threadId);
+            List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(threadId, sortedByVotes);
             commentList.clear();
             commentList.addAll(newCommentList);
             adapter.notifyDataSetChanged();

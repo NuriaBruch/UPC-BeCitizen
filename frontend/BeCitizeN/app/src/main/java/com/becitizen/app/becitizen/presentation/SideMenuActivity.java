@@ -141,10 +141,8 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "INSIDE_ACTIVITY");
                 break;
             case R.id.nav_utilities:
-                /*
-                Fragment fragment = new UtilitiesActivity();
-                fragmentTransaction(fragment);
-                */
+                fragment = new UtilitiesMenu();
+                fragmentTransaction(fragment, "UTILITIES_MENU");
                 break;
             case R.id.nav_forum:
                 fragment = new ForumCategoriesActivity();
@@ -154,9 +152,8 @@ public class SideMenuActivity extends AppCompatActivity
                 /*
                 fragment = new PrivateMessagesActivity();
                 fragmentTransaction(fragment, "PRIVATE_MESSAGES_ACTIVITY");
-
-                break;
                 */
+                break;
             case R.id.nav_settings:
                 /*
                 fragment = new SettingsActivity();
@@ -164,16 +161,12 @@ public class SideMenuActivity extends AppCompatActivity
                 */
                 break;
             case R.id.nav_help:
-                /*
                 fragment = new HelpActivity();
-                fragmentTransaction(fragment);
-                */
+                fragmentTransaction(fragment, "HELP_ACTIVITY");
                 break;
             case R.id.nav_about:
-                /*
                 fragment = new AboutActivity();
-                fragmentTransaction(fragment);
-                */
+                fragmentTransaction(fragment, "ABOUT_ACTIVITY");
                 break;
         }
 

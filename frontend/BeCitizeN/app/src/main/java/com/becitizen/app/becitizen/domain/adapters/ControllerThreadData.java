@@ -13,7 +13,7 @@ public class ControllerThreadData {
     private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
     private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
     private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
-    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?&threadId=";
+    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?threadId=";
     private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
     private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
     private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
@@ -47,8 +47,8 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getThreadsCategory(String category, int block) {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category + "&block=" + block);
+    public String getThreadsCategory(String category, int block, boolean sortedByVotes) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category + "&block=" + block + "&sortedByVotes=" + String.valueOf(sortedByVotes));
     }
 
     /**
@@ -96,8 +96,8 @@ public class ControllerThreadData {
         return ServerAdapter.getInstance().doGetRequest(URI_THREAD_CONTENT + String.valueOf(id));
     }
 
-    public String getThreadComments(int id) {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id));
+    public String getThreadComments(int id, boolean sortedByVotes) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id) + "&sortedByVotes="+ String.valueOf(sortedByVotes));
     }
 
     public String newComment(String commentText, int threadId) {

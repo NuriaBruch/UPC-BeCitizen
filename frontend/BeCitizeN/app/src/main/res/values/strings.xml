@@ -48,9 +48,12 @@
 
     <string name="guest">Guest</string>
 
+    <string name="quoting">Quoting comment:</string>
+
     <string name="newComment">Write a comment</string>
     <string name="comments">Comments</string>
     <string name="quotingError">Quoting not implemented yet</string>
+    <string name="commentCreated">Comment created</string>
 
     <string name="tokenError">Token error</string>
 
@@ -60,10 +63,29 @@
     <string name="biographyUP">Biography:</string>
     <string name="deactived">Deactivated user</string>
 
+    <string name="send">Send</string>
+
+    <string name="emptyreply">Your reply is empty</string>
+
     <string name="votes">votes</string>
 
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
+
+
+    <string name="ccTitle">Currency Converter</string>
+    <string name="ccFrom">From:</string>
+    <string name="ccTo">To:</string>
+    <string name="ccConvertText">Write Amount to Convert</string>
+    <string name="ccResult">Result</string>
+    <string name="ccErrorConvert">Sorry we couldn\'t convert that</string>
+
+
+    <string name="wordOfTheDayTitle">Word of the Day</string>
+    <string name="wordOfTheDayMeans">means</string>
+    <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
+    <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
+    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
 
     <string name="serverError">Server Error</string>
     <string name="DBError">Database Error</string>
@@ -85,6 +107,18 @@
     <string name="day">day</string>
     <string name="year">year</string>
 
+    <string name="buttonCurrency">Currency Converter</string>
+    <string name="buttonTranslator">Translator</string>
+    <string name="buttonWord">Word of the day</string>
+
+    <string name="textDevelopedBy">This application has been developed by a group of students of the Computer Engineering degree from the Universitat Politècnica de Catalunya (UPC) and more specifically from the Facultat d\'Informàtica de Barcelona (FIB).</string>
+    <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
+    <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
+
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
     <string name="openInBrowser">Open in Browser</string>
     <string name="openMap">Open Map</string>
 
@@ -336,6 +370,7 @@
     <string name="hintTitleThread">Provide a title for your new thread</string>
     <string name="hintThreadContent">Describe your thread</string>
     <string name="newThread">New Thread</string>
+    <string name="convert">Convert</string>
 
     <string-array name="image_codes">
         <item>1</item>
@@ -369,5 +404,23 @@
         <item>Employment</item>
         <item>Justice</item>
     </string-array>
+
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="tab_text_1">Principal</string>
+    <string name="tab_text_2">Information</string>
+    <string name="tab_text_3">FAQ</string>
+    <string name="tab_text_4">Forum</string>
+    <string name="tab_text_5">Messaging</string>
+    <string name="tab_text_6">Utilities</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
+    <string name="helpPrincipal_2">Information about the city</string>
+    <string name="helpPrincipal_3">FAQ (frequently asked questions)</string>
+    <string name="helpPrincipal_4">A forum</string>
+    <string name="helpPrincipal_5">Private messaging</string>
+    <string name="helpPrincipal_6">Other utilities</string>
+    <string name="helpPrincipal_7">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
+
 </resources>

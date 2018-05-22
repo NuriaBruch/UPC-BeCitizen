@@ -67,7 +67,11 @@ module.exports.routes = {
   'PUT /updateProfile':{
     controller: 'UserController',
     action: 'updateProfile'
-  }, 
+  },
+  'GET /resetPassword':{
+    controller: 'UserController',
+    action: 'resetPassword'
+  },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
     controller: 'ThreadController',
@@ -84,6 +88,10 @@ module.exports.routes = {
   'GET /getThread':{
     controller: 'ThreadController',
     action: 'getThread'
+  },
+  'GET /getThreadWords':{
+    controller: 'ThreadController',
+    action: 'getThreadWords'
   },
   'PUT /reportThread':{
     controller: 'ThreadController',
@@ -114,6 +122,33 @@ module.exports.routes = {
     controller: 'CommentController',
     action: 'voteComment'
   },
+  //############ MONETARYEXCHANGE CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getExchange':{
+    controller: 'MonetaryExchangeController',
+    action: 'getExchange'
+  },
+  'GET /getAllCurrencies':{
+    controller: 'MonetaryExchangeController',
+    action: 'getAllCurrencies'
+  },
+  //############ WORD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getWord':{
+    controller: 'WordController',
+    action: 'getWord'
+  },
+
+  //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
+  'POST /newConversation':{
+    controller: 'ConversationController',
+    action: 'newConversation'
+  },
+  'GET /getConversations':{
+    controller: 'ConversationController',
+    action: 'getConversations'
+  },
+  
+
+
   //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newInfo':{
     controller: 'InformationController',

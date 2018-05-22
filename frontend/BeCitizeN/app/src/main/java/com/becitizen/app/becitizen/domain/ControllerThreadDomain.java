@@ -44,9 +44,9 @@ public class ControllerThreadDomain {
      * @param block number of info block (each block contains x threads)
      * @return JSONObject que contiene los posts de una categoria
      */
-    public ArrayList<CategoryThread> getThreadsCategory(String category, int block) {
+    public ArrayList<CategoryThread> getThreadsCategory(String category, int block, boolean sortedByVotes) {
         try {
-            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category.replace(" ", "%20"), block));
+            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategory(category.replace(" ", "%20"), block, sortedByVotes));
             ArrayList<CategoryThread> threads = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("threads");
             for(int i = 0; i < array.length(); i++)
@@ -116,11 +116,11 @@ public class ControllerThreadDomain {
         return thread;
     }
 
-    public List<Comment> getThreadComments(int id) throws JSONException, ServerException {
-        JSONObject info = new JSONObject(controllerThreadData.getThreadComments(id));
+    public List<Comment> getThreadComments(int id, boolean sortedByVotes) throws JSONException, ServerException {
+        JSONObject info = new JSONObject(controllerThreadData.getThreadComments(id, sortedByVotes));
         List<Comment> commentList = new ArrayList<>();
         if (info.get("status").equals("Ok")) {
-            JSONArray commentsDataArray = (JSONArray)info.get("comment");
+            JSONArray commentsDataArray = (JSONArray)info.get("comments");
             for(int i = 0; i < commentsDataArray.length(); i++) {
                 JSONObject commentData = commentsDataArray.getJSONObject(i);
 
@@ -134,6 +134,7 @@ public class ControllerThreadDomain {
                 comment.setVotable(commentData.getBoolean("canVote"));
                 comment.setReportable(commentData.getBoolean("canReport"));
                 comment.setId(commentData.getInt("id"));
+                comment.setThreadId(id);
                 commentList.add(comment);
             }
         }

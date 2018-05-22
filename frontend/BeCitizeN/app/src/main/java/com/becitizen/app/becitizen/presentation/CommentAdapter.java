@@ -1,15 +1,19 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +35,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     private Context context;
     private List<Comment> commentList;
+    private ControllerThreadPresentation controllerThreadPresentation;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank;
@@ -50,6 +55,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             commentQuote = view.findViewById(R.id.commentQuoteButton);
             commentAuthorImage = view.findViewById(R.id.commentAuthorImage);
             commentView = view;
+
+            controllerThreadPresentation = ControllerThreadPresentation.getUniqueInstance();
         }
     }
 
@@ -78,7 +85,49 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Quoting not implemented yet", Toast.LENGTH_LONG).show();
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.thread_comment_quote);
+                //LayoutInflater inflater = LayoutInflater.from(context);
+                //View quoteView = inflater.inflate(R.layout.thread_comment_quote, null);
+
+                TextView quoteId = dialog.findViewById(R.id.quote_id_text);
+                quoteId.setText('#'+String.valueOf(comment.getId()));
+
+                TextView quoteContent = dialog.findViewById(R.id.quote_content);
+                quoteContent.setText(comment.getContent());
+
+                Button sendButton = dialog.findViewById(R.id.send_button);
+
+                final EditText commentContent = dialog.findViewById(R.id.comment_text);
+
+                dialog.show();
+
+
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String commentText = commentContent.getText().toString().trim();
+                        if (commentText.isEmpty())
+                            Toast.makeText(context, R.string.emptyreply, Toast.LENGTH_LONG).show();
+                        else {
+                            try {
+                                controllerThreadPresentation.newComment("#"+String.valueOf(comment.getId())+' '+commentText, comment.getThreadId());
+                                Toast.makeText(context, R.string.commentCreated, Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(comment.getThreadId(), false);
+                                commentList.clear();
+                                commentList.addAll(newCommentList);
+                                notifyDataSetChanged();
+                            }
+                            catch (JSONException e) {
+                                Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                            }
+                            catch (ServerException e) {
+                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                });
             }
         });
 
@@ -135,9 +184,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
             holder.commentVote.setEnabled(false);
         }
+        else {
+            holder.commentVote.setImageResource(R.drawable.vote_icon);
+            holder.commentVote.setEnabled(true);
+        }
         if (!comment.isReportable()) {
             holder.commentReport.setImageResource(R.drawable.ic_reported);
             holder.commentReport.setEnabled(false);
+        }
+        else {
+            holder.commentReport.setImageResource(R.drawable.report_icon);
+            holder.commentReport.setEnabled(true);
         }
 
         setAuthorImage(holder, comment.getAuthorImage());
