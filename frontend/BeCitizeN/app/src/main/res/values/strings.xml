@@ -120,8 +120,8 @@
         <item>coin1</item>
         <item>coin2</item>
     </string-array>
-    <string name="openInBrowser">Open in Browser</string>
     <string name="openMap">Open Map</string>
+    <string name="openInBrowser">Open in Browser</string>
 
     <string name="blockUser">Block user</string>
     <string name="unblockUser">Unblock user</string>
