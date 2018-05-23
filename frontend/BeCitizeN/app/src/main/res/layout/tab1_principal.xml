@@ -135,6 +135,27 @@
         android:textColor="@android:color/black"
         android:text="@string/helpPrincipal_6"/>
 
+    <ImageView
+        android:id="@+id/iv_7"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:scaleType="fitCenter"
+        android:layout_below="@+id/iv_6"
+        android:layout_margin="10dp"
+        android:background="@null"
+        app:srcCompat="@drawable/red_point"/>
+
+    <TextView
+        android:id="@+id/tv_7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_7"
+        android:layout_toEndOf="@+id/iv_7"
+        android:gravity="center_vertical"
+        android:textSize="17sp"
+        android:textColor="@android:color/black"
+        android:text="@string/helpPrincipal_7"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -142,8 +163,8 @@
         android:layout_marginTop="20dp"
         android:textSize="17sp"
         android:textColor="@android:color/black"
-        android:layout_below="@+id/iv_6"
-        android:text="@string/helpPrincipal_7"/>
+        android:layout_below="@+id/iv_7"
+        android:text="@string/helpPrincipal_8"/>
 
 
 
