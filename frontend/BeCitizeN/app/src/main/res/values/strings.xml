@@ -421,14 +421,39 @@
     <string name="tab_text_4">Forum</string>
     <string name="tab_text_5">Messaging</string>
     <string name="tab_text_6">Utilities</string>
+    <string name="tab_text_7">User profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
-    <string name="helpPrincipal_2">Information about the city</string>
-    <string name="helpPrincipal_3">FAQ (frequently asked questions)</string>
-    <string name="helpPrincipal_4">A forum</string>
-    <string name="helpPrincipal_5">Private messaging</string>
-    <string name="helpPrincipal_6">Other utilities</string>
-    <string name="helpPrincipal_7">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
+    <string name="helpPrincipal_2">User profile</string>
+    <string name="helpPrincipal_3">Information about the city</string>
+    <string name="helpPrincipal_4">FAQ (frequently asked questions)</string>
+    <string name="helpPrincipal_5">A forum</string>
+    <string name="helpPrincipal_6">Private messaging</string>
+    <string name="helpPrincipal_7">Other utilities</string>
+    <string name="helpPrincipal_8">If you want to know more about any of these functionalities, please just click its name on the top of your screen.</string>
+
+    <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
+    <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>
+    <string name="helpUser_3">In the edit profile screen, you can update your data and also deactivate your account with the deactivate user icon.</string>
+    <string name="helpUser_4">Once you see your profile, you can do logout with the logout icon. This will take you to the initial screen.</string>
+
+    <string name="helpForum_1">You can access the forum by the forum icon in the side menu of the application.</string>
+    <string name="helpForum_2">On the first screen of the forum, there are different categories and you can choose among them, just like in the information part of BeCitizeN.</string>
+    <string name="helpForum_3">Once you have chosen a category you can either start a new thread or chose to see one of the threads created by another user.</string>
+    <string name="helpForum_4">If you have chosen to see a thread, you can comment it by writing in the text entry at the bottom of your screen.</string>
+    <string name="helpForum_5">You can also reply a specific comment by quoting it.</string>
+    <string name="helpForum_6">If you want to indicate that you like a comment or thread you can use the voting icon.</string>
+    <string name="helpForum_7">On the other hand, if you believe that the content of a comment or post is inappropriate you can use the report icon.</string>
+    <string name="helpForum_8">Another important thing you need to know about the forum is that if you click on the profile image of any user, you can accede its user profile.</string>
+
+    <string name="helpUtilities_1">You can accede the utilities by its icon in your side menu.</string>
+    <string name="helpUtilities_2">In this part of the application you have 3 different functionalities:</string>
+    <string name="helpUtilities_3">Currency converter</string>
+    <string name="helpUtilities_4">You can select the currency you want to convert and the currency to which you want it. The conversion among all currencies is actualized twice a day.</string>
+    <string name="helpUtilities_5">Translator</string>
+    <string name="helpUtilities_6">With this functionality you can introduce a text in any language and translate it to any other.</string>
+    <string name="helpUtilities_7">Word of the day</string>
+    <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, also in Catalan. This functionality is possible thanks to rodamot.cat.</string>
 
 </resources>
