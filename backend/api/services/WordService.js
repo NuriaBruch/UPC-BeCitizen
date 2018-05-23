@@ -1,16 +1,28 @@
 
 module.exports = class WordService {
 
+    translateDefinition(definition){
+        const translate = require('google-translate-api');
+        return new Promise((resolve, reject) => {
+            translate(definition, { to: 'en'})
+            .then(res => {
+                resolve(res.text);
+            })
+            .catch(err => {
+                reject(err);
+            });
+        });
+    }
+
     insertWordOnDB(word, callback){
         //callback(err)
 
         //First we should translate the word
-        const translate = require('google-translate-api');
-        translate(word.definition, { to: 'en'})
-        .then(res => {
+        this.translateDefinition(word.definition)
+        .then(translatedDefinition => {
             Word.create({
                 word: word.word,
-                definition: res.text
+                definition: translatedDefinition
             })
             .then(wordGenerated => {
                 callback(false)
@@ -54,7 +66,7 @@ module.exports = class WordService {
                             callback(true, null);
                         }     
                         else {
-                            this. insertWordOnDB(word, (err3) => {
+                            this.insertWordOnDB(word,(err3) => {
                                 callback(false, word);
                             });
                         }
@@ -153,8 +165,18 @@ module.exports = class WordService {
                 console.log("SCRAPPING");
                 this.scrappingWord((err2, word) => {
                     if(!err2){
-                        response.info = word;
-                        callback(response)
+                        this.translateDefinition(word.definition)
+                        .then(translatedDefinition => {
+                            response.info = {
+                                word: word.word,
+                                definition: translatedDefinition
+                            };
+                            callback(response);
+                        })
+                        .catch(err => {
+                            response.status = "E1";
+                            response.errors.push("Server error");
+                        })
                     }
                     else{
                         response.status = "E2";
