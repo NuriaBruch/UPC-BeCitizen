@@ -137,14 +137,24 @@ module.exports = class WordService {
 
     getRandomWord(callback){
         // callback(error, found, word)
-        Word.findOne({})
-        .then(function(word){
-            if(word)
-                callback(false, true, word);
-            else 
-                callback(false, false, null);
+
+        Word.count()
+        .then(num => {
+            let randm = Math.floor((Math.random() * num));
+            if(randm < 0) randm = 0;
+    
+            Word.find({skip: randm, limit: 1})
+            .then(word => {
+                if(word[0] !== undefined)
+                    callback(false, true, word[0]);
+                else 
+                    callback(false, false, null);
+            })
+            .catch(err => {
+                callback(true, false, null);
+            })
         })
-        .catch(function(err){
+        .catch(err => {
             callback(true, false, null);
         });
     }
