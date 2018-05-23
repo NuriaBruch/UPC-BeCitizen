@@ -456,4 +456,12 @@
     <string name="helpUtilities_7">Word of the day</string>
     <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, also in Catalan. This functionality is possible thanks to rodamot.cat.</string>
 
+    <string name="helpMessaging_1">With the private messaging icon in the side menu, you can access your private conversations with other users.</string>
+    <string name="helpMessaging_2">To be able to start a new conversation, you have to go through the forum to a another user profile and there you have to click the private messaging button.</string>
+    <string name="helpMessaging_3">If one user sends you messages, you will see it when you enter to your private conversations.</string>
+    <string name="helpMessaging_4">If you do not want a user to send you any message, you can block him by accessing his profile, either through the forum or the conversation, and click the block user button.</string>
+
+    <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
+    <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
+
 </resources>
