@@ -35,8 +35,8 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private TextView tvRank;
     private ImageView ivUserImage;
     private FloatingActionButton fbPrivateMessage;
-    private ImageButton ibEditProfile;
-    private ImageButton ibSignOut;
+    private CardView ibEditProfile;
+    private CardView ibSignOut;
     private ImageView rankIcon;
     private ImageView ivBlock;
     private TextView tvBlock;
