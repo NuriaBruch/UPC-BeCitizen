@@ -129,6 +129,7 @@
     <string name="unblockUserMsg">Do you really want to unblock this user?</string>
 
     <string name="errorBlock">It is not possible to block / unblock this user </string>
+    <string name="errorMessaging">It is not possible to send message to this user </string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
