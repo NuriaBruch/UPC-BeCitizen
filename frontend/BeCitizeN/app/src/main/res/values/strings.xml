@@ -438,4 +438,13 @@
     <string name="helpUser_3">In the edit profile screen you can update you data and also deactivate your account with the deactivate user icon.</string>
     <string name="helpUser_4">Once you are seeing your profile, you can do logout with the logout icon. This will take you to the initial screen.</string>
 
+    <string name="helpForum_1">You can access the forum by the forum icon in the side menu of the application.</string>
+    <string name="helpForum_2">On the first screen of the forum, there are different categories and you can choose among them, just like in the information part of BeCitizeN.</string>
+    <string name="helpForum_3">Once you have chosen a category you can either start a new thread or chose to see one of the threads created by another user.</string>
+    <string name="helpForum_4">If you have chosen to see a thread, you can comment it by writing in the text entry at the bottom of your screen.</string>
+    <string name="helpForum_5">You can also reply a specific comment by quoting it.</string>
+    <string name="helpForum_6">If you want to indicate that you like a comment or thread you can use the like button.</string>
+    <string name="helpForum_7">On the other hand, if you believe that the content of a comment or post is inappropriate you can use the report button.</string>
+    <string name="helpForum_8">The last important thing you need to know about the forum is that if you click on the profile image of any user, you can accede its user profile.</string>
+
 </resources>
