@@ -3,16 +3,25 @@ module.exports = class WordService {
 
     insertWordOnDB(word, callback){
         //callback(err)
-        Word.create({
-            word: word.word,
-            definition: word.definition
-        })
-        .then(wordGenerated => {
-            callback(false)
+
+        //First we should translate the word
+        const translate = require('google-translate-api');
+        translate(word.definition, { to: 'en'})
+        .then(res => {
+            Word.create({
+                word: word.word,
+                definition: res.text
+            })
+            .then(wordGenerated => {
+                callback(false)
+            })
+            .catch(err => {
+                callback(true);
+            });
         })
         .catch(err => {
             callback(true);
-        })
+        });
     }
 
     scrappingWord(callback){

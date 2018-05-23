@@ -10,6 +10,7 @@
     "ejs": "2.3.4",
     "generate-password": "^1.4.0",
     "google-auth-library": "^1.4.0",
+    "google-translate-api": "^2.3.0",
     "grunt": "1.0.1",
     "grunt-contrib-clean": "1.0.0",
     "grunt-contrib-coffee": "1.0.0",
