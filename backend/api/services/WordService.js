@@ -157,8 +157,8 @@ module.exports = class WordService {
                             }
                             else{
                                 response.info = this.prettyWord(word);
-                                callback(response);
                             }
+                            callback(response);
                         }); 
                     }
                 })
