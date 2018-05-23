@@ -421,7 +421,7 @@
     <string name="tab_text_4">Forum</string>
     <string name="tab_text_5">Messaging</string>
     <string name="tab_text_6">Utilities</string>
-    <string name="tab_text_7">Users</string>
+    <string name="tab_text_7">User profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
@@ -432,5 +432,10 @@
     <string name="helpPrincipal_6">Private messaging</string>
     <string name="helpPrincipal_7">Other utilities</string>
     <string name="helpPrincipal_8">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
+
+    <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
+    <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>
+    <string name="helpUser_3">In the edit profile screen you can update you data and also deactivate your account with the deactivate user icon.</string>
+    <string name="helpUser_4">Once you are seeing your profile, you can do logout with the logout icon. This will take you to the initial screen.</string>
 
 </resources>
