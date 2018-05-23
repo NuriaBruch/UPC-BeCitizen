@@ -6,6 +6,9 @@ module.exports = {
             status: "OK",
             errors: [],
             conversationId: "",
+            username: "",
+            name: "",
+            profilePicture: ""
         }
         User.findOne({email: recieverMail}).populate('blocksUser').populate('blockedByUser').exec(function(err1, userFound){
             if(err1 !== undefined && err1){
@@ -25,6 +28,9 @@ module.exports = {
                 callback(response);
             }
             else{
+              response.username = userFound.username;
+              response.name = userFound.name;
+              response.profilePicture = userFound.profilePicture;
                 Conversation.findOne({
                 or:[
                     {user1: senderMail,
@@ -87,6 +93,7 @@ module.exports = {
                 conversations.forEach(conver => {
                     var converInfo = {
                         id: "",
+                        name: "",
                         username: "",
                         profilePicture: "",
                         newMessage: "",
@@ -98,11 +105,13 @@ module.exports = {
                     converInfo.lastMessageContent = conver.lastMessageContent;
                     if(conver.user1.email === userMail){
                         converInfo.username = conver.user2.username;
+                        converInfo.name = conver.user2.name;
                         converInfo.newMessage = conver.newMessage1;
                         converInfo.profilePicture = conver.user2.profilePicture;
                     }
                     else if(conver.user2.email === userMail){
                         converInfo.username = conver.user1.username;
+                        converInfo.name = conver.user1.name;
                         converInfo.newMessage = conver.newMessage2;
                         converInfo.profilePicture = conver.user1.profilePicture;
                     }
