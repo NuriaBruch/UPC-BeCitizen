@@ -112,7 +112,7 @@ module.exports = class WordService {
         })
         .then(function(word){
             //console.log(word);
-            if(word)
+            if(word[0] !== undefined)
                 callback(false, true, word[0]);
             else 
                 callback(false, false, null);
@@ -161,11 +161,11 @@ module.exports = class WordService {
                         response.errors.push("Scrapping error");
                         this.getLastWord((err3, found, word) => {
                             if(err3){
-                                response.info = "E1";
+                                response.status = "E1";
                                 response.errors.push("Server error")
                             }
                             else if(!found){
-                                response.info = "E23";
+                                response.status = "E23";
                                 response.errors.push("Scrapping error and no words in db.")
                             }
                             else{
@@ -199,6 +199,7 @@ module.exports = class WordService {
         var today = new Date();
         today = UtilsService.convertUTCDateToLocalDate(today);
         var todayDay = today.getDay();
+        console.log(todayDay);
         // If we are on saturday or sunday then..
         if (todayDay == 6 || todayDay == 7){
             this.getRandomWord((err, found, word) => {
