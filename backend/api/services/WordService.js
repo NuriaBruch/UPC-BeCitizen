@@ -104,7 +104,7 @@ module.exports = class WordService {
     }
 
     getLastWord(callback){
-        // callback(error, found, word
+        // callback(error, found, word)
 
         Word.find({
             limit: 1,
@@ -123,13 +123,26 @@ module.exports = class WordService {
         })
     }
 
-    getWord(callback) {
+    getRandomWord(callback){
+        // callback(error, found, word)
+        Word.findOne({})
+        .then(function(word){
+            if(word)
+                callback(false, true, word);
+            else 
+                callback(false, false, null);
+        })
+        .catch(function(err){
+            callback(true, false, null);
+        });
+    }
+
+    process(callback){
         var response = {
             status: "Ok",
             errors: [],
             info: null
         }
-
         this.needUpdateServer((err, need) => {
             if(err){
                 response.status = "E1"
@@ -180,5 +193,35 @@ module.exports = class WordService {
                 });
             }
         });
+    }
+
+    getWord(callback) {
+        var today = new Date();
+        today = UtilsService.convertUTCDateToLocalDate(today);
+        var todayDay = today.getDay();
+        // If we are on saturday or sunday then..
+        if (todayDay == 6 || todayDay == 7){
+            this.getRandomWord((err, found, word) => {
+                // If we dont find any word means that we should make the process
+                if(!found) {
+                    this.process(res => {
+                        callback(res);
+                    })
+                }
+                else {
+                    var response = {
+                        status: "Ok",
+                        errors: [],
+                        info: this.prettyWord(word)
+                    }
+                    callback(response);
+                }
+            });
+        }
+        else{
+            this.process(res => {
+                callback(res);
+            })
+        }
     }
 }
