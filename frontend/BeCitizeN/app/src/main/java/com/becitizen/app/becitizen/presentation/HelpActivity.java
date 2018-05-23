@@ -77,18 +77,21 @@ public class HelpActivity extends Fragment {
                     Tab1Principal tab1 = new Tab1Principal();
                     return tab1;
                 case 1:
+                    Tab7User tab7 = new Tab7User();
+                    return tab7;
+                case 2:
                     Tab2Information tab2 = new Tab2Information();
                     return tab2;
-                case 2:
+                case 3:
                     Tab3FAQ tab3 = new Tab3FAQ();
                     return tab3;
-                case 3:
+                case 4:
                     Tab4Forum tab4 = new Tab4Forum();
                     return tab4;
-                case 4:
+                case 5:
                     Tab5Messaging tab5 = new Tab5Messaging();
                     return tab5;
-                case 5:
+                case 6:
                     Tab6Utilities tab6 = new Tab6Utilities();
                     return tab6;
                 default:
@@ -98,8 +101,7 @@ public class HelpActivity extends Fragment {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 6;
+            return 7;
         }
 
         @Override
@@ -108,14 +110,16 @@ public class HelpActivity extends Fragment {
                 case 0:
                     return "Principal";
                 case 1:
-                    return "Information";
+                    return "Users";
                 case 2:
-                    return "FAQ";
+                    return "Information";
                 case 3:
-                    return "Forum";
+                    return "FAQ";
                 case 4:
-                    return "Messaging";
+                    return "Forum";
                 case 5:
+                    return "Messaging";
+                case 6:
                     return "Utilities";
             }
 

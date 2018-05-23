@@ -421,14 +421,16 @@
     <string name="tab_text_4">Forum</string>
     <string name="tab_text_5">Messaging</string>
     <string name="tab_text_6">Utilities</string>
+    <string name="tab_text_7">Users</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
-    <string name="helpPrincipal_2">Information about the city</string>
-    <string name="helpPrincipal_3">FAQ (frequently asked questions)</string>
-    <string name="helpPrincipal_4">A forum</string>
-    <string name="helpPrincipal_5">Private messaging</string>
-    <string name="helpPrincipal_6">Other utilities</string>
-    <string name="helpPrincipal_7">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
+    <string name="helpPrincipal_2">User profile</string>
+    <string name="helpPrincipal_3">Information about the city</string>
+    <string name="helpPrincipal_4">FAQ (frequently asked questions)</string>
+    <string name="helpPrincipal_5">A forum</string>
+    <string name="helpPrincipal_6">Private messaging</string>
+    <string name="helpPrincipal_7">Other utilities</string>
+    <string name="helpPrincipal_8">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
 
 </resources>

@@ -234,7 +234,7 @@
             android:background="@drawable/card_button_4">
 
             <ImageView
-                android:id="@+id/ibBlock"
+                android:id="@+id/ivBlock"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
@@ -246,9 +246,10 @@
                 />
 
             <TextView
+                android:id="@+id/tvBlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ibBlock"
+                android:layout_below="@+id/ivBlock"
                 android:layout_margin="7dp"
                 android:text="@string/blockUser"
                 android:textColor="@android:color/black"
