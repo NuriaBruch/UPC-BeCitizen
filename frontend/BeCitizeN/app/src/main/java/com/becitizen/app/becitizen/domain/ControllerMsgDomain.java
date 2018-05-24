@@ -72,6 +72,8 @@ public class ControllerMsgDomain {
         messages.add(new Message(true, new Date(18,5,16,9,47, 36), "Disfruta de tu día"));
         messages.add(new Message(false, new Date(18,5,16,22,57, 10), "Gracias"));
 
+        Log.d("DEB", messages.toString());
+
         return messages;
     }
 }

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Conversation {
         this.userImage = userImage;
         this.userName = userName;
         this.lastMessage = lastMessage;
+        messages = new ArrayList<>();
     }
 
     public Conversation(int id, int userImage, String userName, Date lastMessage, List<Message> messages) {

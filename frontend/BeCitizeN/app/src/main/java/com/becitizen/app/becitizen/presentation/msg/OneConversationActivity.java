@@ -10,10 +10,8 @@ import android.view.View;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
-import com.becitizen.app.becitizen.domain.entities.Message;
 
 import java.util.Date;
-import java.util.List;
 
 public class OneConversationActivity extends AppCompatActivity {
 
@@ -44,11 +42,13 @@ public class OneConversationActivity extends AppCompatActivity {
           "lastMessageTime": "string"
          */
 
-        int conversationId = getIntent().getExtras().getInt("conversationId", -1);
+        int conversationId = getIntent().getExtras().getInt("id", -1);
         String username = getIntent().getExtras().getString("username", null);
-        int profilePicture = getIntent().getExtras().getInt("conversationId", -1);
+        int profilePicture = getIntent().getExtras().getInt("profilePicture", -1);
         String lastTime = getIntent().getExtras().getString("lastMessageTime", null);
         Date lastMessageTime = new Date(lastTime);
+
+        conversation = new Conversation(conversationId, profilePicture, username, lastMessageTime);
 
         // TODO: set username, profilePicture, lastMessage while loading
 
@@ -58,7 +58,7 @@ public class OneConversationActivity extends AppCompatActivity {
             // TODO: Error
         }
 
-        Log.d("MESSAGES", conversation.getMessages().toString());
+        Log.d("DEBBUGING", conversation.toString());
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
         mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
