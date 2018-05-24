@@ -4,6 +4,7 @@ import android.accounts.NetworkErrorException;
 
 import com.becitizen.app.becitizen.domain.ControllerMsgDomain;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
+import com.becitizen.app.becitizen.domain.entities.Message;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import java.util.List;
@@ -20,7 +21,11 @@ public class ControllerMsgPresentation {
         return instance;
     }
 
-    public Conversation getConversation() {
+    public List<Message> getMessages(int conversationId) {
+        return ControllerMsgDomain.getInstance().getMessages(conversationId);
+    }
+
+    public Conversation getConversation(String email) {
         return ControllerMsgDomain.getInstance().getConversation();
     }
 

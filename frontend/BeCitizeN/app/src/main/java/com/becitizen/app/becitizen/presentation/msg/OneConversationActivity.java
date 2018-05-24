@@ -12,6 +12,7 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.domain.entities.Message;
 
+import java.util.Date;
 import java.util.List;
 
 public class OneConversationActivity extends AppCompatActivity {
@@ -20,7 +21,6 @@ public class OneConversationActivity extends AppCompatActivity {
     private MessageAdapter mMessageAdapter;
 
     private Conversation conversation;
-    private List<Message> messageList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +36,35 @@ public class OneConversationActivity extends AppCompatActivity {
             }
         });
 
-        conversation = ControllerMsgPresentation.getInstance().getConversation();
-        messageList = conversation.getMessages();
+        /* EXTRAS
 
-        Log.i("MESSAGES", messageList.toString());
+          "id": 0,
+          "username": "string",
+          "profilePicture": 0,
+          "lastMessageTime": "string"
+         */
+
+        int conversationId = getIntent().getExtras().getInt("conversationId", -1);
+        String username = getIntent().getExtras().getString("username", null);
+        int profilePicture = getIntent().getExtras().getInt("conversationId", -1);
+        String lastTime = getIntent().getExtras().getString("lastMessageTime", null);
+        Date lastMessageTime = new Date(lastTime);
+
+        // TODO: set username, profilePicture, lastMessage while loading
+
+        if (conversationId != -1) {
+            conversation.setMessages(ControllerMsgPresentation.getInstance().getMessages(conversationId));
+        } else {
+            // TODO: Error
+        }
+
+        Log.d("MESSAGES", conversation.getMessages().toString());
 
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        mMessageAdapter = new MessageAdapter(this, messageList);
+        mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
         mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
         mMessageRecycler.setAdapter(mMessageAdapter);
+
+        // TODO: send new message
     }
 }
