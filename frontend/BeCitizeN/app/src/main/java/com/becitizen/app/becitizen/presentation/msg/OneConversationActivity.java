@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
@@ -17,6 +19,9 @@ public class OneConversationActivity extends AppCompatActivity {
 
     private RecyclerView mMessageRecycler;
     private MessageAdapter mMessageAdapter;
+
+    private ImageView profilePictureView;
+    private TextView usernameView;
 
     private Conversation conversation;
 
@@ -30,9 +35,12 @@ public class OneConversationActivity extends AppCompatActivity {
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("Toolbar","Clicked");
+                Log.d("Toolbar","Clicked");
             }
         });
+
+        profilePictureView = (ImageView) findViewById(R.id.image_message_profile);
+        usernameView = (TextView) findViewById(R.id.text_message_name);
 
         /* EXTRAS
 
@@ -49,21 +57,22 @@ public class OneConversationActivity extends AppCompatActivity {
         Date lastMessageTime = new Date(lastTime);
 
         conversation = new Conversation(conversationId, profilePicture, username, lastMessageTime);
+        Log.d("Conversation", conversation.toString());
 
         // TODO: set username, profilePicture, lastMessage while loading
+        if (profilePicture >= 1 && profilePicture <= 8) profilePictureView.setImageResource(getResources().getIdentifier("userprofile" + profilePicture, "drawable", null));
+        if (username != null) usernameView.setText(username);
 
         if (conversationId != -1) {
             conversation.setMessages(ControllerMsgPresentation.getInstance().getMessages(conversationId));
+
+            mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+            mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
+            mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+            mMessageRecycler.setAdapter(mMessageAdapter);
         } else {
             // TODO: Error
         }
-
-        Log.d("DEBBUGING", conversation.toString());
-
-        mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-        mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
-        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mMessageRecycler.setAdapter(mMessageAdapter);
 
         // TODO: send new message
     }
