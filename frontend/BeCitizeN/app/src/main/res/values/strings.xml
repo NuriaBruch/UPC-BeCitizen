@@ -120,9 +120,16 @@
     <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
     <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
 
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
+
 
     <string name="openInBrowser">Open in Browser</string>
     <string name="openMap">Open Map</string>
+    <string name="empty">Empty</string>
+    <string name="networkError">Network Error</string>
 
     <string name="blockUser">Block user</string>
     <string name="unblockUser">Unblock user</string>
@@ -130,6 +137,7 @@
     <string name="unblockUserMsg">Do you really want to unblock this user?</string>
 
     <string name="errorBlock">It is not possible to block / unblock this user </string>
+    <string name="errorMessaging">It is not possible to send message to this user </string>
 
     <string-array name="currencies" translatable="false">
         <item>coin1</item>

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -29,6 +30,8 @@ import org.json.JSONException;
 
 import java.lang.reflect.Array;
 import java.util.Calendar;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserProfileEdit extends Fragment implements View.OnClickListener {
     private View rootView;
@@ -150,6 +153,9 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
 
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -278,6 +284,9 @@ public class UserProfileEdit extends Fragment implements View.OnClickListener {
 
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

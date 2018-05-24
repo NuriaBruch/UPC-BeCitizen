@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,8 @@ import com.becitizen.app.becitizen.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CurrencyConverterActivity extends Fragment {
 
@@ -80,7 +83,13 @@ public class CurrencyConverterActivity extends Fragment {
                             editTextAmount.setText("0");
                             amount = "0";
                         }
-                        double resultado = ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom,currencyTo,amount);
+                        double resultado = 0;
+                        try {
+                            resultado = ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom,currencyTo,amount);
+                        } catch (NetworkErrorException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
                         textViewResultado.setText(String.valueOf((float)resultado));
                         break;
                 }
@@ -89,7 +98,12 @@ public class CurrencyConverterActivity extends Fragment {
     }
 
     private void getCurrencyList(){
-        ControllerUtilitiesPresentation.getInstance().getCurrencyList(currencyList);
+        try {
+            ControllerUtilitiesPresentation.getInstance().getCurrencyList(currencyList);
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
 }

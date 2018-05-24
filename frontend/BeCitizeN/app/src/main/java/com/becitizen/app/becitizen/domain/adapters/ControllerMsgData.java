@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.exceptions.ServerException;
@@ -26,7 +27,7 @@ public class ControllerMsgData {
         return instance;
     }
 
-    public JSONObject getConversations() throws ServerException {
+    public JSONObject getConversations() throws ServerException, NetworkErrorException {
         String json = ServerAdapter.getInstance().doGetRequest(URI_CONVERSATIONS);
         try {
             return new JSONObject(json);

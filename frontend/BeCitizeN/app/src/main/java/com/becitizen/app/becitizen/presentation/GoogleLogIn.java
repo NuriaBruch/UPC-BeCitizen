@@ -1,7 +1,9 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
@@ -12,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class GoogleLogIn {
 
@@ -61,6 +65,12 @@ public class GoogleLogIn {
         } catch (ApiException e) {
             return LoginResponse.ERROR;
         }
-        return ControllerUserPresentation.getUniqueInstance().googleLogin(account);
+        try {
+            return ControllerUserPresentation.getUniqueInstance().googleLogin(account);
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
+            return null;
+        }
     }
 }
