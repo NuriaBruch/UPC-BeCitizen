@@ -73,13 +73,17 @@
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
 
+    <string name="searchCategoryThreadTitle">Searching in:</string>
+    <string name="searchCategoryHint">Write the words to find</string>
+    <string name="searchCategoryButton">Search</string>
+    <string name="searchCategoryEmptyText">Your search can not be empty</string>
 
     <string name="ccTitle">Currency Converter</string>
     <string name="ccFrom">From:</string>
     <string name="ccTo">To:</string>
     <string name="ccConvertText">Write Amount to Convert</string>
     <string name="ccResult">Result</string>
-    <string name="ccErrorConvert">Sorry we couldn\'t convert that</string>
+    <string name="ccErrorConvert">Sorry we could not convert that</string>
 
 
     <string name="wordOfTheDayTitle">Word of the Day</string>
@@ -121,6 +125,7 @@
         <item>coin2</item>
     </string-array>
 
+
     <string name="openInBrowser">Open in Browser</string>
     <string name="openMap">Open Map</string>
     <string name="empty">Empty</string>
@@ -133,6 +138,11 @@
 
     <string name="errorBlock">It is not possible to block / unblock this user </string>
     <string name="errorMessaging">It is not possible to send message to this user </string>
+
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
@@ -425,14 +435,38 @@
     <string name="tab_text_4">Forum</string>
     <string name="tab_text_5">Messaging</string>
     <string name="tab_text_6">Utilities</string>
+    <string name="tab_text_7">User profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
-    <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
-    <string name="helpPrincipal_2">Information about the city</string>
-    <string name="helpPrincipal_3">FAQ (frequently asked questions)</string>
-    <string name="helpPrincipal_4">A forum</string>
-    <string name="helpPrincipal_5">Private messaging</string>
-    <string name="helpPrincipal_6">Other utilities</string>
-    <string name="helpPrincipal_7">If you want to know more about any of this functionalities, please just click its name on the top of your screen.</string>
+    <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
+    <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>
+    <string name="helpUser_3">In the edit profile screen, you can update your data and also deactivate your account with the deactivate user icon.</string>
+    <string name="helpUser_4">Once you see your profile, you can do logout with the logout icon. This will take you to the initial screen.</string>
+
+    <string name="helpForum_1">You can access the forum by the forum icon in the side menu of the application.</string>
+    <string name="helpForum_2">On the first screen of the forum, there are different categories and you can choose among them, just like in the information part of BeCitizeN.</string>
+    <string name="helpForum_3">Once you have chosen a category you can either start a new thread or chose to see one of the threads created by another user.</string>
+    <string name="helpForum_4">If you have chosen to see a thread, you can comment it by writing in the text entry at the bottom of your screen.</string>
+    <string name="helpForum_5">You can also reply a specific comment by quoting it.</string>
+    <string name="helpForum_6">If you want to indicate that you like a comment or thread you can use the voting icon.</string>
+    <string name="helpForum_7">On the other hand, if you believe that the content of a comment or post is inappropriate you can use the report icon.</string>
+    <string name="helpForum_8">Another important thing you need to know about the forum is that if you click on the profile image of any user, you can accede its user profile.</string>
+
+    <string name="helpUtilities_1">You can accede the utilities by its icon in your side menu.</string>
+    <string name="helpUtilities_2">In this part of the application you have 3 different functionalities:</string>
+    <string name="helpUtilities_3">Currency converter</string>
+    <string name="helpUtilities_4">You can select the currency you want to convert and the currency to which you want it. The conversion among all currencies is actualized twice a day.</string>
+    <string name="helpUtilities_5">Translator</string>
+    <string name="helpUtilities_6">With this functionality you can introduce a text in any language and translate it to any other.</string>
+    <string name="helpUtilities_7">Word of the day</string>
+    <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, also in Catalan. This functionality is possible thanks to rodamot.com.</string>
+
+    <string name="helpMessaging_1">With the private messaging icon in the side menu, you can access your private conversations with other users.</string>
+    <string name="helpMessaging_2">To be able to start a new conversation, you have to go through the forum to a another user profile and there you have to click the private messaging button.</string>
+    <string name="helpMessaging_3">If one user sends you messages, you will see it when you enter to your private conversations.</string>
+    <string name="helpMessaging_4">If you do not want a user to send you any message, you can block him by accessing his profile, either through the forum or the conversation, and click the block user button.</string>
+
+    <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
+    <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
 
 </resources>

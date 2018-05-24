@@ -1,18 +1,39 @@
 
 module.exports = class WordService {
 
+    translateDefinition(definition){
+        const translate = require('google-translate-api');
+        return new Promise((resolve, reject) => {
+            translate(definition, { to: 'en'})
+            .then(res => {
+                resolve(res.text);
+            })
+            .catch(err => {
+                reject(err);
+            });
+        });
+    }
+
     insertWordOnDB(word, callback){
         //callback(err)
-        Word.create({
-            word: word.word,
-            definition: word.definition
-        })
-        .then(wordGenerated => {
-            callback(false)
+
+        //First we should translate the word
+        this.translateDefinition(word.definition)
+        .then(translatedDefinition => {
+            Word.create({
+                word: word.word,
+                definition: translatedDefinition
+            })
+            .then(wordGenerated => {
+                callback(false)
+            })
+            .catch(err => {
+                callback(true);
+            });
         })
         .catch(err => {
             callback(true);
-        })
+        });
     }
 
     scrappingWord(callback){
@@ -45,7 +66,7 @@ module.exports = class WordService {
                             callback(true, null);
                         }     
                         else {
-                            this. insertWordOnDB(word, (err3) => {
+                            this.insertWordOnDB(word,(err3) => {
                                 callback(false, word);
                             });
                         }
@@ -95,7 +116,7 @@ module.exports = class WordService {
     }
 
     getLastWord(callback){
-        // callback(error, found, word
+        // callback(error, found, word)
 
         Word.find({
             limit: 1,
@@ -103,7 +124,7 @@ module.exports = class WordService {
         })
         .then(function(word){
             //console.log(word);
-            if(word)
+            if(word[0] !== undefined)
                 callback(false, true, word[0]);
             else 
                 callback(false, false, null);
@@ -114,13 +135,36 @@ module.exports = class WordService {
         })
     }
 
-    getWord(callback) {
+    getRandomWord(callback){
+        // callback(error, found, word)
+
+        Word.count()
+        .then(num => {
+            let randm = Math.floor((Math.random() * num));
+            if(randm < 0) randm = 0;
+    
+            Word.find({skip: randm, limit: 1})
+            .then(word => {
+                if(word[0] !== undefined)
+                    callback(false, true, word[0]);
+                else 
+                    callback(false, false, null);
+            })
+            .catch(err => {
+                callback(true, false, null);
+            })
+        })
+        .catch(err => {
+            callback(true, false, null);
+        });
+    }
+
+    process(callback){
         var response = {
             status: "Ok",
             errors: [],
             info: null
         }
-
         this.needUpdateServer((err, need) => {
             if(err){
                 response.status = "E1"
@@ -131,25 +175,35 @@ module.exports = class WordService {
                 console.log("SCRAPPING");
                 this.scrappingWord((err2, word) => {
                     if(!err2){
-                        response.info = word;
-                        callback(response)
+                        this.translateDefinition(word.definition)
+                        .then(translatedDefinition => {
+                            response.info = {
+                                word: word.word,
+                                definition: translatedDefinition
+                            };
+                            callback(response);
+                        })
+                        .catch(err => {
+                            response.status = "E1";
+                            response.errors.push("Server error");
+                        })
                     }
                     else{
                         response.status = "E2";
                         response.errors.push("Scrapping error");
                         this.getLastWord((err3, found, word) => {
                             if(err3){
-                                response.info = "E1";
+                                response.status = "E1";
                                 response.errors.push("Server error")
                             }
                             else if(!found){
-                                response.info = "E23";
+                                response.status = "E23";
                                 response.errors.push("Scrapping error and no words in db.")
                             }
                             else{
                                 response.info = this.prettyWord(word);
-                                callback(response);
                             }
+                            callback(response);
                         }); 
                     }
                 })
@@ -171,5 +225,36 @@ module.exports = class WordService {
                 });
             }
         });
+    }
+
+    getWord(callback) {
+        var today = new Date();
+        today = UtilsService.convertUTCDateToLocalDate(today);
+        var todayDay = today.getDay();
+        console.log(todayDay);
+        // If we are on saturday or sunday then..
+        if (todayDay == 6 || todayDay == 7){
+            this.getRandomWord((err, found, word) => {
+                // If we dont find any word means that we should make the process
+                if(!found) {
+                    this.process(res => {
+                        callback(res);
+                    })
+                }
+                else {
+                    var response = {
+                        status: "Ok",
+                        errors: [],
+                        info: this.prettyWord(word)
+                    }
+                    callback(response);
+                }
+            });
+        }
+        else{
+            this.process(res => {
+                callback(res);
+            })
+        }
     }
 }

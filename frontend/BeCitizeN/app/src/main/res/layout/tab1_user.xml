@@ -16,7 +16,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:gravity="center"
-        android:text="@string/tab_text_4"/>
+        android:text="@string/tab_text_7"/>
 
     <ScrollView
         android:id="@+id/scrollHelp7"
@@ -37,43 +37,20 @@
                 android:layout_marginStart="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/ic_menu_forum"
+                app:srcCompat="@drawable/ic_menu_user"
                 android:background="@color/colorPrimary"/>
 
             <TextView
-            android:id="@+id/text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_alignTop="@+id/img1"
-            android:layout_toEndOf="@+id/img1"
-            android:text="@string/helpForum_1"
-            android:textSize="17sp"
-            android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/text12"
+                android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/text1"
-                android:layout_alignEnd="@+id/text1"
-                android:layout_below="@+id/text1"
-                android:text="@string/helpForum_2"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_alignTop="@+id/img1"
+                android:layout_toEndOf="@+id/img1"
+                android:text="@string/helpUser_1"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/text13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/text12"
-                android:layout_alignEnd="@+id/text12"
-                android:layout_below="@+id/text12"
-                android:text="@string/helpForum_3"
-                android:textSize="17sp"
-                android:textColor="@android:color/black"/>
-
 
             <ImageView
                 android:id="@+id/img2"
@@ -81,11 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/img1"
                 android:layout_alignEnd="@+id/img1"
-                android:layout_below="@+id/text13"
+                android:layout_below="@+id/text1"
                 android:layout_marginTop="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/ic_icons8_sent_96"/>
+                app:srcCompat="@drawable/log_out"/>
 
             <TextView
                 android:id="@+id/text2"
@@ -95,7 +72,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_alignTop="@+id/img2"
                 android:layout_toEndOf="@+id/img2"
-                android:text="@string/helpForum_4"
+                android:text="@string/helpUser_4"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"/>
 
@@ -109,7 +86,7 @@
                 android:layout_marginTop="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/quote_icon"/>
+                app:srcCompat="@drawable/edit_user"/>
 
             <TextView
                 android:id="@+id/text3"
@@ -119,21 +96,21 @@
                 android:layout_marginEnd="20dp"
                 android:layout_alignTop="@+id/img3"
                 android:layout_toEndOf="@+id/img3"
-                android:text="@string/helpForum_5"
+                android:text="@string/helpUser_2"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"/>
 
             <ImageView
-            android:id="@+id/img4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/img3"
-            android:layout_alignEnd="@+id/img3"
-            android:layout_below="@+id/text3"
-            android:layout_marginTop="20dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/vote_icon"/>
+                android:id="@+id/img4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/img3"
+                android:layout_alignEnd="@+id/img3"
+                android:layout_below="@+id/text3"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/delete_user"/>
 
             <TextView
                 android:id="@+id/text4"
@@ -141,60 +118,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_alignTop="@+id/img4"
                 android:layout_toEndOf="@+id/img4"
-                android:text="@string/helpForum_6"
-                android:textSize="17sp"
-                android:textColor="@android:color/black"/>
-
-            <ImageView
-                android:id="@+id/img5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/img4"
-                android:layout_alignEnd="@+id/img4"
-                android:layout_below="@+id/text4"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/report_icon"/>
-
-            <TextView
-                android:id="@+id/text5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_alignTop="@+id/img5"
-                android:layout_toEndOf="@+id/img5"
-                android:text="@string/helpForum_7"
-                android:textSize="17sp"
-                android:textColor="@android:color/black"/>
-
-            <ImageView
-                android:id="@+id/img6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/img5"
-                android:layout_alignEnd="@+id/img5"
-                android:layout_below="@+id/text5"
-                android:layout_marginTop="20dp"
-                android:padding="2dp"
-                android:background="@android:color/black"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/userprofile1"/>
-
-            <TextView
-                android:id="@+id/text6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_alignTop="@+id/img6"
-                android:layout_toEndOf="@+id/img6"
-                android:text="@string/helpForum_8"
+                android:text="@string/helpUser_3"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"/>
 

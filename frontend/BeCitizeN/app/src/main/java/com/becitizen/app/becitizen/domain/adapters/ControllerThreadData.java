@@ -11,6 +11,7 @@ import org.json.JSONObject;
 public class ControllerThreadData {
 
     //URIs
+
     private static final String URI_BCN = "http://becitizen.cf";
 
     private static final String URI_THREADS_CATEGORY = URI_BCN + "/getAllThreadsCategory?category=";
@@ -23,6 +24,7 @@ public class ControllerThreadData {
     private static final String URI_VOTE_COMMENT = URI_BCN + "/voteComment";
     private static final String URI_REPORT_THREAD = URI_BCN + "/reportThread";
     private static final String URI_REPORT_COMMENT = URI_BCN + "/reportComment";
+    private static final String URI_THREADS_CATEGORY_SEARCH = URI_BCN + "/getThreadWords?category=";
 
 
     private static ControllerThreadData instance = null;
@@ -164,4 +166,9 @@ public class ControllerThreadData {
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    public String getThreadsCategorySearch(String category, int block, boolean sortedByVotes, String searchWords) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY_SEARCH + category + "&block=" + block + "&sortedByVotes=" + String.valueOf(sortedByVotes) + "&words=" + searchWords);
+    }
 }
+
+

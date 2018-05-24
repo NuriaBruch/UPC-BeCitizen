@@ -381,8 +381,8 @@ public class ControllerUserDomain {
             if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
             if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
             if(!info.isNull("profilePicture")) bundle.putInt("image", info.getInt("profilePicture"));
-            if(!info.isNull("email")) bundle.putInt("email", info.getInt("email"));
-            if(!info.isNull("blocked")) bundle.putInt("blocked", info.getInt("blocked"));
+            if(!info.isNull("email")) bundle.putString("email", info.getString("email"));
+            if(!info.isNull("blocked")) bundle.putBoolean("blocked", info.getBoolean("blocked"));
 
             if (username.equals(currentUser.getUsername())) {
                 currentUser.setFirstName(info.getString("name"));

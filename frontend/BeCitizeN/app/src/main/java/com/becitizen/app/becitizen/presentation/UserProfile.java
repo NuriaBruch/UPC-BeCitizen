@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,10 +41,12 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private TextView tvRank;
     private ImageView ivUserImage;
     private FloatingActionButton fbPrivateMessage;
-    private ImageButton ibEditProfile;
-    private ImageButton ibSignOut;
+    private CardView ibEditProfile;
+    private CardView ibSignOut;
     private ImageView rankIcon;
-    private ImageButton blockButton;
+    private ImageView ivBlock;
+    private TextView tvBlock;
+    private CardView blockButton;
 
 
     private String userMail;
@@ -79,6 +82,8 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         tvCountry = rootView.findViewById(R.id.tvCountry);
         tvBiography = rootView.findViewById(R.id.tvBiography);
         ivUserImage = rootView.findViewById(R.id.ivUserImage);
+        ivBlock = rootView.findViewById(R.id.ivBlock);
+        tvBlock = rootView.findViewById(R.id.tvBlock);
 
         ibEditProfile = rootView.findViewById(R.id.ibEditProfile);
         ibEditProfile.setOnClickListener(this);
@@ -135,11 +140,13 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
             if (!loggedUser) {
                 if (blockedUser) {
-                    blockButton.setImageResource(R.drawable.unblock_user);
+                    ivBlock.setImageResource(R.drawable.unblock_user);
+                    tvBlock.setText(R.string.unblockUser);
                 }
 
                 else {
-                    blockButton.setImageResource(R.drawable.block_user);
+                    ivBlock.setImageResource(R.drawable.block_user);
+                    tvBlock.setText(R.string.blockUser);
                 }
             }
         }
@@ -337,7 +344,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         if (!blockedUser) {
             try {
                 controllerUserPresentation.blockUser(userMail);
-                blockButton.setImageResource(R.drawable.unblock_user);
+                ivBlock.setImageResource(R.drawable.unblock_user);
+                tvBlock.setText(R.string.unblockUser);
+                blockedUser = !blockedUser;
             }
             catch (ServerException e) {
                 Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -354,7 +363,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         else {
             try {
                 controllerUserPresentation.unblockUser(userMail);
-                blockButton.setImageResource(R.drawable.block_user);
+                ivBlock.setImageResource(R.drawable.block_user);
+                tvBlock.setText(R.string.blockUser);
+                blockedUser = !blockedUser;
             }
             catch (ServerException e) {
                 Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
