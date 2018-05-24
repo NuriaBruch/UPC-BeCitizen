@@ -27,7 +27,7 @@ module.exports = {
     },
     type: {
       type: 'string',
-      enum: ['text','list']
+      enum: ['text','list','map']
     },
     isTarifa: {
       type: 'boolean',
