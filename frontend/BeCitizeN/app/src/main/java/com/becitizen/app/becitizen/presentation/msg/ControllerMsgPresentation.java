@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.presentation.msg;
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.ControllerMsgDomain;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
@@ -22,7 +24,7 @@ public class ControllerMsgPresentation {
         return ControllerMsgDomain.getInstance().getConversation();
     }
 
-    public List<Conversation> getConversations() throws ServerException {
+    public List<Conversation> getConversations() throws ServerException, NetworkErrorException {
         return ControllerMsgDomain.getInstance().getConversations();
     }
 }

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
@@ -23,6 +24,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DataRegisterView extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText birthDateInput;
@@ -118,6 +121,9 @@ public class DataRegisterView extends AppCompatActivity implements View.OnClickL
             }
         } catch (ServerException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

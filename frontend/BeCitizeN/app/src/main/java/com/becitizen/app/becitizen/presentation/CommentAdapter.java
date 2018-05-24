@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -26,6 +27,8 @@ import com.becitizen.app.becitizen.exceptions.ServerException;
 import org.json.JSONException;
 
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by ISA on 27/04/2018.
@@ -124,6 +127,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                             }
                             catch (ServerException e) {
                                 Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                            } catch (NetworkErrorException e) {
+                                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }
                     }
@@ -144,6 +150,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 }
                 catch (ServerException e) {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                } catch (NetworkErrorException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
@@ -162,6 +171,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
                 }
                 catch (ServerException e) {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                } catch (NetworkErrorException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });

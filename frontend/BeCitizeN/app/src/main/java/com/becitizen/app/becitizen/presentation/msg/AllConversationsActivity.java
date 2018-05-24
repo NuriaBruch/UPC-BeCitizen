@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation.msg;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,8 @@ import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AllConversationsActivity extends Fragment {
 
@@ -52,6 +55,9 @@ public class AllConversationsActivity extends Fragment {
             e.printStackTrace();
             conversations = new ArrayList<>();
             Toast.makeText(rootView.getContext(), getContext().getResources().getString(R.string.serverError), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
         mAdapter = new ConversationAdapter(getContext(), conversations);
         mRecyclerView.setAdapter(mAdapter);

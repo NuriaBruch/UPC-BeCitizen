@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
@@ -49,7 +51,7 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getThreadsCategory(String category, int block, boolean sortedByVotes) {
+    public String getThreadsCategory(String category, int block, boolean sortedByVotes) throws NetworkErrorException {
         return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category + "&block=" + block + "&sortedByVotes=" + String.valueOf(sortedByVotes));
     }
 
@@ -58,7 +60,7 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getCategories() {
+    public String getCategories() throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_CATEGORIES);
     }
 
@@ -69,7 +71,7 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public boolean newThread(Thread t) throws ServerException {
+    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
         JSONObject json = new JSONObject();
         try {
             json.put("title", t.getTitle());
@@ -94,15 +96,15 @@ public class ControllerThreadData {
     }
 
 
-    public String getThreadContent(int id) {
+    public String getThreadContent(int id) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_THREAD_CONTENT + String.valueOf(id));
     }
 
-    public String getThreadComments(int id, boolean sortedByVotes) {
+    public String getThreadComments(int id, boolean sortedByVotes) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id) + "&sortedByVotes="+ String.valueOf(sortedByVotes));
     }
 
-    public String newComment(String commentText, int threadId) {
+    public String newComment(String commentText, int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         try {
             json.put("content", commentText);
@@ -120,7 +122,7 @@ public class ControllerThreadData {
      * @param threadId  Identificador del thread que se quiere votar
      * @return Server response
      */
-    public String voteThread(int threadId) {
+    public String voteThread(int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -132,7 +134,7 @@ public class ControllerThreadData {
      * @param threadId  Identificador del thread que se quiere reportar
      * @return Server response
      */
-    public String reportThread(int threadId) {
+    public String reportThread(int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -144,7 +146,7 @@ public class ControllerThreadData {
      * @param commentId  Identificador del comentario que se quiere votar
      * @return Server response
      */
-    public String voteComment(int commentId) {
+    public String voteComment(int commentId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_COMMENT + "?commentId=" + commentId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -156,7 +158,7 @@ public class ControllerThreadData {
      * @param commentId  Identificador del comentario que se quiere reportar
      * @return Server response
      */
-    public String reportComment(int commentId) {
+    public String reportComment(int commentId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_COMMENT + "?commentId=" + commentId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);

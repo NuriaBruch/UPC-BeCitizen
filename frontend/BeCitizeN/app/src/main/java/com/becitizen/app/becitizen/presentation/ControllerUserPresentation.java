@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -49,7 +50,7 @@ public class ControllerUserPresentation {
      * @param email Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String email) throws ServerException {
+    public boolean existsMail(String email) throws ServerException, NetworkErrorException {
         return controllerUserDomain.existsMail(email);
     }
 
@@ -73,7 +74,7 @@ public class ControllerUserPresentation {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException{
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException, NetworkErrorException {
         return controllerUserDomain.registerData(username, firstName, lastName, birthDate, country);
     }
 
@@ -84,7 +85,7 @@ public class ControllerUserPresentation {
      * @param password Contrasena
      * @return Cierto si las credenciales son correctas, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) throws ServerException {
+    public boolean checkCredentials(String email, String password) throws ServerException, NetworkErrorException {
         return controllerUserDomain.checkCredentials(email,password);
     }
 
@@ -93,7 +94,7 @@ public class ControllerUserPresentation {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() throws ServerException {
+    public LoginResponse facebookLogin() throws ServerException, NetworkErrorException {
         return controllerUserDomain.facebookLogin();
     }
 
@@ -103,7 +104,7 @@ public class ControllerUserPresentation {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException{
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException, NetworkErrorException {
         return controllerUserDomain.googleLogin(account);
     }
 
@@ -161,11 +162,11 @@ public class ControllerUserPresentation {
         ControllerUserDomain.getUniqueInstance().initializeMySharedPreferences(context);
     }
 
-    public boolean deactivateAccount() throws ServerException, JSONException {
+    public boolean deactivateAccount() throws ServerException, JSONException, NetworkErrorException {
         return controllerUserDomain.deactivateAccount();
     }
 
-    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException, NetworkErrorException {
         return controllerUserDomain.editProfile(firstName, lastName, birthDate, image, country, biography);
     }
 
@@ -174,7 +175,7 @@ public class ControllerUserPresentation {
     }
 
 
-    public Bundle viewProfile(String username) throws ServerException, JSONException {
+    public Bundle viewProfile(String username) throws ServerException, JSONException, NetworkErrorException {
         return controllerUserDomain.viewProfile(username);
     }
 
@@ -182,11 +183,11 @@ public class ControllerUserPresentation {
         return controllerUserDomain.checkUsername(username);
     }
 
-    public void blockUser(String mail) throws ServerException, JSONException {
+    public void blockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserDomain.blockUser(mail);
     }
 
-    public void unblockUser(String mail) throws ServerException, JSONException {
+    public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserDomain.unblockUser(mail);
     }
 }
