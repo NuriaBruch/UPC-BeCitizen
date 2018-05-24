@@ -139,11 +139,6 @@
     <string name="errorBlock">It is not possible to block / unblock this user </string>
     <string name="errorMessaging">It is not possible to send message to this user </string>
 
-    <string-array name="currencies" translatable="false">
-        <item>coin1</item>
-        <item>coin2</item>
-    </string-array>
-
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
