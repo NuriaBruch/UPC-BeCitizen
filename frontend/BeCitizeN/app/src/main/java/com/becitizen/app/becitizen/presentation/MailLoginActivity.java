@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class MailLoginActivity extends AppCompatActivity {
@@ -39,7 +42,13 @@ public class MailLoginActivity extends AppCompatActivity {
 
         String email = tietMail.getText().toString().trim();
         try {
-            boolean i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
+            boolean i = false;
+            try {
+                i = controllerUserPresentation.checkCredentials(email, tietPassw.getText().toString().trim());
+            } catch (NetworkErrorException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
+            }
 
             if (i) {
                 Intent intent = new Intent(this, SideMenuActivity.class);

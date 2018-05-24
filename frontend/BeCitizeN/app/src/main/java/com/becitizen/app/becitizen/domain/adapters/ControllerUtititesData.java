@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.exceptions.ServerException;
@@ -23,7 +24,7 @@ public class ControllerUtititesData {
     private ControllerUtititesData() {
     }
 
-    public void getCurrencyList(List<String> currencyList){
+    public void getCurrencyList(List<String> currencyList) throws NetworkErrorException {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_ALL_CURRENCIES));
             if (info.get("status").equals("Ok")) {
@@ -41,7 +42,7 @@ public class ControllerUtititesData {
 
     }
 
-    public double getConversion(String currencyFrom, String currencyTo, String amount) {
+    public double getConversion(String currencyFrom, String currencyTo, String amount) throws NetworkErrorException{
         try{
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_EXCHANGE+"?currencyFrom="+currencyFrom+"&currencyTo="+currencyTo+"&amount="+amount));
             if(info.get("conversion") != null)
@@ -53,7 +54,7 @@ public class ControllerUtititesData {
         }
     }
 
-    public String[] getWordOfTheDay() throws JSONException, ServerException {
+    public String[] getWordOfTheDay() throws JSONException, ServerException, NetworkErrorException{
         JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_GET_WORD));
         if (info.get("status").equals("Ok")) {
             JSONObject data = info.getJSONObject("info");

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.domain.adapters.ControllerMsgData;
@@ -32,7 +33,7 @@ public class ControllerMsgDomain {
         return new Conversation(1, 2, "Alex", new Date(18,5,16,22,57, 10));
     }
 
-    public List<Conversation> getConversations() throws ServerException {
+    public List<Conversation> getConversations() throws ServerException, NetworkErrorException {
         JSONObject json = ControllerMsgData.getInstance().getConversations();
 
         try {

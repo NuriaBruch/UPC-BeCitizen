@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
@@ -19,6 +21,8 @@ import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInformationAdapter.ViewHolder> {
 
@@ -49,17 +53,23 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
 
             Information info = null;
 
-            if (content.getVisibility() == View.GONE)
-                info = ControllerInformationPresentation.getUniqueInstance().getInformation(mData.get(getAdapterPosition()).getId());
+            if (content.getVisibility() == View.GONE) {
+
+                try {
+                    info = ControllerInformationPresentation.getUniqueInstance().getInformation(mData.get(getAdapterPosition()).getId());
+                } catch (NetworkErrorException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
 
             String url = "";
             ArrayList<Marker> markers = new ArrayList<>();
-            markers.add(new Marker("test", 41.405663, 2.138554));
 
             if (info != null) {
                 content.setText(info.getContent());
                 url = info.getUrl();
-                //markers = info.getMarkers();
+                markers = info.getMarkers();
                 openInBrowser.setOnClickListener(new OpenInBrowserOnClick(url, markers));
             }
 

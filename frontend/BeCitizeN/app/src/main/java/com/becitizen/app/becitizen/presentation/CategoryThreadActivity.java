@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,8 +44,11 @@ public class CategoryThreadActivity extends Fragment  {
         public void handleMessage(Message msg) {
             adapter.addAll(dataChunk);
             progressBar.setVisibility(View.GONE);
-            if (adapter.getCount() == 0) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
+            if (msg.what ==0 && adapter.getCount() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.empty), Toast.LENGTH_SHORT);
+                toast.show();
+            } else if (msg.what == 1) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
@@ -54,8 +58,12 @@ public class CategoryThreadActivity extends Fragment  {
     private Runnable loadThreads = new Runnable() {
         public void run() {
             ++block;
-            dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block, sortedByVotes);
-            UIUpdater.sendEmptyMessage(0);
+            try {
+                dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block, sortedByVotes);
+                UIUpdater.sendEmptyMessage(0);
+            } catch (NetworkErrorException e) {
+                UIUpdater.sendEmptyMessage(1);
+            }
         }
     };
 

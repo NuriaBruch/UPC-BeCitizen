@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.becitizen.app.becitizen.exceptions.ServerException;
 import java.util.regex.Pattern;
 
 import static android.util.Patterns.EMAIL_ADDRESS;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ViewSignUpMail extends AppCompatActivity {
 
@@ -66,6 +68,9 @@ public class ViewSignUpMail extends AppCompatActivity {
             }
         } catch (ServerException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         return true;

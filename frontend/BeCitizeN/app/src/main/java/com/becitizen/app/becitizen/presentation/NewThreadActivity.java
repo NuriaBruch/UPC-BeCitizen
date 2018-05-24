@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,8 @@ import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class NewThreadActivity extends Fragment implements View.OnClickListener {
 
@@ -47,7 +50,12 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
 
         newThreadSubmit.setOnClickListener(this);
 
-        categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+        try {
+            categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.row_forum_category, categories);
 
@@ -87,6 +95,9 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
         } catch (ServerException e) {
             Toast.makeText(rootView.getContext(), getResources().getText(R.string.serverError), Toast.LENGTH_LONG).show();
             e.printStackTrace();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,15 +13,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 
 import java.util.ArrayList;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class ForumCategoriesActivity extends Fragment {
 
     private View rootView;
-    private ArrayList<String> categories;
+    private ArrayList<String> categories = new ArrayList<>();
     ArrayAdapter<String> adapter;
     private Handler UIUpdater = new Handler() {
         @Override
@@ -28,6 +32,10 @@ public class ForumCategoriesActivity extends Fragment {
             for (int i = 0; i < categories.size(); ++i)
                 adapter.add(categories.get(i));
             progressBar.setVisibility(View.GONE);
+            if (msg.what == 1) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     };
     private ProgressBar progressBar;
@@ -59,8 +67,12 @@ public class ForumCategoriesActivity extends Fragment {
 
         Runnable loadCategories = new Runnable() {
             public void run() {
-                categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
-                UIUpdater.sendEmptyMessage(0);
+                try {
+                    categories = ControllerThreadPresentation.getUniqueInstance().getCategories();
+                    UIUpdater.sendEmptyMessage(0);
+                } catch (NetworkErrorException e) {
+                    UIUpdater.sendEmptyMessage(1);
+                }
             }
         };
 

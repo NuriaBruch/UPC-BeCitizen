@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,6 +25,8 @@ import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -176,6 +179,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
             finishFragment();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -339,6 +345,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
             catch (JSONException e) {
                 Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            } catch (NetworkErrorException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
 
@@ -353,6 +362,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
                 catch (JSONException e) {
                 Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            } catch (NetworkErrorException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,8 +45,11 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
             dataModels.addAll(dataChunk);
             adapter.notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
-            if (dataModels.size() == 0) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
+            if (msg.what ==0 && dataModels.size() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.empty), Toast.LENGTH_SHORT);
+                toast.show();
+            } else if (msg.what == 1) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
@@ -54,8 +58,12 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
 
     private Runnable loadInformations = new Runnable() {
         public void run() {
-            dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategory(category);
-            UIUpdater.sendEmptyMessage(0);
+            try {
+                dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategory(category);
+                UIUpdater.sendEmptyMessage(0);
+            } catch (NetworkErrorException e) {
+                UIUpdater.sendEmptyMessage(1);
+            }
         }
     };
 
