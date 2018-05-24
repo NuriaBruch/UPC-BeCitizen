@@ -15,6 +15,8 @@ public class ControllerMsgData {
 
     private static final String URI_CONVERSATIONS = URI_BCN + "/conversations";
     private static final String URI_NEW_CONVERSATION = URI_BCN + "/conversation";
+    private static final String URI_NEW_MESSAGE = URI_BCN + "/message";
+    private static final String URI_MESSAGES = URI_BCN + "/conversationMessages";
 
     // instance
     private static ControllerMsgData instance;
@@ -39,4 +41,48 @@ public class ControllerMsgData {
     }
 
 
+    public void newMessage(int id, String s) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("idConver", id);
+            json.put("content", s);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_NEW_MESSAGE, json.toString()};
+
+        String response = ServerAdapter.getInstance().doPostRequest(dataRequest);
+        Log.d("Response", response);
+    }
+
+    public JSONObject getConversation(String email) throws ServerException {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_NEW_CONVERSATION, json.toString()};
+
+        String response = ServerAdapter.getInstance().doPostRequest(dataRequest);
+        try {
+            return new JSONObject(response);
+        } catch (JSONException e) {
+            Log.e("SERVER_RESPONSE", response);
+            e.printStackTrace();
+            throw new ServerException("The server has not returned a JSONObject");
+        }
+    }
+
+    public JSONObject getMessages(int conversationId) throws ServerException {
+        String response = ServerAdapter.getInstance().doGetRequest(URI_MESSAGES + "?idConver=" + conversationId);
+        Log.d("Conversation id", conversationId + "");
+        try {
+            return new JSONObject(response);
+        } catch (JSONException e) {
+            Log.e("SERVER_RESPONSE", response);
+            e.printStackTrace();
+            throw new ServerException("The server has not returned a JSONObject");
+        }
+    }
 }

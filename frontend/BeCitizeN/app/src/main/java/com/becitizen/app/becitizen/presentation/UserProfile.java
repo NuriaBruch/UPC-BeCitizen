@@ -13,7 +13,6 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,6 @@ import com.becitizen.app.becitizen.presentation.msg.ControllerMsgPresentation;
 import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -324,17 +322,21 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
     private void startConversation() {
         // TODO començar nova conversa
-        if (userMail == null) {
-            Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
-        } else {
-            Conversation c = ControllerMsgPresentation.getInstance().getConversation(userMail);
-            Intent intent = new Intent(getContext(), OneConversationActivity.class);
-            intent.putExtra("id", c.getId());
-            intent.putExtra("username", c.getUserName());
-            intent.putExtra("profilePicture", c.getUserImage());
-            intent.putExtra("lastMessageTime", c.getLastMessage().toString());
-            startActivity(intent);
-        }
+        if (userMail != null) {
+            Conversation c = null;
+            try {
+                c = ControllerMsgPresentation.getInstance().getConversation(userMail);
+                Intent intent = new Intent(getContext(), OneConversationActivity.class);
+                intent.putExtra("id", c.getId());
+                intent.putExtra("username", username); //c.getUserName());
+                intent.putExtra("profilePicture", c.getUserImage());
+                intent.putExtra("lastMessageTime", c.getLastMessage().toString());
+                startActivity(intent);
+            } catch (ServerException e) {
+                e.printStackTrace();
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
+            }
+        } else Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
     }
 
     private void blockUser() {

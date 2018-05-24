@@ -12,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.List;
 public class ControllerMsgDomain {
 
     private static ControllerMsgDomain instance;
+
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
     protected ControllerMsgDomain() {
     }
@@ -28,9 +33,26 @@ public class ControllerMsgDomain {
         return instance;
     }
 
-    public Conversation getConversation() {
-        // TODO: Conversation is harcoded
-        return new Conversation(1, 2, "Alex", new Date(18,5,16,22,57, 10));
+    public Conversation getConversation(String email) throws ServerException {
+        JSONObject json = ControllerMsgData.getInstance().getConversation(email);
+
+        try {
+            if (!json.getString("status").equalsIgnoreCase("OK")) {
+                Log.e("SERVER_ERRORS", json.getJSONArray("errors").toString());
+                throw new ServerException("Server has rerturned errors");
+            } else {
+                return new Conversation(
+                        json.getInt("conversationId"),
+                        json.getInt("profilePicture"),
+                        json.getString("username"),
+                        json.getString("name"),
+                        new Date(18,5,16,22,57, 10));
+            }
+        } catch (JSONException e) {
+            Log.e("SERVER_RESPONSE", json.toString());
+            e.printStackTrace();
+            throw new ServerException("Server has not returned the expected JSON!");
+        }
     }
 
     public List<Conversation> getConversations() throws ServerException, NetworkErrorException {
@@ -51,7 +73,7 @@ public class ControllerMsgDomain {
                             c.getInt("id"),
                             c.getInt("profilePicture"),
                             c.getString("username"),
-                            new Date(c.getString("lastMessageTime"))));
+                                dateFormat.parse(c.getString("lastMessageTime"))));
                 }
 
                 return conversations;
@@ -60,20 +82,49 @@ public class ControllerMsgDomain {
             Log.e("SERVER_RESPONSE", json.toString());
             e.printStackTrace();
             throw new ServerException("Server has not returned the expected JSON!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new ServerException("Error formatting date.");
         }
     }
 
-    public List<Message> getMessages(int conversationId) {
-        // TODO: Is harcoded
-        List<Message> messages = new ArrayList<>();
-        messages.add(new Message(true, new Date(18,5,16,9,45, 30), "Muchas felicidades :)"));
-        messages.add(new Message(true, new Date(18,5,16,9,45, 49), "Qué tal todo?"));
-        messages.add(new Message(true, new Date(18,5,16,9,46, 50), "A ver si quedamos, que hace mucho que no nos vemos!"));
-        messages.add(new Message(true, new Date(18,5,16,9,47, 36), "Disfruta de tu día"));
-        messages.add(new Message(false, new Date(18,5,16,22,57, 10), "Gracias"));
+    public List<Message> getMessages(int conversationId) throws ServerException {
+        JSONObject json = ControllerMsgData.getInstance().getMessages(conversationId);
 
-        Log.d("DEB", messages.toString());
+        try {
+            if (!json.getString("status").equalsIgnoreCase("OK")) {
+                Log.e("SERVER_ERRORS", json.getJSONArray("errors").toString());
+                throw new ServerException("Server has rerturned errors");
+            } else {
+                JSONArray jsonArray = json.getJSONArray("messages");
+                List<Message> messages = new ArrayList<>();
 
-        return messages;
+                for (int i = jsonArray.length()-1; i >= 0; i--) {
+                    JSONObject c = jsonArray.getJSONObject(i);
+                    if(!c.isNull("date")) {
+                        try {
+                            messages.add(new Message(
+                                    c.getBoolean("sendedByMe"),
+                                    dateFormat.parse(c.getString("date")),
+                                    c.getString("content")));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                            Log.e("DATE", c.toString());
+                        }
+                    }
+                }
+
+                Log.d("Messages", messages.toString());
+                return messages;
+            }
+        } catch (JSONException e) {
+            Log.e("SERVER_RESPONSE", json.toString());
+            e.printStackTrace();
+            throw new ServerException("Server has not returned the expected JSON!");
+        }
+    }
+
+    public void newMessage(int id, String s) {
+        ControllerMsgData.getInstance().newMessage(id, s);
     }
 }

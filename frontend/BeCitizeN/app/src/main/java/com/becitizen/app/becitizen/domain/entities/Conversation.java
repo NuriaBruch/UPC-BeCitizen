@@ -9,6 +9,7 @@ public class Conversation {
     private int id;
     private int userImage;
     private String userName;
+    private String name;
     private Date lastMessage;
     private List<Message> messages;
 
@@ -18,6 +19,14 @@ public class Conversation {
         this.userName = userName;
         this.lastMessage = lastMessage;
         messages = new ArrayList<>();
+    }
+
+    public Conversation(int id, int userImage, String userName, String name, Date lastMessage) {
+        this.id = id;
+        this.userImage = userImage;
+        this.userName = userName;
+        this.name = name;
+        this.lastMessage = lastMessage;
     }
 
     public Conversation(int id, int userImage, String userName, Date lastMessage, List<Message> messages) {

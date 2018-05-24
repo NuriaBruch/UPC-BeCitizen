@@ -21,15 +21,19 @@ public class ControllerMsgPresentation {
         return instance;
     }
 
-    public List<Message> getMessages(int conversationId) {
+    public List<Message> getMessages(int conversationId) throws ServerException {
         return ControllerMsgDomain.getInstance().getMessages(conversationId);
     }
 
-    public Conversation getConversation(String email) {
-        return ControllerMsgDomain.getInstance().getConversation();
+    public Conversation getConversation(String email) throws ServerException {
+        return ControllerMsgDomain.getInstance().getConversation(email);
     }
 
     public List<Conversation> getConversations() throws ServerException, NetworkErrorException {
         return ControllerMsgDomain.getInstance().getConversations();
+    }
+
+    public void newMessage(int id, String s) {
+        ControllerMsgDomain.getInstance().newMessage(id, s);
     }
 }

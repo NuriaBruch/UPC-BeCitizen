@@ -36,9 +36,14 @@ public class SideMenuActivity extends AppCompatActivity
             goToLogin();
         }
 
-        //Set the fragment initially
-        Fragment fragment = new InsideActivity();
-        fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfile")) {
+            viewProfile(bundle);
+        } else {
+            //Set the fragment initially
+            Fragment fragment = new InsideActivity();
+            fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -174,5 +179,9 @@ public class SideMenuActivity extends AppCompatActivity
         return true;
     }
 
-
+    private void viewProfile(Bundle bundle) {
+        Fragment fragment = new UserProfile();
+        fragment.setArguments(bundle);
+        fragmentTransaction(fragment, "USER_PROFILE");
+    }
 }

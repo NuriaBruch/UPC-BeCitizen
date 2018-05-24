@@ -18,7 +18,8 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <include layout="@layout/app_bar_one_conversation"/>
+            <include layout="@layout/app_bar_one_conversation"
+                android:id="@+id/appbar_conversation"/>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
