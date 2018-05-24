@@ -5,112 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.becitizen.app.becitizen.presentation.UserProfile"
+    android:paddingTop="20dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
     >
+
+    <ImageView
+        android:id="@+id/ivUserImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/blockButton"
+        android:layout_toStartOf="@+id/ibEditProfile"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="#000000"
+        android:padding="1dp"
+        app:srcCompat="@drawable/deactivated_user" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/ibEditProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_button_3">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:layout_margin="8dp"
+                android:background="@null"
+                app:srcCompat="@drawable/edit_user" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/ibSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/ibEditProfile"
+        android:layout_marginTop="20dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="8dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_button_2">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitCenter"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/log_out"
+                android:background="@null"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivUserImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Username"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Firstname Lastname"
+        android:textSize="25sp"
+        android:textColor="@android:color/black"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_below="@+id/tvName">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:paddingLeft="30dp">
-
-            <ImageView
-                android:id="@+id/ivUserImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:background="#000000"
-                android:padding="1dp"
-                app:srcCompat="@drawable/deactivated_user" />
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ibEditProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                app:cardElevation="8dp"
-                app:cardCornerRadius="8dp"
-                >
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/card_button_3">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_margin="8dp"
-                        android:background="@null"
-                        app:srcCompat="@drawable/edit_user" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/ibSignOut"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/ibEditProfile"
-                android:layout_marginTop="20dp"
-                app:cardElevation="8dp"
-                app:cardCornerRadius="8dp"
-                >
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/card_button_2">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:scaleType="fitCenter"
-                        android:layout_margin="8dp"
-                        app:srcCompat="@drawable/log_out"
-                        android:background="@null"/>
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <TextView
-                android:id="@+id/tvUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ivUserImage"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="Username"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvUsername"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
-                android:text="Firstname Lastname"
-                android:textSize="25sp"
-                android:textColor="@android:color/black"/>
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/labelRank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvName"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
                 android:text="@string/rankUP"
                 android:textSize="20sp"
@@ -184,7 +190,7 @@
                 android:id="@+id/labelBiography"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/labelCountry"
+                android:layout_below="@+id/tvCountry"
                 android:text="@string/biographyUP"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -211,7 +217,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
         android:textAllCaps="false"
         app:backgroundTint="@color/colorAccent"
         app:fabSize="normal"
@@ -221,17 +226,16 @@
         android:id="@+id/blockButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
         app:cardElevation="8dp"
         app:cardCornerRadius="8dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/card_button_4">
+            android:background="@drawable/card_button_4"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/ivBlock"
@@ -240,7 +244,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="7dp"
+                android:layout_marginBottom="8dp"
                 app:srcCompat="@drawable/block_user"
                 android:background="@null"
                 />
@@ -250,7 +254,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ivBlock"
-                android:layout_margin="7dp"
+                android:layout_centerHorizontal="true"
                 android:text="@string/blockUser"
                 android:textColor="@android:color/black"
                 />
