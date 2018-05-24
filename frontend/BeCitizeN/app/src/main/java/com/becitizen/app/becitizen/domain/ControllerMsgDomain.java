@@ -29,14 +29,7 @@ public class ControllerMsgDomain {
 
     public Conversation getConversation() {
         // TODO: Conversation is harcoded
-        List<Message> messages = new ArrayList<>();
-        messages.add(new Message(true, new Date(18,5,16,9,45, 30), "Muchas felicidades :)"));
-        messages.add(new Message(true, new Date(18,5,16,9,45, 49), "Qué tal todo?"));
-        messages.add(new Message(true, new Date(18,5,16,9,46, 50), "A ver si quedamos, que hace mucho que no nos vemos!"));
-        messages.add(new Message(true, new Date(18,5,16,9,47, 36), "Disfruta de tu día"));
-        messages.add(new Message(false, new Date(18,5,16,22,57, 10), "Gracias"));
-
-        return new Conversation(1, 2, "Alex", new Date(18,5,16,22,57, 10), messages);
+        return new Conversation(1, 2, "Alex", new Date(18,5,16,22,57, 10));
     }
 
     public List<Conversation> getConversations() throws ServerException {
@@ -67,5 +60,17 @@ public class ControllerMsgDomain {
             e.printStackTrace();
             throw new ServerException("Server has not returned the expected JSON!");
         }
+    }
+
+    public List<Message> getMessages(int conversationId) {
+        // TODO: Is harcoded
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message(true, new Date(18,5,16,9,45, 30), "Muchas felicidades :)"));
+        messages.add(new Message(true, new Date(18,5,16,9,45, 49), "Qué tal todo?"));
+        messages.add(new Message(true, new Date(18,5,16,9,46, 50), "A ver si quedamos, que hace mucho que no nos vemos!"));
+        messages.add(new Message(true, new Date(18,5,16,9,47, 36), "Disfruta de tu día"));
+        messages.add(new Message(false, new Date(18,5,16,22,57, 10), "Gracias"));
+
+        return messages;
     }
 }

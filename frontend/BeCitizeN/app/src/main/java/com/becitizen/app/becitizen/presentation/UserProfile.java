@@ -17,7 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.presentation.msg.ControllerMsgPresentation;
+import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -308,6 +311,17 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
     private void startConversation() {
         // TODO començar nova conversa
+        if (userMail == null) {
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
+        } else {
+            Conversation c = ControllerMsgPresentation.getInstance().getConversation(userMail);
+            Intent intent = new Intent(getContext(), OneConversationActivity.class);
+            intent.putExtra("id", c.getId());
+            intent.putExtra("username", c.getUserName());
+            intent.putExtra("profilePicture", c.getUserImage());
+            intent.putExtra("lastMessageTime", c.getLastMessage().toString());
+            startActivity(intent);
+        }
     }
 
     private void blockUser() {
