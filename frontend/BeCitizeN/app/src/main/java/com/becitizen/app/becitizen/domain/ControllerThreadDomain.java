@@ -53,6 +53,7 @@ public class ControllerThreadDomain {
             {
                 JSONObject object = array.getJSONObject(i);
                 threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
+                object.get("title");
             }
             return threads;
         }
@@ -140,7 +141,7 @@ public class ControllerThreadDomain {
         }
         else if (info.get("status").equals("E2")) throw new ServerException("DB error");
 
-       return commentList;
+        return commentList;
     }
 
     public void newComment(String commentText, int threadId) throws JSONException, ServerException {
@@ -215,4 +216,20 @@ public class ControllerThreadDomain {
     }
 
 
+    public ArrayList<CategoryThread> getThreadsCategorySearch(String category, int block, boolean sortedByVotes, String searchWords) {
+        try {
+            JSONObject data = new JSONObject(controllerThreadData.getThreadsCategorySearch(category.replace(" ", "%20"), block, sortedByVotes, searchWords.replace(" ", "+")));
+            ArrayList<CategoryThread> threads = new ArrayList<>();
+            JSONArray array = (JSONArray)data.get("threads");
+            for(int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                threads.add(new CategoryThread(object.getString("title"), object.getString("username"), object.getString("createdAt"), object.getInt("votes"), object.getInt("id")));
+                object.get("title");
+            }
+            return threads;
+        }
+        catch (JSONException e) {
+            return new ArrayList<>();
+        }
+    }
 }

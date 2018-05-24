@@ -73,13 +73,17 @@
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
 
+    <string name="searchCategoryThreadTitle">Searching in:</string>
+    <string name="searchCategoryHint">Write the words to find</string>
+    <string name="searchCategoryButton">Search</string>
+    <string name="searchCategoryEmptyText">Your search can not be empty</string>
 
     <string name="ccTitle">Currency Converter</string>
     <string name="ccFrom">From:</string>
     <string name="ccTo">To:</string>
     <string name="ccConvertText">Write Amount to Convert</string>
     <string name="ccResult">Result</string>
-    <string name="ccErrorConvert">Sorry we couldn\'t convert that</string>
+    <string name="ccErrorConvert">Sorry we could not convert that</string>
 
 
     <string name="wordOfTheDayTitle">Word of the Day</string>
@@ -116,10 +120,7 @@
     <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
     <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
 
-    <string-array name="currencies" translatable="false">
-        <item>coin1</item>
-        <item>coin2</item>
-    </string-array>
+
     <string name="openInBrowser">Open in Browser</string>
     <string name="openMap">Open Map</string>
 
@@ -129,6 +130,11 @@
     <string name="unblockUserMsg">Do you really want to unblock this user?</string>
 
     <string name="errorBlock">It is not possible to block / unblock this user </string>
+
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
@@ -423,15 +429,6 @@
     <string name="tab_text_6">Utilities</string>
     <string name="tab_text_7">User profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
-
-    <string name="helpPrincipal_1">In this application the functionalities you can find are:</string>
-    <string name="helpPrincipal_2">User profile</string>
-    <string name="helpPrincipal_3">Information about the city</string>
-    <string name="helpPrincipal_4">FAQ (frequently asked questions)</string>
-    <string name="helpPrincipal_5">A forum</string>
-    <string name="helpPrincipal_6">Private messaging</string>
-    <string name="helpPrincipal_7">Other utilities</string>
-    <string name="helpPrincipal_8">If you want to know more about any of these functionalities, please just click its name on the top of your screen.</string>
 
     <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
     <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>

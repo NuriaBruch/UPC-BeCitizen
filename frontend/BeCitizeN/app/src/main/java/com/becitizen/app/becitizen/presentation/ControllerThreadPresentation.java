@@ -119,4 +119,7 @@ public class ControllerThreadPresentation {
         controllerThreadDomain.reportComment(commentId);
     }
 
+    public ArrayList<CategoryThread> getThreadsCategorySearch(String category, int block, boolean sortedByVotes, String searchWords) {
+        return controllerThreadDomain.getThreadsCategorySearch(category, block, sortedByVotes, searchWords);
+    }
 }

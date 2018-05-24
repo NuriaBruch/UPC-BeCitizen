@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -37,6 +40,8 @@ public class CategoryThreadActivity extends Fragment  {
     private int preLast;
     private static CategoryThreadAdapter adapter;
     private String category = "";
+    private String searchWords = "";
+    private boolean searching = false;
     private Thread threadLoadThreads;
     private Handler UIUpdater = new Handler() {
         @Override
@@ -55,6 +60,14 @@ public class CategoryThreadActivity extends Fragment  {
         public void run() {
             ++block;
             dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block, sortedByVotes);
+            UIUpdater.sendEmptyMessage(0);
+        }
+    };
+
+    private Runnable loadThreadsSearch = new Runnable() {
+        public void run() {
+            ++block;
+            dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategorySearch(category, block, sortedByVotes, searchWords);
             UIUpdater.sendEmptyMessage(0);
         }
     };
@@ -103,6 +116,7 @@ public class CategoryThreadActivity extends Fragment  {
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searching = false;
                 sortedByVotes = !sortedByVotes;
                 block = -1;
                 preLast = 0;
@@ -111,6 +125,45 @@ public class CategoryThreadActivity extends Fragment  {
                     threadLoadThreads.interrupt();
                 threadLoadThreads = new Thread(loadThreads);
                 threadLoadThreads.start();
+
+            }
+        });
+
+        ImageButton searchButton = rootView.findViewById(R.id.threadsSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(rootView.getContext());
+                dialog.setContentView(R.layout.category_thread_search);
+
+                TextView searchCategory = dialog.findViewById(R.id.search_name_text);
+                searchCategory.setText(category);
+
+                Button searchButton = dialog.findViewById(R.id.search_button);
+
+                final EditText wordsToSearch = dialog.findViewById(R.id.search_edit_text);
+
+                dialog.show();
+
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        searchWords = wordsToSearch.getText().toString().trim();
+                        if (searchWords.isEmpty())
+                            Toast.makeText(dialog.getContext(), R.string.searchCategoryEmptyText, Toast.LENGTH_LONG).show();
+                        else {
+                            searching = true;
+                            block = -1;
+                            preLast = 0;
+                            adapter.clear();
+                            if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                threadLoadThreads.interrupt();
+                            threadLoadThreads = new Thread(loadThreadsSearch);
+                            threadLoadThreads.start();
+                            dialog.dismiss();
+                        }
+                    }
+                });
 
             }
         });
@@ -147,10 +200,18 @@ public class CategoryThreadActivity extends Fragment  {
                             if(preLast!=lastItem) {
                                 preLast = lastItem;
                                 progressBar.setVisibility(View.VISIBLE);
-                                if (threadLoadThreads != null && threadLoadThreads.isAlive())
-                                    threadLoadThreads.interrupt();
-                                threadLoadThreads = new Thread(loadThreads);
-                                threadLoadThreads.start();
+                                if (!searching) {
+                                    if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                        threadLoadThreads.interrupt();
+                                    threadLoadThreads = new Thread(loadThreads);
+                                    threadLoadThreads.start();
+                                }
+                                else {
+                                    if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                        threadLoadThreads.interrupt();
+                                    threadLoadThreads = new Thread(loadThreadsSearch);
+                                    threadLoadThreads.start();
+                                }
                             }
                         }
                 }
