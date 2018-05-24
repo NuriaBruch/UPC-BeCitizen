@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.exceptions.ServerException;
@@ -58,7 +59,7 @@ public class ControllerUserData {
      * @return La respuesta de nuestro servidor al hacer login con Facebook
      * @throws ServerException Si se ha generado algún error en el servidor o no devuelve la respuesta esperada.
      */
-    public String facebookLogin() throws ServerException {
+    public String facebookLogin() throws ServerException, NetworkErrorException{
         String response, token;
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
@@ -94,7 +95,7 @@ public class ControllerUserData {
      *
      * @return La respuesta de nuestro servidor al hacer login con Google
      */
-    public String googleLogin(String token) {
+    public String googleLogin(String token) throws NetworkErrorException {
         return ServerAdapter.getInstance().doGetRequest(URI_GOOGLE_LOGIN + token);
     }
 
@@ -105,7 +106,7 @@ public class ControllerUserData {
      *
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
-    public boolean existsMail(String mail) throws ServerException {
+    public boolean existsMail(String mail) throws ServerException, NetworkErrorException {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
@@ -134,7 +135,7 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException, NetworkErrorException {
 
         JSONObject json = new JSONObject();
         try {
@@ -168,11 +169,11 @@ public class ControllerUserData {
 
     }
 
-    public String checkCredentials(String email, String password) {
+    public String checkCredentials(String email, String password) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException, NetworkErrorException {
         JSONObject json = new JSONObject();
         json.put("name", firstName);
         json.put("surname", lastName);
@@ -192,7 +193,7 @@ public class ControllerUserData {
     }
 
 
-    public boolean deactivateAccount(String username) throws ServerException, JSONException{
+    public boolean deactivateAccount(String username) throws ServerException, JSONException, NetworkErrorException{
         JSONObject json = new JSONObject();
         json.put("username", username);
 
@@ -205,7 +206,7 @@ public class ControllerUserData {
         else throw new ServerException("Server Error");
     }
 
-    public String viewProfile(String username) {
+    public String viewProfile(String username) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 
@@ -213,7 +214,7 @@ public class ControllerUserData {
         ServerAdapter.getInstance().setTOKEN(token);
     }
 
-    public void blockUser(String mail) throws ServerException, JSONException {
+    public void blockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         JSONObject json = new JSONObject();
         json.put("reportedEmail", mail);
 
@@ -227,7 +228,7 @@ public class ControllerUserData {
         else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
     }
 
-    public void unblockUser(String mail) throws ServerException, JSONException {
+    public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         JSONObject json = new JSONObject();
         json.put("reportedEmail", mail);
 

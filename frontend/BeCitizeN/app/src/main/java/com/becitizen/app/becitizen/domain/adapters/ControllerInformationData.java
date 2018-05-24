@@ -1,17 +1,12 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
-import com.becitizen.app.becitizen.domain.entities.Thread;
-import com.becitizen.app.becitizen.exceptions.ServerException;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.accounts.NetworkErrorException;
 
 public class ControllerInformationData {
 
     //URIs
-    //TODO: change back to server
-    private static final String URI_INFORMATIONS_CATEGORY = "http://10.0.2.2:1337/getAllInfoCategory?category=";
-    private static final String URI_INFORMATION_CONTENT = "http://10.0.2.2:1337/getInfo?infoId=";
+    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory?category=";
+    private static final String URI_INFORMATION_CONTENT = "http://becitizen.cf/getInfo?infoId=";
 
 
     private static ControllerInformationData instance = null;
@@ -40,7 +35,7 @@ public class ControllerInformationData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getInformationsCategory(String category) {
+    public String getInformationsCategory(String category) throws NetworkErrorException {
         return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category);
     }
 
@@ -51,7 +46,7 @@ public class ControllerInformationData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getInformation(int id) {
+    public String getInformation(int id) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_INFORMATION_CONTENT + id);
     }
 }

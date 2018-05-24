@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -25,6 +26,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ThreadActivity extends Fragment {
     private View rootView;
@@ -120,6 +123,9 @@ public class ThreadActivity extends Fragment {
                     }
                     catch (ServerException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (NetworkErrorException e) {
+                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                        toast.show();
                     }
 
                 }
@@ -138,6 +144,9 @@ public class ThreadActivity extends Fragment {
                     }
                     catch (ServerException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (NetworkErrorException e) {
+                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 }
             });
@@ -184,6 +193,9 @@ public class ThreadActivity extends Fragment {
                         }
                         catch (ServerException e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (NetworkErrorException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                     }
                 }
@@ -200,6 +212,9 @@ public class ThreadActivity extends Fragment {
         }
         catch (ServerException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
 
     }
@@ -216,6 +231,9 @@ public class ThreadActivity extends Fragment {
         }
         catch (ServerException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

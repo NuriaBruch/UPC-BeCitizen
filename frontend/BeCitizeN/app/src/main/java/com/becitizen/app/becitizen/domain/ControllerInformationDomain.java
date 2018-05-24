@@ -1,6 +1,8 @@
 package com.becitizen.app.becitizen.domain;
 
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.adapters.ControllerInformationData;
 import com.becitizen.app.becitizen.domain.adapters.ControllerThreadData;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
@@ -46,7 +48,7 @@ public class ControllerInformationDomain {
      * @param category nombre de la categoria
      * @return JSONObject que contiene las informaciones de una categoria
      */
-    public ArrayList<Information> getInformationsCategory(String category) {
+    public ArrayList<Information> getInformationsCategory(String category) throws NetworkErrorException {
         try {
             JSONObject data = new JSONObject(controllerInformationData.getInformationsCategory(category.replace(" ", "%20")));
             ArrayList<Information> informations = new ArrayList<>();
@@ -68,7 +70,7 @@ public class ControllerInformationDomain {
      * @param id de la informacion
      * @return null si ha ocurrido algun error
      */
-    public Information getInformation(int id) {
+    public Information getInformation(int id) throws NetworkErrorException{
         try {
             JSONObject data = new JSONObject(controllerInformationData.getInformation(id));
             data = data.getJSONObject("info");

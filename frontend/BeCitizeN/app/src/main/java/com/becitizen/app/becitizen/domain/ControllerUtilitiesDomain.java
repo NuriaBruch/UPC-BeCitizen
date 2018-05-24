@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.domain;
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.adapters.ControllerUtititesData;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
@@ -17,15 +19,15 @@ public class ControllerUtilitiesDomain {
     private ControllerUtilitiesDomain() {
     }
 
-    public void getCurrencyList(List<String> currencyList){
+    public void getCurrencyList(List<String> currencyList) throws NetworkErrorException{
         ControllerUtititesData.getInstance().getCurrencyList(currencyList);
     }
 
-    public double getConversion(String currencyFrom, String currencyTo, String amount) {
+    public double getConversion(String currencyFrom, String currencyTo, String amount) throws NetworkErrorException{
         return ControllerUtititesData.getInstance().getConversion(currencyFrom,currencyTo,amount);
     }
 
-    public String[] getWordOfTheDay() throws ServerException, JSONException {
+    public String[] getWordOfTheDay() throws ServerException, JSONException, NetworkErrorException {
         return ControllerUtititesData.getInstance().getWordOfTheDay();
     }
 }

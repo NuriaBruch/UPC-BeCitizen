@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class WordOfTheDayActivity extends Fragment {
 
@@ -46,6 +49,9 @@ public class WordOfTheDayActivity extends Fragment {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
         } catch (ServerException e) {
             Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
 
         return rootView;

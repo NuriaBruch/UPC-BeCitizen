@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -47,11 +48,12 @@ public class ServerAdapter {
      * @param url Direccion en la que se quiere hacer el get
      * @return Respuesta obtenida con el get
      */
-    public String doGetRequest(String url) {
+    public String doGetRequest(String url) throws NetworkErrorException {
         sendUserDataToServer request = new sendUserDataToServer();
         String data = "";
         try {
             data = request.execute(new String[]{url}).get();
+            if (data.equals("Network Error")) throw new NetworkErrorException(data);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -65,11 +67,12 @@ public class ServerAdapter {
      * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a postear
      * @return Respuesta obtenida con el post
      */
-    public String doPostRequest(String[] dataRequest) {
+    public String doPostRequest(String[] dataRequest) throws NetworkErrorException {
         PostTask request = new PostTask();
         String data = "";
         try {
             data = request.execute(dataRequest).get();
+            if (data.equals("Network Error")) throw new NetworkErrorException();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -83,11 +86,12 @@ public class ServerAdapter {
      * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a hacer put
      * @return Respuesta obtenida con el put
      */
-    public String doPutRequest(String[] dataRequest) {
+    public String doPutRequest(String[] dataRequest) throws NetworkErrorException {
         PutTask request = new PutTask();
         String data = "";
         try {
             data = request.execute(dataRequest).get();
+            if (data.equals("Network Error")) throw new NetworkErrorException(data);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -119,8 +123,8 @@ public class ServerAdapter {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
             } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
+                Log.e(TAG, "Network Error", e);
+                return "Network Error";
             }
             return responseBody;
         }
@@ -165,8 +169,8 @@ public class ServerAdapter {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
             } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
+                Log.e(TAG, "Network error", e);
+                return "Network error";
             }
             return responseBody;
         }
@@ -208,8 +212,8 @@ public class ServerAdapter {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
             } catch (IOException e) {
-                Log.e(TAG, "Error sending ID token to backend.", e);
-                return "Error sending ID token to backend.";
+                Log.e(TAG, "Network error", e);
+                return "Network error";
             }
             return responseBody;
         }

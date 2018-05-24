@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -48,7 +49,7 @@ public class ControllerInformationPresentation {
      * @param category nombre de la categoria
      * @return null si ha ocurrido algun error
      */
-    public ArrayList<Information> getInformationsCategory(String category) {
+    public ArrayList<Information> getInformationsCategory(String category) throws NetworkErrorException {
         return controllerInformationDomain.getInformationsCategory(category);
     }
 
@@ -57,7 +58,7 @@ public class ControllerInformationPresentation {
      * @param id de la informacion
      * @return information vacia si hay algun error
      */
-    public Information getInformation(int id) {
+    public Information getInformation(int id) throws NetworkErrorException {
         return controllerInformationDomain.getInformation(id);
     }
 }
