@@ -1,6 +1,5 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
-import android.accounts.NetworkErrorException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -48,12 +47,12 @@ public class ServerAdapter {
      * @param url Direccion en la que se quiere hacer el get
      * @return Respuesta obtenida con el get
      */
-    public String doGetRequest(String url) throws NetworkErrorException {
+    public String doGetRequest(String url) {
         sendUserDataToServer request = new sendUserDataToServer();
         String data = "";
         try {
             data = request.execute(new String[]{url}).get();
-            if (data.equals("Network Error")) throw new NetworkErrorException(data);
+            //if (data.equals("Network Error")) throw new NetworkErrorException(data);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -67,12 +66,12 @@ public class ServerAdapter {
      * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a postear
      * @return Respuesta obtenida con el post
      */
-    public String doPostRequest(String[] dataRequest) throws NetworkErrorException {
+    public String doPostRequest(String[] dataRequest) {
         PostTask request = new PostTask();
         String data = "";
         try {
             data = request.execute(dataRequest).get();
-            if (data.equals("Network Error")) throw new NetworkErrorException();
+            //if (data.equals("Network Error")) throw new NetworkErrorException();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -86,12 +85,12 @@ public class ServerAdapter {
      * @param dataRequest Conjunto de Strings que contienen la url seguida de los valors del JSONObject a hacer put
      * @return Respuesta obtenida con el put
      */
-    public String doPutRequest(String[] dataRequest) throws NetworkErrorException {
+    public String doPutRequest(String[] dataRequest) {
         PutTask request = new PutTask();
         String data = "";
         try {
             data = request.execute(dataRequest).get();
-            if (data.equals("Network Error")) throw new NetworkErrorException(data);
+            //if (data.equals("Network Error")) throw new NetworkErrorException(data);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
