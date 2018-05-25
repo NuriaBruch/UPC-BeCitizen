@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,6 +17,8 @@ import com.becitizen.app.becitizen.domain.entities.Conversation;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ConversationAdapter  extends RecyclerView.Adapter {
 
@@ -52,7 +53,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
 
     private class ConversationHolder extends RecyclerView.ViewHolder {
         RelativeLayout row_conversation;
-        ImageView profile_photo;
+        CircleImageView profile_photo;
         TextView user_name;
         TextView username;
         TextView last_message;
@@ -63,7 +64,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
             super(itemView);
 
             row_conversation = (RelativeLayout) itemView.findViewById(R.id.one_row_conversation);
-            profile_photo = (ImageView) itemView.findViewById(R.id.conversation_profile_photo);
+            profile_photo = (CircleImageView) itemView.findViewById(R.id.conversation_profile_photo);
             user_name = (TextView) itemView.findViewById(R.id.conversation_user_name);
             username = (TextView) itemView.findViewById(R.id.conversation_username);
             last_message = (TextView) itemView.findViewById(R.id.conversation_last_message);
@@ -87,7 +88,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
 
             Log.d("CONVERSATION", conversation.toString());
 
-            profile_photo.setImageResource(mContext.getResources().getIdentifier("userprofile" + conversation.getUserImage(), "drawable", null));
+            profile_photo.setImageResource(getImageId(conversation.getUserImage()));
             // TODO: set the user name + lastname
             user_name.setText(conversation.getName());
             username.setText("@" + conversation.getUserName());
@@ -99,6 +100,29 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
             // TODO: See if the conversation is really unread
             if (conversation.isNewMessage()) unread.setText("!");
             else unread.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private int getImageId(int number) {
+        switch (number) {
+            case 1:
+                return R.drawable.userprofile1;
+            case 2:
+                return R.drawable.userprofile2;
+            case 3:
+                return R.drawable.userprofile3;
+            case 4:
+                return R.drawable.userprofile4;
+            case 5:
+                return R.drawable.userprofile5;
+            case 6:
+                return R.drawable.userprofile6;
+            case 7:
+                return R.drawable.userprofile7;
+            case 8:
+                return R.drawable.userprofile8;
+            default:
+                return R.drawable.userprofile1;
         }
     }
 }

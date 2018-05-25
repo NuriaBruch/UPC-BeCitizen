@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +18,14 @@ import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class OneConversationActivity extends AppCompatActivity implements View.OnClickListener{
 
     private RecyclerView mMessageRecycler;
     private MessageAdapter mMessageAdapter;
 
-    private ImageView profilePictureView;
+    private CircleImageView profilePictureView;
     private TextView nameView, usernameView;
     private Toolbar appbar;
     private Button sendButton;
@@ -46,7 +47,7 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
             }
         });
 
-        profilePictureView = (ImageView) findViewById(R.id.image_message_profile);
+        profilePictureView = (CircleImageView) findViewById(R.id.image_message_profile);
         nameView = (TextView) findViewById(R.id.text_message_name);
         usernameView = (TextView) findViewById(R.id.text_message_username);
         appbar = (Toolbar) findViewById(R.id.toolbar_conv);
@@ -59,7 +60,7 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         conversation = new Conversation(conversationId, name, username, profilePicture);
         Log.d("Conversation", conversation.toString());
 
-        if (profilePicture >= 1 && profilePicture <= 8) profilePictureView.setImageResource(getResources().getIdentifier("userprofile" + profilePicture, "drawable", null));
+        if (profilePicture >= 1 && profilePicture <= 8) profilePictureView.setImageResource(getImageId(profilePicture));
         if (name != null) nameView.setText(name);
         if (username != null) {
             usernameView.setText("@" + username);
@@ -121,5 +122,28 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         bundle.putString("username", conversation.getUserName());
         i.putExtras(bundle);
         startActivity(i);
+    }
+
+    private int getImageId(int number) {
+        switch (number) {
+            case 1:
+                return R.drawable.userprofile1;
+            case 2:
+                return R.drawable.userprofile2;
+            case 3:
+                return R.drawable.userprofile3;
+            case 4:
+                return R.drawable.userprofile4;
+            case 5:
+                return R.drawable.userprofile5;
+            case 6:
+                return R.drawable.userprofile6;
+            case 7:
+                return R.drawable.userprofile7;
+            case 8:
+                return R.drawable.userprofile8;
+            default:
+                return R.drawable.userprofile1;
+        }
     }
 }
