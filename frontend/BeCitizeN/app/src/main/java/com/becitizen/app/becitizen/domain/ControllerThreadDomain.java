@@ -13,7 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -108,10 +111,18 @@ public class ControllerThreadDomain {
             thread.setAuthor(threadData.getString("username"));
             thread.setAuthorRank(threadData.getString("rank"));
             thread.setAuthorImage(Integer.valueOf(threadData.getString("profilePicture")));
-            thread.setCreatedAt(threadData.getString("createdAt"));
             thread.setVotes(threadData.getInt("votes"));
             thread.setCanVote(threadData.getBoolean("canVote"));
             thread.setCanReport(threadData.getBoolean("canReport"));
+
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            try {
+                cal.setTime(sdf.parse(threadData.getString("createdAt")));
+                thread.setCreatedAt(cal.getTime().toString());
+            } catch (ParseException e) {
+                thread.setCreatedAt("");
+            }
         }
         else {
             if (info.get("status").equals("E2")) throw new ServerException("DB error");
@@ -132,12 +143,23 @@ public class ControllerThreadDomain {
                 comment.setAuthor(commentData.getString("username"));
                 comment.setAuthorRank(commentData.getString("rank"));
                 comment.setAuthorImage(commentData.getInt("profilePicture"));
-                comment.setCreatedAt(commentData.getString("createdAt"));
+
                 comment.setVotes(commentData.getInt("votes"));
                 comment.setVotable(commentData.getBoolean("canVote"));
                 comment.setReportable(commentData.getBoolean("canReport"));
                 comment.setId(commentData.getInt("id"));
                 comment.setThreadId(id);
+
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+                try {
+                    cal.setTime(sdf.parse(commentData.getString("createdAt")));
+                    comment.setCreatedAt(cal.getTime().toString());
+                } catch (ParseException e) {
+                    comment.setCreatedAt("");
+                }
+
                 commentList.add(comment);
             }
         }

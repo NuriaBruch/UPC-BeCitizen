@@ -72,7 +72,14 @@ public class ControllerInformationDomain {
      */
     public Information getInformation(int id) throws NetworkErrorException{
         try {
-            JSONObject data = new JSONObject(controllerInformationData.getInformation(id).replace("\\" + '"', "\"").replace("\"[", "[").replace("]\"", "]"));
+            String response = controllerInformationData.getInformation(id);
+            JSONObject data = null;
+            try {
+                data = new JSONObject(response.replace("\\" + '"', "\"").replace("\"[", "[").replace("]\"", "]"));
+            } catch (JSONException e) {
+                data = new JSONObject(response);
+            }
+
             data = data.getJSONObject("info");
             String type = data.getString("type");
             String content;

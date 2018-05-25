@@ -41,7 +41,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     private ControllerThreadPresentation controllerThreadPresentation;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank;
+        public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank, commentId;
         public ImageButton commentVote, commentReport, commentQuote, commentAuthorImage;
         public View commentView;
 
@@ -52,6 +52,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             commentContent = view.findViewById(R.id.commentContentText);
             commentVotes = view.findViewById(R.id.commentVotesText);
             commentAuthorRank = view.findViewById(R.id.commentAuthorRankText);
+            commentId = view.findViewById(R.id.commentId);
 
             commentVote = view.findViewById(R.id.commentVoteButton);
             commentReport = view.findViewById(R.id.commentReportButton);
@@ -84,6 +85,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentContent.setText(comment.getContent());
         holder.commentVotes.setText(String.valueOf(comment.getVotes()));
         holder.commentAuthorRank.setText(comment.getAuthorRank());
+        holder.commentId.setText('#'+String.valueOf(comment.getId()));
 
         holder.commentQuote.setOnClickListener(new View.OnClickListener() {
             @Override
