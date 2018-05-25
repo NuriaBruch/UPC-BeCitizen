@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
         ImageView profile_photo;
         TextView user_name;
         TextView username;
+        TextView last_message;
         TextView last_message_date;
         TextView unread;
 
@@ -64,6 +66,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
             profile_photo = (ImageView) itemView.findViewById(R.id.conversation_profile_photo);
             user_name = (TextView) itemView.findViewById(R.id.conversation_user_name);
             username = (TextView) itemView.findViewById(R.id.conversation_username);
+            last_message = (TextView) itemView.findViewById(R.id.conversation_last_message);
             last_message_date = (TextView) itemView.findViewById(R.id.conversation_last_message_date);
             unread = (TextView) itemView.findViewById(R.id.conversation_unread);
         }
@@ -82,15 +85,20 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
                 }
             });
 
+            Log.d("CONVERSATION", conversation.toString());
+
             profile_photo.setImageResource(mContext.getResources().getIdentifier("userprofile" + conversation.getUserImage(), "drawable", null));
             // TODO: set the user name + lastname
-            username.setText(conversation.getUserName());
-
+            user_name.setText(conversation.getName());
+            username.setText("@" + conversation.getUserName());
+            if (conversation.getLastMessage().length() < 25) last_message.setText(conversation.getLastMessage());
+            else last_message.setText(conversation.getLastMessage().substring(0, 23) + "...");
             // Format the stored timestamp into a readable String using method.
             last_message_date.setText(DateUtils.formatSameDayTime(conversation.getLastMessageDate().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
 
             // TODO: See if the conversation is really unread
-            unread.setText("!");
+            if (conversation.isNewMessage()) unread.setText("!");
+            else unread.setVisibility(View.INVISIBLE);
         }
     }
 }

@@ -31,13 +31,25 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@id/image_cardview"
-        android:text="Vihaan"
+        android:text=""
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/conversation_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/conversation_user_name"
+        android:layout_alignBottom="@+id/conversation_user_name"
+        android:paddingLeft="4dp"
+        android:text=""
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/conversation_last_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/conversation_user_name"
@@ -54,7 +66,8 @@
         android:layout_marginTop="15dp"
         android:text="5:30 PM"
         android:textColor="#0aea07"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/conversation_unread"
