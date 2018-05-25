@@ -38,7 +38,7 @@
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 app:srcCompat="@drawable/ic_menu_private_messages"
-                android:background="@color/colorPrimary"/>
+                />
 
             <TextView
                 android:id="@+id/text1"
@@ -64,7 +64,8 @@
                 android:adjustViewBounds="true"
                 android:background="@color/colorAccent"
                 android:padding="4dp"
-                app:srcCompat="@drawable/private_message" />
+                android:tint="@android:color/white"
+                app:srcCompat="@drawable/ic_menu_private_messages" />
 
             <TextView
                 android:id="@+id/text2"

@@ -37,8 +37,7 @@
                 android:layout_marginStart="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/ic_menu_utilities"
-                android:background="@color/colorPrimary"/>
+                app:srcCompat="@drawable/ic_menu_utilities" />
 
             <TextView
                 android:id="@+id/text1"
