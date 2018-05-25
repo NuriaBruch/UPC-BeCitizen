@@ -104,11 +104,11 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
         if (loggedUser) {
             fbPrivateMessage.setVisibility(View.GONE);
-            blockButton.setVisibility(View.GONE);
+            blockButton.setVisibility(View.INVISIBLE);
         }
         else {
-            ibEditProfile.setVisibility(View.GONE);
-            ibSignOut.setVisibility(View.GONE);
+            ibEditProfile.setVisibility(View.INVISIBLE);
+            ibSignOut.setVisibility(View.INVISIBLE);
         }
 
         try {
