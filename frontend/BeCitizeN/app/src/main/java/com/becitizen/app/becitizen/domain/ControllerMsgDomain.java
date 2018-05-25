@@ -102,7 +102,7 @@ public class ControllerMsgDomain {
 
                 for (int i = jsonArray.length()-1; i >= 0; i--) {
                     JSONObject c = jsonArray.getJSONObject(i);
-                    if(!c.isNull("date")) {
+                    if(!c.isNull("date") && c.getString("content").length()>0) {
                         try {
                             messages.add(new Message(
                                     c.getBoolean("sendedByMe"),

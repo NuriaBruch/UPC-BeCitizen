@@ -99,7 +99,7 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
                 viewProfile();
                 break;
             case R.id.button_chatbox_send:
-                sendMessage();
+                if (sendText.getText().length()>0) sendMessage();
         }
     }
 
