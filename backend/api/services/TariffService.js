@@ -35,7 +35,7 @@ You can use up to four different modes on each transfer, and time for transfers 
             response += block + block2;
         })
 
-        console.log(response);
+        //console.log(response);
         return response;
     }
 
