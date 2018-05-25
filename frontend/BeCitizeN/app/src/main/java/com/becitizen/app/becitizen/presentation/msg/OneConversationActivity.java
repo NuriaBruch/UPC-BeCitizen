@@ -19,15 +19,13 @@ import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
 
-import java.util.Date;
-
 public class OneConversationActivity extends AppCompatActivity implements View.OnClickListener{
 
     private RecyclerView mMessageRecycler;
     private MessageAdapter mMessageAdapter;
 
     private ImageView profilePictureView;
-    private TextView usernameView;
+    private TextView nameView, usernameView;
     private Toolbar appbar;
     private Button sendButton;
     private EditText sendText;
@@ -49,36 +47,28 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         });
 
         profilePictureView = (ImageView) findViewById(R.id.image_message_profile);
-        usernameView = (TextView) findViewById(R.id.text_message_name);
+        nameView = (TextView) findViewById(R.id.text_message_name);
+        usernameView = (TextView) findViewById(R.id.text_message_username);
         appbar = (Toolbar) findViewById(R.id.toolbar_conv);
 
         int conversationId = getIntent().getExtras().getInt("id", -1);
+        String name = getIntent().getExtras().getString("name", null);
         String username = getIntent().getExtras().getString("username", null);
         int profilePicture = getIntent().getExtras().getInt("profilePicture", -1);
-        String lastTime = getIntent().getExtras().getString("lastMessageTime", null);
-        Date lastMessageTime = new Date(lastTime);
 
-        conversation = new Conversation(conversationId, profilePicture, username, lastMessageTime);
+        conversation = new Conversation(conversationId, name, username, profilePicture);
         Log.d("Conversation", conversation.toString());
 
-        // TODO: set username, profilePicture, lastMessage while loading
         if (profilePicture >= 1 && profilePicture <= 8) profilePictureView.setImageResource(getResources().getIdentifier("userprofile" + profilePicture, "drawable", null));
+        if (name != null) nameView.setText(name);
         if (username != null) {
-            usernameView.setText(username);
-
+            usernameView.setText("@" + username);
             appbar.setOnClickListener(this);
         }
 
-
-
         if (conversationId != -1) {
             try {
-                conversation.setMessages(ControllerMsgPresentation.getInstance().getMessages(conversationId));
-                mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
-                mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
-                mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
-                mMessageRecycler.setAdapter(mMessageAdapter);
-                Log.d("DEBUG", conversation.toString());
+                loadComments(conversationId);
             } catch (ServerException e) {
                 e.printStackTrace();
                 Toast.makeText(this, getResources().getString(R.string.errorLoadMessages), Toast.LENGTH_LONG).show();
@@ -87,10 +77,18 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
             Toast.makeText(this, getResources().getString(R.string.errorLoadMessages), Toast.LENGTH_LONG).show();
         }
 
-        // TODO: send new message
         sendButton = (Button) findViewById(R.id.button_chatbox_send);
         sendButton.setOnClickListener(this);
         sendText = (EditText) findViewById(R.id.edittext_chatbox);
+    }
+
+    private void loadComments(int conversationId) throws ServerException {
+        conversation.setMessages(ControllerMsgPresentation.getInstance().getMessages(conversationId));
+        mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+        mMessageAdapter = new MessageAdapter(this, conversation.getMessages());
+        mMessageRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mMessageRecycler.setAdapter(mMessageAdapter);
+        Log.d("DEBUG", conversation.toString());
     }
 
     @Override
@@ -107,6 +105,12 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
     private void sendMessage() {
         ControllerMsgPresentation.getInstance().newMessage(conversation.getId(), sendText.getText().toString());
         sendText.setText("");
+        try {
+            loadComments(conversation.getId());
+        } catch (ServerException e) {
+            e.printStackTrace();
+            Toast.makeText(this, getResources().getString(R.string.errorLoadMessages), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void viewProfile() {

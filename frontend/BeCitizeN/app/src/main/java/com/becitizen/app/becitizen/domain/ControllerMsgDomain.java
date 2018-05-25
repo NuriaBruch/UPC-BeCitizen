@@ -16,7 +16,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ControllerMsgDomain {
@@ -43,10 +42,9 @@ public class ControllerMsgDomain {
             } else {
                 return new Conversation(
                         json.getInt("conversationId"),
-                        json.getInt("profilePicture"),
                         json.getString("username"),
                         json.getString("name"),
-                        new Date(18,5,16,22,57, 10));
+                        json.getInt("profilePicture"));
             }
         } catch (JSONException e) {
             Log.e("SERVER_RESPONSE", json.toString());
@@ -70,9 +68,12 @@ public class ControllerMsgDomain {
                     JSONObject c = jsonArray.getJSONObject(i);
                     if(!c.isNull("lastMessageTime"))
                         conversations.add(new Conversation(
-                            c.getInt("id"),
-                            c.getInt("profilePicture"),
-                            c.getString("username"),
+                                c.getInt("id"),
+                                c.getString("name"),
+                                c.getString("username"),
+                                c.getInt("profilePicture"),
+                                c.getBoolean("newMessage"),
+                                c.getString("lastMessageContent"),
                                 dateFormat.parse(c.getString("lastMessageTime"))));
                 }
 

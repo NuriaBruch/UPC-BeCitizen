@@ -1,39 +1,44 @@
 package com.becitizen.app.becitizen.domain.entities;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Conversation {
 
     private int id;
-    private int userImage;
-    private String userName;
     private String name;
-    private Date lastMessage;
+    private String userName;
+    private int userImage;
+    private boolean newMessage;
+    private String lastMessage;
+    private Date lastMessageDate;
     private List<Message> messages;
 
-    public Conversation(int id, int userImage, String userName, Date lastMessage) {
+    public Conversation(int id, String name, String userName, int userImage) {
         this.id = id;
-        this.userImage = userImage;
-        this.userName = userName;
-        this.lastMessage = lastMessage;
-        messages = new ArrayList<>();
-    }
-
-    public Conversation(int id, int userImage, String userName, String name, Date lastMessage) {
-        this.id = id;
-        this.userImage = userImage;
-        this.userName = userName;
         this.name = name;
-        this.lastMessage = lastMessage;
+        this.userName = userName;
+        this.userImage = userImage;
     }
 
-    public Conversation(int id, int userImage, String userName, Date lastMessage, List<Message> messages) {
+    public Conversation(int id, String name, String userName, int userImage, boolean newMessage, String lastMessage, Date lastMessageDate) {
         this.id = id;
-        this.userImage = userImage;
+        this.name = name;
         this.userName = userName;
+        this.userImage = userImage;
+        this.newMessage = newMessage;
         this.lastMessage = lastMessage;
+        this.lastMessageDate = lastMessageDate;
+    }
+
+    public Conversation(int id, String name, String userName, int userImage, boolean newMessage, String lastMessage, Date lastMessageDate, List<Message> messages) {
+        this.id = id;
+        this.name = name;
+        this.userName = userName;
+        this.userImage = userImage;
+        this.newMessage = newMessage;
+        this.lastMessage = lastMessage;
+        this.lastMessageDate = lastMessageDate;
         this.messages = messages;
     }
 
@@ -45,12 +50,12 @@ public class Conversation {
         this.id = id;
     }
 
-    public int getUserImage() {
-        return userImage;
+    public String getName() {
+        return name;
     }
 
-    public void setUserImage(int userImage) {
-        this.userImage = userImage;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUserName() {
@@ -61,12 +66,36 @@ public class Conversation {
         this.userName = userName;
     }
 
-    public Date getLastMessage() {
+    public int getUserImage() {
+        return userImage;
+    }
+
+    public void setUserImage(int userImage) {
+        this.userImage = userImage;
+    }
+
+    public boolean isNewMessage() {
+        return newMessage;
+    }
+
+    public void setNewMessage(boolean newMessage) {
+        this.newMessage = newMessage;
+    }
+
+    public String getLastMessage() {
         return lastMessage;
     }
 
-    public void setLastMessage(Date lastMessage) {
+    public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+    public Date getLastMessageDate() {
+        return lastMessageDate;
+    }
+
+    public void setLastMessageDate(Date lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
     }
 
     public List<Message> getMessages() {
@@ -81,9 +110,12 @@ public class Conversation {
     public String toString() {
         return "Conversation{" +
                 "id=" + id +
-                ", userImage=" + userImage +
+                ", name='" + name + '\'' +
                 ", userName='" + userName + '\'' +
-                ", lastMessage=" + lastMessage +
+                ", userImage=" + userImage +
+                ", newMessage=" + newMessage +
+                ", lastMessage='" + lastMessage + '\'' +
+                ", lastMessageDate=" + lastMessageDate +
                 ", messages=" + messages +
                 '}';
     }

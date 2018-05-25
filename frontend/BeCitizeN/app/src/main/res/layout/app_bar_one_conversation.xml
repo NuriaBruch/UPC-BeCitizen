@@ -30,12 +30,25 @@
 
         <TextView
             android:id="@+id/text_message_name"
-            android:text="John Doe"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:paddingLeft="8dp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/text_message_username"
+            android:text=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingLeft="8dp"
+            app:layout_constraintLeft_toRightOf="@+id/text_message_name"
             android:layout_marginLeft="8dp"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="4dp" />

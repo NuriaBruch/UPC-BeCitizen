@@ -328,9 +328,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
                 c = ControllerMsgPresentation.getInstance().getConversation(userMail);
                 Intent intent = new Intent(getContext(), OneConversationActivity.class);
                 intent.putExtra("id", c.getId());
-                intent.putExtra("username", username); //c.getUserName());
+                intent.putExtra("name", c.getName());
+                intent.putExtra("username", c.getUserName());
                 intent.putExtra("profilePicture", c.getUserImage());
-                intent.putExtra("lastMessageTime", c.getLastMessage().toString());
                 startActivity(intent);
             } catch (ServerException e) {
                 e.printStackTrace();

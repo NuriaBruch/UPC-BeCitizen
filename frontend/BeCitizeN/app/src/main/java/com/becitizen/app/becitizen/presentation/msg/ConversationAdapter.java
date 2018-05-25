@@ -75,9 +75,9 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, OneConversationActivity.class);
                     intent.putExtra("id", conversation.getId());
+                    intent.putExtra("name", conversation.getName());
                     intent.putExtra("username", conversation.getUserName());
                     intent.putExtra("profilePicture", conversation.getUserImage());
-                    intent.putExtra("lastMessageTime", conversation.getLastMessage().toString());
                     mContext.startActivity(intent);
                 }
             });
@@ -87,7 +87,7 @@ public class ConversationAdapter  extends RecyclerView.Adapter {
             username.setText(conversation.getUserName());
 
             // Format the stored timestamp into a readable String using method.
-            last_message_date.setText(DateUtils.formatSameDayTime(conversation.getLastMessage().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
+            last_message_date.setText(DateUtils.formatSameDayTime(conversation.getLastMessageDate().getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
 
             // TODO: See if the conversation is really unread
             unread.setText("!");
