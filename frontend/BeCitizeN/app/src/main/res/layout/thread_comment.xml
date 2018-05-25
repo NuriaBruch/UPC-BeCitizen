@@ -118,5 +118,14 @@
         android:layout_marginBottom="5dp"
         android:text="createdAt" />
 
+    <TextView
+        android:id="@+id/commentId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/relativeLayout"
+        android:layout_below="@id/relativeLayout"
+        android:text="id"
+        android:textStyle="bold" />
+
 
 </RelativeLayout>
