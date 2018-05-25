@@ -13,10 +13,10 @@ module.exports.cron = {
     },
 
   tariffsUpdate: {
-    schedule: '0 * * * * *',
+    schedule: '* * 1 * * *',
     onTick: function () {
       new TariffService().updateTariffs(((err, tariffs) => {
-        //if(err) console.log("Error scrapping or updating");
+        if(err) console.log("Error scrapping or updating");
       }));
     }
   }
