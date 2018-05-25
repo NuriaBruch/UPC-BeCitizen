@@ -1,4 +1,44 @@
 module.exports = class TariffService {
+
+    prettyFormat(tariffs){
+        var response = 
+        `The scope of the Autoritat del Transport Metropolità integrated fare system covers a total of 253 municipalities, divided into six rings and various fare sectors.        
+A single ticket permits the use of the transport needed to move from one place to another. It permits the change to the Barcelona suburban railway integrated network, Ferrocarrils de la Generalitat, the metro, bus and tram.        
+All tickets, as well as unlimited journey tickets, must be validated before boarding the train. Keep your ticket until you have left the station        
+You can use up to four different modes on each transfer, and time for transfers between them are:
+
+1 zona:  1 h 15 min
+
+2 zones: 1 h 30 min
+
+3 zones: 1 h 45min
+
+4 zones: 2 h
+
+5 zones: 2 h 15 min
+
+6 zones: 2 h 30 min
+`;
+
+        tariffs.forEach((obj) => {
+            let block = 
+            `
+    ${obj.type}:
+    ${obj.definition}
+`
+            let block2 = "";
+            obj.tariffs.forEach((tariff) => {
+                block2 += `     Zone ${tariff.zone}: ${tariff.price}€
+`
+
+            })
+            response += block + block2;
+        })
+
+        console.log(response);
+        return response;
+    }
+
     updateInfo(tariffs, callback){
         // callback(err);
         var err = false;
@@ -6,14 +46,14 @@ module.exports = class TariffService {
         Information.findOne({isTarifa : true})
         .then(info => {
             if(info !== undefined){
-                info.content = tariffs;
+                info.content = this.prettyFormat(tariffs);
                 info.save(err => callback(err));
             }
             else{
                 Information.create({
-                    category: "justice", 
+                    category: "tourism", 
                     title: "Tariffs",
-                    content: JSON.stringify(tariffs),
+                    content: this.prettyFormat(tariffs),
                     isTarifa: true
                 })
                 .then(info => {
@@ -84,7 +124,7 @@ module.exports = class TariffService {
         const request = require('request');
         const cheerio = require("cheerio");
 
-        request("http://rodalies.gencat.cat/ca/tarifes/servei_rodalia_barcelona/servei_integrat_atm/", (err, res, html) => {
+        request("http://rodalies.gencat.cat/en/tarifes/servei_rodalia_barcelona/servei_integrat_atm/index.html", (err, res, html) => {
             if(!err){
                 //console.log("We are in da request");
                 let $ = cheerio.load(html);
