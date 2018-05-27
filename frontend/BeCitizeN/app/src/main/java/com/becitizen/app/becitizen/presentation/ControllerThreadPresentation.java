@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.ControllerThreadDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
@@ -42,15 +44,15 @@ public class ControllerThreadPresentation {
      * @param category name of the category
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<CategoryThread> getThreadsCategory(String category) {
-        return controllerThreadDomain.getThreadsCategory(category);
+    public ArrayList<CategoryThread> getThreadsCategory(String category, int block, boolean sortedByVotes) throws NetworkErrorException {
+        return controllerThreadDomain.getThreadsCategory(category, block, sortedByVotes);
     }
 
     /**
      * Metodo que retorna todas las categorias
      * @return empty arraylist si ha ocurrido algun error
      */
-    public ArrayList<String> getCategories() {
+    public ArrayList<String> getCategories() throws NetworkErrorException {
         return controllerThreadDomain.getCategories();
     }
 
@@ -58,20 +60,20 @@ public class ControllerThreadPresentation {
      * Metodo que crea un nuevo thread
      * @return empty arraylist si ha ocurrido algun error
      */
-    public boolean newThread(Thread t) throws ServerException {
+    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
         return controllerThreadDomain.newThread(t);
     }
 
 
-    public Thread getThreadContent(int id) throws JSONException, ServerException {
+    public Thread getThreadContent(int id) throws JSONException, ServerException, NetworkErrorException {
         return controllerThreadDomain.getThreadContent(id);
     }
 
-    public List<Comment> getThreadComments(int id) throws JSONException, ServerException {
-        return controllerThreadDomain.getThreadComments(id);
+    public List<Comment> getThreadComments(int id, boolean sortedByVotes) throws JSONException, ServerException, NetworkErrorException {
+        return controllerThreadDomain.getThreadComments(id, sortedByVotes);
     }
 
-    public void newComment(String commentText, int threadId) throws ServerException, JSONException {
+    public void newComment(String commentText, int threadId) throws ServerException, JSONException, NetworkErrorException {
         controllerThreadDomain.newComment(commentText, threadId);
     }
 
@@ -82,7 +84,7 @@ public class ControllerThreadPresentation {
      * @throws ServerException Si el servidor devuelve algún error
      * @throws JSONException Si se produce algún error al crear o leer JSONs
      */
-    public void voteThread(int threadId) throws ServerException, JSONException {
+    public void voteThread(int threadId) throws ServerException, JSONException, NetworkErrorException {
         controllerThreadDomain.voteThread(threadId);
     }
 
@@ -93,7 +95,7 @@ public class ControllerThreadPresentation {
      * @throws ServerException Si el servidor devuelve algún error
      * @throws JSONException Si se produce algún error al crear o leer JSONs
      */
-    public void reportThread(int threadId) throws ServerException, JSONException {
+    public void reportThread(int threadId) throws ServerException, JSONException, NetworkErrorException {
         controllerThreadDomain.reportThread(threadId);
     }
 
@@ -104,7 +106,7 @@ public class ControllerThreadPresentation {
      * @throws ServerException Si el servidor devuelve algún error
      * @throws JSONException Si se produce algún error al crear o leer JSONs
      */
-    public void voteComment(int commentId) throws ServerException, JSONException {
+    public void voteComment(int commentId) throws ServerException, JSONException, NetworkErrorException {
         controllerThreadDomain.voteComment(commentId);
     }
 
@@ -115,8 +117,11 @@ public class ControllerThreadPresentation {
      * @throws ServerException Si el servidor devuelve algún error
      * @throws JSONException Si se produce algún error al crear o leer JSONs
      */
-    public void reportComment(int commentId) throws ServerException, JSONException {
+    public void reportComment(int commentId) throws ServerException, JSONException, NetworkErrorException {
         controllerThreadDomain.reportComment(commentId);
     }
 
+    public ArrayList<CategoryThread> getThreadsCategorySearch(String category, int block, boolean sortedByVotes, String searchWords) {
+        return controllerThreadDomain.getThreadsCategorySearch(category, block, sortedByVotes, searchWords);
+    }
 }

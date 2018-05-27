@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
 import android.util.Log;
 
 import com.becitizen.app.becitizen.exceptions.ServerException;
@@ -12,16 +13,21 @@ import org.json.JSONObject;
 public class ControllerUserData {
 
     //URIs
-    private static final String URI_FB_LOGIN = "http://becitizen.cf/loginFacebook";
-    private static final String URI_GOOGLE_LOGIN = "http://becitizen.cf/loginGoogle?idToken=";
+    private static final String URI_BCN = "http://becitizen.cf";
 
-    private static final String URI_EXISTS_EMAIL = "http://becitizen.cf/existsEmail";
-    private static final String URI_REGISTER = "http://becitizen.cf/register";
-    private static final String URI_LOGIN_MAIL = "http://becitizen.cf/loginMail";
+    private static final String URI_FB_LOGIN = URI_BCN + "/loginFacebook";
+    private static final String URI_GOOGLE_LOGIN = URI_BCN + "/loginGoogle?idToken=";
 
-    private static final String URI_DEACTIVATE_ACCOUNT = "http://becitizen.cf/deactivateAccount";
-    private static final String URI_UPDATE_PROFILE = "http://becitizen.cf/updateProfile";
-    private static final String URI_VIEW_PROFILE = "http://becitizen.cf/viewProfile";
+    private static final String URI_EXISTS_EMAIL = URI_BCN + "/existsEmail";
+    private static final String URI_REGISTER = URI_BCN + "/register";
+    private static final String URI_LOGIN_MAIL = URI_BCN + "/loginMail";
+
+    private static final String URI_DEACTIVATE_ACCOUNT = URI_BCN + "/deactivateAccount";
+    private static final String URI_UPDATE_PROFILE = URI_BCN + "/updateProfile";
+    private static final String URI_VIEW_PROFILE = URI_BCN + "/viewProfile";
+
+    private static final String URI_BLOCK = URI_BCN + "/blockUser";
+    private static final String URI_UNBLOCK = URI_BCN + "/unblockUser";
 
     private static ControllerUserData instance = null;
 
@@ -53,7 +59,7 @@ public class ControllerUserData {
      * @return La respuesta de nuestro servidor al hacer login con Facebook
      * @throws ServerException Si se ha generado algún error en el servidor o no devuelve la respuesta esperada.
      */
-    public String facebookLogin() throws ServerException {
+    public String facebookLogin() throws ServerException, NetworkErrorException{
         String response, token;
 
         if((token = AccessToken.getCurrentAccessToken().getToken()) != null)
@@ -89,7 +95,7 @@ public class ControllerUserData {
      *
      * @return La respuesta de nuestro servidor al hacer login con Google
      */
-    public String googleLogin(String token) {
+    public String googleLogin(String token) throws NetworkErrorException {
         return ServerAdapter.getInstance().doGetRequest(URI_GOOGLE_LOGIN + token);
     }
 
@@ -100,7 +106,7 @@ public class ControllerUserData {
      *
      * @return True si el email esta registrado en nuestro servidor, False de lo contrario
      */
-    public boolean existsMail(String mail) throws ServerException {
+    public boolean existsMail(String mail) throws ServerException, NetworkErrorException {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_EXISTS_EMAIL + "?email=" + mail));
             if (info.get("status").equals("Ok")) {
@@ -129,7 +135,7 @@ public class ControllerUserData {
      * @return False si ha ocurrido algun error, True de lo contrario
      */
     public boolean registerData(String email, String password, String username, String firstName,
-                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException {
+                            String lastName, String birthDate, String country, int image, boolean facebook, boolean google) throws ServerException, NetworkErrorException {
 
         JSONObject json = new JSONObject();
         try {
@@ -163,11 +169,11 @@ public class ControllerUserData {
 
     }
 
-    public String checkCredentials(String email, String password) {
+    public String checkCredentials(String email, String password) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_LOGIN_MAIL + "?email=" + email + "&password=" + password);
     }
 
-    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException, NetworkErrorException {
         JSONObject json = new JSONObject();
         json.put("name", firstName);
         json.put("surname", lastName);
@@ -187,7 +193,7 @@ public class ControllerUserData {
     }
 
 
-    public boolean deactivateAccount(String username) throws ServerException, JSONException{
+    public boolean deactivateAccount(String username) throws ServerException, JSONException, NetworkErrorException{
         JSONObject json = new JSONObject();
         json.put("username", username);
 
@@ -200,11 +206,39 @@ public class ControllerUserData {
         else throw new ServerException("Server Error");
     }
 
-    public String viewProfile(String username) {
+    public String viewProfile(String username) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_VIEW_PROFILE + "?username=" + username);
     }
 
     public void setToken(String token) {
         ServerAdapter.getInstance().setTOKEN(token);
+    }
+
+    public void blockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
+        JSONObject json = new JSONObject();
+        json.put("reportedEmail", mail);
+
+        String[] dataRequest = {URI_BLOCK, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User not found");
+        else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
+        else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
+    }
+
+    public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
+        JSONObject json = new JSONObject();
+        json.put("reportedEmail", mail);
+
+        String[] dataRequest = {URI_UNBLOCK, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User not found");
+        else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
+        else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
     }
 }

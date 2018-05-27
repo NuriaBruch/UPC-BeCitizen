@@ -74,11 +74,11 @@ module.exports = {
         });
     },
     
-    getThreadComments: function(threadId,email,callback){
+    getThreadComments: function(threadId,email,sortedByVotes,callback){
         var response = {
             status: "Ok",
             errors: [],
-            comment: []
+            comments: []
         };
         Comment.find({belongsTo:threadId}).populate('reportedBy',{where:{email:email}}).populate('votedBy',{where:{email:email}}).exec(function(err2,commentsFound){
             if(err2 !== undefined && err2) {
@@ -86,7 +86,7 @@ module.exports = {
                 response.errors.push(err2);
                 callback(response);
             }
-            if(commentsFound){
+            if(commentsFound.length>0){
                 async.each(commentsFound,function(comment,eachCb){
                     var commentInfo = {
                         content:"",
@@ -119,7 +119,7 @@ module.exports = {
                             commentInfo.username = userOwner.username;
                             commentInfo.rank = userOwner.rank;
                             commentInfo.profilePicture = userOwner.profilePicture;
-                            response.comment.push(commentInfo);
+                            response.comments.push(commentInfo);
                             eachCb();
                         }
                         else{
@@ -131,6 +131,11 @@ module.exports = {
                         }
                     });
                 },function(){
+                    var sortedList  = _.sortBy(response.comments, function(l){
+                        if(sortedByVotes === 'true') return -l.votes;
+                        return -l.createdAt;
+                    });
+                    response.comments = sortedList;
                     callback(response);
                 });
             }

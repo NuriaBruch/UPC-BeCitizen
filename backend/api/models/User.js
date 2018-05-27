@@ -81,7 +81,16 @@ module.exports = {
     votedComments: {
       collection: 'comment',
       via: 'votedBy'
+    },
+    blocksUser: {
+      collection: 'user',
+      via: 'blockedByUser'
+    },
+    blockedByUser: {
+      collection: 'user',
+      via: 'blocksUser'
     }
+    
   }
 };
 

@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.domain;
 
 
+import android.accounts.NetworkErrorException;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,7 +50,7 @@ public class ControllerUserDomain {
      * @param mail Email a comprovar
      * @return True si el email esta en el servidor, false de lo contrario
      */
-    public boolean existsMail(String mail) throws ServerException {
+    public boolean existsMail(String mail) throws ServerException, NetworkErrorException {
         return controllerUserData.existsMail(mail);
     }
 
@@ -73,7 +74,7 @@ public class ControllerUserDomain {
      * @param country Pais
      * @return False si ha ocurrido algun error, true de lo contrario
      */
-    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException {
+    public boolean registerData(String username, String firstName, String lastName, String birthDate, String country) throws ServerException, NetworkErrorException {
         currentUser.setUsername(username);
         currentUser.setFirstName(firstName);
         currentUser.setLastName(lastName);
@@ -106,7 +107,7 @@ public class ControllerUserDomain {
      *
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse facebookLogin() throws ServerException {
+    public LoginResponse facebookLogin() throws ServerException, NetworkErrorException {
 
         JSONObject json = null;
         try {
@@ -143,7 +144,7 @@ public class ControllerUserDomain {
      * @param account Cuenta de Google que identifica al usuario
      * @return ERROR si ha ocurrido algun error, LOGGED_IN si el usuario ya esta registrado en nuestro servidor o REGISTER si el usuario no esta registrado en nuestro servidor
      */
-    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException {
+    public LoginResponse googleLogin(GoogleSignInAccount account) throws ServerException, NetworkErrorException {
         try {
             JSONObject response = new JSONObject(controllerUserData.googleLogin(account.getIdToken()));
 
@@ -291,7 +292,7 @@ public class ControllerUserDomain {
      * @param password Contrasena a comprobar
      * @return True si el par {email, password} esta en el servidor, false de lo contrario
      */
-    public boolean checkCredentials(String email, String password) throws ServerException {
+    public boolean checkCredentials(String email, String password) throws ServerException, NetworkErrorException {
         try {
             JSONObject response = new JSONObject(controllerUserData.checkCredentials(email, password));
 
@@ -329,11 +330,11 @@ public class ControllerUserDomain {
         MySharedPreferences.init(context);
     }
 
-    public boolean deactivateAccount() throws ServerException, JSONException{
+    public boolean deactivateAccount() throws ServerException, JSONException, NetworkErrorException{
         return controllerUserData.deactivateAccount(currentUser.getUsername());
     }
 
-    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException {
+    public boolean editProfile(String firstName, String lastName, String birthDate, int image, String country, String biography) throws ServerException, JSONException, NetworkErrorException {
         // Poster sha de mirar el Json aqui en lloc de a controllerUserData
         boolean i = controllerUserData.editProfile(firstName, lastName, birthDate, image, country, biography);
         if (i) {
@@ -362,7 +363,7 @@ public class ControllerUserDomain {
         return bundle;
     }
 
-    public Bundle viewProfile(String username) throws ServerException, JSONException {
+    public Bundle viewProfile(String username) throws ServerException, JSONException, NetworkErrorException {
 
         Bundle bundle = new Bundle();
 
@@ -380,6 +381,8 @@ public class ControllerUserDomain {
             if(!info.isNull("biography")) bundle.putString("biography", info.getString("biography"));
             if(!info.isNull("rank")) bundle.putString("rank", info.getString("rank"));
             if(!info.isNull("profilePicture")) bundle.putInt("image", info.getInt("profilePicture"));
+            if(!info.isNull("email")) bundle.putString("email", info.getString("email"));
+            if(!info.isNull("blocked")) bundle.putBoolean("blocked", info.getBoolean("blocked"));
 
             if (username.equals(currentUser.getUsername())) {
                 currentUser.setFirstName(info.getString("name"));
@@ -409,5 +412,13 @@ public class ControllerUserDomain {
 
     public boolean checkUsername(String username) {
         return username.equals(currentUser.getUsername());
+    }
+
+    public void blockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
+        controllerUserData.blockUser(mail);
+    }
+
+    public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
+        controllerUserData.unblockUser(mail);
     }
 }

@@ -1,5 +1,6 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -26,18 +27,21 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class ThreadActivity extends Fragment {
     private View rootView;
     private RecyclerView recyclerView;
     private CommentAdapter adapter;
     private List<Comment> commentList;
     private int threadId;
-    ControllerThreadPresentation controllerThreadPresentation;
+    private ControllerThreadPresentation controllerThreadPresentation;
 
     TextView threadAuthor, threadTime, threadContent, threadTitle, threadVotes, threadAuthorRank;
-    ImageButton threadVote, threadReport, threadAuthorImage;
+    ImageButton threadVote, threadReport, threadAuthorImage, commentSort;
     EditText newCommentText;
     ImageButton newCommentButton;
+    boolean sortedByVotes;
 
     public ThreadActivity() {}
 
@@ -48,6 +52,8 @@ public class ThreadActivity extends Fragment {
         controllerThreadPresentation = ControllerThreadPresentation.getUniqueInstance();
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
+
+        sortedByVotes = false;
 
         prepareContent();
 
@@ -117,6 +123,9 @@ public class ThreadActivity extends Fragment {
                     }
                     catch (ServerException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (NetworkErrorException e) {
+                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                        toast.show();
                     }
 
                 }
@@ -135,6 +144,9 @@ public class ThreadActivity extends Fragment {
                     }
                     catch (ServerException e) {
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    } catch (NetworkErrorException e) {
+                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                        toast.show();
                     }
                 }
             });
@@ -151,6 +163,15 @@ public class ThreadActivity extends Fragment {
                 }
             });
 
+            commentSort = rootView.findViewById(R.id.commentSortButton);
+            commentSort.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sortedByVotes = !sortedByVotes;
+                    prepareComments();
+                }
+            });
+
             newCommentText = rootView.findViewById(R.id.newCommentInput);
             newCommentButton = rootView.findViewById(R.id.newCommentButton);
             newCommentButton.setOnClickListener(new View.OnClickListener() {
@@ -158,12 +179,12 @@ public class ThreadActivity extends Fragment {
                 public void onClick(View view) {
                     String commentText = newCommentText.getText().toString().trim();
                     if (commentText.isEmpty())
-                        Snackbar.make(view, "Your reply is empty", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, R.string.emptyreply, Snackbar.LENGTH_LONG).show();
                     else {
                         try {
                             controllerThreadPresentation.newComment(commentText, threadId);
                             prepareComments();
-                            Toast.makeText(getContext(), "Comment created", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), R.string.commentCreated, Toast.LENGTH_LONG).show();
                             newCommentText.clearFocus();
                             newCommentText.setText(null);
                         }
@@ -172,6 +193,9 @@ public class ThreadActivity extends Fragment {
                         }
                         catch (ServerException e) {
                             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (NetworkErrorException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                     }
                 }
@@ -188,13 +212,16 @@ public class ThreadActivity extends Fragment {
         }
         catch (ServerException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
 
     }
 
     private void prepareComments () {
         try {
-            List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(threadId);
+            List<Comment> newCommentList = controllerThreadPresentation.getThreadComments(threadId, sortedByVotes);
             commentList.clear();
             commentList.addAll(newCommentList);
             adapter.notifyDataSetChanged();
@@ -204,6 +231,9 @@ public class ThreadActivity extends Fragment {
         }
         catch (ServerException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 

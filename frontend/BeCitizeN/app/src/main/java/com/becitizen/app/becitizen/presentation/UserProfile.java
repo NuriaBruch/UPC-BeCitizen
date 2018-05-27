@@ -1,23 +1,31 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.presentation.msg.ControllerMsgPresentation;
+import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
 
 import org.json.JSONException;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserProfile extends Fragment implements View.OnClickListener {
 
@@ -31,17 +39,22 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     private TextView tvRank;
     private ImageView ivUserImage;
     private FloatingActionButton fbPrivateMessage;
-    private ImageButton ibEditProfile;
-    private ImageButton ibSignOut;
+    private CardView ibEditProfile;
+    private CardView ibSignOut;
     private ImageView rankIcon;
+    private ImageView ivBlock;
+    private TextView tvBlock;
+    private CardView blockButton;
 
+
+    private String userMail;
     private boolean loggedUser;
     private String username;
-    private boolean activeUser;
+    private boolean blockedUser;
     Bundle userData;
 
     public UserProfile() {
-        activeUser = true;
+        blockedUser = false;
         username = "";
     }
 
@@ -67,6 +80,8 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         tvCountry = rootView.findViewById(R.id.tvCountry);
         tvBiography = rootView.findViewById(R.id.tvBiography);
         ivUserImage = rootView.findViewById(R.id.ivUserImage);
+        ivBlock = rootView.findViewById(R.id.ivBlock);
+        tvBlock = rootView.findViewById(R.id.tvBlock);
 
         ibEditProfile = rootView.findViewById(R.id.ibEditProfile);
         ibEditProfile.setOnClickListener(this);
@@ -74,7 +89,11 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         ibSignOut = rootView.findViewById(R.id.ibSignOut);
         ibSignOut.setOnClickListener(this);
 
+        blockButton = rootView.findViewById(R.id.blockButton);
+        blockButton.setOnClickListener(this);
+
         fbPrivateMessage = rootView.findViewById(R.id.fbPrivateMessage);
+        fbPrivateMessage.setOnClickListener(this);
 
         setValues();
 
@@ -85,10 +104,11 @@ public class UserProfile extends Fragment implements View.OnClickListener {
 
         if (loggedUser) {
             fbPrivateMessage.setVisibility(View.GONE);
+            blockButton.setVisibility(View.INVISIBLE);
         }
         else {
-            ibEditProfile.setVisibility(View.GONE);
-            ibSignOut.setVisibility(View.GONE);
+            ibEditProfile.setVisibility(View.INVISIBLE);
+            ibSignOut.setVisibility(View.INVISIBLE);
         }
 
         try {
@@ -107,6 +127,26 @@ public class UserProfile extends Fragment implements View.OnClickListener {
             setRankColor();
 
             setImage(userData.getInt("image"));
+
+            if (userData.get("email") != null) {
+                userMail = userData.get("email").toString();
+            }
+
+            if (userData.get("blocked") != null) {
+                blockedUser = userData.getBoolean("blocked");
+            }
+
+            if (!loggedUser) {
+                if (blockedUser) {
+                    ivBlock.setImageResource(R.drawable.unblock_user);
+                    tvBlock.setText(R.string.unblockUser);
+                }
+
+                else {
+                    ivBlock.setImageResource(R.drawable.block_user);
+                    tvBlock.setText(R.string.blockUser);
+                }
+            }
         }
 
         catch (ServerException e) {
@@ -144,6 +184,9 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
             finishFragment();
+        } catch (NetworkErrorException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
@@ -233,11 +276,109 @@ public class UserProfile extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ibEditProfile:
-                editProfile(rootView);
+                editProfile();
                 break;
             case R.id.ibSignOut:
                 signOut();
                 break;
+            case R.id.blockButton:
+                askConfirmation();
+                break;
+            case R.id.fbPrivateMessage:
+                startConversation();
+                break;
+        }
+    }
+
+    private void askConfirmation() {
+        if(!blockedUser) {
+            new AlertDialog.Builder(rootView.getContext())
+                    .setTitle(getResources().getString(R.string.blockUser))
+                    .setMessage(getResources().getString(R.string.blockUserMsg))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            blockUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+
+        else {
+            new AlertDialog.Builder(rootView.getContext())
+                    .setTitle(getResources().getString(R.string.unblockUser))
+                    .setMessage(getResources().getString(R.string.unblockUserMsg))
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            blockUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
+        }
+    }
+
+    private void startConversation() {
+        // TODO començar nova conversa
+        if (userMail != null) {
+            Conversation c = null;
+            try {
+                c = ControllerMsgPresentation.getInstance().getConversation(userMail);
+                Intent intent = new Intent(getContext(), OneConversationActivity.class);
+                intent.putExtra("id", c.getId());
+                intent.putExtra("name", c.getName());
+                intent.putExtra("username", c.getUserName());
+                intent.putExtra("profilePicture", c.getUserImage());
+                startActivity(intent);
+            } catch (ServerException e) {
+                e.printStackTrace();
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
+            }
+        } else Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorMessaging), Toast.LENGTH_LONG).show();
+    }
+
+    private void blockUser() {
+        if (userMail == null) {
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.errorBlock), Toast.LENGTH_LONG).show();
+        }
+        if (!blockedUser) {
+            try {
+                controllerUserPresentation.blockUser(userMail);
+                ivBlock.setImageResource(R.drawable.unblock_user);
+                tvBlock.setText(R.string.unblockUser);
+                blockedUser = !blockedUser;
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+            catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            } catch (NetworkErrorException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+
+        else {
+            try {
+                controllerUserPresentation.unblockUser(userMail);
+                ivBlock.setImageResource(R.drawable.block_user);
+                tvBlock.setText(R.string.blockUser);
+                blockedUser = !blockedUser;
+            }
+            catch (ServerException e) {
+                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+
+                catch (JSONException e) {
+                Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror) , Toast.LENGTH_LONG).show();
+            } catch (NetworkErrorException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         }
     }
 
@@ -253,7 +394,7 @@ public class UserProfile extends Fragment implements View.OnClickListener {
         this.startActivity(intent);
     }
 
-    public void editProfile(View view) {
+    public void editProfile() {
         Fragment fragment = new UserProfileEdit();
         fragmentTransaction(fragment, "USER_EDIT_PROFILE");
     }

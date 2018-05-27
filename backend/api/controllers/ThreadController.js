@@ -24,7 +24,7 @@ module.exports = {
         var {title, content, category} = req.body;
         ThreadService.createThread(userMail,title,content,category,function(status){
             res.send(status);
-        })
+        });
     },
 
     deleteThread: function(req,res){
@@ -53,7 +53,8 @@ module.exports = {
     getAllThreadsCategory: function(req,res){
         var block = req.query.block;
         var category = req.query.category;
-        ThreadService.getAllThreadsCategory(block,category,function(status){
+        var sortedByVotes = req.query.sortedByVotes; 
+        ThreadService.getAllThreadsCategory(block,category,sortedByVotes,function(status){
             res.send(status);
         });
     },
@@ -64,6 +65,18 @@ module.exports = {
         ThreadService.voteThread(id, email,function(status){
             res.send(status);
         });
+    },
+
+    getThreadWords: function(req,res){
+        var block = req.query.block;
+        var category = req.query.category;
+        var sortedByVotes = req.query.sortedByVotes;
+        var words = req.query.words;
+        var email = UtilsService.getEmailFromHeader(req);
+        ThreadService.getThreadWords(words,email,block,category,sortedByVotes,function(status){
+            res.send(status);
+        });
     }
+
 };
 

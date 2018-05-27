@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,9 +36,14 @@ public class SideMenuActivity extends AppCompatActivity
             goToLogin();
         }
 
-        //Set the fragment initially
-        Fragment fragment = new InsideActivity();
-        fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfile")) {
+            viewProfile(bundle);
+        } else {
+            //Set the fragment initially
+            Fragment fragment = new InsideActivity();
+            fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -133,32 +139,25 @@ public class SideMenuActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_information:
+                fragment = new InformationCategoriesActivity();
+                fragmentTransaction(fragment, "INFORMATION_CATEGORY_ACTIVITY");
+                break;
+            case R.id.nav_faq:
                 fragment = new InsideActivity();
                 fragmentTransaction(fragment, "INSIDE_ACTIVITY");
                 break;
-            case R.id.nav_faq:
-                /*
-                Fragment fragment = new FaqActivity();
-                fragmentTransaction(fragment);
-                */
-                break;
             case R.id.nav_utilities:
-                /*
-                Fragment fragment = new UtilitiesActivity();
-                fragmentTransaction(fragment);
-                */
+                fragment = new UtilitiesMenu();
+                fragmentTransaction(fragment, "UTILITIES_MENU");
                 break;
             case R.id.nav_forum:
                 fragment = new ForumCategoriesActivity();
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                /*
-                fragment = new PrivateMessagesActivity();
-                fragmentTransaction(fragment, "PRIVATE_MESSAGES_ACTIVITY");
-
+                fragment = new AllConversationsActivity();
+                fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
                 break;
-                */
             case R.id.nav_settings:
                 /*
                 fragment = new SettingsActivity();
@@ -166,16 +165,12 @@ public class SideMenuActivity extends AppCompatActivity
                 */
                 break;
             case R.id.nav_help:
-                /*
                 fragment = new HelpActivity();
-                fragmentTransaction(fragment);
-                */
+                fragmentTransaction(fragment, "HELP_ACTIVITY");
                 break;
             case R.id.nav_about:
-                /*
                 fragment = new AboutActivity();
-                fragmentTransaction(fragment);
-                */
+                fragmentTransaction(fragment, "ABOUT_ACTIVITY");
                 break;
         }
 
@@ -184,5 +179,9 @@ public class SideMenuActivity extends AppCompatActivity
         return true;
     }
 
-
+    private void viewProfile(Bundle bundle) {
+        Fragment fragment = new UserProfile();
+        fragment.setArguments(bundle);
+        fragmentTransaction(fragment, "USER_PROFILE");
+    }
 }

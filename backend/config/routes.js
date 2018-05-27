@@ -67,7 +67,19 @@ module.exports.routes = {
   'PUT /updateProfile':{
     controller: 'UserController',
     action: 'updateProfile'
-  }, 
+  },
+  'GET /resetPassword':{
+    controller: 'UserController',
+    action: 'resetPassword'
+  },
+  'POST /blockUser':{
+    controller: 'UserController',
+    action: 'blockUser'
+  },
+  'POST /unblockUser':{
+    controller: 'UserController',
+    action: 'unblockUser'
+  },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
     controller: 'ThreadController',
@@ -84,6 +96,10 @@ module.exports.routes = {
   'GET /getThread':{
     controller: 'ThreadController',
     action: 'getThread'
+  },
+  'GET /getThreadWords':{
+    controller: 'ThreadController',
+    action: 'getThreadWords'
   },
   'PUT /reportThread':{
     controller: 'ThreadController',
@@ -113,10 +129,61 @@ module.exports.routes = {
   'PUT /voteComment': {
     controller: 'CommentController',
     action: 'voteComment'
-  },  
+  },
+  //############ MONETARYEXCHANGE CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getExchange':{
+    controller: 'MonetaryExchangeController',
+    action: 'getExchange'
+  },
+  'GET /getAllCurrencies':{
+    controller: 'MonetaryExchangeController',
+    action: 'getAllCurrencies'
+  },
+  //############ WORD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getWord':{
+    controller: 'WordController',
+    action: 'getWord'
+  },
+
+  //############ CONVERSATION CONTROLLER ################# ordered as POST>GET
+  'POST /conversation':{
+    controller: 'ConversationController',
+    action: 'newConversation'
+  },
+  'GET /conversations':{
+    controller: 'ConversationController',
+    action: 'getConversations'
+  },
+
+  //############ MESSAGE CONTROLLER ################# ordered as POST>GET
+  'POST /message':{
+    controller: 'MessageController',
+    action: 'newMessage'
+  },
+  'GET /conversationMessages':{
+    controller: 'MessageController',
+    action: 'getMessages'
+  },
+  
 
 
-
+  //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newInfo':{
+    controller: 'InformationController',
+    action: 'createInfo'
+  },
+  'GET /getAllInfoCategory':{
+    controller: 'InformationController',
+    action: 'getAllInfoCategory'
+  },
+  'GET /getInfo':{
+    controller: 'InformationController',
+    action: 'getInfo'
+  },
+  'DELETE /deleteInfo':{
+    controller: 'InformationController',
+    action: 'deleteInfo'
+  }
 
 
   /***************************************************************************

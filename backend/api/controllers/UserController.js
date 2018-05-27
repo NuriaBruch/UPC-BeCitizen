@@ -9,7 +9,7 @@ module.exports = {
 
 	register: function(req,res){
         var {username, password, email, name, surname, birthday, country, profilePicture, facebook, google} = req.body;
-        
+
         var hasFace = (facebook ==='true');
         var hasGoogle = (google === 'true');
         var gestionUser = new GestionUser();
@@ -84,7 +84,7 @@ module.exports = {
 
     updateProfile: function(req,res){
         var gestionUser = new GestionUser();
-        
+
         gestionUser.update(req,function(status){
             res.send(status);
         });
@@ -93,9 +93,46 @@ module.exports = {
     viewProfile: function(req, res){
         var gestionUser = new GestionUser();
 
+        var myEmail = UtilsService.getEmailFromHeader(req);
         var username = req.query.username;
-        
-        gestionUser.view(username,function(status){
+
+        gestionUser.view(myEmail,username,function(status){
+            res.send(status);
+        });
+    },
+
+    blockUser: function(req, res){
+        var reporter = UtilsService.getEmailFromHeader(req);
+        var reported = req.body.reportedEmail;
+        var gestionUser = new GestionUser();
+        gestionUser.block(reporter,reported,function(status){
+            if(status.status !== "Ok") res.send(status);
+            else{
+                ConversationService.blockConversation(reporter,reported,function(status2){
+                    res.send(status2);
+                });
+            }
+        });
+    },
+
+
+    unblockUser: function(req,res){
+        var reporter = UtilsService.getEmailFromHeader(req);
+        var reported = req.body.reportedEmail;
+        var gestionUser = new GestionUser();
+        gestionUser.unblock(reporter,reported,function(status){
+            if(status.status !== "Ok") res.send(status);
+            else{
+                ConversationService.unblockConversation(reporter,reported,function(status2){
+                    res.send(status2);
+                });
+            }
+        });
+    },
+    resetPassword: function(req,res){
+        var userMail = req.query.userEmail;
+        var gestionUser = new GestionUser();
+        gestionUser.resetPassword(userMail, function(status){
             res.send(status);
         });
     }

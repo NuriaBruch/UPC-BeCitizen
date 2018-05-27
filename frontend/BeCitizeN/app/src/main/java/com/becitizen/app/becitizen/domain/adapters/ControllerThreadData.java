@@ -1,5 +1,7 @@
 package com.becitizen.app.becitizen.domain.adapters;
 
+import android.accounts.NetworkErrorException;
+
 import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
@@ -9,16 +11,20 @@ import org.json.JSONObject;
 public class ControllerThreadData {
 
     //URIs
-    private static final String URI_THREADS_CATEGORY = "http://becitizen.cf/getAllThreadsCategory?category=";
-    private static final String URI_CATEGORIES = "http://becitizen.cf/categories";
-    private static final String URI_NEW_THREAD = "http://becitizen.cf/newThread";
-    private static final String URI_THREAD_CONTENT = "http://becitizen.cf/getThread?threadId=";
-    private static final String URI_THREAD_COMMENTS = "http://becitizen.cf/getThreadComments?&threadId=";
-    private static final String URI_NEW_COMMENT = "http://becitizen.cf/newComment";
-    private static final String URI_VOTE_THREAD = "http://becitizen.cf/voteThread";
-    private static final String URI_VOTE_COMMENT = "http://becitizen.cf/voteComment";
-    private static final String URI_REPORT_THREAD = "http://becitizen.cf/reportThread";
-    private static final String URI_REPORT_COMMENT = "http://becitizen.cf/reportComment";
+
+    private static final String URI_BCN = "http://becitizen.cf";
+
+    private static final String URI_THREADS_CATEGORY = URI_BCN + "/getAllThreadsCategory?category=";
+    private static final String URI_CATEGORIES = URI_BCN + "/categories";
+    private static final String URI_NEW_THREAD = URI_BCN + "/newThread";
+    private static final String URI_THREAD_CONTENT = URI_BCN + "/getThread?threadId=";
+    private static final String URI_THREAD_COMMENTS = URI_BCN + "/getThreadComments?&threadId=";
+    private static final String URI_NEW_COMMENT = URI_BCN + "/newComment";
+    private static final String URI_VOTE_THREAD = URI_BCN + "/voteThread";
+    private static final String URI_VOTE_COMMENT = URI_BCN + "/voteComment";
+    private static final String URI_REPORT_THREAD = URI_BCN + "/reportThread";
+    private static final String URI_REPORT_COMMENT = URI_BCN + "/reportComment";
+    private static final String URI_THREADS_CATEGORY_SEARCH = URI_BCN + "/getThreadWords?category=";
 
 
     private static ControllerThreadData instance = null;
@@ -47,8 +53,8 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getThreadsCategory(String category) {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category);
+    public String getThreadsCategory(String category, int block, boolean sortedByVotes) throws NetworkErrorException {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY + category + "&block=" + block + "&sortedByVotes=" + String.valueOf(sortedByVotes));
     }
 
     /**
@@ -56,7 +62,7 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public String getCategories() {
+    public String getCategories() throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_CATEGORIES);
     }
 
@@ -67,7 +73,7 @@ public class ControllerThreadData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public boolean newThread(Thread t) throws ServerException {
+    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
         JSONObject json = new JSONObject();
         try {
             json.put("title", t.getTitle());
@@ -92,15 +98,15 @@ public class ControllerThreadData {
     }
 
 
-    public String getThreadContent(int id) {
+    public String getThreadContent(int id) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_THREAD_CONTENT + String.valueOf(id));
     }
 
-    public String getThreadComments(int id) {
-        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id));
+    public String getThreadComments(int id, boolean sortedByVotes) throws NetworkErrorException{
+        return ServerAdapter.getInstance().doGetRequest(URI_THREAD_COMMENTS + String.valueOf(id) + "&sortedByVotes="+ String.valueOf(sortedByVotes));
     }
 
-    public String newComment(String commentText, int threadId) {
+    public String newComment(String commentText, int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         try {
             json.put("content", commentText);
@@ -118,7 +124,7 @@ public class ControllerThreadData {
      * @param threadId  Identificador del thread que se quiere votar
      * @return Server response
      */
-    public String voteThread(int threadId) {
+    public String voteThread(int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -130,7 +136,7 @@ public class ControllerThreadData {
      * @param threadId  Identificador del thread que se quiere reportar
      * @return Server response
      */
-    public String reportThread(int threadId) {
+    public String reportThread(int threadId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_THREAD + "?threadId=" + threadId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -142,7 +148,7 @@ public class ControllerThreadData {
      * @param commentId  Identificador del comentario que se quiere votar
      * @return Server response
      */
-    public String voteComment(int commentId) {
+    public String voteComment(int commentId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_VOTE_COMMENT + "?commentId=" + commentId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
@@ -154,10 +160,15 @@ public class ControllerThreadData {
      * @param commentId  Identificador del comentario que se quiere reportar
      * @return Server response
      */
-    public String reportComment(int commentId) {
+    public String reportComment(int commentId) throws NetworkErrorException{
         JSONObject json = new JSONObject();
         String[] dataRequest = {URI_REPORT_COMMENT + "?commentId=" + commentId, json.toString()};
         return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
+    public String getThreadsCategorySearch(String category, int block, boolean sortedByVotes, String searchWords) {
+        return ServerAdapter.getInstance().doGetRequest(URI_THREADS_CATEGORY_SEARCH + category + "&block=" + block + "&sortedByVotes=" + String.valueOf(sortedByVotes) + "&words=" + searchWords);
+    }
 }
+
+

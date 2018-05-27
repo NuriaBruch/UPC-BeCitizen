@@ -1,15 +1,24 @@
 package com.becitizen.app.becitizen.presentation;
 
+import android.accounts.NetworkErrorException;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -21,14 +30,55 @@ import java.util.ArrayList;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class CategoryThreadActivity extends Fragment {
+public class CategoryThreadActivity extends Fragment  {
 
     private View rootView;
-    private LinearLayout parentLinearLayout;
+    boolean sortedByVotes;
     ArrayList<CategoryThread> dataModels;
+    ArrayList<CategoryThread> dataChunk;
+    private int block = -1;
     ListView listView;
+    private int preLast;
     private static CategoryThreadAdapter adapter;
     private String category = "";
+    private String searchWords = "";
+    private boolean searching = false;
+    private Thread threadLoadThreads;
+    private Handler UIUpdater = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            adapter.addAll(dataChunk);
+            progressBar.setVisibility(View.GONE);
+            if (msg.what ==0 && adapter.getCount() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.empty), Toast.LENGTH_SHORT);
+                toast.show();
+            } else if (msg.what == 1) {
+                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    };
+    private ProgressBar progressBar;
+
+    private Runnable loadThreads = new Runnable() {
+        public void run() {
+            ++block;
+            try {
+                dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category, block, sortedByVotes);
+                UIUpdater.sendEmptyMessage(0);
+            } catch (NetworkErrorException e) {
+                UIUpdater.sendEmptyMessage(1);
+            }
+        }
+    };
+
+    private Runnable loadThreadsSearch = new Runnable() {
+        public void run() {
+            ++block;
+            dataChunk = ControllerThreadPresentation.getUniqueInstance().getThreadsCategorySearch(category, block, sortedByVotes, searchWords);
+            UIUpdater.sendEmptyMessage(0);
+        }
+    };
 
     public CategoryThreadActivity() {
     }
@@ -42,14 +92,16 @@ public class CategoryThreadActivity extends Fragment {
 
         rootView = inflater.inflate(R.layout.activity_category_thread, container, false);
 
+        sortedByVotes = false;
+
         listView = (ListView)rootView.findViewById(R.id.list);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        progressBar.setIndeterminate(true);
 
-        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
+        TextView categoryText = rootView.findViewById(R.id.categoryText);
+        categoryText.setText(category);
 
-        if (dataModels.size() == 0) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Empty", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+        dataModels = new ArrayList<CategoryThread>();
 
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +120,62 @@ public class CategoryThreadActivity extends Fragment {
             }
         });
 
+        ImageButton sortButton = rootView.findViewById(R.id.threadsSortButton);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searching = false;
+                sortedByVotes = !sortedByVotes;
+                block = -1;
+                preLast = 0;
+                adapter.clear();
+                if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                    threadLoadThreads.interrupt();
+                threadLoadThreads = new Thread(loadThreads);
+                threadLoadThreads.start();
+
+            }
+        });
+
+        ImageButton searchButton = rootView.findViewById(R.id.threadsSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(rootView.getContext());
+                dialog.setContentView(R.layout.category_thread_search);
+
+                TextView searchCategory = dialog.findViewById(R.id.search_name_text);
+                searchCategory.setText(category);
+
+                Button searchButton = dialog.findViewById(R.id.search_button);
+
+                final EditText wordsToSearch = dialog.findViewById(R.id.search_edit_text);
+
+                dialog.show();
+
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        searchWords = wordsToSearch.getText().toString().trim();
+                        if (searchWords.isEmpty())
+                            Toast.makeText(dialog.getContext(), R.string.searchCategoryEmptyText, Toast.LENGTH_LONG).show();
+                        else {
+                            searching = true;
+                            block = -1;
+                            preLast = 0;
+                            adapter.clear();
+                            if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                threadLoadThreads.interrupt();
+                            threadLoadThreads = new Thread(loadThreadsSearch);
+                            threadLoadThreads.start();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+            }
+        });
+
         adapter = new CategoryThreadAdapter(dataModels, getApplicationContext());
 
         listView.setAdapter(adapter);
@@ -82,13 +190,63 @@ public class CategoryThreadActivity extends Fragment {
             }
         });
 
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                switch(absListView.getId())
+                {
+                    case R.id.list:
+                        // Sample calculation to determine if the last
+                        // item is fully visible.
+                        final int lastItem = firstVisibleItem + visibleItemCount;
+                        if (lastItem == totalItemCount) {
+                            if(preLast!=lastItem) {
+                                preLast = lastItem;
+                                progressBar.setVisibility(View.VISIBLE);
+                                if (!searching) {
+                                    if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                        threadLoadThreads.interrupt();
+                                    threadLoadThreads = new Thread(loadThreads);
+                                    threadLoadThreads.start();
+                                }
+                                else {
+                                    if (threadLoadThreads != null && threadLoadThreads.isAlive())
+                                        threadLoadThreads.interrupt();
+                                    threadLoadThreads = new Thread(loadThreadsSearch);
+                                    threadLoadThreads.start();
+                                }
+                            }
+                        }
+                }
+            }
+        });
+
         return rootView;
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        dataModels = ControllerThreadPresentation.getUniqueInstance().getThreadsCategory(category);
+        progressBar.setVisibility(View.VISIBLE);
+        if (threadLoadThreads != null && threadLoadThreads.isAlive())
+            threadLoadThreads.interrupt();
+        threadLoadThreads = new Thread(loadThreads);
+        threadLoadThreads.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        block = -1;
+        preLast = 0;
+        adapter.clear();
+        if (threadLoadThreads != null && threadLoadThreads.isAlive())
+            threadLoadThreads.interrupt();
     }
 
     private void fragmentTransaction(Fragment fragment, String tag) {

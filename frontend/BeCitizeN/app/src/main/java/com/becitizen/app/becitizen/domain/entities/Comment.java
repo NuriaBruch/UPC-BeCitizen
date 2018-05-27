@@ -14,6 +14,7 @@ public class Comment {
     private int votes;
     private boolean votable;
     private boolean reportable;
+    private int threadId;
 
 
     public Comment() {
@@ -92,5 +93,12 @@ public class Comment {
         this.reportable = reportable;
     }
 
+    public int getThreadId() {
+        return threadId;
+    }
+
+    public void setThreadId(int threadId) {
+        this.threadId = threadId;
+    }
 }
 

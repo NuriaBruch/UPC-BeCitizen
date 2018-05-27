@@ -45,12 +45,16 @@
     <string name="submit">Submit</string>
     <string name="errorMsgName">Not a valid input</string>
     <string name="errorUsername">Username already exists</string>
+    <string name="errorBiography">Biography too long</string>
 
     <string name="guest">Guest</string>
+
+    <string name="quoting">Quoting comment:</string>
 
     <string name="newComment">Write a comment</string>
     <string name="comments">Comments</string>
     <string name="quotingError">Quoting not implemented yet</string>
+    <string name="commentCreated">Comment created</string>
 
     <string name="tokenError">Token error</string>
 
@@ -60,10 +64,33 @@
     <string name="biographyUP">Biography:</string>
     <string name="deactived">Deactivated user</string>
 
+    <string name="send">Send</string>
+
+    <string name="emptyreply">Your reply is empty</string>
+
     <string name="votes">votes</string>
 
     <string name="update">Update</string>
     <string name="editprofile">Edit your profile</string>
+
+    <string name="searchCategoryThreadTitle">Searching in:</string>
+    <string name="searchCategoryHint">Write the words to find</string>
+    <string name="searchCategoryButton">Search</string>
+    <string name="searchCategoryEmptyText">Your search can not be empty</string>
+
+    <string name="ccTitle">Currency Converter</string>
+    <string name="ccFrom">From:</string>
+    <string name="ccTo">To:</string>
+    <string name="ccConvertText">Write Amount to Convert</string>
+    <string name="ccResult">Result</string>
+    <string name="ccErrorConvert">Sorry we could not convert that</string>
+
+
+    <string name="wordOfTheDayTitle">Word of the Day</string>
+    <string name="wordOfTheDayMeans">means</string>
+    <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
+    <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
+    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
 
     <string name="serverError">Server Error</string>
     <string name="DBError">Database Error</string>
@@ -84,6 +111,34 @@
     <string name="hour">hour</string>
     <string name="day">day</string>
     <string name="year">year</string>
+
+    <string name="buttonCurrency">Currency Converter</string>
+    <string name="buttonTranslator">Translator</string>
+    <string name="buttonWord">Word of the day</string>
+
+    <string name="textDevelopedBy">This application has been developed by a group of students of the Computer Engineering degree from the Universitat Politècnica de Catalunya (UPC) and more specifically from the Facultat d\'Informàtica de Barcelona (FIB).</string>
+    <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
+    <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
+
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
+
+
+    <string name="openInBrowser">Open in Browser</string>
+    <string name="openMap">Open Map</string>
+    <string name="empty">Empty</string>
+    <string name="networkError">Network Error</string>
+
+    <string name="deactivateUser">Deactivate</string>
+    <string name="blockUser">Block</string>
+    <string name="unblockUser">Unblock</string>
+    <string name="blockUserMsg">Do you really want to block this user?</string>
+    <string name="unblockUserMsg">Do you really want to unblock this user?</string>
+
+    <string name="errorBlock">It is not possible to block / unblock this user </string>
+    <string name="errorMessaging">It is not possible to send message to this user </string>
 
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
@@ -333,6 +388,7 @@
     <string name="hintTitleThread">Provide a title for your new thread</string>
     <string name="hintThreadContent">Describe your thread</string>
     <string name="newThread">New Thread</string>
+    <string name="convert">Convert</string>
 
     <string-array name="image_codes">
         <item>1</item>
@@ -366,4 +422,48 @@
         <item>Employment</item>
         <item>Justice</item>
     </string-array>
+
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="tab_text_1">Principal</string>
+    <string name="tab_text_2">Information</string>
+    <string name="tab_text_3">FAQ</string>
+    <string name="tab_text_4">Forum</string>
+    <string name="tab_text_5">Messaging</string>
+    <string name="tab_text_6">Utilities</string>
+    <string name="tab_text_7">User profile</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
+    <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>
+    <string name="helpUser_3">In the edit profile screen, you can update your data and also deactivate your account with the deactivate user icon.</string>
+    <string name="helpUser_4">Once you see your profile, you can do logout with the logout icon. This will take you to the initial screen.</string>
+
+    <string name="helpForum_1">You can access the forum by the forum icon in the side menu of the application.</string>
+    <string name="helpForum_2">On the first screen of the forum, there are different categories and you can choose among them, just like in the information part of BeCitizeN.</string>
+    <string name="helpForum_3">Once you have chosen a category you can either start a new thread or chose to see one of the threads created by another user.</string>
+    <string name="helpForum_4">If you have chosen to see a thread, you can comment it by writing in the text entry at the bottom of your screen.</string>
+    <string name="helpForum_5">You can also reply a specific comment by quoting it.</string>
+    <string name="helpForum_6">If you want to indicate that you like a comment or thread you can use the voting icon.</string>
+    <string name="helpForum_7">On the other hand, if you believe that the content of a comment or post is inappropriate you can use the report icon.</string>
+    <string name="helpForum_8">Another important thing you need to know about the forum is that if you click on the profile image of any user, you can accede its user profile.</string>
+
+    <string name="helpUtilities_1">You can accede the utilities by its icon in your side menu.</string>
+    <string name="helpUtilities_2">In this part of the application you have 3 different functionalities:</string>
+    <string name="helpUtilities_3">Currency converter</string>
+    <string name="helpUtilities_4">You can select the currency you want to convert and the currency to which you want it. The conversion among all currencies is actualized twice a day.</string>
+    <string name="helpUtilities_5">Translator</string>
+    <string name="helpUtilities_6">With this functionality you can introduce a text in any language and translate it to any other.</string>
+    <string name="helpUtilities_7">Word of the day</string>
+    <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, in your selected language. This functionality is possible thanks to rodamot.com.</string>
+
+    <string name="helpMessaging_1">With the private messaging icon in the side menu, you can access your private conversations with other users.</string>
+    <string name="helpMessaging_2">To be able to start a new conversation, you have to go through the forum to a another user profile and there you have to click the private messaging button.</string>
+    <string name="helpMessaging_3">If one user sends you messages, you will see it when you enter to your private conversations.</string>
+    <string name="helpMessaging_4">If you do not want a user to send you any message, you can block him by accessing his profile, either through the forum or the conversation, and click the block user button.</string>
+
+    <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
+    <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
+    <string name="errorLoadMessages">Could not load messages</string>
+
 </resources>

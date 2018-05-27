@@ -63,7 +63,10 @@ public class CategoryThreadAdapter extends ArrayAdapter<CategoryThread> implemen
         TextView votesView = (TextView) rowView.findViewById(R.id.votes);
 
         // 4. Set the text for textView
-        titleView.setText(dataSet.get(position).getTitle());
+        if (dataSet.get(position).getTitle().length() < 22)
+            titleView.setText(dataSet.get(position).getTitle());
+        else
+            titleView.setText(dataSet.get(position).getTitle().substring(0, 22) + "...");
 
         //get x seconds/hours/days/years string
         String dateString;
