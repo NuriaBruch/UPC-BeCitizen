@@ -69,5 +69,19 @@ module.exports = {
 
     isEmptyOrBlank: function(str){
        return (!str || 0 === str.length || !str.trim());
+    },
+
+    translate: function(text, from, to){
+        //console.log(`${text} ${from} ${to}`);
+        const translate = require('google-translate-api');
+        return new Promise((resolve, reject) => {
+            translate(text, {from: from, to: to})
+            .then(res => {
+                resolve(res.text);
+            })
+            .catch(err => {
+                reject(err);
+            })
+        });
     }
 }
