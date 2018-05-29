@@ -4,7 +4,7 @@
     android:id="@+id/rlGeneral"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.becitizen.app.becitizen.presentation.ViewSignUpMail">
+    tools:context="com.becitizen.app.becitizen.presentation.user.SignUpMailActivity">
 
     <TextView
         android:id="@+id/tvSignUp"

@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
+import com.becitizen.app.becitizen.presentation.user.MainActivity;
 
 public class InsideActivity extends Fragment {
 

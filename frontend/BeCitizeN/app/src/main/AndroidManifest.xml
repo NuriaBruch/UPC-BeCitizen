@@ -19,16 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.user.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.DataRegisterView"
+            android:name=".presentation.user.DataRegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.ViewSignUpMail"
+            android:name=".presentation.user.SignUpMailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.MailLoginActivity"
+            android:name=".presentation.user.MailLoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.msg.OneConversationActivity"
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ImageSelection"
+            android:name=".presentation.user.ImageSelectionDialog"
             android:label="Pick your image"
             android:noHistory="true"
             android:screenOrientation="portrait"
@@ -75,7 +75,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".presentation.MapsActivity"
+            android:name=".presentation.info.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 
