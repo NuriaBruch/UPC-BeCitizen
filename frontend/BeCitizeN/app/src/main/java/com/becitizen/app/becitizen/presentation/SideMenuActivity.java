@@ -16,7 +16,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
+import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
+import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
+import com.becitizen.app.becitizen.presentation.user.MainActivity;
+import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
+import com.becitizen.app.becitizen.presentation.utilities.AboutActivity;
+import com.becitizen.app.becitizen.presentation.utilities.HelpActivity;
+import com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -37,7 +45,7 @@ public class SideMenuActivity extends AppCompatActivity
         }
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfile")) {
+        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfileActivity")) {
             viewProfile(bundle);
         } else {
             //Set the fragment initially
@@ -120,7 +128,7 @@ public class SideMenuActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("loggeduser", true);
-            Fragment fragment = new UserProfile();
+            Fragment fragment = new UserProfileActivity();
             fragment.setArguments(bundle);
             fragmentTransaction(fragment, "USER_PROFILE");
             return true;
@@ -180,7 +188,7 @@ public class SideMenuActivity extends AppCompatActivity
     }
 
     private void viewProfile(Bundle bundle) {
-        Fragment fragment = new UserProfile();
+        Fragment fragment = new UserProfileActivity();
         fragment.setArguments(bundle);
         fragmentTransaction(fragment, "USER_PROFILE");
     }

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     xmlns:facebook="http://schemas.android.com/apk/res-auto"
-    tools:context="com.becitizen.app.becitizen.presentation.MainActivity"
+    tools:context="com.becitizen.app.becitizen.presentation.user.MainActivity"
     >
 
     <ImageView

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.becitizen.app.becitizen.presentation.UserProfile"
+    tools:context="com.becitizen.app.becitizen.presentation.user.UserProfileActivity"
     android:paddingTop="20dp"
     android:paddingStart="20dp"
     android:paddingEnd="20dp"

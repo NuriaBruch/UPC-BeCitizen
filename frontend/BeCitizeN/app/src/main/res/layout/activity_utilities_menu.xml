@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.becitizen.app.becitizen.presentation.UtilitiesMenu"
+    tools:context="com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu"
     android:weightSum="10"
     android:orientation="vertical">
 

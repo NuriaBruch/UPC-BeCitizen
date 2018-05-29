@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 
 import java.util.ArrayList;
 import java.util.List;

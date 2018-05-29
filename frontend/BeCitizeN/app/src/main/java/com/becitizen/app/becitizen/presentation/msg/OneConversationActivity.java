@@ -17,6 +17,7 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -117,7 +118,7 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
     private void viewProfile() {
         Intent i = new Intent(this, SideMenuActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("fragment", "UserProfile");
+        bundle.putString("fragment", "UserProfileActivity");
         bundle.putBoolean("loggeduser", false);
         bundle.putString("username", conversation.getUserName());
         i.putExtras(bundle);
