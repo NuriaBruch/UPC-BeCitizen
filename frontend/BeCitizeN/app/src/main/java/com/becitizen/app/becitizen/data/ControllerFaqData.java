@@ -68,4 +68,8 @@ public class ControllerFaqData {
         }
     }
 
+    public List<FaqEntry> getFaqByKeyWordAndCategory(String category, String keyword){
+        return myFaqEntryDao.getByWordAndCategroy(category, keyword);
+    }
+
 }

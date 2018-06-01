@@ -10,8 +10,8 @@ public interface FaqEntryDao {
     @Query("SELECT * FROM FAQENTRY")
     List<FaqEntry> getAll();
 
-    @Query("SELECT * FROM FAQENTRY WHERE question LIKE :word ")
-    List<FaqEntry> getByWord(String word);
+    @Query("SELECT * FROM FAQENTRY WHERE category =:word and question LIKE :word ")
+    List<FaqEntry> getByWordAndCategroy(String category, String word);
 
     @Query("Select * From FaqEntry Where category = :category")
     List<FaqEntry> getByCategory(String category);
