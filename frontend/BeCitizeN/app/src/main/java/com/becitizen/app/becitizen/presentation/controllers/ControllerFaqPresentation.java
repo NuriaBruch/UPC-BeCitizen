@@ -3,7 +3,7 @@ package com.becitizen.app.becitizen.presentation.controllers;
 import android.accounts.NetworkErrorException;
 
 import com.becitizen.app.becitizen.domain.controllers.ControllerFaqDomain;
-import com.becitizen.app.becitizen.domain.entities.Information;
+import com.becitizen.app.becitizen.domain.entities.FaqEntry;
 
 import java.util.ArrayList;
 
@@ -39,7 +39,7 @@ public class ControllerFaqPresentation {
      * @param category nombre de la categoria
      * @return null si ha ocurrido algun error
      */
-    public ArrayList<Information> getFaqsCategory(String category) throws NetworkErrorException {
+    public ArrayList<FaqEntry> getFaqsCategory(String category) throws NetworkErrorException {
         return controllerFaqDomain.getFaqsCategory(category);
     }
 

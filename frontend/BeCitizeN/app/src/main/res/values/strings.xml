@@ -131,6 +131,8 @@
     <string name="empty">Empty</string>
     <string name="networkError">Network Error</string>
 
+    <string name="report">Report</string>
+
     <string name="deactivateUser">Deactivate</string>
     <string name="blockUser">Block</string>
     <string name="unblockUser">Unblock</string>

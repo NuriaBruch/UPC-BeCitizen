@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
+import com.becitizen.app.becitizen.presentation.faq.FaqCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
@@ -151,8 +152,8 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "INFORMATION_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_faq:
-                fragment = new InsideActivity();
-                fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+                fragment = new FaqCategoriesActivity();
+                fragmentTransaction(fragment, "FAQ_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_utilities:
                 fragment = new UtilitiesMenu();
