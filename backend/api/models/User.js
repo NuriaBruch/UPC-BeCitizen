@@ -89,8 +89,12 @@ module.exports = {
     blockedByUser: {
       collection: 'user',
       via: 'blocksUser'
+    },
+    canChangePassword: {
+      type: 'boolean',
+      defaultsTo: false
     }
-    
+
   }
 };
 
