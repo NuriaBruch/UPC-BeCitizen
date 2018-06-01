@@ -1,9 +1,12 @@
 package com.becitizen.app.becitizen.presentation.faq;
 
 import android.accounts.NetworkErrorException;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +89,38 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
         }
     };
 
+    public class RatingOnRatingBarChangeListener implements RatingBar.OnRatingBarChangeListener
+    {
+        int id;
+        public RatingOnRatingBarChangeListener(int id) {
+            this.id = id;
+        }
+
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+            AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
+
+
+            adb.setTitle(mContext.getResources().getString(R.string.wantToRate));
+
+
+            adb.setIcon(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_info_outline, null));
+
+
+            adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                } });
+
+
+            adb.setNegativeButton(mContext.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                } });
+            adb.show();
+        }
+    };
+
     // data is passed into the constructor
     CategoryFaqAdapter(Context context, List<FaqEntry> data) {
         this.mInflater = LayoutInflater.from(context);
@@ -114,6 +149,8 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
             holder.title.setText(mData.get(position).getQuestion().substring(0, 22) + "...");
 
         holder.content.setText(mData.get(position).getAnswer());
+        holder.ratingBar.setRating(mData.get(position).getRating());
+        holder.ratingBar.setOnRatingBarChangeListener(new RatingOnRatingBarChangeListener(mData.get(position).getId()));
         holder.report.setOnClickListener(new ReportOnClick(mData.get(position).getId()));
     }
 

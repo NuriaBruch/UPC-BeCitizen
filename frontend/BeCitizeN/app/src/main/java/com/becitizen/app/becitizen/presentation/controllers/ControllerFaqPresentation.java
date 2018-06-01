@@ -40,7 +40,11 @@ public class ControllerFaqPresentation {
      * @return null si ha ocurrido algun error
      */
     public ArrayList<FaqEntry> getFaqsCategory(String category) throws NetworkErrorException {
-        return controllerFaqDomain.getFaqsCategory(category);
+        //return controllerFaqDomain.getFaqsCategory(category);
+        return new ArrayList<FaqEntry>() {{
+            add(new FaqEntry(1, "hi?", "hi bro", 2.5f));
+            add(new FaqEntry(2, "how u doin?", "fine bro", 2f));
+        }};
     }
 
     /**
