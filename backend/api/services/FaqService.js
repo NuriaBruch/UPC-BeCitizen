@@ -54,6 +54,36 @@ module.exports = {
             errors.push("Server error");
             callback(response);
         })
-    }
+    },
+
+    getAllFaqCategory(category,callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            faqs:[]
+         };
+        Faq.find({category: category}).sort('question ASC').exec(function(err2,faqsFound){
+            if(err2 !== undefined && err2) {
+                response.status = "E2";
+                response.errors.push(err2);
+            }
+            if(faqsFound.length>0){
+                faqsFound.forEach(faq => {
+                    var faqBrief= {
+                        question:"",
+                        id:""
+                    };
+                    faqBrief.question = faq.question;
+                    faqBrief.id = faq.id;
+                    response.faqs.push(faqBrief);
+                });
+            }
+            else{
+                response.status = "Error";
+                response.errors.push("No faq found for the given category");
+            }
+            callback(response);
+        });
+    },
 
 }

@@ -30,7 +30,14 @@ module.exports = {
         FaqService.getFaqs(function(status){
             res.send(status);
         })
-    }
+    },
+    getAllFaqCategory: function(req,res){   
+        var category = req.query.category;
+        FaqService.getAllFaqCategory(category,function(status){
+            res.send(status);
+        })
+    },
+
 	
 };
 
