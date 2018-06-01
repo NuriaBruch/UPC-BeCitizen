@@ -6,7 +6,6 @@ public class ControllerFaqData {
 
     //URIs
     private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory?category=";
-    private static final String URI_INFORMATION_CONTENT = "http://becitizen.cf/getInfo?infoId=";
 
 
     private static ControllerFaqData instance = null;
