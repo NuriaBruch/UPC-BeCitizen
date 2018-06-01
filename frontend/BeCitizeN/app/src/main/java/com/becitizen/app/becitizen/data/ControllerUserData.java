@@ -241,4 +241,8 @@ public class ControllerUserData {
         else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
         else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
     }
+
+    public void newPassword(String oldPassword, String newPassword) {
+        // TODO: Do request
+    }
 }
