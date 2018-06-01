@@ -183,8 +183,17 @@ module.exports.routes = {
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
-  }
+  },
 
+  //############ FAQ CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newFaq':{
+    controller: 'FaqController',
+    action: 'createFaq'
+  },
+  'DELETE /deleteFaq':{
+    controller: 'FaqController',
+    action: 'deleteFaq'
+  },
 
   /***************************************************************************
   *                                                                          *
