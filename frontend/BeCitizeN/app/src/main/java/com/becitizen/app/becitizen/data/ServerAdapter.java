@@ -2,6 +2,8 @@ package com.becitizen.app.becitizen.data;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+import com.becitizen.app.becitizen.R;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -52,7 +54,7 @@ public class ServerAdapter {
         String data = "";
         try {
             data = request.execute(new String[]{url}).get();
-            //if (data.equals("Network Error")) throw new NetworkErrorException(data);
+            //if (data.equals("Network Error")) Toast.makeText(getApplicationContext(),getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -71,7 +73,7 @@ public class ServerAdapter {
         String data = "";
         try {
             data = request.execute(dataRequest).get();
-            //if (data.equals("Network Error")) throw new NetworkErrorException();
+            //if (data.equals("Network Error")) Toast.makeText(getApplicationContext(),getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -90,7 +92,7 @@ public class ServerAdapter {
         String data = "";
         try {
             data = request.execute(dataRequest).get();
-            //if (data.equals("Network Error")) throw new NetworkErrorException(data);
+            //if (data.equals("Network Error")) Toast.makeText(getApplicationContext(),getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
