@@ -180,6 +180,10 @@ module.exports.routes = {
     controller: 'InformationController',
     action: 'getInfo'
   },
+  'GET /getInfoWords':{
+    controller: 'InformationController',
+    action: 'getInfoWords'
+  },
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
