@@ -183,8 +183,13 @@ module.exports.routes = {
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
-  }
+  },
 
+  //############ UTILITY CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getTranslation':{
+    controller: 'UtilityController',
+    action: 'getTranslation'
+  },
 
   /***************************************************************************
   *                                                                          *
