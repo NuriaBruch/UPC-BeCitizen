@@ -25,6 +25,11 @@ module.exports = {
             })
         }
         else return res.badRequest();
+    },
+    getFaqs: function(req, res){
+        FaqService.getFaqs(function(status){
+            res.send(status);
+        })
     }
 	
 };

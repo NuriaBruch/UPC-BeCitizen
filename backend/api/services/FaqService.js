@@ -35,6 +35,25 @@ module.exports = {
             }
             callback(response);
         });
+    },
+    getFaqs(callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            info: []
+        };
+
+        Faq.find({})
+        .then(faqs => {
+            console.log(faqs);
+            response.info = faqs;
+            callback(response);
+        })
+        .catch(err => {
+            response.status = "E0";
+            errors.push("Server error");
+            callback(response);
+        })
     }
 
 }

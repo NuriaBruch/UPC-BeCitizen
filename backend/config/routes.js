@@ -190,6 +190,10 @@ module.exports.routes = {
     controller: 'FaqController',
     action: 'createFaq'
   },
+  'GET /getFaqs':{
+    controller: 'FaqController',
+    action: 'getFaqs'
+  },
   'DELETE /deleteFaq':{
     controller: 'FaqController',
     action: 'deleteFaq'
