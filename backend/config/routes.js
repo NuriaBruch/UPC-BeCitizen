@@ -195,6 +195,12 @@ module.exports.routes = {
     action: 'getTranslation'
   },
 
+  //########### ADMIN WEBPAGE ########################
+  'GET /admin':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderMainPage'
+  }
+
   /***************************************************************************
   *                                                                          *
   * Custom routes here...                                                    *
