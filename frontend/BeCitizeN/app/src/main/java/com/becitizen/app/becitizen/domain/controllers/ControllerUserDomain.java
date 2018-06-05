@@ -436,7 +436,7 @@ public class ControllerUserDomain {
         controllerUserData.unblockUser(mail);
     }
 
-    public void newPassword(String oldPassword, String newPassword) {
+    public void newPassword(String oldPassword, String newPassword) throws ServerException, JSONException {
         controllerUserData.newPassword(oldPassword, newPassword);
     }
 }
