@@ -18,4 +18,24 @@ module.exports = class UtilityService{
             callback(response);
         });
     }
+
+    async getLanguageCodes(){
+        var response = {
+            status: "Ok",
+            errors: [],
+            info: []
+        };
+
+        try {
+            response.info = await LanguageCode.find().limit(1);
+        }
+        catch (e) {
+            console.log(e);
+            response.status = "E0";
+        }
+    }
+
+    async updateLanguageCodes(){
+        console.log("mock");
+    }
 }

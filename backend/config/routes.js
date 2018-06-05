@@ -190,6 +190,10 @@ module.exports.routes = {
     controller: 'UtilityController',
     action: 'getTranslation'
   },
+  'GET /getLanguageCodes':{
+    controller: 'UtilityController',
+    action: 'getLanguageCodes'
+  },
 
   /***************************************************************************
   *                                                                          *
