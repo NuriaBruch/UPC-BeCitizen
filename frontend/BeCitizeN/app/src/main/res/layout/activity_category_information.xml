@@ -15,9 +15,42 @@
         android:visibility="gone">
     </ProgressBar>
 
+    <LinearLayout
+        android:id="@+id/TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingTop="5dp"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/categoryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:text="TextView"
+            android:textAllCaps="true"
+            android:textColor="@color/platinum"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/infoSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_icons8_search_96" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvInfomation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/TopLayout"/>
 
 </RelativeLayout>

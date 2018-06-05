@@ -2,10 +2,13 @@ package com.becitizen.app.becitizen.data;
 
 import android.accounts.NetworkErrorException;
 
+import org.json.JSONObject;
+
 public class ControllerInformationData {
 
     //URIs
     private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory?category=";
+    private static final String URI_INFORMATIONS_CATEGORY_SEARCH = "http://becitizen.cf/getInfoWords?category=";
     private static final String URI_INFORMATION_CONTENT = "http://becitizen.cf/getInfo?infoId=";
 
 
@@ -48,5 +51,9 @@ public class ControllerInformationData {
      */
     public String getInformation(int id) throws NetworkErrorException{
         return ServerAdapter.getInstance().doGetRequest(URI_INFORMATION_CONTENT + id);
+    }
+
+    public String getInformationsCategorySearch(String category, String searchWords)  throws NetworkErrorException {
+        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category + "&words="+searchWords);
     }
 }
