@@ -380,26 +380,29 @@ module.exports = class GestionUser {
     changePassword(userMail, oldPassword, newPassword, callback){
       var response = {
         status: "Ok",
-        error: []
+        errors: []
       }
       User.findOne({email:userMail}).exec(function(err,userFound){
-        if(err1 !== undefined && err1){
+        if(err !== undefined && err){
           response.status = "E1";
           response.errors.push("Server error");
+          callback(response);
         }
         else{
           bcrypt.compare(oldPassword, userFound.password, function(err1, result) {
             if(err1 !== undefined && err1){
                 response.status = "E1";
                 response.errors.push("Server error");
+                callback(response);
             }
-            else if(result == false){
+            else if(result === false){
                 response.status = "E2";
                 response.errors.push("Incorrect password");
+                callback(response);
             }
             else{
               const saltRounds = 10;
-              bcrypt.hash(pass, saltRounds, function(err2, hash) {
+              bcrypt.hash(newPassword, saltRounds, function(err2, hash) {
               if(err2 !== undefined && err2) {
                   response.status = "E1";
                   response.errors.push("Server error");
@@ -412,15 +415,16 @@ module.exports = class GestionUser {
                       response.errors.push("Server error");
                       response.status = "E1";
                       callback(response);
-                  };
+                  }
+                  else{
+                    callback(response);
+                  }
                 });
               }
             });
-            callback(response);
             }
         });
         }
-        callback(response);
     });
-  }
+  };
 };
