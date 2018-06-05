@@ -107,4 +107,21 @@ public class ControllerInformationDomain {
             return null;
         }
     }
+
+    public ArrayList<Information> getInformationsCategorySearch(String category, String searchWords) throws NetworkErrorException {
+        try {
+            JSONObject data = new JSONObject(controllerInformationData.getInformationsCategorySearch(category.replace(" ", "%20"), searchWords.replace(" ", "+")));
+            ArrayList<Information> informations = new ArrayList<>();
+            JSONArray array = (JSONArray)data.get("infos");
+            for(int i = 0; i < array.length(); i++)
+            {
+                JSONObject object = array.getJSONObject(i);
+                informations.add(new Information(object.getInt("id"), object.getString("title")));
+            }
+            return informations;
+        }
+        catch (JSONException e) {
+            return new ArrayList<>();
+        }
+    }
 }

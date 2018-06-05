@@ -130,6 +130,7 @@ public class CategoryThreadActivity extends Fragment  {
                 block = -1;
                 preLast = 0;
                 adapter.clear();
+                progressBar.setVisibility(View.VISIBLE);
                 if (threadLoadThreads != null && threadLoadThreads.isAlive())
                     threadLoadThreads.interrupt();
                 threadLoadThreads = new Thread(loadThreads);
@@ -165,6 +166,7 @@ public class CategoryThreadActivity extends Fragment  {
                             block = -1;
                             preLast = 0;
                             adapter.clear();
+                            progressBar.setVisibility(View.VISIBLE);
                             if (threadLoadThreads != null && threadLoadThreads.isAlive())
                                 threadLoadThreads.interrupt();
                             threadLoadThreads = new Thread(loadThreadsSearch);

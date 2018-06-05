@@ -51,4 +51,8 @@ public class ControllerInformationPresentation {
     public Information getInformation(int id) throws NetworkErrorException {
         return controllerInformationDomain.getInformation(id);
     }
+
+    public ArrayList<Information> getInformationsCategorySearch(String category, String searchWords) throws NetworkErrorException {
+        return controllerInformationDomain.getInformationsCategorySearch(category, searchWords);
+    }
 }

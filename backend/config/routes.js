@@ -180,6 +180,10 @@ module.exports.routes = {
     controller: 'InformationController',
     action: 'getInfo'
   },
+  'GET /getInfoWords':{
+    controller: 'InformationController',
+    action: 'getInfoWords'
+  },
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
@@ -194,6 +198,12 @@ module.exports.routes = {
     controller: 'UtilityController',
     action: 'getLanguageCodes'
   },
+
+  //########### ADMIN WEBPAGE ########################
+  'GET /admin':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderMainPage'
+  }
 
   /***************************************************************************
   *                                                                          *

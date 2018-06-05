@@ -101,62 +101,68 @@ module.exports = {
                 
             } 
             else{
-                
-                var parsed = JSON.parse(body);
-                var currencies = parsed['results'];
-                
-                if(currencies === undefined){
-                   
-                }
-                else{
-                    Object.keys(currencies).forEach(function(key) {
-                       
-                        Currency.findOne({name: key}).exec(function(err, currencyFound){
-                            if(err !== undefined && err) {
-                                sails.log("server error")
-                            }
-                            else if(currencyFound){
-                                lastUpdate = currencyFound['updatedAt']
-                                currentDate = new Date()
-                                hoursOfDifference = (Math.abs(currentDate.getTime() - lastUpdate.getTime()) / 3600000)
-                                if(hoursOfDifference > 24){
-                                    query = currencyFound['name'].concat("_EUR")
+                try{
+                    var parsed = JSON.parse(body);
+                    var currencies = parsed['results'];
+                    
+                    if(currencies === undefined){
+                    
+                    }
+                    else{
+                        Object.keys(currencies).forEach(function(key) {
+                        
+                            Currency.findOne({name: key}).exec(function(err, currencyFound){
+                                if(err !== undefined && err) {
+                                    sails.log("server error")
+                                }
+                                else if(currencyFound){
+                                    lastUpdate = currencyFound['updatedAt']
+                                    currentDate = new Date()
+                                    hoursOfDifference = (Math.abs(currentDate.getTime() - lastUpdate.getTime()) / 3600000)
+                                    if(hoursOfDifference > 24){
+                                        query = currencyFound['name'].concat("_EUR")
+                                        getExchanges(query,function(response){
+                                            if(response.status != "Ok"){
+                                                sails.log("incorrect exchange")
+                                            }
+                                            else{
+                                                currencyFound['rateToEur'] = response.conversion;
+                                                currencyFound.save(function(error) {
+                                                    if(error) {
+                                                        sails.log(error);
+                                                    } else {
+                                                    }
+                                                });
+                                                
+                                            }
+
+                                        });
+
+                                    }
+                                    
+                                }
+                                else{
+                                    query = key.concat("_EUR")
                                     getExchanges(query,function(response){
                                         if(response.status != "Ok"){
-                                            sails.log("incorrect exchange")
                                         }
                                         else{
-                                            currencyFound['rateToEur'] = response.conversion;
-                                            currencyFound.save(function(error) {
-                                                if(error) {
-                                                    sails.log(error);
-                                                } else {
+                                            Currency.create({name: key, rateToEur: response.conversion}).exec(function(err2, newCurrency){
+                                                if(err2 !== undefined && err2){
                                                 }
                                             });
-                                            
                                         }
-
                                     });
-
                                 }
-                                
-                            }
-                            else{
-                                query = key.concat("_EUR")
-                                getExchanges(query,function(response){
-                                    if(response.status != "Ok"){
-                                    }
-                                    else{
-                                        Currency.create({name: key, rateToEur: response.conversion}).exec(function(err2, newCurrency){
-                                            if(err2 !== undefined && err2){
-                                            }
-                                        });
-                                    }
-                                });
-                            }
+                            });
                         });
-                    });
-                } 
+                    }
+                }
+                catch(e){
+                    console.log(e);
+                }
+            
+                 
             }
         });
     },
