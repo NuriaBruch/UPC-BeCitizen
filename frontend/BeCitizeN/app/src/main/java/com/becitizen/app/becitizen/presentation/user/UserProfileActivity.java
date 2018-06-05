@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
@@ -105,7 +107,14 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
 
         if (loggedUser) {
             fbPrivateMessage.setVisibility(View.GONE);
-            blockButton.setVisibility(View.INVISIBLE);
+            try {
+                if(controllerUserPresentation.isLoggedWithMail()) ivBlock.setImageResource(R.drawable.reset_password);
+                else blockButton.setVisibility(View.INVISIBLE);
+            } catch (SharedPreferencesException e) {
+                blockButton.setVisibility(View.INVISIBLE);
+                Toast.makeText(getContext(), "SharedPreferencesError", Toast.LENGTH_LONG).show();
+                Log.e("SharedPreferencesE", e.getMessage());
+            }
         }
         else {
             ibEditProfile.setVisibility(View.INVISIBLE);
@@ -283,7 +292,13 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
                 signOut();
                 break;
             case R.id.blockButton:
-                askConfirmation();
+                try {
+                    if (loggedUser && controllerUserPresentation.isLoggedWithMail()) changePass();
+                    askConfirmation();
+                } catch (SharedPreferencesException e) {
+                    Toast.makeText(getContext(), "SharedPreferencesError", Toast.LENGTH_LONG).show();
+                    Log.e("SharedPreferencesE", e.getMessage());
+                }
                 break;
             case R.id.fbPrivateMessage:
                 startConversation();
@@ -398,6 +413,11 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
     public void editProfile() {
         Fragment fragment = new UserProfileEditActivity();
         fragmentTransaction(fragment, "USER_EDIT_PROFILE");
+    }
+
+    private void changePass() {
+        Fragment fragment = new ChangePasswordActivity();
+        fragmentTransaction(fragment, "CHANGE_PASSWORD");
     }
 
     private void fragmentTransaction(Fragment fragment, String tag) {
