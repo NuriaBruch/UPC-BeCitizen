@@ -465,5 +465,12 @@
     <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
     <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
     <string name="errorLoadMessages">Could not load messages</string>
+    <string name="changePassword">Change your password</string>
+    <string name="writePass">Write your current password</string>
+    <string name="writeNewPass">Enter your new password</string>
+    <string name="repeatNewPassword">Confirm your new password</string>
+    <string name="allFieldsRequired">All fields are required</string>
+    <string name="passDoNotMatch">Passwords do not match</string>
+    <string name="passUpdated">Your password has been successfully updated!</string>
 
 </resources>

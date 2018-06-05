@@ -422,4 +422,8 @@ public class ControllerUserDomain {
     public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserData.unblockUser(mail);
     }
+
+    public void newPassword(String oldPassword, String newPassword) {
+        controllerUserData.newPassword(oldPassword, newPassword);
+    }
 }
