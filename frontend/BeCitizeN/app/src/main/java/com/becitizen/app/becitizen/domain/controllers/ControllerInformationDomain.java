@@ -110,7 +110,8 @@ public class ControllerInformationDomain {
 
     public ArrayList<Information> getInformationsCategorySearch(String category, String searchWords) throws NetworkErrorException {
         try {
-            JSONObject data = new JSONObject(controllerInformationData.getInformationsCategorySearch(category.replace(" ", "%20"), searchWords.replace(" ", "+")));
+            String result = controllerInformationData.getInformationsCategorySearch(category.replace(" ", "%20"), searchWords.replace(" ", "+"));
+            JSONObject data = new JSONObject(result);
             ArrayList<Information> informations = new ArrayList<>();
             JSONArray array = (JSONArray)data.get("infos");
             for(int i = 0; i < array.length(); i++)
