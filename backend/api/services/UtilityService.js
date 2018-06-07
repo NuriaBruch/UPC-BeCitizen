@@ -34,7 +34,7 @@ module.exports = class UtilityService{
         }
         catch (e) {
             console.log(e);
-            response.status = "E0";
+            response.status = "Error";
         }
         return response;
     }
