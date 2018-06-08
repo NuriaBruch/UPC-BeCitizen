@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
@@ -164,8 +165,20 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                fragment = new AllConversationsActivity();
-                fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
+                try {
+                    if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                        fragment = new LoggedAsGuestActivity();
+                        fragmentTransaction(fragment, "LOGGED_AS_GUEST_ACTIVITY");
+                    } else {
+                        fragment = new AllConversationsActivity();
+                        fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
+                    }
+                } catch (SharedPreferencesException e) {
+                    e.printStackTrace();
+                    //Initialize MySharedPreferences
+                    ControllerUserPresentation.getUniqueInstance().initializeMySharedPreferences(this);
+                    goToLogin();
+                }
                 break;
             case R.id.nav_settings:
                 /*
