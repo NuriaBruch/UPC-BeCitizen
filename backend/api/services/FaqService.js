@@ -71,9 +71,13 @@ module.exports = {
                 faqsFound.forEach(faq => {
                     var faqBrief= {
                         question:"",
+                        answer:"",
+                        puntuation: "",
                         id:""
                     };
                     faqBrief.question = faq.question;
+                    faqBrief.answer = faq.answer;
+                    faqBrief.puntuation = faq.puntuation;
                     faqBrief.id = faq.id;
                     response.faqs.push(faqBrief);
                 });
