@@ -207,7 +207,15 @@ module.exports.routes = {
   "POST /login": {
     controller: 'website/WebpageControllerController',
     action: 'login'
-  }
+  },
+  "GET /allInfo": {
+    controller: 'website/WebpageControllerController',
+    action: 'renderAllInfo'
+  },
+  "POST /allInfo": {
+    controller: 'website/WebpageControllerController',
+    action: 'deleteInfos'
+  },
 
   /***************************************************************************
   *                                                                          *

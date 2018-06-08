@@ -24,7 +24,38 @@ module.exports = {
   renderLoginPage: function(req, res){
     if(req.session.authenticated) res.redirect("/main");
     else res.view("login");
-  }
+  },
 
+  renderAllInfo: function(req, res){
+    Information.find({}).sort("category")
+    .then(infos => {
+      res.view("allInfo", {
+        infos: infos
+      })
+    })
+  },
+
+  deleteInfos: function(req, res){
+    let ids = req.body.id;
+    let infos;
+    if(typeof(ids) == "string"){
+      infos = ids;
+    }
+    else{
+      infos = ids.map(i => {
+        return parseInt(i)
+      })
+    }
+    
+    Information.destroy(infos)
+    .then(() => {
+      res.redirect("/AllInfo");
+    })
+    .catch(e => {
+      console.log(e);
+      res.send(500);
+    })
+    
+  }
 };
 
