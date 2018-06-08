@@ -32,11 +32,9 @@ module.exports = {
     },
 
     getInfoWords: function(req,res){
-        var block = req.query.block;
         var category = req.query.category;
         var words = req.query.words;
-        var email = UtilsService.getEmailFromHeader(req);
-        InfoService.getInfoWords(words,email,block,category,function(status){
+        InfoService.getInfoWords(words,category,function(status){
             res.send(status);
         });
     }

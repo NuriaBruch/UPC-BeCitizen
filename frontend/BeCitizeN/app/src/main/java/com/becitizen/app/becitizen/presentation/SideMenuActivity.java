@@ -25,6 +25,7 @@ import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 import com.becitizen.app.becitizen.presentation.utilities.AboutActivity;
 import com.becitizen.app.becitizen.presentation.utilities.HelpActivity;
 import com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu;
+import com.becitizen.app.becitizen.presentation.utilities.WordOfTheDayActivity;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,8 +50,8 @@ public class SideMenuActivity extends AppCompatActivity
             viewProfile(bundle);
         } else {
             //Set the fragment initially
-            Fragment fragment = new InsideActivity();
-            fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+            Fragment fragment = new WordOfTheDayActivity();
+            fragmentTransaction(fragment, "WORD_OF_THE_DAY");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -151,7 +152,7 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "INFORMATION_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_faq:
-                fragment = new InsideActivity();
+                fragment = new LoggedAsGuestActivity();
                 fragmentTransaction(fragment, "INSIDE_ACTIVITY");
                 break;
             case R.id.nav_utilities:

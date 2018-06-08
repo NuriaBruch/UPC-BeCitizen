@@ -15,26 +15,21 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 import com.becitizen.app.becitizen.presentation.user.MainActivity;
 
-public class InsideActivity extends Fragment {
+public class LoggedAsGuestActivity extends Fragment {
 
     private View rootView;
 
-    public InsideActivity() {
+    public LoggedAsGuestActivity() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        rootView = inflater.inflate(R.layout.activity_inside, container, false);
+        rootView = inflater.inflate(R.layout.activity_logged_as_guest, container, false);
 
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
-            else {
-                TextView loggedAs = (TextView) rootView.findViewById(R.id.textLoggedAs);
-                String user = ControllerUserPresentation.getUniqueInstance().getLoggedUser();
-                if(user.equals("guest")) user = getResources().getString(R.string.guest);
-                loggedAs.setText(getResources().getString(R.string.loggedAs) + " " + user);
-            }
+            else if (!ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) getActivity().onBackPressed();
         } catch (Exception e) {
             e.printStackTrace();
             goToLogin();

@@ -43,8 +43,7 @@ public class ControllerInformationData {
     }
 
     /**
-     * Metodo que solicita una informacion.
-     *
+     * Metodo que solicita una informacion
      * @param id id de la informacion
      *
      * @return La respuesta de nuestro servidor
@@ -54,6 +53,6 @@ public class ControllerInformationData {
     }
 
     public String getInformationsCategorySearch(String category, String searchWords)  throws NetworkErrorException {
-        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category + "&words="+searchWords);
+        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY_SEARCH + category + "&words="+searchWords);
     }
 }
