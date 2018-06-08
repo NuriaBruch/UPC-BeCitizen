@@ -196,7 +196,7 @@ module.exports.routes = {
   },
 
   //########### ADMIN WEBPAGE ########################
-  'GET /admin':{
+  'GET /main':{
     controller: 'website/WebpageControllerController',
     action: 'renderMainPage'
   },
