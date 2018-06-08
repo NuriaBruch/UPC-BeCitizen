@@ -128,12 +128,25 @@ public class SideMenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("loggeduser", true);
-            Fragment fragment = new UserProfileActivity();
-            fragment.setArguments(bundle);
-            fragmentTransaction(fragment, "USER_PROFILE");
-            return true;
+            try {
+                if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                    Fragment fragment = new LoggedAsGuestActivity();
+                    fragmentTransaction(fragment, "LOGGED_AS_GUEST_ACTIVITY");
+                    return true;
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("loggeduser", true);
+                    Fragment fragment = new UserProfileActivity();
+                    fragment.setArguments(bundle);
+                    fragmentTransaction(fragment, "USER_PROFILE");
+                    return true;
+                }
+            } catch (SharedPreferencesException e) {
+                e.printStackTrace();
+                //Initialize MySharedPreferences
+                ControllerUserPresentation.getUniqueInstance().initializeMySharedPreferences(this);
+                goToLogin();
+            }
         }
 
         return super.onOptionsItemSelected(item);
