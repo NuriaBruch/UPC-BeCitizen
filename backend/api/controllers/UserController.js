@@ -135,6 +135,16 @@ module.exports = {
         gestionUser.resetPassword(userMail, function(status){
             res.send(status);
         });
+    },
+    changePassword: function(req, res){
+      var userMail = UtilsService.getEmailFromHeader(req);
+      var oldPassword = req.body.oldPassword;
+      var newPassword = req.body.newPassword;
+      var gestionUser = new GestionUser();
+
+      gestionUser.changePassword(userMail, oldPassword, newPassword, function(status){
+        res.send(status);
+      });
     }
 };
 
