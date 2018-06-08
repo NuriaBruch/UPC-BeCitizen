@@ -423,7 +423,10 @@ public class ControllerUserDomain {
         controllerUserData.unblockUser(mail);
     }
 
-    public boolean isLoggedAsGuest() {
-        return loggedAsGuest;
+    public boolean isLoggedAsGuest() throws SharedPreferencesException {
+        MySharedPreferences preferences = MySharedPreferences.getInstance();
+        if (preferences.getValue(PREFS_KEY, "isLogged").equals("true"))
+            return preferences.getValue(PREFS_KEY, "mode").equals("guest");
+        return false;
     }
 }
