@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 import com.becitizen.app.becitizen.presentation.msg.OneConversationActivity;
@@ -108,6 +109,15 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
             blockButton.setVisibility(View.INVISIBLE);
         }
         else {
+            try {
+                if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                    fbPrivateMessage.setVisibility(View.GONE);
+                    blockButton.setVisibility(View.INVISIBLE);
+                }
+            } catch (SharedPreferencesException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), R.string.sharedPreferencesError, Toast.LENGTH_LONG).show();
+            }
             ibEditProfile.setVisibility(View.INVISIBLE);
             ibSignOut.setVisibility(View.INVISIBLE);
         }
