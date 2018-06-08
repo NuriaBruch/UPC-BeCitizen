@@ -194,6 +194,16 @@ module.exports.routes = {
     controller: 'UtilityController',
     action: 'getTranslation'
   },
+  'GET /getLanguageCodes':{
+    controller: 'UtilityController',
+    action: 'getLanguageCodes'
+  },
+
+  //########### ADMIN WEBPAGE ########################
+  'GET /admin':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderMainPage'
+  }
 
   /***************************************************************************
   *                                                                          *

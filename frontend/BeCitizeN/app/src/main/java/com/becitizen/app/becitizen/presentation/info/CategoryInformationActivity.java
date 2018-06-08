@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation.info;
 
 import android.accounts.NetworkErrorException;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -30,6 +35,7 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
     ArrayList<Information> dataChunk;
     private static CategoryInformationAdapter adapter;
     private String category = "";
+    private String searchWords = "";
     private Thread threadLoadInformations;
 
     private Handler UIUpdater = new Handler() {
@@ -60,6 +66,17 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
         }
     };
 
+    private Runnable loadInformationsSearch = new Runnable() {
+        public void run() {
+            try {
+                dataChunk = ControllerInformationPresentation.getUniqueInstance().getInformationsCategorySearch(category, searchWords);
+                UIUpdater.sendEmptyMessage(0);
+            } catch (NetworkErrorException e) {
+                UIUpdater.sendEmptyMessage(1);
+            }
+        }
+    };
+
     public CategoryInformationActivity() {
     }
 
@@ -75,6 +92,10 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
 
+        TextView categoryText = rootView.findViewById(R.id.categoryText);
+        categoryText.setText(category);
+
+
         dataModels = new ArrayList<Information>();
 
         progressBar.setVisibility(View.VISIBLE);
@@ -82,6 +103,46 @@ public class CategoryInformationActivity extends Fragment implements CategoryInf
             threadLoadInformations.interrupt();
         threadLoadInformations = new Thread(loadInformations);
         threadLoadInformations.start();
+
+
+        ImageButton searchButton = rootView.findViewById(R.id.infoSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(rootView.getContext());
+                dialog.setContentView(R.layout.category_thread_search);
+
+                TextView searchCategory = dialog.findViewById(R.id.search_name_text);
+                searchCategory.setText(category);
+
+                Button searchButton = dialog.findViewById(R.id.search_button);
+
+                final EditText wordsToSearch = dialog.findViewById(R.id.search_edit_text);
+
+                dialog.show();
+
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        searchWords = wordsToSearch.getText().toString().trim();
+                        if (searchWords.isEmpty())
+                            Toast.makeText(dialog.getContext(), R.string.searchCategoryEmptyText, Toast.LENGTH_LONG).show();
+                        else {
+                            dataModels.clear();
+                            progressBar.setVisibility(View.VISIBLE);
+                            if (threadLoadInformations != null && threadLoadInformations.isAlive())
+                                threadLoadInformations.interrupt();
+                            threadLoadInformations = new Thread(loadInformationsSearch);
+                            threadLoadInformations.start();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+            }
+        });
+
+
 
         RecyclerView recyclerView = rootView.findViewById(R.id.rvInfomation);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
