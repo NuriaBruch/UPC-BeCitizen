@@ -185,4 +185,8 @@ public class ControllerUserPresentation {
     public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserDomain.unblockUser(mail);
     }
+
+    public boolean isLoggedAsGuest() {
+        return controllerUserDomain.isLoggedAsGuest();
+    }
 }
