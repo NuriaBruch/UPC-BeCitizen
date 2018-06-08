@@ -86,4 +86,49 @@ module.exports = {
         });
     },
 
+    reportFaq: function(faqId, email, callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+        };
+        User.findOne({email: email}).populate("reportedFaq").exec(function (err, user){
+            if((err && err !== undefined) || user == undefined) {
+                response.status = "E1";
+                response.errors.push("There is no user with that id.");
+                callback(response);
+            }
+            else{
+                Faq.findOne({id: faqId}).populate("reportedBy").exec(function(err1, faq){
+                    if((err1 && err1 !== undefined) || faq == undefined) {
+                        response.status = "E2";
+                        response.errors.push("There is no faq with that id.");
+                        callback(response);
+                    }
+                    else{
+                        var found = _.chain(user.reportedFaq).pluck("id").indexOf(faqId).value();
+                        if(found === -1){
+                            const MAX_REPORTS = 10;
+                            if(_.size(faq.reportedBy) + 1 >= MAX_REPORTS){
+                                faq.content = "This faq has been deleted.";
+                            }
+                            user.reportedFaq.add(faqId);
+                            user.save(function(err){
+                                faq.reportedBy.add(user.id);
+                                faq.numberReports = faq.numberReports + 1;
+                                faq.save(function(err){
+                                    callback(response);
+                                });
+                            });
+                        }
+                        else{
+                            response.status = "E3";
+                            response.errors.push("The user has already reported that faq.");
+                            callback(response);
+                        }
+                    } 
+                });
+            }
+        })
+    },
+
 }

@@ -37,6 +37,13 @@ module.exports = {
             res.send(status);
         })
     },
+    reportFaq: function(req, res){
+        var id = parseInt(req.query.faqId);
+        var email = UtilsService.getEmailFromHeader(req);
+        FaqService.reportFaq(id, email, function(status){
+            res.send(status);
+        });
+    },
 
 	
 };
