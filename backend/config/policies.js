@@ -56,6 +56,14 @@ module.exports.policies = {
   MessageController: {
     newMessage: 'tokenAuth',
     getMessage: 'tokenAuth'
+  },
+
+  InformationController: {
+    createInfo: 'sessionAuth',
+    deleteInfo: 'sessionAuth',
+  },
+  WebpageControllerController: {
+    renderMainPage: 'sessionAuth'
   }
 
   /***************************************************************************

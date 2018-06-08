@@ -7,14 +7,10 @@
 
 module.exports = {
 	createInfo: function(req,res){
-        var superpass = req.query.superpass;
-        if(superpass === 'Bienquisto123H'){
-            var {category,title,content,url,type} = req.body;
-            InfoService.createInfo(category,title,content,url,type,function(status){
-                res.send(status);
-            })
-        }
-        else return res.badRequest();
+        var {category,title,content,url,type} = req.body;
+        InfoService.createInfo(category,title,content,url,type,function(status){
+            res.send(status);
+        });
     },
     getAllInfoCategory: function(req,res){
         var category = req.query.category;
@@ -29,14 +25,10 @@ module.exports = {
         })
     },
     deleteInfo: function(req,res){
-        var superpass = req.query.superpass;
-        if(superpass === 'Bienquisto123H'){
-            var infoId = req.query.infoId;
-            InfoService.deleteInfo(infoId,function(status){
-                res.send(status);
-            })
-        }
-        else return res.badRequest();
+        var infoId = req.query.infoId;
+        InfoService.deleteInfo(infoId,function(status){
+            res.send(status);
+        });
     },
 
     getInfoWords: function(req,res){

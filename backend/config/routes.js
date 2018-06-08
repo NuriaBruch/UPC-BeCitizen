@@ -31,10 +31,6 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
-  },
   //############ USER CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /register': {
     controller: 'UserController',
@@ -200,9 +196,17 @@ module.exports.routes = {
   },
 
   //########### ADMIN WEBPAGE ########################
-  'GET /admin':{
+  'GET /main':{
     controller: 'website/WebpageControllerController',
     action: 'renderMainPage'
+  },
+  'GET /':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderLoginPage'
+  },
+  "POST /login": {
+    controller: 'website/WebpageControllerController',
+    action: 'login'
   }
 
   /***************************************************************************
