@@ -26,6 +26,7 @@ import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 
 import java.util.ArrayList;
 
@@ -105,21 +106,31 @@ public class CategoryThreadActivity extends Fragment  {
         dataModels = new ArrayList<CategoryThread>();
 
         FloatingActionButton fab = rootView.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    if (ControllerUserDomain.getUniqueInstance().isLogged()) {
-                        NewThreadActivity fragment = new NewThreadActivity();
-                        fragment.setCategory(category);
-                        fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
-                    } else throw new SharedPreferencesException("User not logged in");
-                } catch (SharedPreferencesException e) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+        try {
+            if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                fab.setVisibility(View.GONE);
+            } else {
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            if (ControllerUserDomain.getUniqueInstance().isLogged()) {
+                                NewThreadActivity fragment = new NewThreadActivity();
+                                fragment.setCategory(category);
+                                fragmentTransaction(fragment, "CATEGORY_THREAD_ACTIVITY");
+                            } else throw new SharedPreferencesException("User not logged in");
+                        } catch (SharedPreferencesException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "You have to be logged in", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
             }
-        });
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), R.string.sharedPreferencesError, Toast.LENGTH_LONG).show();
+        }
+
 
         ImageButton sortButton = rootView.findViewById(R.id.threadsSortButton);
         sortButton.setOnClickListener(new View.OnClickListener() {
