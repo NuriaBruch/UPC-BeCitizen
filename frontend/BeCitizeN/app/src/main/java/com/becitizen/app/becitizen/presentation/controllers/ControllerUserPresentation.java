@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONException;
@@ -186,7 +187,7 @@ public class ControllerUserPresentation {
         controllerUserDomain.unblockUser(mail);
     }
 
-    public boolean isLoggedAsGuest() {
+    public boolean isLoggedAsGuest() throws SharedPreferencesException {
         return controllerUserDomain.isLoggedAsGuest();
     }
 }
