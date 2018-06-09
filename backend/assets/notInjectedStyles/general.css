@@ -1,0 +1,7 @@
+.table > * {
+    text-align: center;
+}
+
+.noBorders > td{
+    border-top: none;
+}

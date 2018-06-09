@@ -30,7 +30,7 @@ module.exports = {
     });
   },
 
-  renderAllInfo: function(req, res){
+  renderAllInfoPage: function(req, res){
     Information.find({}).sort("category")
     .then(infos => {
       res.view("allInfo", {
@@ -38,6 +38,12 @@ module.exports = {
         layout: 'defaultLayout'
       })
     })
+  },
+
+  renderNewInfoPage: function(req, res){
+    res.view("newInfo", {
+      layout: 'defaultLayout'
+    });
   },
 
   deleteInfos: function(req, res){

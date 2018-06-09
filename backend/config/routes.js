@@ -210,11 +210,15 @@ module.exports.routes = {
   },
   "GET /allInfo": {
     controller: 'website/WebpageControllerController',
-    action: 'renderAllInfo'
+    action: 'renderAllInfoPage'
   },
   "POST /allInfo": {
     controller: 'website/WebpageControllerController',
     action: 'deleteInfos'
+  },
+  'GET /newInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderNewInfoPage'
   },
 
   /***************************************************************************

@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="/notInjectedStyles/general.css">
 <div class="container" style="margin-top: 0px">
     <form action="" method="post">
             <table class="table">
@@ -21,10 +21,22 @@
                             <td><input type="checkbox" name="id" id="id" value="<%= i.id %>"></td>
                         </tr>
                     <% }) %> 
-        
                     <tr>
-                        <td scope="row" colspan="5">
-                            <button type="submit" class="btn-primary" style="float: right; width: 100px; height: 40px; margin-right: 20px">Delete</button>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td scope="row" colspan="1">
+                            <button type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete</button>
+                        </td>
+                    </tr>
+                    <tr class="noBorders">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td scope="row">
+                            <a style="width: 100px; height: 40px;" class="btn btn-primary" href="/newInfo">New</a>
                         </td>
                     </tr>
                 </tbody>
