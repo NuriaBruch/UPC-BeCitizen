@@ -18,19 +18,24 @@ module.exports = {
   },
 
   renderMainPage: function(req,res){
-      res.view("main");
+      res.view("main", {
+        layout: 'defaultLayout'
+      });
   },
 
   renderLoginPage: function(req, res){
     if(req.session.authenticated) res.redirect("/main");
-    else res.view("login");
+    else res.view("login", {
+      layout: 'loginLayout'
+    });
   },
 
   renderAllInfo: function(req, res){
     Information.find({}).sort("category")
     .then(infos => {
       res.view("allInfo", {
-        infos: infos
+        infos: infos,
+        layout: 'defaultLayout'
       })
     })
   },
