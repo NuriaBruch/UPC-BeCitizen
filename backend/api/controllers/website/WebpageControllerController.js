@@ -41,9 +41,16 @@ module.exports = {
   },
 
   renderAddInfoPage: function(req, res){
-    res.view("AddInfo", {
-      layout: 'defaultLayout'
-    });
+    ThreadService.getAllCategories(function(status){
+      let categories = status.categories;
+      res.view("AddInfo", {
+        layout: 'defaultLayout',
+        categories: categories
+      });
+    })
+    // res.view("AddInfo", {
+    //   layout: 'defaultLayout'
+    // });
   },
 
   deleteInfos: function(req, res){
@@ -71,7 +78,7 @@ module.exports = {
   addInfo: function(req, res){
     var {category,title,content,url,type} = req.body;
 
-    InfoService.createInfo(category,title,content,url,type,function(status){
+    InfoService.createInfo(category,title,content,url,"text",function(status){
       if(status.status == "Ok")
         res.redirect("/allInfo");
     });

@@ -27,7 +27,7 @@
                         <td></td>
                         <td></td>
                         <td scope="row" colspan="1">
-                            <button id="deleteBtn" type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete 0</button>
+                            <button disabled="true" id="deleteBtn" type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete 0</button>
                         </td>
                     </tr>
                     <tr class="noBorders">
@@ -49,6 +49,8 @@
     function updateDeleteBtn(){
         var count = $("#allInfoTable").find("input").filter(":checked").length;
         $("#deleteBtn").text("Delete " + count);
+
+        count == 0 ? $("#deleteBtn").attr("disabled", true) : $("#deleteBtn").attr("disabled", false);
     }
 
     $(document).ready(function(){

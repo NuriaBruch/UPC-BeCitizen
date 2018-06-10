@@ -8,15 +8,9 @@
 module.exports = {
     
     getAllCategories: function(req,res){
-        var response = {
-            status: "Ok",
-            errors: [],
-            categories: [ "culture", "education and formation",
-        "emergencies", "language", "justice", "public administration", "housing",
-        "health", "work", "tourism", "off topic"]
-        }
-
-        res.send(response);
+        ThreadService.getAllCategories(function(status){
+            res.send(status);
+        });
     },
 
     createThread: function(req,res){
