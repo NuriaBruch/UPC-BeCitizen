@@ -216,9 +216,13 @@ module.exports.routes = {
     controller: 'website/WebpageControllerController',
     action: 'deleteInfos'
   },
-  'GET /newInfo':{
+  'GET /AddInfo':{
     controller: 'website/WebpageControllerController',
-    action: 'renderNewInfoPage'
+    action: 'renderAddInfoPage'
+  },
+  'POST /addInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'addInfo'
   },
 
   /***************************************************************************

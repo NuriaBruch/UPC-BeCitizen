@@ -40,8 +40,8 @@ module.exports = {
     })
   },
 
-  renderNewInfoPage: function(req, res){
-    res.view("newInfo", {
+  renderAddInfoPage: function(req, res){
+    res.view("AddInfo", {
       layout: 'defaultLayout'
     });
   },
@@ -66,7 +66,15 @@ module.exports = {
       console.log(e);
       res.send(500);
     })
-    
+  },
+
+  addInfo: function(req, res){
+    var {category,title,content,url,type} = req.body;
+
+    InfoService.createInfo(category,title,content,url,type,function(status){
+      if(status.status == "Ok")
+        res.redirect("/allInfo");
+    });
   }
 };
 

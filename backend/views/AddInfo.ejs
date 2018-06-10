@@ -1,56 +1,35 @@
 <link rel="stylesheet" href="/notInjectedStyles/general.css">
 <div class="container" style="margin-top: 20px">
-    <!-- <form method="POST" action="/newInfo">
-        Category:<br>
-        <input type="text" name="category" value="">
-        <br>
-        Title:<br>
-        <input type="text" name="title" value="">
-        <br>
-        Content:<br>
-        <input type="text" name="content" value="">
-        <br>
-        Url:<br>
-        <input type="text" name="url" value="">
-        <br>
-        Type:<br>
-        <input type="text" name="type" value="">
-        <br>
-        
-        <br>
-        <input class="btn btn-primary" type="submit" value="Submit">
-    </form>  -->
-
-    <form method="POST" action="/newInfo">
+    <form method="POST" action="/addInfo">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Category</span>
             </div>
-            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+            <input name="category" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Title</span>
             </div>
-            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+            <input name="title" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Content</span>
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea name="content" class="form-control" aria-label="With textarea"></textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Url</span>
             </div>
-            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+            <input name="url" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Type</span>
             </div>
-            <input type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
+            <input name="type" type="text" class="form-control" placeholder="" aria-label="Username" aria-describedby="basic-addon1">
         </div>
 
         <input class="btn btn-primary btn-lg" type="submit" value="Submit">
