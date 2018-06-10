@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/notInjectedStyles/general.css">
 <div class="container" style="margin-top: 0px">
     <form action="" method="post">
-            <table class="table">
+            <table id="allInfoTable" class="table">
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
@@ -27,7 +27,7 @@
                         <td></td>
                         <td></td>
                         <td scope="row" colspan="1">
-                            <button type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete</button>
+                            <button id="deleteBtn" type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete 0</button>
                         </td>
                     </tr>
                     <tr class="noBorders">
@@ -44,5 +44,18 @@
     </form>
     
 </div>
+
+<script>
+    function updateDeleteBtn(){
+        var count = $("#allInfoTable").find("input").filter(":checked").length;
+        $("#deleteBtn").text("Delete " + count);
+    }
+
+    $(document).ready(function(){
+        $("#allInfoTable").find("input").change(function() {
+            updateDeleteBtn();
+        });
+    });
+</script>
 
 
