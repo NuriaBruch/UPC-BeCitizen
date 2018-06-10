@@ -9,3 +9,10 @@
 .input-group-text{
     min-width: 100px;
 }
+
+td {
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
