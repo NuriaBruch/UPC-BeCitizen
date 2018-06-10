@@ -62,8 +62,13 @@ module.exports.policies = {
     createInfo: 'sessionAuth',
     deleteInfo: 'sessionAuth',
   },
-  WebpageControllerController: {
-    renderMainPage: 'sessionAuth'
+
+  "website/WebpageControllerController": {
+    renderMainPage: 'sessionAuth',
+    renderAllInfoPage: 'sessionAuth',
+    deleteInfos: "sessionAuth",
+    renderAddInfoPage: 'sessionAuth',
+    addInfo: 'sessionAuth'
   }
 
   /***************************************************************************
