@@ -17,6 +17,11 @@ module.exports = {
     }
   },
 
+  logout: function(req, res){
+    req.session.authenticated = false;
+    res.redirect("/");
+  },
+
   renderMainPage: function(req,res){
       res.view("main", {
         layout: 'defaultLayout'
