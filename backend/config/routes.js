@@ -224,6 +224,10 @@ module.exports.routes = {
     controller: 'website/WebpageControllerController',
     action: 'addInfo'
   },
+  'POST /editInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'editInfo'
+  },
   'GET /logout':{
     controller: 'website/WebpageControllerController',
     action: 'logout'

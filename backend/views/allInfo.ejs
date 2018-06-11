@@ -8,6 +8,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Category</th>
                         <th scope="col">Content</th>
+                        <th scope="col">Edit</th>
                         <th scope="col">Delete ?</th>
                     </tr>
                 </thead>
@@ -18,10 +19,12 @@
                             <td><%= i.title %></td>
                             <td><%= i.category %></td>
                             <td><%= i.content %></td>
+                            <td><a class="btn" href="/allInfo?id=<%= i.id %>"><span class="fa fa-pencil"></span></a></td>
                             <td><input type="checkbox" name="id" id="id" value="<%= i.id %>"></td>
                         </tr>
                     <% }) %> 
                     <tr>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -31,6 +34,7 @@
                         </td>
                     </tr>
                     <tr class="noBorders">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

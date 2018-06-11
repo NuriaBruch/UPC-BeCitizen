@@ -36,13 +36,32 @@ module.exports = {
   },
 
   renderAllInfoPage: function(req, res){
-    Information.find({}).sort("category")
-    .then(infos => {
-      res.view("allInfo", {
-        infos: infos,
-        layout: 'defaultLayout'
+    var id = req.query.id;
+    if(id != undefined){
+      Information.findOne({id: id}).
+      then(info => {
+        if(info == undefined) res.notFound();
+        else{
+          ThreadService.getAllCategories(function(status){
+            let categories = status.categories;
+            res.view("editInfo", {
+              layout: 'defaultLayout',
+              categories: categories,
+              info: info
+            });
+          });
+        }
       })
-    })
+    }
+    else{
+      Information.find({}).sort("category")
+      .then(infos => {
+        res.view("allInfo", {
+          infos: infos,
+          layout: 'defaultLayout'
+        })
+      })
+    }
   },
 
   renderAddInfoPage: function(req, res){
@@ -86,6 +105,26 @@ module.exports = {
     InfoService.createInfo(category,title,content,url,type,function(status){
       if(status.status == "Ok")
         res.redirect("/allInfo");
+    });
+  },
+
+  editInfo: function(req, res){
+    var {category,title,content,url,type} = req.body;
+    console.log("GEo");
+    Information.update({
+      category: category,
+      title: title,
+      content: content,
+      url: url,
+      type: type
+    })
+    .then(info => {
+      console.log("Nice");
+      res.redirect("/allInfo");
+    })
+    .catch(e => {
+      console.log("Oh");
+      console.log(e)
     });
   }
 };
