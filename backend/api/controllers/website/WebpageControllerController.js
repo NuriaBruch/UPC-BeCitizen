@@ -13,7 +13,7 @@ module.exports = {
       res.redirect("/main");
     }
     else{
-      res.view(403);
+      res.forbidden();
     }
   },
 
