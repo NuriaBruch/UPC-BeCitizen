@@ -31,7 +31,7 @@ module.exports = {
             res.send(status);
         })
     },
-    getAllFaqCategory: function(req,res){   
+    getAllFaqCategory: function(req,res){
         var category = req.query.category;
         FaqService.getAllFaqCategory(category,function(status){
             res.send(status);
@@ -44,7 +44,13 @@ module.exports = {
             res.send(status);
         });
     },
-
-	
+    valorateFaq: function(req, res){
+      var id = parseInt(req.body.faqId);
+      var valoration = parseInt(req.body.valoration);
+      var email = UtilsService.getEmailFromHeader(req);
+      FaqService.valorateFaq(id, email, valoration, function(status){
+          res.send(status);
+      });
+    }
 };
 

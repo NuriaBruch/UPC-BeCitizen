@@ -1,4 +1,30 @@
 
+function recalculatePuntuation(faqId, callback){
+  var response = {
+    status: "Ok",
+    errors: []
+  }
+
+  Faq.findOne({id: faqId}).exec(function(err, FAQFound){
+    if(err && err !== undefined){
+      response.status = "E1";
+      response.errors.push("Server error");
+      callback(response);
+    }
+    else if(FAQFound === undefined){
+      response.status = "E2";
+      response.errors.push("There's no FAQ with the faqID given");
+      callback(response);
+    }
+    else{
+
+    }
+  })
+
+  }
+
+}
+
 module.exports = {
 
     createFaq(category,question,answer,callback){
@@ -16,7 +42,7 @@ module.exports = {
                 response.errors.push(err2);
             }
             callback(response);
-            }   
+            }
         );
     },
     deleteFaq(faqId,callback){
@@ -129,10 +155,54 @@ module.exports = {
                             response.errors.push("The user has already reported that faq.");
                             callback(response);
                         }
-                    } 
+                    }
                 });
             }
         })
     },
+
+    valorateFaq: function(faqId, email, valoration, callback){
+      var response = {
+        status: "Ok",
+        errors: ""
+      };
+      var recalculate = false;
+      valorationsFaq.findOne({user: email, faq: faqId}).exec(function(err, valorationFound){
+        if(err && err !== undefined){
+          response.status = "E1";
+          response.errors.push("Server error");
+          callback(response);
+        }
+        else if(valorationFound === undefined){
+          valorationsFaq.create({faq: faqId, user: email, valoration: valoration}).exec(function(err1,valorationCreated){
+            if(err1 && err1 !== undefined){
+              response.status = "E1";
+              response.errors.push("Server error");
+              callback(response);
+            }
+            else{
+              recalculate = true;
+              callback(response);
+            }
+          });
+        }
+        else{
+          valorationFound.valoration = valoration;
+          valorationFound.save(function(err2){
+            if(err2 && err2 !== undefined){
+              response.status = "E1";
+              response.errors.push("Server error");
+            }
+            else{
+              recalculate = true;
+            }
+            callback(response);
+          });
+        }
+      });
+      if(recalculate){
+
+      }
+    }
 
 }

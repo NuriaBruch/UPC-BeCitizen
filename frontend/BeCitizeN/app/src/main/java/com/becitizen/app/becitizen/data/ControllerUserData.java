@@ -28,6 +28,7 @@ public class ControllerUserData {
 
     private static final String URI_BLOCK = URI_BCN + "/blockUser";
     private static final String URI_UNBLOCK = URI_BCN + "/unblockUser";
+    private static final String URI_CHANGE_PASS = URI_BCN + "/changePassword";
 
     private static ControllerUserData instance = null;
 
@@ -192,7 +193,6 @@ public class ControllerUserData {
         else throw new ServerException("DB error");
     }
 
-
     public boolean deactivateAccount(String username) throws ServerException, JSONException, NetworkErrorException{
         JSONObject json = new JSONObject();
         json.put("username", username);
@@ -240,5 +240,21 @@ public class ControllerUserData {
         else if (info.get("status").equals("E2")) throw new ServerException("User not found");
         else if (info.get("status").equals("E3")) throw new ServerException("Reporting yourself");
         else if (info.get("status").equals("E4")) throw new ServerException("User already reported");
+    }
+
+    public void newPassword(String oldPassword, String newPassword) throws JSONException, ServerException {
+        // TODO: Do request
+        JSONObject json = new JSONObject();
+        json.put("oldPassword", oldPassword);
+        json.put("newPassword", newPassword);
+
+        String[] dataRequest = {URI_CHANGE_PASS, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("Server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User password doesn't match");
+        else if (!info.get("status").equals("Ok")) throw new ServerException("Server error");
+
     }
 }

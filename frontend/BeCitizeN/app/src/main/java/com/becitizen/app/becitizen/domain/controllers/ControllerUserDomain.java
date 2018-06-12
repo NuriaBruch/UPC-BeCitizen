@@ -205,6 +205,19 @@ public class ControllerUserDomain {
     }
 
     /**
+     * Determina si els usuario se ha identificado con email
+     *
+     * @return True si el usuario esta identificado con email, false de lo contrario
+     * @throws SharedPreferencesException Si MySharedPreferences no se ha inicializado
+     */
+    public boolean isLoggedWithMail() throws SharedPreferencesException {
+        MySharedPreferences preferences = MySharedPreferences.getInstance();
+        if (preferences.getValue(PREFS_KEY, "isLogged").equals("true"))
+            return preferences.getValue(PREFS_KEY, "mode").equals("mail");
+        else return false;
+    }
+
+    /**
      * Devuelve el usuario identificado
      *
      * @return "guest" si se ha identificado como invitado o el username si se ha identificado con email, Google o Facebook
@@ -421,5 +434,9 @@ public class ControllerUserDomain {
 
     public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserData.unblockUser(mail);
+    }
+
+    public void newPassword(String oldPassword, String newPassword) throws ServerException, JSONException {
+        controllerUserData.newPassword(oldPassword, newPassword);
     }
 }

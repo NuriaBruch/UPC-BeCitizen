@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.enumerations.LoginResponse;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import org.json.JSONException;
@@ -184,5 +185,13 @@ public class ControllerUserPresentation {
 
     public void unblockUser(String mail) throws ServerException, JSONException, NetworkErrorException {
         controllerUserDomain.unblockUser(mail);
+    }
+
+    public void newPassword(String oldPassword, String newPassword) throws ServerException, JSONException {
+        controllerUserDomain.newPassword(oldPassword, newPassword);
+    }
+
+    public boolean isLoggedWithMail() throws SharedPreferencesException {
+        return controllerUserDomain.isLoggedWithMail();
     }
 }

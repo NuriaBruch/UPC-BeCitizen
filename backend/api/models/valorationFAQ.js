@@ -13,12 +13,12 @@ module.exports = {
     },
     user: {
         model: 'user'
-    },    
+    },
     valoration:{
         type: 'integer',
+        enum: [0,1,2,3,4,5],
         defaultsTo: 0
     }
     }
   };
-  
-  
+

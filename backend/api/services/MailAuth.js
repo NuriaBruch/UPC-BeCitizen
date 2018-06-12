@@ -38,7 +38,7 @@ module.exports = class MailAuth {
             }
             else{
                 bcrypt.compare(pass, userFound.password, function(err2, result) {
-                    if(err1 !== undefined && err1){
+                    if(err2 !== undefined && err1){
                         response.status = "E1";
                         response.errors.push("Server error");
                     }
@@ -59,8 +59,8 @@ module.exports = class MailAuth {
                         response.info.rank = userFound.rank;
 
                         if(userFound.deactivated){
-                            UtilsService.update_deactivated(userFound,function(err1){
-                                if(err1 !== undefined && err1) {
+                            UtilsService.update_deactivated(userFound,function(err3){
+                                if(err3 !== undefined && err3) {
                                     response.status = "E1";
                                     response.errors.push(err1);
                                 }
@@ -73,5 +73,5 @@ module.exports = class MailAuth {
         });
     };
 
-    
+
 };
