@@ -68,7 +68,8 @@ module.exports.policies = {
     renderAllInfoPage: 'sessionAuth',
     deleteInfos: "sessionAuth",
     renderAddInfoPage: 'sessionAuth',
-    addInfo: 'sessionAuth'
+    addInfo: 'sessionAuth',
+    editInfo: 'sessionAuth'
   }
 
   /***************************************************************************

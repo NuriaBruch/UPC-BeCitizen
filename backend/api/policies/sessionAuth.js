@@ -22,5 +22,5 @@ module.exports = function(req, res, next) {
   //   status: "Error",
   //   errors: ["User not logged in"]
   // });
-  res.view(403);
+  res.forbidden();
 };
