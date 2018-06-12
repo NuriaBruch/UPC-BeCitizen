@@ -109,9 +109,8 @@ module.exports = {
   },
 
   editInfo: function(req, res){
-    var {category,title,content,url,type} = req.body;
-    console.log("GEo");
-    Information.update({
+    var {id,category,title,content,url,type} = req.body;
+    Information.update({id: id}, {
       category: category,
       title: title,
       content: content,
@@ -119,11 +118,9 @@ module.exports = {
       type: type
     })
     .then(info => {
-      console.log("Nice");
       res.redirect("/allInfo");
     })
     .catch(e => {
-      console.log("Oh");
       console.log(e)
     });
   }
