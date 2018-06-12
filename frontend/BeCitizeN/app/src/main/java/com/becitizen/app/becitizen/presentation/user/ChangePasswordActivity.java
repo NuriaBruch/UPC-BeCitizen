@@ -27,7 +27,7 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
+        rootView = inflater.inflate(R.layout.activity_change_password, container, false);
 
         oldPassword = (TextInputEditText) rootView.findViewById(R.id.oldPassword);
         newPassword = (TextInputEditText) rootView.findViewById(R.id.newPassword);
