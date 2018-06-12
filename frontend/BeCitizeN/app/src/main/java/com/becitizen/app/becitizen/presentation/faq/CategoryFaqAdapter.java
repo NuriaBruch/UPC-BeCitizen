@@ -123,32 +123,36 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
 
         @Override
         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-
-            final int value = Math.round(v);
-            AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
-
-
-            adb.setTitle(mContext.getResources().getString(R.string.wantToRate));
+            if (b) {
+                final int value = Math.round(v);
+                AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
 
 
-            adb.setIcon(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_info_outline, null));
+                adb.setTitle(mContext.getResources().getString(R.string.wantToRate));
 
 
-            adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    try {
-                        if (!ControllerFaqPresentation.getUniqueInstance().rateFaq(id, value)) throw new NetworkErrorException();
-                    } catch (NetworkErrorException e) {
-                        Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.networkError),Toast.LENGTH_SHORT).show();
+                adb.setIcon(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_info_outline, null));
+
+
+                adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            if (!ControllerFaqPresentation.getUniqueInstance().rateFaq(id, value))
+                                throw new NetworkErrorException();
+                        } catch (NetworkErrorException e) {
+                            Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } });
+                });
 
 
-            adb.setNegativeButton(mContext.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                } });
-            adb.show();
+                adb.setNegativeButton(mContext.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                adb.show();
+            }
         }
     };
 

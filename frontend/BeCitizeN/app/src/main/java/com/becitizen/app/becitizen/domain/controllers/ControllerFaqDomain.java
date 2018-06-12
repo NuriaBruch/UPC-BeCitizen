@@ -101,12 +101,13 @@ public class ControllerFaqDomain {
     /**
      * Metodo para obtener los nombres de todas las categorias
      *
+     * @param forceRefresh forzar que se recarguen los datos
      * @return JSONObject que contiene los nombres de todas las categorias
      */
-    public ArrayList<String> getCategories() {
+    public ArrayList<String> getCategories(boolean forceRefresh) {
         try {
             MySharedPreferences preferences = MySharedPreferences.getInstance();
-            if (preferences.getDate(PREFS_KEY, "lastRefresh") == null || preferences.getDate(PREFS_KEY, "lastRefresh").isBefore(DateTime.now().minusHours(12))) {
+            if (forceRefresh || preferences.getDate(PREFS_KEY, "lastRefresh") == null || preferences.getDate(PREFS_KEY, "lastRefresh").isBefore(DateTime.now().minusHours(12))) {
                 refreshData();
                 preferences.saveDate(PREFS_KEY, "lastRefresh", DateTime.now());
             }

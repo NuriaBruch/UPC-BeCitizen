@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
     private View rootView;
     List<FaqEntry> dataModels;
     ArrayList<FaqEntry> dataChunk;
+    private SwipeRefreshLayout srl;
     private static CategoryFaqAdapter adapter;
     private String category = "";
     private Thread threadLoadFaqs;
@@ -54,6 +56,7 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
                 Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
                 toast.show();
             }
+            srl.setRefreshing(false);
         }
     };
     private ProgressBar progressBar;
@@ -126,6 +129,32 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
 
             }
         });
+
+        srl = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+        srl.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Runnable loadCategories = new Runnable() {
+                            public void run() {
+                                try {
+                                    ControllerFaqPresentation.getUniqueInstance().getCategoriesForceRefresh();
+                                    dataModels.clear();
+                                    if (threadLoadFaqs != null && threadLoadFaqs.isAlive())
+                                        threadLoadFaqs.interrupt();
+                                    threadLoadFaqs = new Thread(loadFaqs);
+                                    threadLoadFaqs.start();
+                                } catch (NetworkErrorException e) {
+                                    UIUpdater.sendEmptyMessage(1);
+                                }
+                            }
+                        };
+
+                        Thread threadLoadCategories = new Thread(loadCategories);
+                        threadLoadCategories.start();
+                    }
+                }
+        );
 
         progressBar.setVisibility(View.VISIBLE);
         if (threadLoadFaqs != null && threadLoadFaqs.isAlive())

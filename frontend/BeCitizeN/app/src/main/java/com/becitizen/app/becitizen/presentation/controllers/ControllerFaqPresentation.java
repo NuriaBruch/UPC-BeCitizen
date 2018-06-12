@@ -46,7 +46,11 @@ public class ControllerFaqPresentation {
      * @return empty arraylist si ha ocurrido algun error
      */
     public ArrayList<String> getCategories() throws NetworkErrorException {
-        return controllerFaqDomain.getCategories();
+        return controllerFaqDomain.getCategories(false);
+    }
+
+    public ArrayList<String> getCategoriesForceRefresh() throws NetworkErrorException {
+        return controllerFaqDomain.getCategories(true);
     }
 
     /**
