@@ -5,7 +5,7 @@ function recalculatePuntuation(faqId, callback){
     errors: []
   }
 
-  Faq.findOne({id: faqId}).exec(function(err, FAQFound){
+  Faq.findOne({id: faqId}).populate('valoration').exec(function(err, FAQFound){
     if(err && err !== undefined){
       response.status = "E1";
       response.errors.push("Server error");
@@ -17,13 +17,25 @@ function recalculatePuntuation(faqId, callback){
       callback(response);
     }
     else{
-
+      var nValoracions = 0;
+      var sumaPuntuacions = 0;
+      _(FAQFound.valoration).forEach(function(item){
+        nValoracions++;
+        sumaPuntuacions += item.valoration;
+      });
+      FAQFound.puntuation = (sumaPuntuacions/nValoracions);
+      FAQFound.save(function(err){
+        if(err && err !== undefined){
+          response.status = "E1";
+          response.errors.push("Server error");
+          callback(response);
+        }
+        callback(response);
+      });
     }
+
   })
-
-  }
-
-}
+};
 
 module.exports = {
 
@@ -200,8 +212,10 @@ module.exports = {
           });
         }
       });
-      if(recalculate){
 
+      if(recalculate){
+        recalculatePuntuation(faqId, status);
+        callback(status);
       }
     }
 
