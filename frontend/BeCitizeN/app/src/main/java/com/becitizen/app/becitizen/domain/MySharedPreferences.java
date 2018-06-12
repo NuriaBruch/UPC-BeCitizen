@@ -5,6 +5,12 @@ import android.content.SharedPreferences;
 
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 
+import org.joda.time.DateTime;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class MySharedPreferences {
@@ -53,6 +59,30 @@ public class MySharedPreferences {
         editor = settings.edit();
         editor.putString(key, value);
         editor.commit();
+    }
+
+    /**
+     * Este metodo permite obtener un valor guardado en SharedPreferences
+     *
+     * @param name Nombre de los SharedPreferences
+     * @param key Clave del valor que se quiere obtener
+     * @return Valor guardado en SharedPreferences name con clave key, si no existe devuelve un String vacio
+     */
+    public DateTime getDate(String name, String key) {
+        String result = getValue(name, key);
+        if (result != "") return DateTime.parse(result);
+        else return null;
+    }
+
+    /**
+     * Este metodo permite guardar un valor en SharedPreferences
+     *
+     * @param name Nombre que recibiran los SharedPreferences usados
+     * @param key Clave del valor guardado
+     * @param date Valor guardado
+     */
+    public void saveDate(String name, String key, DateTime date) {
+        saveValue(name, key, date.toString());
     }
 
     /**

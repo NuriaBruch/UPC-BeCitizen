@@ -22,6 +22,7 @@ import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.FaqEntry;
 import com.becitizen.app.becitizen.domain.entities.Information;
 import com.becitizen.app.becitizen.domain.entities.Marker;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerInformationPresentation;
 import com.becitizen.app.becitizen.presentation.info.MapsActivity;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
@@ -77,7 +78,7 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
 
     public class ReportOnClick implements View.OnClickListener
     {
-        int id;
+        final int id;
         public ReportOnClick(int id) {
             this.id = id;
         }
@@ -85,13 +86,37 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
         @Override
         public void onClick(View v)
         {
+            AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
 
+
+            adb.setTitle(mContext.getResources().getString(R.string.wantToReport));
+
+
+            adb.setIcon(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.ic_info_outline, null));
+
+
+            adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        if (!ControllerFaqPresentation.getUniqueInstance().reportFaq(id)) throw new NetworkErrorException();
+                    } catch (NetworkErrorException e) {
+                        Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.networkError),Toast.LENGTH_SHORT).show();
+                    }
+                } });
+
+
+            adb.setNegativeButton(mContext.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                } });
+            adb.show();
         }
     };
 
     public class RatingOnRatingBarChangeListener implements RatingBar.OnRatingBarChangeListener
     {
-        int id;
+        final int id;
         public RatingOnRatingBarChangeListener(int id) {
             this.id = id;
         }
@@ -109,7 +134,11 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
 
             adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-
+                    try {
+                        if (!ControllerFaqPresentation.getUniqueInstance().reportFaq(id)) throw new NetworkErrorException();
+                    } catch (NetworkErrorException e) {
+                        Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.networkError),Toast.LENGTH_SHORT).show();
+                    }
                 } });
 
 

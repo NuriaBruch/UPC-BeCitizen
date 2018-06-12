@@ -16,7 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
 
 import java.util.ArrayList;
 
@@ -48,6 +48,7 @@ public class FaqCategoriesActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_forum_categories, container, false);
+        ControllerFaqPresentation.getUniqueInstance().setContext(getApplicationContext());
 
         ListView list = (ListView)rootView.findViewById(R.id.listView);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
@@ -69,7 +70,7 @@ public class FaqCategoriesActivity extends Fragment {
         Runnable loadCategories = new Runnable() {
             public void run() {
                 try {
-                    categories = ControllerForumPresentation.getUniqueInstance().getCategories();
+                    categories = ControllerFaqPresentation.getUniqueInstance().getCategories();
                     UIUpdater.sendEmptyMessage(0);
                 } catch (NetworkErrorException e) {
                     UIUpdater.sendEmptyMessage(1);

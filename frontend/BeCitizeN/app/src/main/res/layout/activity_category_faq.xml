@@ -15,9 +15,30 @@
         android:visibility="gone">
     </ProgressBar>
 
+    <LinearLayout
+        android:id="@+id/TopLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingTop="5dp"
+        android:elevation="3dp">
+
+        <ImageButton
+            android:id="@+id/threadsSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:tint="@android:color/white"
+            app:srcCompat="@drawable/ic_icons8_search_96" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFaq"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/TopLayout"/>
 
 </RelativeLayout>

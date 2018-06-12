@@ -11,7 +11,9 @@ import java.util.List;
 public class ControllerFaqData {
 
     //URIs
-    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory?category=";
+    //private static final String URI_FAQS_CATEGORY = "http://becitizen.cf/getAllFaqCategory?category=";
+    private static final String URI_FAQS_CATEGORY = "http://10.0.2.2:1337/getAllFaqCategory?category=";
+    private static final String URI_FAQ_REPORT = "http://10.0.2.2:1337/reportFaq?faqId=";
 
     private static AppDatabase myDB;
     private static ControllerFaqData instance = null;
@@ -48,6 +50,15 @@ public class ControllerFaqData {
     }
 
     /**
+     * Metodo que solicita los nombres de todas las categorias.
+     *
+     * @return La respuesta de nuestro servidor
+     */
+    public String getCategories() throws NetworkErrorException{
+        return ServerAdapter.getInstance().doGetRequest(ControllerForumData.URI_CATEGORIES);
+    }
+
+    /**
      * Metodo que solicita las faqs de una categoria.
      *
      * @param category nombre de la categoria
@@ -55,11 +66,15 @@ public class ControllerFaqData {
      * @return La respuesta de nuestro servidor
      */
     public String getFaqCategory(String category) throws NetworkErrorException {
-        return ServerAdapter.getInstance().doGetRequest(URI_INFORMATIONS_CATEGORY + category);
+        return ServerAdapter.getInstance().doGetRequest(URI_FAQS_CATEGORY + category);
     }
 
     public List<FaqEntry> getFaqByCategoryFromDB(String category){
         return myFaqEntryDao.getByCategory(category);
+    }
+
+    public List<String> getFaqCategoriesFromDB(){
+        return myFaqEntryDao.getCategories();
     }
 
     public void insertMultiplesFaqsOnDB(List<FaqEntry> faqEntries){
@@ -70,6 +85,16 @@ public class ControllerFaqData {
 
     public List<FaqEntry> getFaqByKeyWordAndCategory(String category, String keyword){
         return myFaqEntryDao.getByWordAndCategroy(category, keyword);
+    }
+
+    public String reportFaq(int id){
+        String[] dataRequest = {URI_FAQ_REPORT + id, ""};
+        return ServerAdapter.getInstance().doPostRequest(dataRequest);
+    }
+
+    public String rateFaq(int id, float rating){
+        String[] dataRequest = {URI_FAQ_REPORT + id, ""};
+        return ServerAdapter.getInstance().doPostRequest(dataRequest);
     }
 
 }

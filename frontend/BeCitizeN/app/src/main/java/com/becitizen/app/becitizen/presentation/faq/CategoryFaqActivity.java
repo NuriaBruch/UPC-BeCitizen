@@ -1,6 +1,7 @@
 package com.becitizen.app.becitizen.presentation.faq;
 
 import android.accounts.NetworkErrorException;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +12,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -32,7 +37,9 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
     ArrayList<FaqEntry> dataChunk;
     private static CategoryFaqAdapter adapter;
     private String category = "";
-    private Thread threadLoadInformations;
+    private Thread threadLoadFaqs;
+    private String searchWords = "";
+    private boolean searching = false;
 
     private Handler UIUpdater = new Handler() {
         @Override
@@ -51,10 +58,13 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
     };
     private ProgressBar progressBar;
 
-    private Runnable loadInformations = new Runnable() {
+    private Runnable loadFaqs = new Runnable() {
         public void run() {
             try {
-                dataChunk = ControllerFaqPresentation.getUniqueInstance().getFaqsCategory(category);
+                if (searchWords.equals(""))
+                    dataChunk = ControllerFaqPresentation.getUniqueInstance().getFaqsCategory(category);
+                else
+                    dataChunk = ControllerFaqPresentation.getUniqueInstance().getFaqsCategoryWord(category, searchWords);
                 UIUpdater.sendEmptyMessage(0);
             } catch (NetworkErrorException e) {
                 UIUpdater.sendEmptyMessage(1);
@@ -73,17 +83,55 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_category_faq, container, false);
+        ControllerFaqPresentation.getUniqueInstance().setContext(getApplicationContext());
 
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
 
         dataModels = new ArrayList<FaqEntry>();
 
+        ImageButton searchButton = rootView.findViewById(R.id.threadsSearchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(rootView.getContext());
+                dialog.setContentView(R.layout.category_thread_search);
+
+                TextView searchCategory = dialog.findViewById(R.id.search_name_text);
+                searchCategory.setText(category);
+
+                Button searchButton = dialog.findViewById(R.id.search_button);
+
+                final EditText wordsToSearch = dialog.findViewById(R.id.search_edit_text);
+
+                dialog.show();
+
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        searchWords = wordsToSearch.getText().toString().trim();
+                        if (searchWords.isEmpty())
+                            Toast.makeText(dialog.getContext(), R.string.searchCategoryEmptyText, Toast.LENGTH_LONG).show();
+                        else {
+                            searching = true;
+                            dataModels.clear();
+                            if (threadLoadFaqs != null && threadLoadFaqs.isAlive())
+                                threadLoadFaqs.interrupt();
+                            threadLoadFaqs = new Thread(loadFaqs);
+                            threadLoadFaqs.start();
+                            dialog.dismiss();
+                        }
+                    }
+                });
+
+            }
+        });
+
         progressBar.setVisibility(View.VISIBLE);
-        if (threadLoadInformations != null && threadLoadInformations.isAlive())
-            threadLoadInformations.interrupt();
-        threadLoadInformations = new Thread(loadInformations);
-        threadLoadInformations.start();
+        if (threadLoadFaqs != null && threadLoadFaqs.isAlive())
+            threadLoadFaqs.interrupt();
+        threadLoadFaqs = new Thread(loadFaqs);
+        threadLoadFaqs.start();
 
         RecyclerView recyclerView = rootView.findViewById(R.id.rvFaq);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -107,8 +155,8 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
     @Override
     public void onPause() {
         super.onPause();
-        if (threadLoadInformations != null && threadLoadInformations.isAlive())
-            threadLoadInformations.interrupt();
+        if (threadLoadFaqs != null && threadLoadFaqs.isAlive())
+            threadLoadFaqs.interrupt();
     }
 
     private void fragmentTransaction(Fragment fragment, String tag) {

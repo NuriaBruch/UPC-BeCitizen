@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.uncopt:android.justified:1.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'joda-time:joda-time:2.10'
 
     //Room dependencies
     def room_version = "1.1.0" // or, for latest rc, use "1.1.1-rc1"
