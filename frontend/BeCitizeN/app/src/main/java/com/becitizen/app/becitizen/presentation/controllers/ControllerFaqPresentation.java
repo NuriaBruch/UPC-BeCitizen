@@ -74,7 +74,7 @@ public class ControllerFaqPresentation {
      * @param rating valoracion de la pregunta
      * @return information vacia si hay algun error
      */
-    public boolean rateFaq(int id, float rating) throws NetworkErrorException {
+    public boolean rateFaq(int id, int rating) throws NetworkErrorException {
         return controllerFaqDomain.rateFaq(id, rating);
     }
 

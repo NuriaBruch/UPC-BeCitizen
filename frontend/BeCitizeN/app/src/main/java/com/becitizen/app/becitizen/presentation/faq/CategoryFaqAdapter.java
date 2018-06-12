@@ -123,6 +123,8 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
 
         @Override
         public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+
+            final int value = Math.round(v);
             AlertDialog.Builder adb = new AlertDialog.Builder(mContext);
 
 
@@ -135,7 +137,7 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
             adb.setPositiveButton(mContext.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     try {
-                        if (!ControllerFaqPresentation.getUniqueInstance().reportFaq(id)) throw new NetworkErrorException();
+                        if (!ControllerFaqPresentation.getUniqueInstance().rateFaq(id, value)) throw new NetworkErrorException();
                     } catch (NetworkErrorException e) {
                         Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.networkError),Toast.LENGTH_SHORT).show();
                     }

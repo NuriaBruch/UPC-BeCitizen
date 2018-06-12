@@ -128,7 +128,7 @@ public class ControllerFaqDomain {
      * @param rating valoracion del usuario
      * @return false si ha ocurrido algun error
      */
-    public boolean rateFaq(int id, float rating) throws NetworkErrorException{
+    public boolean rateFaq(int id, int rating) throws NetworkErrorException{
         try {
             JSONObject data = new JSONObject(controllerFaqData.rateFaq(id, rating));
             if (data.getString("status").equals("Ok")) return true;

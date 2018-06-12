@@ -6,6 +6,9 @@ import android.content.Context;
 
 import com.becitizen.app.becitizen.domain.entities.FaqEntry;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 public class ControllerFaqData {
@@ -14,6 +17,7 @@ public class ControllerFaqData {
     //private static final String URI_FAQS_CATEGORY = "http://becitizen.cf/getAllFaqCategory?category=";
     private static final String URI_FAQS_CATEGORY = "http://10.0.2.2:1337/getAllFaqCategory?category=";
     private static final String URI_FAQ_REPORT = "http://10.0.2.2:1337/reportFaq?faqId=";
+    private static final String URI_FAQ_RATE = "http://10.0.2.2:1337/valorateFaq";
 
     private static AppDatabase myDB;
     private static ControllerFaqData instance = null;
@@ -92,9 +96,16 @@ public class ControllerFaqData {
         return ServerAdapter.getInstance().doPostRequest(dataRequest);
     }
 
-    public String rateFaq(int id, float rating){
-        String[] dataRequest = {URI_FAQ_REPORT + id, ""};
-        return ServerAdapter.getInstance().doPostRequest(dataRequest);
+    public String rateFaq(int id, int rating){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("faqId", id);
+            json.put("valoration", rating);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String[] dataRequest = {URI_FAQ_RATE, json.toString()};
+        return ServerAdapter.getInstance().doPutRequest(dataRequest);
     }
 
 }
