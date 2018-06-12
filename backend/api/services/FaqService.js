@@ -8,7 +8,7 @@ function recalculatePuntuation(faqId, callback){
   Faq.findOne({id: faqId}).populate('valoration').exec(function(err, FAQFound){
     if(err && err !== undefined){
       response.status = "E1";
-      response.errors.push("Server error");
+      response.errors.push(err);
       callback(response);
     }
     else if(FAQFound === undefined){
@@ -19,15 +19,15 @@ function recalculatePuntuation(faqId, callback){
     else{
       var nValoracions = 0;
       var sumaPuntuacions = 0;
-      _(FAQFound.valoration).forEach(function(item){
+      _.forEach(FAQFound.valoration,function(item){
         nValoracions++;
         sumaPuntuacions += item.valoration;
       });
       FAQFound.puntuation = (sumaPuntuacions/nValoracions);
-      FAQFound.save(function(err){
-        if(err && err !== undefined){
+      FAQFound.save(function(err1){
+        if(err1 && err1 !== undefined){
           response.status = "E1";
-          response.errors.push("Server error");
+          response.errors.push(err1);
           callback(response);
         }
         callback(response);
@@ -176,26 +176,28 @@ module.exports = {
     valorateFaq: function(faqId, email, valoration, callback){
       var response = {
         status: "Ok",
-        errors: ""
+        errors: []
       };
+
       var recalculate = false;
-      valorationsFaq.findOne({user: email, faq: faqId}).exec(function(err, valorationFound){
+      valorationFAQ.findOne({user: email, faq: faqId}).exec(function(err, valorationFound){
         if(err && err !== undefined){
-          response.status = "E1";
-          response.errors.push("Server error");
+          response.status = "Eii";
+          response.errors.push(err);
           callback(response);
         }
         else if(valorationFound === undefined){
-          valorationsFaq.create({faq: faqId, user: email, valoration: valoration}).exec(function(err1,valorationCreated){
+          valorationFAQ.create({faq: faqId, user: email, valoration: valoration}).exec(function(err1,valorationCreated){
             if(err1 && err1 !== undefined){
               response.status = "E1";
               response.errors.push("Server error");
               callback(response);
             }
             else{
-              recalculate = true;
-              callback(response);
-            }
+              recalculatePuntuation(faqId, function(status){
+                callback(status);
+            });
+          }
           });
         }
         else{
@@ -204,19 +206,18 @@ module.exports = {
             if(err2 && err2 !== undefined){
               response.status = "E1";
               response.errors.push("Server error");
+              callback(response);
             }
             else{
-              recalculate = true;
-            }
-            callback(response);
+              recalculatePuntuation(faqId, function(status){
+                callback(status);
+            });
+          }
           });
         }
-      });
-
-      if(recalculate){
-        recalculatePuntuation(faqId, status);
-        callback(status);
       }
+    );
+
     }
 
 }
