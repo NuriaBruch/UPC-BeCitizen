@@ -241,14 +241,26 @@ module.exports.routes = {
     controller: 'FaqController',
     action: 'createFaq'
   },
+  'POST /reportFaq': {
+    controller: 'FaqController',
+    action: 'reportFaq'
+  },
+  'PUT /valorateFaq': {
+    controller: 'FaqController',
+    action: 'valorateFaq'
+  },
   'GET /getFaqs':{
     controller: 'FaqController',
     action: 'getFaqs'
   },
+  'GET /getAllFaqCategory':{
+    controller: 'FaqController',
+    action: 'getAllFaqCategory'
+  },
   'DELETE /deleteFaq':{
     controller: 'FaqController',
     action: 'deleteFaq'
-  },
+  }
 
   /***************************************************************************
   *                                                                          *

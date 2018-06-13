@@ -208,7 +208,7 @@ public class ServerAdapter {
                 HttpResponse response = httpclient.execute(httpput);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-
+                Log.d(TAG, "Put response: " + responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";

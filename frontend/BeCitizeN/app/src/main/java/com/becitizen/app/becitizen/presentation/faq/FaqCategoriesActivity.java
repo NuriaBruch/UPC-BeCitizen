@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
 
 import java.util.ArrayList;
 
@@ -26,10 +27,12 @@ public class FaqCategoriesActivity extends Fragment {
 
     private View rootView;
     private ArrayList<String> categories = new ArrayList<>();
+    private SwipeRefreshLayout srl;
     ArrayAdapter<String> adapter;
     private Handler UIUpdater = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            adapter.clear();
             for (int i = 0; i < categories.size(); ++i)
                 adapter.add(categories.get(i));
             progressBar.setVisibility(View.GONE);
@@ -37,6 +40,7 @@ public class FaqCategoriesActivity extends Fragment {
                 Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
                 toast.show();
             }
+            srl.setRefreshing(false);
         }
     };
     private ProgressBar progressBar;
@@ -48,10 +52,33 @@ public class FaqCategoriesActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_forum_categories, container, false);
+        ControllerFaqPresentation.getUniqueInstance().setContext(getApplicationContext());
 
         ListView list = (ListView)rootView.findViewById(R.id.listView);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
         progressBar.setIndeterminate(true);
+
+        srl = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+        srl.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        Runnable loadCategories = new Runnable() {
+                            public void run() {
+                                try {
+                                    categories = ControllerFaqPresentation.getUniqueInstance().getCategoriesForceRefresh();
+                                    UIUpdater.sendEmptyMessage(0);
+                                } catch (NetworkErrorException e) {
+                                    UIUpdater.sendEmptyMessage(1);
+                                }
+                            }
+                        };
+
+                        Thread threadLoadCategories = new Thread(loadCategories);
+                        threadLoadCategories.start();
+                    }
+                }
+        );
 
         adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category);
         list.setAdapter(adapter);
@@ -69,7 +96,7 @@ public class FaqCategoriesActivity extends Fragment {
         Runnable loadCategories = new Runnable() {
             public void run() {
                 try {
-                    categories = ControllerForumPresentation.getUniqueInstance().getCategories();
+                    categories = ControllerFaqPresentation.getUniqueInstance().getCategories();
                     UIUpdater.sendEmptyMessage(0);
                 } catch (NetworkErrorException e) {
                     UIUpdater.sendEmptyMessage(1);

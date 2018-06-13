@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
 
 import java.util.ArrayList;
@@ -55,6 +57,9 @@ public class ForumCategoriesActivity extends Fragment {
 
         adapter = new ArrayAdapter<String>(rootView.getContext(), R.layout.row_forum_category);
         list.setAdapter(adapter);
+
+        SwipeRefreshLayout srl = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
+        srl.setEnabled(false);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -36,8 +36,9 @@ module.exports = {
       via: 'reportedFaq'
     },
     valoration: {
-      model: 'valorationFAQ'
-    } 
+      collection: 'valorationFAQ',
+      via: 'faq'
+    }
 
   }
 };

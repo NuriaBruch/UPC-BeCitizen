@@ -15,7 +15,7 @@ public class ControllerForumData {
     private static final String URI_BCN = "http://becitizen.cf";
 
     private static final String URI_THREADS_CATEGORY = URI_BCN + "/getAllThreadsCategory?category=";
-    private static final String URI_CATEGORIES = URI_BCN + "/categories";
+    public static final String URI_CATEGORIES = URI_BCN + "/categories";
     private static final String URI_NEW_THREAD = URI_BCN + "/newThread";
     private static final String URI_THREAD_CONTENT = URI_BCN + "/getThread?threadId=";
     private static final String URI_THREAD_COMMENTS = URI_BCN + "/getThreadComments?&threadId=";
