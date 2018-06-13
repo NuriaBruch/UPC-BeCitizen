@@ -87,6 +87,35 @@ module.exports = {
     }
   },
 
+  renderAllFaqsPage: function(req, res){
+    var id = req.query.id;
+    if(id != undefined){
+      Faq.findOne({id: id}).
+      then(faq => {
+        if(faq == undefined) res.notFound();
+        else{
+          ThreadService.getAllCategories(function(status){
+            let categories = status.categories;
+            res.view("editFaq", {
+              layout: 'defaultLayout',
+              categories: categories,
+              faq: faq
+            });
+          });
+        }
+      })
+    }
+    else{
+      Faq.find({}).sort("category")
+      .then(faqs => {
+        res.view("allFaqs", {
+          faqs: faqs,
+          layout: 'defaultLayout'
+        })
+      })
+    }
+  },
+
   renderAddInfoPage: function(req, res){
     ThreadService.getAllCategories(function(status){
       let categories = status.categories;
@@ -95,9 +124,16 @@ module.exports = {
         categories: categories
       });
     })
-    // res.view("AddInfo", {
-    //   layout: 'defaultLayout'
-    // });
+  },
+
+  renderAddFaqPage: function(req, res){
+    ThreadService.getAllCategories(function(status){
+      let categories = status.categories;
+      res.view("addFaq", {
+        layout: 'defaultLayout',
+        categories: categories
+      });
+    })
   },
 
   deleteInfos: function(req, res){
@@ -122,12 +158,43 @@ module.exports = {
     })
   },
 
+  deleteFaqs: function(req, res){
+    let ids = req.body.id;
+    let faqs;
+    if(typeof(ids) == "string"){
+      faqs = ids;
+    }
+    else{
+      faqs = ids.map(i => {
+        return parseInt(i)
+      })
+    }
+    
+    Faq.destroy(faqs)
+    .then(() => {
+      res.redirect("/AllFaqs");
+    })
+    .catch(e => {
+      console.log(e);
+      res.send(500);
+    })
+  },
+
   addInfo: function(req, res){
     var {category,title,content,url,type} = req.body;
 
     InfoService.createInfo(category,title,content,url,type,function(status){
       if(status.status == "Ok")
         res.redirect("/allInfo");
+    });
+  },
+
+  addFaq: function(req, res){
+    var {category,question,answer} = req.body;
+
+    FaqService.createFaq(category,question,answer,function(status){
+      if(status.status == "Ok")
+        res.redirect("/allFaqs");
     });
   },
 
@@ -142,6 +209,21 @@ module.exports = {
     })
     .then(info => {
       res.redirect("/allInfo");
+    })
+    .catch(e => {
+      console.log(e)
+    });
+  },
+
+  editFaq: function(req, res){
+    var {id,category,question, answer} = req.body;
+    Faq.update({id: id}, {
+      category: category,
+      question: question,
+      answer: answer
+    })
+    .then(faq => {
+      res.redirect("/allFaqs");
     })
     .catch(e => {
       console.log(e)
