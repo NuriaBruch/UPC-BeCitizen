@@ -347,6 +347,7 @@
     <!-- MSGS -->
     <string name="send">Send</string>
     <string name="emptyreply">Your reply is empty</string>
+    <string name="errorLoadMessages">Could not load messages</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Currency Converter</string>
@@ -383,6 +384,7 @@
     <string name="updateCorrect">Profile updated correctly</string>
     <string name="JSONerror">JSON error</string>
     <string name="networkError">Network Error</string>
+    <string name="sharedPreferencesError">Shared Preferences Error</string>
 
     <!-- UTILITIES MENU -->
     <string name="buttonCurrency">Currency Converter</string>
@@ -456,7 +458,8 @@
 
     <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
     <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
-    <string name="errorLoadMessages">Could not load messages</string>
+
+    <!-- PASSWORD CHANGE -->
     <string name="changePassword">Change your password</string>
     <string name="writePass">Write your current password</string>
     <string name="writeNewPass">Enter your new password</string>
@@ -464,14 +467,16 @@
     <string name="allFieldsRequired">All fields are required</string>
     <string name="passDoNotMatch">Passwords do not match</string>
     <string name="passUpdated">Your password has been successfully updated!</string>
-    <string name="sharedPreferencesError">Shared Preferences Error</string>
 
+    <!-- FAQ -->
     <string name="report">Report</string>
     <string name="wantToRate">Do you want to rate this question?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
-    <string name="usingOffline">Using outdated data</string>
     <string name="wantToReport">Do you want to report this question?</string>
     <string name="alreadyReported">You have already reported this question</string>
+
+    <!--Falta traduccio -->
+    <string name="usingOffline">Using outdated data</string>
+
 </resources>

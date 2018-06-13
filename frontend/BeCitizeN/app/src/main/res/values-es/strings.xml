@@ -1,0 +1,483 @@
+<resources>
+    <string name="app_name">BeCitizeN</string>
+
+    <string name="facebook_app_id">1386882294791151</string>
+    <string name="backendClientID">857901571463-rhtuk6e89trutq00m185t2fm5assha08.apps.googleusercontent.com</string>
+
+    <!-- LOGIN -->
+    <string name="login">Entrar</string>
+    <string name="login_cancel">El inicio de sesión se ha cancelado</string>
+    <string name="login_fail">El inicio de sesión ha fallado</string>
+    <string name="youAreIn">¡Estás dentro!</string>
+    <string name="loggedAs">Has entrado como invitado. \n Esta característica no está disponible para invitados. \n\n Puedes cerrar sesión y entrar con una cuenta.</string>
+    <string name="logout">Salir</string>
+    <string name="errorUserNotFound">Usuario no encontrado</string>
+    <string name="errorIncorrPassw">Contraseña incorrecta</string>
+    <string name="enter">Entrar</string>
+    <string name="logoutMsg">¿Estás seguro de que quieres salir de BeCitizeN?</string>
+
+    <!-- START SCREEN -->
+    <string name="logInMail">Entrar con email</string>
+    <string name="logInGuest">Entrar como invitado</string>
+    <string name="signUpMail">Registrarse con email</string>
+
+    <!-- SIGN UP -->
+    <string name="signUpTitle">Registrarse</string>
+    <string name="enterEmail">Introduce tu email</string>
+    <string name="enterEmailUsername">Introduce tu email o nombre de usuario</string>
+    <string name="enterPassw">Introduce tu contraseña</string>
+    <string name="repeatPassw">Repite tu contraseña</string>
+    <string name="Accept">Aceptar</string>
+    <string name="errorPasswlenght">Contraseña demasiado corta, 6 caracteres mínimo</string>
+    <string name="errorPassw">Las contraseñas no coinciden</string>
+    <string name="errorMail">El email ya esta registrado</string>
+    <string name="checkInfo">Revisa tu información</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="firstName">Nombre</string>
+    <string name="lastName">Apellido</string>
+    <string name="birthDate">Fecha de nacimiento</string>
+    <string name="biography">Biografia</string>
+    <string name="country">País de nacimiento</string>
+    <string name="submit">Enviar</string>
+    <string name="errorMsgName">Entrada no válida</string>
+    <string name="errorUsername">El nombre de usuario ya existe</string>
+    <string name="errorBiography">Biografía demasiado larga</string>
+    <string-array name="countries" translatable="false">
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Antigua and Barbuda</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Aruba</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaijan</item>
+        <item>Bahamas</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belgium</item>
+        <item>Belize</item>
+        <item>Benin</item>
+        <item>Bermuda</item>
+        <item>Bhutan</item>
+        <item>Bolivia</item>
+        <item>Bosnia and Herzegovina</item>
+        <item>Botswana</item>
+        <item>Brazil</item>
+        <item>British Virgin Islands</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>Cambodia</item>
+        <item>Cameroon</item>
+        <item>Canada</item>
+        <item>Canary Islands</item>
+        <item>Cape Verde</item>
+        <item>Cayman Islands</item>
+        <item>Central African Republic</item>
+        <item>Ceuta and Melilla</item>
+        <item>Chad</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Colombia</item>
+        <item>Comoros</item>
+        <item>Congo</item>
+        <item>Costa Rica</item>
+        <item>Croatia</item>
+        <item>Cuba</item>
+        <item>Curaçao</item>
+        <item>Cyprus</item>
+        <item>Czech Republic</item>
+        <item>Côte d’Ivoire</item>
+        <item>Denmark</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>Dominican Republic</item>
+        <item>Ecuador</item>
+        <item>Egypt</item>
+        <item>El Salvador</item>
+        <item>Equatorial Guinea</item>
+        <item>Eritrea</item>
+        <item>Estonia</item>
+        <item>Ethiopia</item>
+        <item>Faroe Islands</item>
+        <item>Fiji</item>
+        <item>Finland</item>
+        <item>France</item>
+        <item>French Guiana</item>
+        <item>French Polynesia</item>
+        <item>Gabon</item>
+        <item>Gambia</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Ghana</item>
+        <item>Greece</item>
+        <item>Greenland</item>
+        <item>Grenada</item>
+        <item>Guadeloupe</item>
+        <item>Guam</item>
+        <item>Guatemala</item>
+        <item>Guernsey</item>
+        <item>Guinea</item>
+        <item>Guinea-Bissau</item>
+        <item>Guyana</item>
+        <item>Haiti</item>
+        <item>Honduras</item>
+        <item>Hong Kong</item>
+        <item>Hungary</item>
+        <item>Iceland</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Ireland</item>
+        <item>Isle of Man</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Jamaica</item>
+        <item>Japan</item>
+        <item>Jersey</item>
+        <item>Jordan</item>
+        <item>Kazakhstan</item>
+        <item>Kenya</item>
+        <item>Kiribati</item>
+        <item>Kuwait</item>
+        <item>Kyrgyzstan</item>
+        <item>Laos</item>
+        <item>Latin America</item>
+        <item>Latvia</item>
+        <item>Lebanon</item>
+        <item>Lesotho</item>
+        <item>Liberia</item>
+        <item>Libya</item>
+        <item>Liechtenstein</item>
+        <item>Lithuania</item>
+        <item>Luxembourg</item>
+        <item>Macau</item>
+        <item>Macedonia</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Malaysia</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Marshall Islands</item>
+        <item>Martinique</item>
+        <item>Mauritania</item>
+        <item>Mauritius</item>
+        <item>Mayotte</item>
+        <item>Mexico</item>
+        <item>Micronesia</item>
+        <item>Moldova</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montenegro</item>
+        <item>Morocco</item>
+        <item>Mozambique</item>
+        <item>Myanmar</item>
+        <item>Namibia</item>
+        <item>Nepal</item>
+        <item>Netherlands</item>
+        <item>New Caledonia</item>
+        <item>New Zealand</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigeria</item>
+        <item>North Korea</item>
+        <item>Northern Mariana Islands</item>
+        <item>Norway</item>
+        <item>Oman</item>
+        <item>Pakistan</item>
+        <item>Palau</item>
+        <item>Palestine</item>
+        <item>Panama</item>
+        <item>Papua New Guinea</item>
+        <item>Paraguay</item>
+        <item>Peru</item>
+        <item>Philippines</item>
+        <item>Poland</item>
+        <item>Portugal</item>
+        <item>Puerto Rico</item>
+        <item>Qatar</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Rwanda</item>
+        <item>Réunion</item>
+        <item>Saint Barthélemy</item>
+        <item>Saint Kitts and Nevis</item>
+        <item>Saint Lucia</item>
+        <item>Saint Martin</item>
+        <item>Saint Vincent and the Grenadines</item>
+        <item>Samoa</item>
+        <item>San Marino</item>
+        <item>Saudi Arabia</item>
+        <item>Senegal</item>
+        <item>Serbia</item>
+        <item>Seychelles</item>
+        <item>Sierra Leone</item>
+        <item>Singapore</item>
+        <item>Sint Maarten</item>
+        <item>Slovakia</item>
+        <item>Slovenia</item>
+        <item>Solomon Islands</item>
+        <item>Somalia</item>
+        <item>South Africa</item>
+        <item>South Korea</item>
+        <item>South Sudan</item>
+        <item>Spain</item>
+        <item>Sri Lanka</item>
+        <item>Sudan</item>
+        <item>Suriname</item>
+        <item>Swaziland</item>
+        <item>Sweden</item>
+        <item>Switzerland</item>
+        <item>Syria</item>
+        <item>São Tomé and Príncipe</item>
+        <item>Taiwan</item>
+        <item>Tanzania</item>
+        <item>Thailand</item>
+        <item>Timor-Leste</item>
+        <item>Togo</item>
+        <item>Tonga</item>
+        <item>Trinidad and Tobago</item>
+        <item>Tunisia</item>
+        <item>Turkey</item>
+        <item>Turks and Caicos Islands</item>
+        <item>U.S. Outlying Islands</item>
+        <item>U.S. Virgin Islands</item>
+        <item>Uganda</item>
+        <item>Ukraine</item>
+        <item>United Arab Emirates</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+        <item>Uruguay</item>
+        <item>Uzbekistan</item>
+        <item>Vanuatu</item>
+        <item>Venezuela</item>
+        <item>Vietnam</item>
+        <item>Western Sahara</item>
+        <item>Yemen</item>
+        <item>Zambia</item>
+        <item>Zimbabwe</item>
+        <item>Åland Islands</item>
+    </string-array>
+
+    <!-- GUEST -->
+    <string name="guest">Invitado</string>
+
+    <!-- THREAD -->
+    <string name="quoting">Citando comentario:</string>
+    <string name="newComment">Escribe un comentario</string>
+    <string name="comments">Comentarios</string>
+    <string name="commentCreated">Comentario creado</string>
+    <string name="votes">votos</string>
+    <string name="searchCategoryThreadTitle">Buscando en:</string>
+    <string name="searchCategoryHint">Escribe las palabras a buscar</string>
+    <string name="searchCategoryButton">Buscar</string>
+    <string name="searchCategoryEmptyText">Tu búsqueda no puede ser vacía</string>
+    <string name="by">por</string>
+    <string name="seconds">segundos</string>
+    <string name="minutes">minutos</string>
+    <string name="hours">horas</string>
+    <string name="days">días</string>
+    <string name="years">años</string>
+    <string name="second">segundo</string>
+    <string name="minute">minuto</string>
+    <string name="hour">hora</string>
+    <string name="day">dia</string>
+    <string name="year">año</string>
+    <string name="category">Categoría</string>
+    <string name="hintTitleThread">Escribe un título para tu nuevo hilo</string>
+    <string name="hintThreadContent">Describe tu hilo</string>
+    <string name="newThread">Nuevo hilo</string>
+    <string-array name="categories">
+        <item>Cultura</item>
+        <item>Administración</item>
+        <item>Mobilidad</item>
+        <item>Deporte</item>
+        <item>Educación</item>
+        <item>Salud</item>
+        <item>Trabajo</item>
+        <item>Justicia</item>
+    </string-array>
+
+    <!-- PROFILE -->
+    <string name="rankUP">Rango:</string>
+    <string name="birthdateUP">Nacimiento:</string>
+    <string name="countryUP">País:</string>
+    <string name="biographyUP">Biografía:</string>
+    <string name="deactived">Usuario desactivado</string>
+    <string name="update">Actualizar</string>
+    <string name="editprofile">Edita tu perfil</string>
+    <string name="deleteAccount">Eliminar cuenta</string>
+    <string name="deleteAccountMsg">¿Seguro que quieres eliminar tu cuenta?</string>
+    <string name="deactivateUser">Desactivar</string>
+    <string name="blockUser">Bloquear</string>
+    <string name="unblockUser">Desbloquear</string>
+    <string name="blockUserMsg">¿Seguro que quieres bloquear a este usuario?</string>
+    <string name="unblockUserMsg">¿Seguro que quieres desbloquear a este usuario?</string>
+    <string name="errorBlock">No es posible bloquear / desbloquear a este usuario</string>
+    <string name="errorMessaging">No es posible enviar un mensaje a este usuario</string>
+    <string-array name="image_codes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="image_pngs">
+        <item>@drawable/userprofile1</item>
+        <item>@drawable/userprofile2</item>
+        <item>@drawable/userprofile3</item>
+        <item>@drawable/userprofile4</item>
+        <item>@drawable/userprofile5</item>
+        <item>@drawable/userprofile6</item>
+        <item>@drawable/userprofile7</item>
+        <item>@drawable/userprofile8</item>
+    </string-array>
+
+    <!-- MSGS -->
+    <string name="send">Enviar</string>
+    <string name="emptyreply">Tu respuesta está vacía</string>
+    <string name="errorLoadMessages">No se han podido cargar los mensajes</string>
+
+    <!-- CURRENCY CONVERTER -->
+    <string name="ccTitle">Conversor de monedas</string>
+    <string name="ccFrom">De:</string>
+    <string name="ccTo">A:</string>
+    <string name="ccConvertText">Escribe la cantidad a convertir</string>
+    <string name="ccResult">Resultado</string>
+    <string name="ccErrorConvert">Lo sentimos, no hemos podido hacer la conversión</string>
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
+    <string name="convert">Convert</string>
+
+    <!-- WORD OF THE DAY -->
+    <string name="wordOfTheDayTitle">Palabra del día</string>
+    <string name="wordOfTheDayMeans">significa</string>
+    <string name="wordOfTheDaySubtitle">Aprende una palabra en catalán cada día</string>
+    <string name="wordOfTheDayDefinition">Cada dia una palabra diferente en catalán con su definición traducida.</string>
+    <string name="wordOfTheDayProvided">Ofrecido por rodamots.com</string>
+
+    <!-- TRANSLATOR -->
+    <string name="trTitle">Traductor</string>
+    <string name="trAction">Traducir</string>
+    <string name="translateText">Escribe el texto a traducir</string>
+    <string name="errorTranslate">Lo sentimos, no hemos podido hacer la traducción</string>
+    <string-array name="languages" translatable="false">
+        <item>language1</item>
+        <item>language2</item>
+    </string-array>
+
+    <!-- EXCEPTIONS -->
+    <string name="serverError">Error del servidor</string>
+    <string name="updateCorrect">Perfil actualizado correctamente</string>
+    <string name="JSONerror">Error en el JSON</string>
+    <string name="networkError">Error en la red</string>
+    <string name="sharedPreferencesError">Error en Shared Preferences</string>
+
+    <!-- UTILITIES MENU -->
+    <string name="buttonCurrency">Conversor de monedas</string>
+    <string name="buttonTranslator">Traductor</string>
+    <string name="buttonWord">Palabra del día</string>
+
+    <!-- ABOUT -->
+    <string name="textDevelopedBy">Esta aplicación ha sido desarrollada por un grupo de estudiantes del grado de Ingeniería Informática de la Universitat Politècnica de Catalunya (UPC) y más concretamente de la Facultat d\'Informàtica de Barcelona (FIB).</string>
+    <string name="textSubject">BeCitizeN es un proyecto para la asignatura Projecte d\'Enginyeria del Software</string>
+    <string name="textPurpose">Su objetivo principal es proporcionar información útil a los nuevos ciudadanos de Barcelona.</string>
+
+    <!-- INFO -->
+    <string name="openInBrowser">Abrir en el navegador</string>
+    <string name="openMap">Abrir el mapa</string>
+    <string name="empty">Vacío</string>
+    <string name="title_activity_maps">Mapa</string>
+
+    <!-- MENU -->
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+    <string name="nav_header_desc">Cabecera</string>
+    <string name="action_settings">Configuración</string>
+    <string name="profile">Perfil</string>
+    <string name="information">Información</string>
+    <string name="faq">FAQ</string>
+    <string name="utilities">Utilidades</string>
+    <string name="social">Social</string>
+    <string name="private_messages">Mensajes privados</string>
+    <string name="forum">Foro</string>
+    <string name="settings">Configuración</string>
+    <string name="help">Ayuda</string>
+    <string name="about">About</string>
+    <string name="other">Otros</string>
+
+    <!-- HELP -->
+    <string name="tab_text_1">Principal</string>
+    <string name="tab_text_2">Información</string>
+    <string name="tab_text_3">FAQ</string>
+    <string name="tab_text_4">Foro</string>
+    <string name="tab_text_5">Mensajería</string>
+    <string name="tab_text_6">Utilidades</string>
+    <string name="tab_text_7">Perfil de usuario</string>
+
+    <string name="helpUser_1">Si deseas ver su perfil de usuario, puede hacer clic en cualquier momento en el ícono de perfil de usuario en la parte superior derecha de su pantalla.</string>
+    <string name="helpUser_2">Desde tu propia pantalla de perfil de usuario, también puedes editar el perfil haciendo clic en el icono de editar perfil.</string>
+    <string name="helpUser_3">En la pantalla de editar perfil, puedes actualizar tus datos y también desactivar la cuenta con el icono de desactivar usuario.</string>
+    <string name="helpUser_4">Des de la pantalla de tu perfil, puedes cerrar la sesión con el ícono de cierre de sesión. Esto te llevará a la pantalla inicial.</string>
+
+    <string name="helpForum_1">Puedes acceder al foro mediante el icono del foro en el menú lateral de la aplicación.</string>
+    <string name="helpForum_2">En la primera pantalla del foro, hay diferentes categorías y puedes elegir entre ellas, igual que en la parte de información de BeCitizeN.</string>
+    <string name="helpForum_3">Una vez que hayas elegido una categoría, puedes comenzar un nuevo hilo o elegir ver uno de los hilos creados por otro usuario.</string>
+    <string name="helpForum_4">Si has elegido ver un hilo, puedes comentarlo escribiendo en la entrada de texto en la parte inferior de la pantalla.</string>
+    <string name="helpForum_5">También puedes responder un comentario específico citándolo.</string>
+    <string name="helpForum_6">Si quieres indicar que te gusta un comentario o hilo, puedes usar el icono de votación.</string>
+    <string name="helpForum_7">Por otro lado, si crees que el contenido de un comentario o publicación es inapropiado, puedes usar el icono de reportar.</string>
+    <string name="helpForum_8">Otra cosa importante que debes saber sobre el foro es que si haces clic en la imagen del perfil de cualquier usuario, puedes acceder a su perfil de usuario.</string>
+
+    <string name="helpUtilities_1">Puedes acceder a las utilidades por su icono en su menú lateral.</string>
+    <string name="helpUtilities_2">En esta parte de la aplicación tienes 3 funcionalidades diferentes:</string>
+    <string name="helpUtilities_3">Conversor de monedas</string>
+    <string name="helpUtilities_4">Puedes seleccionar la moneda que quieres convertir y la moneda a la que quieres convertirla. La conversión entre todas las monedas se actualiza dos veces al día.</string>
+    <string name="helpUtilities_5">Traductor</string>
+    <string name="helpUtilities_6">Con esta funcionalidad puedes introducir un texto en cualquier idioma y traducirlo a cualquier otro.</string>
+    <string name="helpUtilities_7">Palabra del día</string>
+    <string name="helpUtilities_8">En esta pantalla todos los días aparecerá una nueva palabra en catalán con su significado en inglés. Esta funcionalidad es posible gracias a rodamot.com.</string>
+
+    <string name="helpMessaging_1">Con el ícono de mensajería privada en el menú lateral, puedes acceder a tus conversaciones privadas con otros usuarios.</string>
+    <string name="helpMessaging_2">Para poder iniciar una nueva conversación, debes ir por el foro a otro perfil de usuario y desde allí hacer clic en el botón de mensajería privada.</string>
+    <string name="helpMessaging_3">Si un usuario te envía mensajes, lo verás cuando entres en la pantalla de tus conversaciones privadas.</string>
+    <string name="helpMessaging_4">Si no quieres que un usuario te envíe mensajes, puedes bloquearlo accediendo a su perfil, ya sea a través del foro o de la conversación, y haga clic en el botón de bloquear usuario.</string>
+
+    <string name="helpInformation_1">Puedes acceder a la funcionalidad de información haciendo clic en su icono en el menú lateral.</string>
+    <string name="helpInformation_2">En esta parte de la aplicación puedes ver información útil sobre diferentes cosas sobre Barcelona que podrían ser útiles si vives allí. Todas las publicaciones están clasificadas por categorías para que sea más fácil encontrar la información.</string>
+
+    <!-- PASSWORD CHANGE -->
+    <string name="changePassword">Cambia tu contraseña</string>
+    <string name="writePass">Escribe tu contraseña actual</string>
+    <string name="writeNewPass">Escribe tu nueva contraseña</string>
+    <string name="repeatNewPassword">Confirma tu nueva contraseña</string>
+    <string name="allFieldsRequired">Se requieren todos los campos</string>
+    <string name="passDoNotMatch">Las contraseñas no coinciden</string>
+    <string name="passUpdated">¡Se ha actualizado tu contraseña!</string>
+
+    <!-- FAQ -->
+    <string name="report">Reportar</string>
+    <string name="wantToRate">¿Quieres valorar esta pregunta?</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="wantToReport">¿Quieres reportar esta pregunta?</string>
+    <string name="alreadyReported">Ya has reportado esta pregunta</string>
+
+    <!--Falta traduccio -->
+    <string name="usingOffline">Using outdated data</string>
+
+
+</resources>
