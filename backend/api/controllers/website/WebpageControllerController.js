@@ -23,9 +23,32 @@ module.exports = {
   },
 
   renderMainPage: function(req,res){
+    Faq.find({}).populate("reportedBy")
+    .then(faqs => {
+      let faqsWithReports = faqs.map(f => {
+        let reports = f.reportedBy.length;
+        return {
+          question: f.question,
+          reports: reports
+        }
+      })
+      .sort((a, b) => a.reports > b.reports)
+      .slice(0, 6);
+
       res.view("main", {
-        layout: 'defaultLayout'
+        layout: 'defaultLayout',
+        faqsWithReports: JSON.stringify(faqsWithReports)
       });
+    })
+    .catch(e => {
+      console.log(e);
+      res.view("main", {
+        layout: 'defaultLayout',
+        faqsWithReports: undefined
+      });
+    })
+
+    
   },
 
   renderLoginPage: function(req, res){
