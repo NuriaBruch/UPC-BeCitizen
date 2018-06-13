@@ -6,7 +6,7 @@ import android.accounts.NetworkErrorException;
 import com.becitizen.app.becitizen.data.ControllerForumData;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
-import com.becitizen.app.becitizen.domain.entities.Thread;
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONArray;
@@ -95,14 +95,14 @@ public class ControllerForumDomain {
      *
      * @return
      */
-    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
+    public boolean newThread(ForumThread t) throws ServerException, NetworkErrorException {
         return controllerForumData.newThread(t);
     }
 
 
-    public Thread getThreadContent(int id) throws JSONException, ServerException, NetworkErrorException {
+    public ForumThread getThreadContent(int id) throws JSONException, ServerException, NetworkErrorException {
         JSONObject info = new JSONObject(controllerForumData.getThreadContent(id));
-        Thread thread = new Thread();
+        ForumThread thread = new ForumThread();
         if (info.get("status").equals("Ok")) {
             JSONObject threadData = info.getJSONObject("info");
             thread.setTitle(threadData.getString("title"));

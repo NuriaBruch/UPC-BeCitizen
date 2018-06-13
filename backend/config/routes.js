@@ -216,13 +216,25 @@ module.exports.routes = {
     controller: 'website/WebpageControllerController',
     action: 'renderAllInfoPage'
   },
+  "GET /allFaqs": {
+    controller: 'website/WebpageControllerController',
+    action: 'renderAllFaqsPage'
+  },
   "POST /allInfo": {
     controller: 'website/WebpageControllerController',
     action: 'deleteInfos'
   },
+  "POST /allFaqs": {
+    controller: 'website/WebpageControllerController',
+    action: 'deleteFaqs'
+  },
   'GET /addInfo':{
     controller: 'website/WebpageControllerController',
     action: 'renderAddInfoPage'
+  },
+  'GET /addFaq':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderAddFaqPage'
   },
   'POST /addInfo':{
     controller: 'website/WebpageControllerController',
@@ -231,6 +243,14 @@ module.exports.routes = {
   'POST /editInfo':{
     controller: 'website/WebpageControllerController',
     action: 'editInfo'
+  },
+  'POST /addFaq':{
+    controller: 'website/WebpageControllerController',
+    action: 'addFaq'
+  },
+  'POST /editFaq':{
+    controller: 'website/WebpageControllerController',
+    action: 'editFaq'
   },
   'GET /logout':{
     controller: 'website/WebpageControllerController',

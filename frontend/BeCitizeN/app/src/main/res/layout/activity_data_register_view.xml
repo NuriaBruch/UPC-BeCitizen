@@ -1,134 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.becitizen.app.becitizen.presentation.user.DataRegisterActivity">
 
-    <TextView
-        android:id="@+id/CheckInfoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:text="@string/checkInfo"
-        android:textSize="30sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textStyle="bold" />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/usernameLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/CheckInfoText"
-        android:layout_alignStart="@+id/CheckInfoText"
-        android:layout_below="@+id/CheckInfoText"
-        android:layout_marginTop="20dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/usernameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            android:singleLine="true"
-            android:inputType="textNoSuggestions"
-            android:maxLength="15"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/firstNameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/CheckInfoText"
-        android:layout_alignStart="@+id/CheckInfoText"
-        android:layout_below="@+id/usernameLayout"
-        android:layout_marginTop="20dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/firstNameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/firstName"
-            android:inputType="textPersonName" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/lastNameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/CheckInfoText"
-        android:layout_alignStart="@+id/CheckInfoText"
-        android:layout_below="@+id/firstNameLayout"
-        android:layout_marginTop="20dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/lastNameInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lastName"
-            android:inputType="textPersonName"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/birthDateLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/CheckInfoText"
-        android:layout_alignStart="@+id/CheckInfoText"
-        android:layout_below="@+id/lastNameLayout"
-        android:layout_marginTop="20dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/birthDateInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="false"
-            android:hint="@string/birthDate" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/countryLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/CheckInfoText"
-        android:layout_alignStart="@+id/CheckInfoText"
-        android:layout_below="@+id/birthDateLayout"
-        android:layout_marginTop="20dp"
-        android:hint="@string/country">
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/CheckInfoText"
+            style="@style/mainTitleLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/country" />
+            android:layout_alignParentTop="true"
+            android:text="@string/checkInfo"
+            android:textStyle="bold"
+            android:layout_marginTop="18dp" />
 
-        <Spinner
-            android:id="@+id/countrySpinner"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/usernameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:entries="@array/countries"
-            android:spinnerMode="dialog" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignEnd="@+id/CheckInfoText"
+            android:layout_alignStart="@+id/CheckInfoText"
+            android:layout_below="@+id/CheckInfoText"
+            android:layout_marginTop="40dp">
 
-    <Button
-        android:id="@+id/submitButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/CheckInfoText"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@id/CheckInfoText"
-        android:layout_marginBottom="20dp"
-        android:text="@string/submit"
-        android:textSize="18sp" />
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/usernameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:inputType="textNoSuggestions"
+                android:maxLength="15"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/firstNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/CheckInfoText"
+            android:layout_alignStart="@+id/CheckInfoText"
+            android:layout_below="@+id/usernameLayout"
+            android:layout_marginTop="20dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/firstNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/firstName"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/lastNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/CheckInfoText"
+            android:layout_alignStart="@+id/CheckInfoText"
+            android:layout_below="@+id/firstNameLayout"
+            android:layout_marginTop="20dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/lastNameInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastName"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/birthDateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/CheckInfoText"
+            android:layout_alignStart="@+id/CheckInfoText"
+            android:layout_below="@+id/lastNameLayout"
+            android:layout_marginTop="20dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/birthDateInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:hint="@string/birthDate" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/countryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/CheckInfoText"
+            android:layout_alignStart="@+id/CheckInfoText"
+            android:layout_below="@+id/birthDateLayout"
+            android:layout_marginTop="20dp"
+            android:hint="@string/country">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/country" />
+
+            <Spinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/countries"
+                android:spinnerMode="dialog" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/CheckInfoText"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@id/CheckInfoText"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/countryLayout"
+            android:text="@string/submit"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"/>
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</ScrollView>

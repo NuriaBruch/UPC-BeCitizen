@@ -5,7 +5,7 @@ import android.accounts.NetworkErrorException;
 import com.becitizen.app.becitizen.domain.controllers.ControllerForumDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.Comment;
-import com.becitizen.app.becitizen.domain.entities.Thread;
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
@@ -60,12 +60,12 @@ public class ControllerForumPresentation {
      * Metodo que crea un nuevo thread
      * @return empty arraylist si ha ocurrido algun error
      */
-    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
+    public boolean newThread(ForumThread t) throws ServerException, NetworkErrorException {
         return controllerForumDomain.newThread(t);
     }
 
 
-    public Thread getThreadContent(int id) throws JSONException, ServerException, NetworkErrorException {
+    public ForumThread getThreadContent(int id) throws JSONException, ServerException, NetworkErrorException {
         return controllerForumDomain.getThreadContent(id);
     }
 
