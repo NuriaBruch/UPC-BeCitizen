@@ -76,6 +76,10 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'unblockUser'
   },
+  'PUT /changePassword':{
+    controller: 'UserController',
+    action: 'changePassword'
+  },
   //############ THREAD CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /newThread':{
     controller: 'ThreadController',
@@ -160,7 +164,7 @@ module.exports.routes = {
     controller: 'MessageController',
     action: 'getMessages'
   },
-  
+
 
 
   //############ INFO CONTROLLER ################# ordered as POST>GET>PUT>DELETE

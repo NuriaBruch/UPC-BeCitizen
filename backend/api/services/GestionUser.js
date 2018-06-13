@@ -17,7 +17,7 @@ function sendNewPass(userFound,callback){
        });
     var mailOptions = {
         from: "Borja Fernández",
-        to: userFound.email, 
+        to: userFound.email,
         subject: 'BeCitizeN password recovery service',
         text: "",
         html: '<div id="main">'+
@@ -41,8 +41,8 @@ function sendNewPass(userFound,callback){
         '</div>'
 
 
-            
-        
+
+
     }
     const saltRounds = 10;
 
@@ -54,7 +54,9 @@ function sendNewPass(userFound,callback){
         }
         else{
             var oldPass = userFound.password;
+            var canChange = userFound.canChangePassword;
             userFound.password = hash;
+            userFound.canChangePassword = true;
             userFound.save(function(error){
                 if(error !== undefined && error){
                     response.errors.push(error);
@@ -70,6 +72,7 @@ function sendNewPass(userFound,callback){
                             }
                             response2.errors.push(error);
                             userFound.pass = oldPass;
+                            userFound.canChangePassword = canChange;
                             userFound.save();
                             callback(response2);
                         }else{
@@ -78,10 +81,10 @@ function sendNewPass(userFound,callback){
                     });
                 }
             });
-            
+
         }
     });
-   
+
 };
 module.exports = class GestionUser {
 
@@ -90,11 +93,12 @@ module.exports = class GestionUser {
            status: "Ok",
            errors: []
         };
+        var potCanviarPassword = false;
 
         if (pass === undefined) pass = UtilsService.getRandomString();
+        else potCanviarPassword = true;
 
         const saltRounds = 10;
-
         bcrypt.hash(pass, saltRounds, function(err1, hash) {
             if(err1 !== undefined && err1) {
                 response.status = "E1";
@@ -112,7 +116,8 @@ module.exports = class GestionUser {
                     country: country,
                     profilePicture: profilePicture,
                     hasFacebook: hasFace,
-                    hasGoogle: hasGoogle
+                    hasGoogle: hasGoogle,
+                    canChangePassword: potCanviarPassword
                 }).exec(function(err2, newUser){
                     if(err2 !== undefined && err2){
                         response.status = "E2";
@@ -347,7 +352,7 @@ module.exports = class GestionUser {
             }
             })
     };
-    
+
     resetPassword(userMail,callback){
         var response = {
             status: "Ok",
@@ -369,6 +374,57 @@ module.exports = class GestionUser {
                     callback(response2);
                 })
             }
-        }); 
+        });
     };
+
+    changePassword(userMail, oldPassword, newPassword, callback){
+      var response = {
+        status: "Ok",
+        errors: []
+      }
+      User.findOne({email:userMail}).exec(function(err,userFound){
+        if(err !== undefined && err){
+          response.status = "E1";
+          response.errors.push("Server error");
+          callback(response);
+        }
+        else{
+          bcrypt.compare(oldPassword, userFound.password, function(err1, result) {
+            if(err1 !== undefined && err1){
+                response.status = "E1";
+                response.errors.push("Server error");
+                callback(response);
+            }
+            else if(result === false){
+                response.status = "E2";
+                response.errors.push("Incorrect password");
+                callback(response);
+            }
+            else{
+              const saltRounds = 10;
+              bcrypt.hash(newPassword, saltRounds, function(err2, hash) {
+              if(err2 !== undefined && err2) {
+                  response.status = "E1";
+                  response.errors.push("Server error");
+                  callback(response);
+              }
+              else{
+                userFound.password = hash;
+                userFound.save(function(error){
+                  if(error !== undefined && error){
+                      response.errors.push("Server error");
+                      response.status = "E1";
+                      callback(response);
+                  }
+                  else{
+                    callback(response);
+                  }
+                });
+              }
+            });
+            }
+        });
+        }
+    });
+  };
 };

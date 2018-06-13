@@ -46,7 +46,8 @@ module.exports.policies = {
     updateProfile: 'tokenAuth',
     viewProfile: 'tokenAuth',
     blockUser: 'tokenAuth',
-    unblockUser: 'tokenAuth'
+    unblockUser: 'tokenAuth',
+    changePassword: 'tokenAuth'
   },
   ConversationController: {
     newConversation: 'tokenAuth',

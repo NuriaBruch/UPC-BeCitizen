@@ -93,8 +93,12 @@ module.exports = {
     reportedFaq: {
       collection: 'faq',
       via: 'reportedBy'
+    },
+    canChangePassword: {
+      type: 'boolean',
+      defaultsTo: false
     }
-    
+
   }
 };
 
