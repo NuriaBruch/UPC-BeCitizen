@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
-import com.becitizen.app.becitizen.domain.entities.Thread;
 import com.becitizen.app.becitizen.domain.entities.ForumThread;
 
 import com.becitizen.app.becitizen.R;
