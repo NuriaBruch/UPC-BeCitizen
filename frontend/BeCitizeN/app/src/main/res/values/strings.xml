@@ -481,5 +481,11 @@
 
     <!--Falta traduccio -->
     <string name="usingOffline">Using outdated data</string>
-    
+
+    <!--Falta traduccio -->
+    <string name="resetExplanation">If you reset your password, you will receive a new one in your email.</string>
+    <string name="resetPassword">Reset password</string>
+    <string name="resetSuccessfully">Your password has been successfully reset! You will receive an email with a new password.</string>
+    <string name="noUserWithEmail">The email does not belong to any of our users!</string>
+
 </resources>
