@@ -12,7 +12,7 @@
     <string name="loggedAs">You have logged as a guest. \n This feature is not available for guest users. \n\n You can log out and login as a registered user.</string>
     <string name="logout">Logout</string>
     <string name="errorUserNotFound">User not found</string>
-    <string name="errorIncorrPassw">Incorrect password</string>
+    <string name="errorIncorrPassw">Wrong password</string>
     <string name="enter">Enter</string>
     <string name="logoutMsg">Do you really want to exit BeCitizeN?</string>
 

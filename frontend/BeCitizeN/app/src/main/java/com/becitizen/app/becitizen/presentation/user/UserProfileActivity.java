@@ -108,7 +108,10 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
         if (loggedUser) {
             fbPrivateMessage.setVisibility(View.GONE);
             try {
-                if(controllerUserPresentation.isLoggedWithMail()) ivBlock.setImageResource(R.drawable.reset_password);
+                if(controllerUserPresentation.isLoggedWithMail()) {
+                    ivBlock.setImageResource(R.drawable.reset_password);
+                    tvBlock.setVisibility(View.GONE);
+                }
                 else blockButton.setVisibility(View.INVISIBLE);
             } catch (SharedPreferencesException e) {
                 blockButton.setVisibility(View.INVISIBLE);
@@ -193,6 +196,7 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
 
         catch (JSONException e) {
             Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
+            Log.d("JSONe", e.getMessage());
             finishFragment();
         } catch (NetworkErrorException e) {
             Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
@@ -294,7 +298,7 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
             case R.id.blockButton:
                 try {
                     if (loggedUser && controllerUserPresentation.isLoggedWithMail()) changePass();
-                    askConfirmation();
+                    else askConfirmation();
                 } catch (SharedPreferencesException e) {
                     Toast.makeText(getContext(), "SharedPreferencesError", Toast.LENGTH_LONG).show();
                     Log.e("SharedPreferencesE", e.getMessage());

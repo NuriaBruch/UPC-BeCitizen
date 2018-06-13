@@ -27,7 +27,7 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.activity_user_profile, container, false);
+        rootView = inflater.inflate(R.layout.activity_change_password, container, false);
 
         oldPassword = (TextInputEditText) rootView.findViewById(R.id.oldPassword);
         newPassword = (TextInputEditText) rootView.findViewById(R.id.newPassword);
@@ -63,6 +63,9 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
                         oldPassword.getText().toString().trim(),
                         newPassword.getText().toString().trim()
                 );
+                Toast.makeText(getContext(), getResources().getString(R.string.passUpdated), Toast.LENGTH_LONG).show();
+                getActivity().onBackPressed();
+
             } catch (ServerException e) {
                 if (e.getMessage().equals("User password doesn't match")) Toast.makeText(getContext(), getResources().getString(R.string.errorIncorrPassw), Toast.LENGTH_LONG).show();
                 else {
@@ -73,7 +76,6 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
                 Toast.makeText(getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_LONG).show();
                 Log.e("JSONe", e.getMessage());
             }
-            Toast.makeText(getContext(), getResources().getString(R.string.passUpdated), Toast.LENGTH_LONG).show();
         }
     }
 }
