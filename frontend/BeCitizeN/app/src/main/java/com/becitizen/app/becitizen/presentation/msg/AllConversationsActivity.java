@@ -7,9 +7,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
@@ -62,6 +64,11 @@ public class AllConversationsActivity extends Fragment {
         }
         mAdapter = new ConversationAdapter(getContext(), conversations);
         mRecyclerView.setAdapter(mAdapter);
+        if(conversations != null && conversations.size() > 0) {
+            Log.d("MSG", "No conversations");
+            TextView noConversationsText = (TextView) rootView.findViewById(R.id.noConversationsText);
+            noConversationsText.setVisibility(View.GONE);
+        }
     }
 
     private RecyclerView mRecyclerView;

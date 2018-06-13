@@ -464,4 +464,5 @@
     <string name="usingOffline">Using outdated data</string>
     <string name="wantToReport">Do you want to report this question?</string>
     <string name="alreadyReported">You have already reported this question</string>
+    <string name="noConversations">You have not any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
 </resources>
