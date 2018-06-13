@@ -403,7 +403,7 @@ public class ControllerUserDomain {
                 currentUser.setLastName(info.getString("surname"));
                 currentUser.setBirthDate(info.getString("birthday"));
                 currentUser.setCountry(info.getString("country"));
-                currentUser.setBiography(info.getString("biography"));
+                currentUser.setBiography(info.optString("biography", ""));
                 currentUser.setRank(info.getString("rank"));
                 currentUser.setImage(info.getInt("profilePicture"));
             }

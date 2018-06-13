@@ -117,7 +117,7 @@ public class ServerAdapter {
                 if (header != null) TOKEN = header.getValue();
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-                Log.d("SERVER_RESPONSE", responseBody);
+                Log.d("SERVER_RESPONSE GET", responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
@@ -162,8 +162,7 @@ public class ServerAdapter {
                 HttpResponse response = httpclient.execute(httppost);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-                Log.d(TAG, "Post response: " + responseBody);
-
+                Log.d("SERVER_RESPONSE POST", responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";
@@ -206,7 +205,7 @@ public class ServerAdapter {
                 HttpResponse response = httpclient.execute(httpput);
                 int statusCode = response.getStatusLine().getStatusCode();
                 responseBody = EntityUtils.toString(response.getEntity());
-
+                Log.d("SERVER_RESPONSE PUT", responseBody);
             } catch (ClientProtocolException e) {
                 Log.e(TAG, "Error sending ID token to backend.", e);
                 return "Error sending ID token to backend.";

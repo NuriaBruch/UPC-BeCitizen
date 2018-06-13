@@ -14,7 +14,7 @@
     <string name="loggedAs">Logged as: </string>
     <string name="logout">Logout</string>
     <string name="errorUserNotFound">User not found</string>
-    <string name="errorIncorrPassw">Incorrect password</string>
+    <string name="errorIncorrPassw">Wrong password</string>
 
     <string name="enter">Enter</string>
     <string name="logInGoogle">Google</string>

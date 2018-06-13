@@ -250,7 +250,7 @@ public class ControllerUserData {
 
         String[] dataRequest = {URI_CHANGE_PASS, json.toString()};
 
-        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPostRequest(dataRequest));
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
 
         if (info.get("status").equals("E1")) throw new ServerException("Server error");
         else if (info.get("status").equals("E2")) throw new ServerException("User password doesn't match");
