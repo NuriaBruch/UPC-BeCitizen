@@ -232,6 +232,19 @@ module.exports.routes = {
     controller: 'website/WebpageControllerController',
     action: 'logout'
   },
+  //############ FAQ CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newFaq':{
+    controller: 'FaqController',
+    action: 'createFaq'
+  },
+  'GET /getFaqs':{
+    controller: 'FaqController',
+    action: 'getFaqs'
+  },
+  'DELETE /deleteFaq':{
+    controller: 'FaqController',
+    action: 'deleteFaq'
+  },
 
   /***************************************************************************
   *                                                                          *
