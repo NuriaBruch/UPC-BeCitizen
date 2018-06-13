@@ -2,7 +2,8 @@ package com.becitizen.app.becitizen.data;
 
 import android.accounts.NetworkErrorException;
 
-import com.becitizen.app.becitizen.domain.entities.Thread;
+
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 
 import org.json.JSONException;
@@ -73,7 +74,7 @@ public class ControllerForumData {
      *
      * @return La respuesta de nuestro servidor
      */
-    public boolean newThread(Thread t) throws ServerException, NetworkErrorException {
+    public boolean newThread(ForumThread t) throws ServerException, NetworkErrorException {
         JSONObject json = new JSONObject();
         try {
             json.put("title", t.getTitle());

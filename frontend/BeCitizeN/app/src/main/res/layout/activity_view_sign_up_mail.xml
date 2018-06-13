@@ -6,85 +6,88 @@
     android:layout_height="match_parent"
     tools:context="com.becitizen.app.becitizen.presentation.user.SignUpMailActivity">
 
-    <TextView
-        android:id="@+id/tvSignUp"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="18dp">
 
-        android:textSize="30sp"
-        android:text="@string/signUpTitle"
-        android:textStyle="bold"
-        />
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilMail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvSignUp"
-        android:layout_alignStart="@+id/tvSignUp"
-        android:layout_below="@+id/tvSignUp"
-        android:layout_marginTop="20dp">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/tietMail"
+        <TextView
+            android:id="@+id/tvSignUp"
+            style="@style/mainTitleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enterEmail"
-            android:inputType="textEmailAddress"/>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignParentTop="true"
+            android:text="@string/signUpTitle"
+            android:textStyle="bold" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilPassw"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvSignUp"
-        android:layout_alignStart="@+id/tvSignUp"
-        android:layout_below="@+id/tilMail"
-        android:layout_marginTop="20dp"
-        >
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/tietPassw"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilMail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enterPassw"
-            android:inputType="textNoSuggestions"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignEnd="@+id/tvSignUp"
+            android:layout_alignStart="@+id/tvSignUp"
+            android:layout_below="@+id/tvSignUp"
+            android:layout_marginTop="40dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilPassw2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvSignUp"
-        android:layout_alignStart="@+id/tvSignUp"
-        android:layout_below="@+id/tilPassw"
-        android:layout_marginTop="20dp">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tietMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enterEmail"
+                android:inputType="textEmailAddress"/>
+        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/tietPassw2"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPassw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/repeatPassw"
-            android:inputType="textNoSuggestions"
-            />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_alignEnd="@+id/tvSignUp"
+            android:layout_alignStart="@+id/tvSignUp"
+            android:layout_below="@+id/tilMail"
+            android:layout_marginTop="20dp"
+            >
 
-    <Button
-        android:id="@+id/bSignUp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvSignUp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/tvSignUp"
-        android:layout_marginBottom="20dp"
-        android:onClick="signUp"
-        android:text="@string/Accept"
-        android:textSize="18sp"/>
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tietPassw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enterPassw"
+                android:inputType="textNoSuggestions"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilPassw2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tvSignUp"
+            android:layout_alignStart="@+id/tvSignUp"
+            android:layout_below="@+id/tilPassw"
+            android:layout_marginTop="20dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/tietPassw2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/repeatPassw"
+                android:inputType="textNoSuggestions"
+                />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/bSignUp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/tvSignUp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/tvSignUp"
+            android:layout_marginBottom="20dp"
+            android:onClick="signUp"
+            android:text="@string/Accept"
+            android:textSize="18sp"/>
+    </RelativeLayout>
 
 </RelativeLayout>

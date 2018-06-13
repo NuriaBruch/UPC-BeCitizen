@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.becitizen.app.becitizen.domain.entities.Thread;
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Comment;
@@ -44,6 +44,8 @@ public class ThreadActivity extends Fragment {
     EditText newCommentText;
     ImageButton newCommentButton;
     boolean sortedByVotes;
+
+    private ForumThread thread;
 
     public ThreadActivity() {}
 
@@ -78,7 +80,7 @@ public class ThreadActivity extends Fragment {
 
     private void prepareContent() {
         try {
-            final Thread thread = controllerForumPresentation.getThreadContent(threadId);
+            thread = controllerForumPresentation.getThreadContent(threadId);
 
             threadAuthor = rootView.findViewById(R.id.threadAuthorText);
             threadAuthor.setText("@" + thread.getAuthor());
