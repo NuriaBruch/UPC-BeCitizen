@@ -343,6 +343,17 @@ module.exports = {
             response.errors.push("Server error.");
             callback(response);
          });
+    },
+
+    getAllCategories: function(callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            categories: [ "culture", "education and formation",
+        "emergencies", "language", "justice", "public administration", "housing",
+        "health", "work", "tourism", "off topic"]
+        }
+        callback(response);
     }
 
 }
