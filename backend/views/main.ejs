@@ -11,13 +11,15 @@
         <canvas id="myChart" width="400" height="400" style="margin-bottom: 40px"></canvas>
         <script>
         var ctx = document.getElementById("myChart").getContext('2d');
+        var faqs =  <%- faqsWithReports %>;
+        console.log(faqs.map(f => f.reports));
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Am I Jeff the killer?", "Can I touch?", "Pole?"],
+                labels: faqs.map(f => f.question),
                 datasets: [{
                     label: 'number of reports',
-                    data: [10, 25, 99],
+                    data: faqs.map(f => f.reports),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
