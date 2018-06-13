@@ -4,17 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.utilities.CurrencyConverterActivity">
-
+    tools:context=".presentation.utilities.TranslatorActivity">
 
     <TextView
-        android:id="@+id/ccTitleText"
+        android:id="@+id/trTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="26dp"
-        android:text="@string/ccTitle"
+        android:text="@string/trTitle"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="36sp"
@@ -27,7 +26,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:layout_below="@id/ccTitleText"
+        android:layout_below="@id/trTitle"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
 
@@ -39,36 +38,36 @@
 
 
             <TextView
-                android:id="@+id/ccFromText"
+                android:id="@+id/trFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ccFrom"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/spinnerFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/currencies"
+                android:entries="@array/languages"
                 android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/ccFromText"/>
+                android:layout_alignBottom="@id/trFrom"/>
 
             <EditText
-                android:id="@+id/editTextAmount"
+                android:id="@+id/editTextToTranslate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spinnerFrom"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:hint="@string/ccConvertText"
-                android:inputType="numberDecimal"
-                android:textSize="24sp" />
+                android:hint="@string/translateText"
+                android:textSize="20sp"
+                android:inputType="textMultiLine"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
     <Button
-        android:id="@+id/convertButton"
+        android:id="@+id/translateButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,9 +77,10 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:elevation="0dp"
-        android:text="@string/convert"
+        android:text="@string/trAction"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
 
     <android.support.v7.widget.CardView
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         android:layout_marginStart="40dp"
-        android:layout_below="@id/convertButton"
+        android:layout_below="@id/translateButton"
         app:cardCornerRadius="8dp"
         app:cardElevation="5dp">
 
@@ -101,32 +101,31 @@
 
 
             <TextView
-            android:id="@+id/ccToText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ccTo"
-            android:textSize="24sp" />
+                android:id="@+id/ccToText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ccTo"
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/spinnerTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/currencies"
+                android:entries="@array/languages"
                 android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@id/ccToText"/>
 
             <TextView
-                android:id="@+id/textViewResultado"
+                android:id="@+id/translated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spinnerTo"
                 android:layout_marginTop="10dp"
-                android:text="@string/ccResult"
                 android:textAlignment="center"
-                android:textColor="@android:color/holo_green_dark"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
 </RelativeLayout>
