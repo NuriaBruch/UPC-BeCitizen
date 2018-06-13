@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
-import com.becitizen.app.becitizen.presentation.ResetPasswordActivity;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 

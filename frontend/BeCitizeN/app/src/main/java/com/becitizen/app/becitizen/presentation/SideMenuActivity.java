@@ -22,12 +22,12 @@ import com.becitizen.app.becitizen.presentation.faq.FaqCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
+import com.becitizen.app.becitizen.presentation.user.LoggedAsGuestActivity;
 import com.becitizen.app.becitizen.presentation.user.MainActivity;
 import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 import com.becitizen.app.becitizen.presentation.utilities.AboutActivity;
 import com.becitizen.app.becitizen.presentation.utilities.HelpActivity;
 import com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu;
-import com.becitizen.app.becitizen.presentation.utilities.WordOfTheDayActivity;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

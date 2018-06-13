@@ -83,7 +83,7 @@
             android:name=".presentation.info.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".presentation.ResetPasswordActivity"/>
+            android:name=".presentation.user.ResetPasswordActivity"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.presentation.user;
 
 
 import android.content.Intent;
@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
-import com.becitizen.app.becitizen.presentation.user.MainActivity;
 
 public class LoggedAsGuestActivity extends Fragment {
 

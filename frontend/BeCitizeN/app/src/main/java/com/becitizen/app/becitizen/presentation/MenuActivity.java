@@ -16,6 +16,7 @@ import com.becitizen.app.becitizen.presentation.faq.FaqCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
+import com.becitizen.app.becitizen.presentation.user.LoggedAsGuestActivity;
 import com.becitizen.app.becitizen.presentation.user.MainActivity;
 
 public class MenuActivity extends Fragment implements View.OnClickListener {

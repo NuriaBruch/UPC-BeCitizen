@@ -1,4 +1,4 @@
-package com.becitizen.app.becitizen.presentation;
+package com.becitizen.app.becitizen.presentation.user;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
