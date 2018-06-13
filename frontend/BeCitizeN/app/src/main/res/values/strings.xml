@@ -4,24 +4,24 @@
     <string name="facebook_app_id">1386882294791151</string>
     <string name="backendClientID">857901571463-rhtuk6e89trutq00m185t2fm5assha08.apps.googleusercontent.com</string>
 
-    <string name="emaillabel">E-mail:</string>
-    <string name="passwordLabel">Password:</string>
+    <!-- LOGIN -->
     <string name="login">Login</string>
-    <string name="login_success">Logged successfully!</string>
     <string name="login_cancel">Login was cancelled</string>
     <string name="login_fail">Login failed</string>
     <string name="youAreIn">You are in!</string>
-    <string name="loggedAs">Logged as: </string>
+    <string name="loggedAs">You have logged as a guest. \n This feature is not available for guest users. \n\n You can log out and login as a registered user.</string>
     <string name="logout">Logout</string>
     <string name="errorUserNotFound">User not found</string>
     <string name="errorIncorrPassw">Incorrect password</string>
-
     <string name="enter">Enter</string>
-    <string name="logInGoogle">Google</string>
+    <string name="logoutMsg">Do you really want to exit BeCitizeN?</string>
+
+    <!-- START SCREEN -->
     <string name="logInMail">Log in with email</string>
     <string name="logInGuest">Log in as a guest</string>
     <string name="signUpMail">Sign up with email</string>
 
+    <!-- SIGN UP -->
     <string name="signUpTitle">Sign up</string>
     <string name="enterEmail">Enter your email</string>
     <string name="enterEmailUsername">Enter your email or username</string>
@@ -31,7 +31,6 @@
     <string name="errorPasswlenght">Password too short, 6 characters at least</string>
     <string name="errorPassw">Passwords do not match</string>
     <string name="errorMail">Mail already registered</string>
-
     <string name="checkInfo">Check your information</string>
     <string name="username">Username</string>
     <string name="firstName">First Name</string>
@@ -39,107 +38,10 @@
     <string name="birthDate">Birth Date</string>
     <string name="biography">Biography</string>
     <string name="country">Birth Country</string>
-    <string name="profilePicture">Profile picture</string>
-    <string name="birthDatePicker">Select your birthdate</string>
-    <string name="dateFormat">dd/mm/yyyy</string>
     <string name="submit">Submit</string>
     <string name="errorMsgName">Not a valid input</string>
     <string name="errorUsername">Username already exists</string>
     <string name="errorBiography">Biography too long</string>
-
-    <string name="guest">Guest</string>
-
-    <string name="quoting">Quoting comment:</string>
-
-    <string name="newComment">Write a comment</string>
-    <string name="comments">Comments</string>
-    <string name="quotingError">Quoting not implemented yet</string>
-    <string name="commentCreated">Comment created</string>
-
-    <string name="tokenError">Token error</string>
-
-    <string name="rankUP">Rank:</string>
-    <string name="birthdateUP">Birthdate:</string>
-    <string name="countryUP">Country:</string>
-    <string name="biographyUP">Biography:</string>
-    <string name="deactived">Deactivated user</string>
-
-    <string name="send">Send</string>
-
-    <string name="emptyreply">Your reply is empty</string>
-
-    <string name="votes">votes</string>
-
-    <string name="update">Update</string>
-    <string name="editprofile">Edit your profile</string>
-
-    <string name="searchCategoryThreadTitle">Searching in:</string>
-    <string name="searchCategoryHint">Write the words to find</string>
-    <string name="searchCategoryButton">Search</string>
-    <string name="searchCategoryEmptyText">Your search can not be empty</string>
-
-    <string name="ccTitle">Currency Converter</string>
-    <string name="ccFrom">From:</string>
-    <string name="ccTo">To:</string>
-    <string name="ccConvertText">Write Amount to Convert</string>
-    <string name="ccResult">Result</string>
-    <string name="ccErrorConvert">Sorry we could not convert that</string>
-
-
-    <string name="wordOfTheDayTitle">Word of the Day</string>
-    <string name="wordOfTheDayMeans">means</string>
-    <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
-    <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
-    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
-
-    <string name="serverError">Server Error</string>
-    <string name="DBError">Database Error</string>
-    <string name="updateCorrect">Profile updated correctly</string>
-    <string name="JSONerror">JSON error</string>
-    <string name="deleteAccount">Delete account</string>
-    <string name="deleteAccountMsg">Do you really want to delete your account?</string>
-    <string name="logoutMsg">Do you really want to exit BeCitizeN?</string>
-
-    <string name="by">by</string>
-    <string name="seconds">seconds</string>
-    <string name="minutes">minutes</string>
-    <string name="hours">hours</string>
-    <string name="days">days</string>
-    <string name="years">years</string>
-    <string name="second">second</string>
-    <string name="minute">minute</string>
-    <string name="hour">hour</string>
-    <string name="day">day</string>
-    <string name="year">year</string>
-
-    <string name="buttonCurrency">Currency Converter</string>
-    <string name="buttonTranslator">Translator</string>
-    <string name="buttonWord">Word of the day</string>
-
-    <string name="textDevelopedBy">This application has been developed by a group of students of the Computer Engineering degree from the Universitat Politècnica de Catalunya (UPC) and more specifically from the Facultat d\'Informàtica de Barcelona (FIB).</string>
-    <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
-    <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
-
-    <string-array name="currencies" translatable="false">
-        <item>coin1</item>
-        <item>coin2</item>
-    </string-array>
-
-
-    <string name="openInBrowser">Open in Browser</string>
-    <string name="openMap">Open Map</string>
-    <string name="empty">Empty</string>
-    <string name="networkError">Network Error</string>
-
-    <string name="deactivateUser">Deactivate</string>
-    <string name="blockUser">Block</string>
-    <string name="unblockUser">Unblock</string>
-    <string name="blockUserMsg">Do you really want to block this user?</string>
-    <string name="unblockUserMsg">Do you really want to unblock this user?</string>
-
-    <string name="errorBlock">It is not possible to block / unblock this user </string>
-    <string name="errorMessaging">It is not possible to send message to this user </string>
-
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
@@ -365,9 +267,132 @@
         <item>Åland Islands</item>
     </string-array>
 
+    <!-- GUEST -->
+    <string name="guest">Guest</string>
+
+    <!-- THREAD -->
+    <string name="quoting">Quoting comment:</string>
+    <string name="newComment">Write a comment</string>
+    <string name="comments">Comments</string>
+    <string name="commentCreated">Comment created</string>
+    <string name="votes">votes</string>
+    <string name="searchCategoryThreadTitle">Searching in:</string>
+    <string name="searchCategoryHint">Write the words to find</string>
+    <string name="searchCategoryButton">Search</string>
+    <string name="searchCategoryEmptyText">Your search can not be empty</string>
+    <string name="by">by</string>
+    <string name="seconds">seconds</string>
+    <string name="minutes">minutes</string>
+    <string name="hours">hours</string>
+    <string name="days">days</string>
+    <string name="years">years</string>
+    <string name="second">second</string>
+    <string name="minute">minute</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="year">year</string>
+    <string name="category">Category</string>
+    <string name="hintTitleThread">Provide a title for your new thread</string>
+    <string name="hintThreadContent">Describe your thread</string>
+    <string name="newThread">New Thread</string>
+    <string-array name="categories">
+        <item>Culture</item>
+        <item>Administration</item>
+        <item>Mobility</item>
+        <item>Sport</item>
+        <item>Education</item>
+        <item>Health</item>
+        <item>Employment</item>
+        <item>Justice</item>
+    </string-array>
+
+    <!-- PROFILE -->
+    <string name="rankUP">Rank:</string>
+    <string name="birthdateUP">Birthdate:</string>
+    <string name="countryUP">Country:</string>
+    <string name="biographyUP">Biography:</string>
+    <string name="deactived">Deactivated user</string>
+    <string name="update">Update</string>
+    <string name="editprofile">Edit your profile</string>
+    <string name="deleteAccount">Delete account</string>
+    <string name="deleteAccountMsg">Do you really want to delete your account?</string>
+    <string name="deactivateUser">Deactivate</string>
+    <string name="blockUser">Block</string>
+    <string name="unblockUser">Unblock</string>
+    <string name="blockUserMsg">Do you really want to block this user?</string>
+    <string name="unblockUserMsg">Do you really want to unblock this user?</string>
+    <string name="errorBlock">It is not possible to block / unblock this user </string>
+    <string name="errorMessaging">It is not possible to send message to this user </string>
+    <string-array name="image_codes">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+    <string-array name="image_pngs">
+        <item>@drawable/userprofile1</item>
+        <item>@drawable/userprofile2</item>
+        <item>@drawable/userprofile3</item>
+        <item>@drawable/userprofile4</item>
+        <item>@drawable/userprofile5</item>
+        <item>@drawable/userprofile6</item>
+        <item>@drawable/userprofile7</item>
+        <item>@drawable/userprofile8</item>
+    </string-array>
+
+    <!-- MSGS -->
+    <string name="send">Send</string>
+    <string name="emptyreply">Your reply is empty</string>
+
+    <!-- CURRENCY CONVERTER -->
+    <string name="ccTitle">Currency Converter</string>
+    <string name="ccFrom">From:</string>
+    <string name="ccTo">To:</string>
+    <string name="ccConvertText">Write Amount to Convert</string>
+    <string name="ccResult">Result</string>
+    <string name="ccErrorConvert">Sorry we could not convert that</string>
+    <string-array name="currencies" translatable="false">
+        <item>coin1</item>
+        <item>coin2</item>
+    </string-array>
+    <string name="convert">Convert</string>
+
+    <!-- WORD OF THE DAY -->
+    <string name="wordOfTheDayTitle">Word of the Day</string>
+    <string name="wordOfTheDayMeans">means</string>
+    <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
+    <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
+    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
+
+    <!-- EXCEPTIONS -->
+    <string name="serverError">Server Error</string>
+    <string name="updateCorrect">Profile updated correctly</string>
+    <string name="JSONerror">JSON error</string>
+    <string name="networkError">Network Error</string>
+
+    <!-- UTILITIES MENU -->
+    <string name="buttonCurrency">Currency Converter</string>
+    <string name="buttonTranslator">Translator</string>
+    <string name="buttonWord">Word of the day</string>
+
+    <!-- ABOUT -->
+    <string name="textDevelopedBy">This application has been developed by a group of students of the Computer Engineering degree from the Universitat Politècnica de Catalunya (UPC) and more specifically from the Facultat d\'Informàtica de Barcelona (FIB).</string>
+    <string name="textSubject">BeCitizeN is a project for the subject Projecte d’Enginyeria del Software.</string>
+    <string name="textPurpose">Its main purpose is to provide useful information to new citizens of Barcelona.</string>
+
+    <!-- INFO -->
+    <string name="openInBrowser">Open in Browser</string>
+    <string name="openMap">Open Map</string>
+    <string name="empty">Empty</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- MENU -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="profile">Profile</string>
@@ -381,50 +406,8 @@
     <string name="help">Help</string>
     <string name="about">About</string>
     <string name="other">Other</string>
-    <string name="rank">Rank</string>
-    <string name="title">Title</string>
-    <string name="content">Content</string>
-    <string name="category">Category</string>
-    <string name="hintTitleThread">Provide a title for your new thread</string>
-    <string name="hintThreadContent">Describe your thread</string>
-    <string name="newThread">New Thread</string>
-    <string name="convert">Convert</string>
 
-    <string-array name="image_codes">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-    </string-array>
-
-    <string-array name="image_pngs">
-        <item>@drawable/userprofile1</item>
-        <item>@drawable/userprofile2</item>
-        <item>@drawable/userprofile3</item>
-        <item>@drawable/userprofile4</item>
-        <item>@drawable/userprofile5</item>
-        <item>@drawable/userprofile6</item>
-        <item>@drawable/userprofile7</item>
-        <item>@drawable/userprofile8</item>
-    </string-array>
-
-    <string-array name="categories">
-        <item>Culture</item>
-        <item>Administration</item>
-        <item>Mobility</item>
-        <item>Sport</item>
-        <item>Education</item>
-        <item>Health</item>
-        <item>Employment</item>
-        <item>Justice</item>
-    </string-array>
-
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_help">HelpActivity</string>
+    <!-- HELP -->
     <string name="tab_text_1">Principal</string>
     <string name="tab_text_2">Information</string>
     <string name="tab_text_3">FAQ</string>
@@ -432,7 +415,6 @@
     <string name="tab_text_5">Messaging</string>
     <string name="tab_text_6">Utilities</string>
     <string name="tab_text_7">User profile</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="helpUser_1">If you want to see your user profile, you can click at any time on the user profile icon in the upper right part of your screen.</string>
     <string name="helpUser_2">From your own user profile screen, you can also edit it by clicking the edit profile icon. </string>

@@ -19,5 +19,14 @@ module.exports.cron = {
         if(err) console.log("Error scrapping or updating");
       }));
     }
+  },
+  languageCodesUpdate: {
+    schedule: '* * 2 * * *',
+    onTick: function(){
+      new UtilityService().updateLanguageCodes()
+      .catch(() => {
+        console.log("Error trying yo update language codes");
+      })
+    }
   }
 };

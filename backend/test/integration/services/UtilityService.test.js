@@ -11,4 +11,14 @@ describe('UtilityService', function () {
             });
         });
     });
+
+    describe('#updateLanguageCodes()', function () {
+        it('should updateLanguageCodes', function (done) {
+            var service = new UtilityService();
+            service.updateLanguageCodes()
+            .then(() => {
+                done();
+            });
+        });
+    });
 });
