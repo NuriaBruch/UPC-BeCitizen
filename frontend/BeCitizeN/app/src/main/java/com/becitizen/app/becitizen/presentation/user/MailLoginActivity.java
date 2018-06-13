@@ -120,7 +120,10 @@ public class MailLoginActivity extends AppCompatActivity {
     }
 
     public void goToResetPassword() {
+        String email = tietMail.getText().toString();
+
         Intent intent = new Intent(this, ResetPasswordActivity.class);
+        intent.putExtra("email", email);
         startActivity(intent);
     }
 }

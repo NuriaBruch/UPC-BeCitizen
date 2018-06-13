@@ -259,11 +259,8 @@ public class ControllerUserData {
     }
 
     public void resetPassword(String email) throws JSONException, ServerException {
-        JSONObject json = new JSONObject();
 
-        String[] dataRequest = {URI_RESET_PASS + email, json.toString()};
-
-        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_RESET_PASS + email));
 
         if (info.get("status").equals("E1")) throw new ServerException("Server error");
         else if (info.get("status").equals("E2")) throw new ServerException("User not found");

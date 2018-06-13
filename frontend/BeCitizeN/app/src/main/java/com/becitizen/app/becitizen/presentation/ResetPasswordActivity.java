@@ -28,6 +28,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_reset_password);
 
         emailView = (TextInputEditText) findViewById(R.id.resetEmail);
+        emailView.setText(getIntent().getStringExtra("email"));
     }
 
     private boolean isEmailValid(String email) {
@@ -39,21 +40,22 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()) {
             case R.id.resetButton:
                 resetPassword();
+                break;
         }
     }
 
     private void resetPassword() {
+        Log.d("DEBUG", "Click on reset password button!");
+
         email = emailView.getText().toString();
 
         if (email.trim().isEmpty()) {
             // Verify email is not empty
-
             emailView.setError(getString(R.string.errorMsgName));
             requestFocus(emailView);
 
-        } else if (email.contains("@")) {
+        } else if (!email.contains("@")) {
             // Verify email contains @
-
             emailView.setError(getString(R.string.errorMsgName));
             requestFocus(emailView);
         } else {
@@ -69,6 +71,8 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     }
 
     private void askConfirmation() {
+        Log.d("DEBUG", "Open alert to ask for password reset");
+
         new AlertDialog.Builder(this)
                 .setTitle(getResources().getString(R.string.resetPassword))
                 .setMessage(getResources().getString(R.string.resetExplanation))
@@ -76,10 +80,15 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        Log.d("DEBUG", "OK pressed in alert dialog");
+
                         try {
+                            Log.d("DEBUG", "1");
                             ControllerUserDomain.getUniqueInstance().resetPassword(email);
 
+                            Log.d("DEBUG", "2");
                             Toast.makeText(getApplicationContext(), R.string.resetSuccessfully, Toast.LENGTH_LONG).show();
+
 
                         } catch (ServerException e) {
                             if (e.getMessage().equalsIgnoreCase("User not found"))
