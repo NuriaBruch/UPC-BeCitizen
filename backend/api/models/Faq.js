@@ -24,8 +24,8 @@ module.exports = {
       required: true
     },
     puntuation:{
-      type: 'integer',
-      defaultsTo: 0
+      type: 'float',
+      defaultsTo: 0.0
     },
     numberReports:{
       type: 'integer',
