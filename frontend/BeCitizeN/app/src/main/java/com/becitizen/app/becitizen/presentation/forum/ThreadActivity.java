@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.Thread;
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Comment;
@@ -49,6 +50,8 @@ public class ThreadActivity extends Fragment {
     ImageButton newCommentButton;
     LinearLayout newCommentLayout;
     boolean sortedByVotes;
+
+    private ForumThread thread;
 
     public ThreadActivity() {}
 
@@ -93,7 +96,7 @@ public class ThreadActivity extends Fragment {
         }
 
         try {
-            final Thread thread = controllerForumPresentation.getThreadContent(threadId);
+            thread = controllerForumPresentation.getThreadContent(threadId);
 
             threadAuthor = rootView.findViewById(R.id.threadAuthorText);
             threadAuthor.setText("@" + thread.getAuthor());

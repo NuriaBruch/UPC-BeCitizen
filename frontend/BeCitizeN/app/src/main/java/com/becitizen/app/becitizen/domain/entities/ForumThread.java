@@ -1,6 +1,6 @@
 package com.becitizen.app.becitizen.domain.entities;
 
-public class Thread {
+public class ForumThread {
 
     private String title;
     private String content;
@@ -13,7 +13,7 @@ public class Thread {
     private boolean canReport;
     private boolean canVote;
 
-    public Thread(String title, String content, String category, String author, int authorImage, String authorRank, String createdAt, int votes, boolean canReport, boolean canVote) {
+    public ForumThread(String title, String content, String category, String author, int authorImage, String authorRank, String createdAt, int votes, boolean canReport, boolean canVote) {
         this.title = title;
         this.content = content;
         this.category = category;
@@ -26,11 +26,11 @@ public class Thread {
         this.canVote = canVote;
     }
 
-    public Thread() {
+    public ForumThread() {
 
     }
 
-    public Thread(String title, String content, String category) {
+    public ForumThread(String title, String content, String category) {
         this.title = title;
         this.content = content;
         this.category = category;

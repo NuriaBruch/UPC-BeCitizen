@@ -5,19 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.forum.NewThreadActivity">
+    tools:context=".presentation.forum.NewThreadActivity"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/NewThreadText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        style="@style/mainTitleLayout"
         android:layout_marginTop="18dp"
         android:text="@string/newThread"
-        android:textSize="30sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+
         android:textStyle="bold" />
 
     <android.support.design.widget.TextInputLayout

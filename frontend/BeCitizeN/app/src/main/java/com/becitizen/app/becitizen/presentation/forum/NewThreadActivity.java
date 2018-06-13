@@ -14,7 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
-import com.becitizen.app.becitizen.domain.entities.Thread;
+
+import com.becitizen.app.becitizen.domain.entities.ForumThread;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
 
@@ -82,7 +83,7 @@ public class NewThreadActivity extends Fragment implements View.OnClickListener 
         String content = contentEditText.getText().toString();
         String category = spinner.getSelectedItem().toString();
 
-        Thread t = new Thread(title, content, category);
+        ForumThread t = new ForumThread(title, content, category);
 
         try {
             ControllerForumPresentation.getUniqueInstance().newThread(t);
