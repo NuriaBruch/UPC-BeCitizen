@@ -8,19 +8,23 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.Thread;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
 
@@ -43,6 +47,7 @@ public class ThreadActivity extends Fragment {
     ImageButton threadVote, threadReport, threadAuthorImage, commentSort;
     EditText newCommentText;
     ImageButton newCommentButton;
+    LinearLayout newCommentLayout;
     boolean sortedByVotes;
 
     public ThreadActivity() {}
@@ -77,6 +82,16 @@ public class ThreadActivity extends Fragment {
     }
 
     private void prepareContent() {
+
+        try {
+            if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
+                newCommentLayout = (LinearLayout) rootView.findViewById(R.id.newCommentLayout);
+                newCommentLayout.setVisibility(View.GONE);
+            }
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
+        }
+
         try {
             final Thread thread = controllerForumPresentation.getThreadContent(threadId);
 
@@ -230,6 +245,7 @@ public class ThreadActivity extends Fragment {
         }
         catch (JSONException e) {
             Toast.makeText(getContext(), "Comments couldn't be loaded", Toast.LENGTH_LONG).show();
+            Log.e("JSONe", e.getMessage());
         }
         catch (ServerException e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
