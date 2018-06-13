@@ -14,10 +14,9 @@ import java.util.List;
 public class ControllerFaqData {
 
     //URIs
-    //private static final String URI_FAQS_CATEGORY = "http://becitizen.cf/getAllFaqCategory?category=";
-    private static final String URI_FAQS_CATEGORY = "http://10.0.2.2:1337/getAllFaqCategory?category=";
-    private static final String URI_FAQ_REPORT = "http://10.0.2.2:1337/reportFaq?faqId=";
-    private static final String URI_FAQ_RATE = "http://10.0.2.2:1337/valorateFaq";
+    private static final String URI_FAQS_CATEGORY = "http://becitizen.cf/getAllFaqCategory?category=";
+    private static final String URI_FAQ_REPORT = "http://becitizen.cf/reportFaq?faqId=";
+    private static final String URI_FAQ_RATE = "http://becitizen.cf/valorateFaq";
 
     private static AppDatabase myDB;
     private static ControllerFaqData instance = null;

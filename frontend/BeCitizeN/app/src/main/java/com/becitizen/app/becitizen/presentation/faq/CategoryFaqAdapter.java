@@ -4,8 +4,6 @@ import android.accounts.NetworkErrorException;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,11 +18,7 @@ import android.widget.Toast;
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.FaqEntry;
-import com.becitizen.app.becitizen.domain.entities.Information;
-import com.becitizen.app.becitizen.domain.entities.Marker;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
-import com.becitizen.app.becitizen.presentation.controllers.ControllerInformationPresentation;
-import com.becitizen.app.becitizen.presentation.info.MapsActivity;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
 import java.util.ArrayList;
@@ -41,7 +35,7 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView title;
+        TextView title, titleLong;
         JustifiedTextView content;
         ImageView expander;
         Button report;
@@ -50,6 +44,7 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.faqTitle);
+            titleLong = itemView.findViewById(R.id.faqTitleLong);
             content = itemView.findViewById(R.id.faqContent);
             expander = itemView.findViewById(R.id.expander);
             report = itemView.findViewById(R.id.report);
@@ -66,12 +61,14 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
                 content.setVisibility(View.GONE);
                 report.setVisibility(View.GONE);
                 ratingBar.setVisibility(View.GONE);
+                titleLong.setVisibility(View.GONE);
             }
             else {
                 expander.setRotation(180);
                 content.setVisibility(View.VISIBLE);
                 report.setVisibility(View.VISIBLE);
                 ratingBar.setVisibility(View.VISIBLE);
+                titleLong.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -177,11 +174,14 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
         holder.content.setVisibility(View.GONE);
         holder.report.setVisibility(View.GONE);
         holder.ratingBar.setVisibility(View.GONE);
+        holder.titleLong.setVisibility(View.GONE);
 
         if (mData.get(position).getQuestion().length() < 22)
             holder.title.setText(mData.get(position).getQuestion());
         else
             holder.title.setText(mData.get(position).getQuestion().substring(0, 22) + "...");
+
+        holder.titleLong.setText(mData.get(position).getQuestion());
 
         holder.content.setText(mData.get(position).getAnswer());
         holder.ratingBar.setRating(mData.get(position).getRating());
