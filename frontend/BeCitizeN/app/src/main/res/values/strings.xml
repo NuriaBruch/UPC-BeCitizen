@@ -487,5 +487,6 @@
     <string name="resetPassword">Reset password</string>
     <string name="resetSuccessfully">Your password has been successfully reset! You will receive an email with a new password.</string>
     <string name="noUserWithEmail">The email does not belong to any of our users!</string>
+    <string name="forgotPassword">Have you forgot your password?</string>
 
 </resources>

@@ -8,10 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.presentation.ResetPasswordActivity;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 
@@ -22,6 +24,7 @@ public class MailLoginActivity extends AppCompatActivity {
 
     private TextInputEditText tietMail;
     private TextInputEditText tietPassw;
+    private TextView forgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,14 @@ public class MailLoginActivity extends AppCompatActivity {
         tietMail = findViewById(R.id.tietMail);
         tietPassw = findViewById(R.id.tietPassw);
         tietPassw.setTransformationMethod(new PasswordTransformationMethod());
+
+        forgotPass = (TextView) findViewById(R.id.forgotPass);
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToResetPassword();
+            }
+        });
 
     }
 
@@ -106,5 +117,10 @@ public class MailLoginActivity extends AppCompatActivity {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    public void goToResetPassword() {
+        Intent intent = new Intent(this, ResetPasswordActivity.class);
+        startActivity(intent);
     }
 }

@@ -49,6 +49,20 @@
             />
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:id="@+id/forgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/tvLogin"
+        android:layout_alignStart="@+id/tvLogin"
+        android:layout_below="@+id/tilPassw"
+        android:layout_marginTop="5dp"
+        android:padding="5dp"
+        android:text="@string/forgotPassword"
+        android:textColor="@drawable/forgot_password"
+        android:textSize="12dp"
+        android:textStyle="italic" />
+
     <Button
         android:id="@+id/bLogin"
         style="@style/Widget.AppCompat.Button.Colored"
