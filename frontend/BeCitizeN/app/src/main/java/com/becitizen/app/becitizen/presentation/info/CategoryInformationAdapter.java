@@ -34,7 +34,7 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
 
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView title;
+        TextView title, titleLong;
         JustifiedTextView content;
         ImageView expander;
         Button openInBrowser;
@@ -42,6 +42,7 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
         ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.infoTitle);
+            titleLong = itemView.findViewById(R.id.infoTitleLong);
             content = itemView.findViewById(R.id.infoContent);
             expander = itemView.findViewById(R.id.expander);
             openInBrowser = itemView.findViewById(R.id.openInBrowser);
@@ -78,10 +79,12 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
                 expander.setRotation(0);
                 content.setVisibility(View.GONE);
                 openInBrowser.setVisibility(View.GONE);
+                titleLong.setVisibility(View.GONE);
             }
             else {
                 expander.setRotation(180);
                 content.setVisibility(View.VISIBLE);
+                titleLong.setVisibility(View.VISIBLE);
                 if (url.startsWith("http://") || url.startsWith("https://")) {
                     openInBrowser.setVisibility(View.VISIBLE);
                 } else if (markers.size() > 0) {
@@ -142,6 +145,9 @@ public class CategoryInformationAdapter extends RecyclerView.Adapter<CategoryInf
             holder.title.setText(mData.get(position).getTitle());
         else
             holder.title.setText(mData.get(position).getTitle().substring(0, 22) + "...");
+
+        holder.titleLong.setText(mData.get(position).getTitle());
+        holder.titleLong.setVisibility(View.GONE);
 
         //holder.content.setText(mData.get(position).getContent());
     }
