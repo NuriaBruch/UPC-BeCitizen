@@ -29,6 +29,7 @@ public class ControllerUserData {
     private static final String URI_BLOCK = URI_BCN + "/blockUser";
     private static final String URI_UNBLOCK = URI_BCN + "/unblockUser";
     private static final String URI_CHANGE_PASS = URI_BCN + "/changePassword";
+    private static final String URI_RESET_PASS = URI_BCN + "/resetPassword?userEmail=";
 
     private static ControllerUserData instance = null;
 
@@ -243,7 +244,6 @@ public class ControllerUserData {
     }
 
     public void newPassword(String oldPassword, String newPassword) throws JSONException, ServerException {
-        // TODO: Do request
         JSONObject json = new JSONObject();
         json.put("oldPassword", oldPassword);
         json.put("newPassword", newPassword);
@@ -255,6 +255,19 @@ public class ControllerUserData {
         if (info.get("status").equals("E1")) throw new ServerException("Server error");
         else if (info.get("status").equals("E2")) throw new ServerException("User password doesn't match");
         else if (!info.get("status").equals("Ok")) throw new ServerException("Server error");
+
+    }
+
+    public void resetPassword(String email) throws JSONException, ServerException {
+        JSONObject json = new JSONObject();
+
+        String[] dataRequest = {URI_RESET_PASS + email, json.toString()};
+
+        JSONObject info = new JSONObject(ServerAdapter.getInstance().doPutRequest(dataRequest));
+
+        if (info.get("status").equals("E1")) throw new ServerException("Server error");
+        else if (info.get("status").equals("E2")) throw new ServerException("User not found");
+        else if (!info.get("status").equals("Ok")) throw new ServerException("Error mail");
 
     }
 }

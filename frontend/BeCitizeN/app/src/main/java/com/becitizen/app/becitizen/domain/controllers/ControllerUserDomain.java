@@ -446,4 +446,8 @@ public class ControllerUserDomain {
             return preferences.getValue(PREFS_KEY, "mode").equals("guest");
         return false;
     }
+
+    public void resetPassword(String email) throws ServerException, JSONException {
+        controllerUserData.resetPassword(email);
+    }
 }

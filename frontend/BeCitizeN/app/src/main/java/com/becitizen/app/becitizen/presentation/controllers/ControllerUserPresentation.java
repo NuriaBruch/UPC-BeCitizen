@@ -198,4 +198,8 @@ public class ControllerUserPresentation {
     public boolean isLoggedWithMail() throws SharedPreferencesException {
         return controllerUserDomain.isLoggedWithMail();
     }
+
+    public void resetPassword(String email) throws ServerException, JSONException {
+        controllerUserDomain.resetPassword(email);
+    }
 }
