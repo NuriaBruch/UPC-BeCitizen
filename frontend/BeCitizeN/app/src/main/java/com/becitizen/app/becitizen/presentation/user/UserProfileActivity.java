@@ -120,6 +120,15 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
             }
         }
         else {
+            try {
+                if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                    fbPrivateMessage.setVisibility(View.GONE);
+                    blockButton.setVisibility(View.INVISIBLE);
+                }
+            } catch (SharedPreferencesException e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), R.string.sharedPreferencesError, Toast.LENGTH_LONG).show();
+            }
             ibEditProfile.setVisibility(View.INVISIBLE);
             ibSignOut.setVisibility(View.INVISIBLE);
         }

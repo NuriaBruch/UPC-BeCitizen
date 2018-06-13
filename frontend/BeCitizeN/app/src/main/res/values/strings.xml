@@ -454,6 +454,7 @@
     <string name="allFieldsRequired">All fields are required</string>
     <string name="passDoNotMatch">Passwords do not match</string>
     <string name="passUpdated">Your password has been successfully updated!</string>
+    <string name="sharedPreferencesError">Shared Preferences Error</string>
 
     <string name="report">Report</string>
     <string name="wantToRate">Do you want to rate this question?</string>
