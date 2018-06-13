@@ -31,10 +31,6 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'homepage'
-  },
   //############ USER CONTROLLER ################# ordered as POST>GET>PUT>DELETE
   'POST /register': {
     controller: 'UserController',
@@ -184,11 +180,75 @@ module.exports.routes = {
     controller: 'InformationController',
     action: 'getInfo'
   },
+  'GET /getInfoWords':{
+    controller: 'InformationController',
+    action: 'getInfoWords'
+  },
   'DELETE /deleteInfo':{
     controller: 'InformationController',
     action: 'deleteInfo'
-  }
+  },
 
+  //############ UTILITY CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'GET /getTranslation':{
+    controller: 'UtilityController',
+    action: 'getTranslation'
+  },
+  'GET /getLanguageCodes':{
+    controller: 'UtilityController',
+    action: 'getLanguageCodes'
+  },
+
+  //########### ADMIN WEBPAGE ########################
+  'GET /main':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderMainPage'
+  },
+  'GET /':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderLoginPage'
+  },
+  "POST /login": {
+    controller: 'website/WebpageControllerController',
+    action: 'login'
+  },
+  "GET /allInfo": {
+    controller: 'website/WebpageControllerController',
+    action: 'renderAllInfoPage'
+  },
+  "POST /allInfo": {
+    controller: 'website/WebpageControllerController',
+    action: 'deleteInfos'
+  },
+  'GET /addInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'renderAddInfoPage'
+  },
+  'POST /addInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'addInfo'
+  },
+  'POST /editInfo':{
+    controller: 'website/WebpageControllerController',
+    action: 'editInfo'
+  },
+  'GET /logout':{
+    controller: 'website/WebpageControllerController',
+    action: 'logout'
+  },
+  //############ FAQ CONTROLLER ################# ordered as POST>GET>PUT>DELETE
+  'POST /newFaq':{
+    controller: 'FaqController',
+    action: 'createFaq'
+  },
+  'GET /getFaqs':{
+    controller: 'FaqController',
+    action: 'getFaqs'
+  },
+  'DELETE /deleteFaq':{
+    controller: 'FaqController',
+    action: 'deleteFaq'
+  },
 
   /***************************************************************************
   *                                                                          *

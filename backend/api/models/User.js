@@ -90,6 +90,10 @@ module.exports = {
       collection: 'user',
       via: 'blocksUser'
     },
+    reportedFaq: {
+      collection: 'faq',
+      via: 'reportedBy'
+    },
     canChangePassword: {
       type: 'boolean',
       defaultsTo: false

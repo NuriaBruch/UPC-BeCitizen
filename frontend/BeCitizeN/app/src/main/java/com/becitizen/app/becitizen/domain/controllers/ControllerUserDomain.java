@@ -439,4 +439,11 @@ public class ControllerUserDomain {
     public void newPassword(String oldPassword, String newPassword) throws ServerException, JSONException {
         controllerUserData.newPassword(oldPassword, newPassword);
     }
+    
+    public boolean isLoggedAsGuest() throws SharedPreferencesException {
+        MySharedPreferences preferences = MySharedPreferences.getInstance();
+        if (preferences.getValue(PREFS_KEY, "isLogged").equals("true"))
+            return preferences.getValue(PREFS_KEY, "mode").equals("guest");
+        return false;
+    }
 }

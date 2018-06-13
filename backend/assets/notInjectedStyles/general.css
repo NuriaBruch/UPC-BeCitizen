@@ -1,0 +1,19 @@
+.table > * {
+    text-align: center;
+}
+
+.noBorders > td{
+    border-top: none;
+}
+
+.input-group-text{
+    min-width: 100px;
+}
+
+td, th{
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle !important;
+} 

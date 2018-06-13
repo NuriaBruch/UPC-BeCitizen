@@ -190,7 +190,11 @@ public class ControllerUserPresentation {
     public void newPassword(String oldPassword, String newPassword) throws ServerException, JSONException {
         controllerUserDomain.newPassword(oldPassword, newPassword);
     }
-
+    
+    public boolean isLoggedAsGuest() throws SharedPreferencesException {
+        return controllerUserDomain.isLoggedAsGuest();
+    }
+    
     public boolean isLoggedWithMail() throws SharedPreferencesException {
         return controllerUserDomain.isLoggedWithMail();
     }
