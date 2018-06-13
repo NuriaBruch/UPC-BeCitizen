@@ -368,6 +368,16 @@
     <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
     <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
 
+    <!-- TRANSLATOR -->
+    <string name="trTitle">Translator</string>
+    <string name="trAction">Translate</string>
+    <string name="translateText">Write text to traduce</string>
+    <string name="errorTranslate">Sorry we could not translate that</string>
+    <string-array name="languages" translatable="false">
+        <item>language1</item>
+        <item>language2</item>
+    </string-array>
+
     <!-- EXCEPTIONS -->
     <string name="serverError">Server Error</string>
     <string name="updateCorrect">Profile updated correctly</string>
