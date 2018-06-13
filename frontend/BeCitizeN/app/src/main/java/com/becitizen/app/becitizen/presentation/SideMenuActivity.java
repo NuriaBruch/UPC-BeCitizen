@@ -42,6 +42,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
+            else ControllerUserPresentation.getUniqueInstance().getLoggedUser();
         } catch (Exception e) {
             e.printStackTrace();
             goToLogin();
