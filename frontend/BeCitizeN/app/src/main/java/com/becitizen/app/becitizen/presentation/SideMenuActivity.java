@@ -42,6 +42,7 @@ public class SideMenuActivity extends AppCompatActivity
 
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
+            else ControllerUserPresentation.getUniqueInstance().getLoggedUser();
         } catch (Exception e) {
             e.printStackTrace();
             goToLogin();
@@ -52,8 +53,8 @@ public class SideMenuActivity extends AppCompatActivity
             viewProfile(bundle);
         } else {
             //Set the fragment initially
-            Fragment fragment = new WordOfTheDayActivity();
-            fragmentTransaction(fragment, "WORD_OF_THE_DAY");
+            Fragment fragment = new MenuActivity();
+            fragmentTransaction(fragment, "MENU_ACTIVITY");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
