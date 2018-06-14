@@ -478,6 +478,7 @@
     <string name="wantToReport">Do you want to report this question?</string>
     <string name="alreadyReported">You have already reported this question</string>
 
+
     <!--Falta traduccio -->
     <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
     <string name="usingOffline">Using outdated data</string>
@@ -487,5 +488,5 @@
     <string name="noUserWithEmail">The email does not belong to any of our users!</string>
     <string name="forgotPassword">Have you forgot your password?</string>
     <string name="errorTranslator">The text is too long</string>
-
+    <string name="selectCategory">Select a category</string>
 </resources>
