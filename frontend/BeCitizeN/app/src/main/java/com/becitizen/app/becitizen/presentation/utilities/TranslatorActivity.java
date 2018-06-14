@@ -94,20 +94,27 @@ public class TranslatorActivity extends Fragment implements View.OnClickListener
             String textFrom = editTextToTranslate.getText().toString();
 
             if (!textFrom.isEmpty()) {
-                String sFrom = spinnerFrom.getSelectedItem().toString();
-                String sTo = spinnerTo.getSelectedItem().toString();
 
-                int indexFrom = languagesList.indexOf(sFrom);
-                int indexTo = languagesList.indexOf(sTo);
+                if (textFrom.length() > 250) {
+                    Toast.makeText(rootView.getContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT ).show();
+                }
 
-                String translateFrom = codesList.get(indexFrom);
-                String translateTo = codesList.get(indexTo);
+                else {
+                    String sFrom = spinnerFrom.getSelectedItem().toString();
+                    String sTo = spinnerTo.getSelectedItem().toString();
 
-                try {
-                    String resultado = controllerUtilitiesPresentation.getTranslation(translateFrom, translateTo, textFrom);
-                    textViewTranslated.setText(resultado);
-                } catch (NetworkErrorException e) {
-                    Toast.makeText(rootView.getContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT).show();
+                    int indexFrom = languagesList.indexOf(sFrom);
+                    int indexTo = languagesList.indexOf(sTo);
+
+                    String translateFrom = codesList.get(indexFrom);
+                    String translateTo = codesList.get(indexTo);
+
+                    try {
+                        String resultado = controllerUtilitiesPresentation.getTranslation(translateFrom, translateTo, textFrom);
+                        textViewTranslated.setText(resultado);
+                    } catch (NetworkErrorException e) {
+                        Toast.makeText(rootView.getContext(), getApplicationContext().getResources().getString(R.string.errorTranslator), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 

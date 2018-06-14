@@ -369,7 +369,7 @@
     <string name="wordOfTheDayMeans">means</string>
     <string name="wordOfTheDaySubtitle">Learn a word in Catalan every day</string>
     <string name="wordOfTheDayDefinition">Every day a different word in Catalan with its definition translated.</string>
-    <string name="wordOfTheDayProvided">Provided by rodamots.com</string>
+    <string name="wordOfTheDayProvided">Provided by rodamots.cat</string>
 
     <!-- TRANSLATOR -->
     <string name="trTitle">Translator</string>
@@ -451,7 +451,7 @@
     <string name="helpUtilities_5">Translator</string>
     <string name="helpUtilities_6">With this functionality you can introduce a text in any language and translate it to any other.</string>
     <string name="helpUtilities_7">Word of the day</string>
-    <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, in your selected language. This functionality is possible thanks to rodamot.com.</string>
+    <string name="helpUtilities_8">In this screen every day will appear a new word in Catalan with its meaning, in your selected language. This functionality is possible thanks to rodamots.cat.</string>
 
     <string name="helpMessaging_1">With the private messaging icon in the side menu, you can access your private conversations with other users.</string>
     <string name="helpMessaging_2">To be able to start a new conversation, you have to go through the forum to a another user profile and there you have to click the private messaging button.</string>
@@ -480,15 +480,12 @@
 
     <!--Falta traduccio -->
     <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
-
-    <!--Falta traduccio -->
     <string name="usingOffline">Using outdated data</string>
-
-    <!--Falta traduccio -->
     <string name="resetExplanation">If you reset your password, you will receive a new one in your email.</string>
     <string name="resetPassword">Reset password</string>
     <string name="resetSuccessfully">Your password has been successfully reset! You will receive an email with a new password.</string>
     <string name="noUserWithEmail">The email does not belong to any of our users!</string>
     <string name="forgotPassword">Have you forgot your password?</string>
+    <string name="errorTranslator">The text is too long</string>
 
 </resources>
