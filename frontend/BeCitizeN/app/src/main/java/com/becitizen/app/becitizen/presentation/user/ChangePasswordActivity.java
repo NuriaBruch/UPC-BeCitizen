@@ -56,8 +56,9 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
                 newPassword.getText().toString().trim().isEmpty() ||
                  reNewPassword.getText().toString().trim().isEmpty()) {
             Toast.makeText(getContext(), getResources().getString(R.string.allFieldsRequired), Toast.LENGTH_LONG).show();
-        }
-        else if (!newPassword.getText().toString().trim().equals(reNewPassword.getText().toString().trim())) {
+        } if (newPassword.getText().toString().trim().length() < 6) {
+            Toast.makeText(getContext(), getResources().getString(R.string.errorPasswlenght), Toast.LENGTH_LONG).show();
+        } else if (!newPassword.getText().toString().trim().equals(reNewPassword.getText().toString().trim())) {
             Toast.makeText(getContext(), getResources().getString(R.string.passDoNotMatch), Toast.LENGTH_LONG).show();
         } else {
             try {

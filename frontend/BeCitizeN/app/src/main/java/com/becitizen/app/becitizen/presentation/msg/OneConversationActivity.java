@@ -41,10 +41,12 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_chats);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Toolbar","Clicked");
+                goBack();
             }
         });
 
@@ -82,6 +84,10 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         sendButton = (Button) findViewById(R.id.button_chatbox_send);
         sendButton.setOnClickListener(this);
         sendText = (EditText) findViewById(R.id.edittext_chatbox);
+    }
+
+    private void goBack() {
+        super.onBackPressed();
     }
 
     private void loadComments(int conversationId) throws ServerException {
