@@ -350,6 +350,7 @@
     <string name="errorLoadMessages">Could not load messages</string>
     <string name="Enter_message">Enter message</string>
     <string name="SEND">SEND</string>
+    <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Currency Converter</string>
@@ -380,6 +381,7 @@
         <item>language1</item>
         <item>language2</item>
     </string-array>
+    <string name="errorTranslator">The text is too long</string>
 
     <!-- EXCEPTIONS -->
     <string name="serverError">Server Error</string>
@@ -461,6 +463,12 @@
     <string name="helpInformation_1">You can access the information functionality by clicking its icon in the side menu.</string>
     <string name="helpInformation_2">In this part of the application you can see useful information about different things about Barcelona that could be useful if you live there. All the posts are classified by categories to make it easier to find the information.</string>
 
+    <string name="helpFAQ_1">You can access the Frequent Asked Questions by the side menu of the application.\n
+                            In the first screen you will find different categories, just as in the information screen.\n
+                            Once you have selected one of the categories, you will see a list of questions. If you click on any of the questions you will be able to read its answer.\n
+                            In each one of the questions you have the possibility to rate its answer with the rating stars.\n
+                            On the other hand, you can also report a question if you want to.</string>
+
     <!-- PASSWORD CHANGE -->
     <string name="changePassword">Change your password</string>
     <string name="writePass">Write your current password</string>
@@ -477,16 +485,16 @@
     <string name="no">No</string>
     <string name="wantToReport">Do you want to report this question?</string>
     <string name="alreadyReported">You have already reported this question</string>
-
-
-    <!--Falta traduccio -->
-    <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
     <string name="usingOffline">Using outdated data</string>
+    <string name="selectCategory">Select a category</string>
+
+    <!-- PASSWORD -->
     <string name="resetExplanation">If you reset your password, you will receive a new one in your email.</string>
     <string name="resetPassword">Reset password</string>
     <string name="resetSuccessfully">Your password has been successfully reset! You will receive an email with a new password.</string>
     <string name="noUserWithEmail">The email does not belong to any of our users!</string>
-    <string name="forgotPassword">Have you forgot your password?</string>
-    <string name="errorTranslator">The text is too long</string>
-    <string name="selectCategory">Select a category</string>
+    <string name="forgotPassword">Have you forgotten your password?</string>
+
+    <!--Falta traduccio -->
+
 </resources>

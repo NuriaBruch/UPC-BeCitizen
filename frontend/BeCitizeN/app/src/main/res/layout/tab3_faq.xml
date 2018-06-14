@@ -27,15 +27,28 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/ic_menu_faq"
+                />
+
             <TextView
                 android:id="@+id/text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:text="FAQ HELP PAGE, COMMING SOON"
+                android:layout_alignTop="@+id/img1"
+                android:layout_toEndOf="@+id/img1"
+                android:text="@string/helpFAQ_1"
                 android:textSize="17sp"
                 android:textColor="@android:color/black"/>
         </RelativeLayout>
