@@ -23,6 +23,7 @@ import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
 import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 
 import org.json.JSONException;
@@ -88,98 +89,105 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         holder.commentAuthorRank.setText(comment.getAuthorRank());
         holder.commentId.setText('#'+String.valueOf(comment.getId()));
 
-        holder.commentQuote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Dialog dialog = new Dialog(context);
-                dialog.setContentView(R.layout.thread_comment_quote);
-                //LayoutInflater inflater = LayoutInflater.from(context);
-                //View quoteView = inflater.inflate(R.layout.thread_comment_quote, null);
-
-                TextView quoteId = dialog.findViewById(R.id.quote_id_text);
-                quoteId.setText('#'+String.valueOf(comment.getId()));
-
-                TextView quoteContent = dialog.findViewById(R.id.quote_content);
-                quoteContent.setText(comment.getContent());
-
-                Button sendButton = dialog.findViewById(R.id.send_button);
-
-                final EditText commentContent = dialog.findViewById(R.id.comment_text);
-
-                dialog.show();
-
-
-                sendButton.setOnClickListener(new View.OnClickListener() {
+        try {
+            if(!ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                holder.commentQuote.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        String commentText = commentContent.getText().toString().trim();
-                        if (commentText.isEmpty())
-                            Toast.makeText(context, R.string.emptyreply, Toast.LENGTH_LONG).show();
-                        else {
-                            try {
-                                controllerForumPresentation.newComment("#"+String.valueOf(comment.getId())+' '+commentText, comment.getThreadId());
-                                Toast.makeText(context, R.string.commentCreated, Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
-                                List<Comment> newCommentList = controllerForumPresentation.getThreadComments(comment.getThreadId(), false);
-                                commentList.clear();
-                                commentList.addAll(newCommentList);
-                                notifyDataSetChanged();
+                        final Dialog dialog = new Dialog(context);
+                        dialog.setContentView(R.layout.thread_comment_quote);
+                        //LayoutInflater inflater = LayoutInflater.from(context);
+                        //View quoteView = inflater.inflate(R.layout.thread_comment_quote, null);
+
+                        TextView quoteId = dialog.findViewById(R.id.quote_id_text);
+                        quoteId.setText('#'+String.valueOf(comment.getId()));
+
+                        TextView quoteContent = dialog.findViewById(R.id.quote_content);
+                        quoteContent.setText(comment.getContent());
+
+                        Button sendButton = dialog.findViewById(R.id.send_button);
+
+                        final EditText commentContent = dialog.findViewById(R.id.comment_text);
+
+                        dialog.show();
+
+
+                        sendButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String commentText = commentContent.getText().toString().trim();
+                                if (commentText.isEmpty())
+                                    Toast.makeText(context, R.string.emptyreply, Toast.LENGTH_LONG).show();
+                                else {
+                                    try {
+                                        controllerForumPresentation.newComment("#"+String.valueOf(comment.getId())+' '+commentText, comment.getThreadId());
+                                        Toast.makeText(context, R.string.commentCreated, Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        List<Comment> newCommentList = controllerForumPresentation.getThreadComments(comment.getThreadId(), false);
+                                        commentList.clear();
+                                        commentList.addAll(newCommentList);
+                                        notifyDataSetChanged();
+                                    }
+                                    catch (JSONException e) {
+                                        Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                                    }
+                                    catch (ServerException e) {
+                                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                                    } catch (NetworkErrorException e) {
+                                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+                                }
                             }
-                            catch (JSONException e) {
-                                Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
-                            }
-                            catch (ServerException e) {
-                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                            } catch (NetworkErrorException e) {
-                                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
+                        });
+                    }
+                });
+
+                holder.commentReport.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            ControllerForumPresentation.getUniqueInstance().reportComment(comment.getId());
+                            holder.commentReport.setImageResource(R.drawable.ic_reported);
+                            holder.commentReport.setEnabled(false);
+                        }
+                        catch (JSONException e) {
+                            Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                        }
+                        catch (ServerException e) {
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (NetworkErrorException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                });
+
+                holder.commentVote.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            ControllerForumPresentation.getUniqueInstance().voteComment(comment.getId());
+                            holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+                            holder.commentVote.setEnabled(false);
+                            holder.commentVotes.setText(String.valueOf(Integer.valueOf(holder.commentVotes.getText().toString()) + 1));
+                        }
+                        catch (JSONException e) {
+                            Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
+                        }
+                        catch (ServerException e) {
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        } catch (NetworkErrorException e) {
+                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                     }
                 });
             }
-        });
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
+        }
 
-        holder.commentReport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    ControllerForumPresentation.getUniqueInstance().reportComment(comment.getId());
-                    holder.commentReport.setImageResource(R.drawable.ic_reported);
-                    holder.commentReport.setEnabled(false);
-                }
-                catch (JSONException e) {
-                    Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
-                }
-                catch (ServerException e) {
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                } catch (NetworkErrorException e) {
-                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
-
-        holder.commentVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    ControllerForumPresentation.getUniqueInstance().voteComment(comment.getId());
-                    holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
-                    holder.commentVote.setEnabled(false);
-                    holder.commentVotes.setText(String.valueOf(Integer.valueOf(holder.commentVotes.getText().toString()) + 1));
-                }
-                catch (JSONException e) {
-                    Toast.makeText(context, "JSON error", Toast.LENGTH_LONG).show();
-                }
-                catch (ServerException e) {
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                } catch (NetworkErrorException e) {
-                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-            }
-        });
 
         holder.commentAuthorImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,9 +205,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
         try {
             if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
-                holder.commentVote.setVisibility(View.GONE);
-                holder.commentReport.setVisibility(View.GONE);
-                holder.commentQuote.setVisibility(View.GONE);
+                holder.commentVote.setClickable(false);
+                holder.commentVote.setColorFilter(0xcacaba);
+                holder.commentVote.setAlpha(.5f);
+
+                holder.commentReport.setClickable(false);
+                holder.commentReport.setColorFilter(0xcacaba);
+                holder.commentReport.setAlpha(.5f);
+
+                holder.commentQuote.setClickable(false);
+                holder.commentQuote.setColorFilter(0xcacaba);
+                holder.commentQuote.setAlpha(.5f);
             } else {
                 if (!comment.isVotable()) {
                     holder.commentVote.setImageResource(R.drawable.ic_voted_icon);

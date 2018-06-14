@@ -120,8 +120,12 @@ public class ThreadActivity extends Fragment {
 
             try {
                 if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
-                    threadVote.setVisibility(View.GONE);
-                    threadReport.setVisibility(View.GONE);
+                    threadVote.setClickable(false);
+                    threadVote.setColorFilter(0xcacaba);
+                    threadVote.setAlpha(.5f);
+                    threadReport.setClickable(false);
+                    threadReport.setColorFilter(0xcacaba);
+                    threadReport.setAlpha(.5f);
                 } else {
                     if (!thread.isCanVote()) {
                         threadVote.setImageResource(R.drawable.ic_voted_icon);
@@ -131,6 +135,48 @@ public class ThreadActivity extends Fragment {
                         threadReport.setImageResource(R.drawable.ic_reported);
                         threadReport.setEnabled(false);
                     }
+
+                    threadVote.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                controllerForumPresentation.voteThread(threadId);
+                                threadVote.setImageResource(R.drawable.ic_voted_icon);
+                                threadVote.setEnabled(false);
+                                threadVotes.setText(String.valueOf(Integer.valueOf(threadVotes.getText().toString()) + 1));
+                            }
+                            catch (JSONException e) {
+                                Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
+                            }
+                            catch (ServerException e) {
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            } catch (NetworkErrorException e) {
+                                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+
+                        }
+                    });
+
+                    threadReport.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            try {
+                                controllerForumPresentation.reportThread(threadId);
+                                threadReport.setImageResource(R.drawable.ic_reported);
+                                threadReport.setEnabled(false);
+                            }
+                            catch (JSONException e) {
+                                Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
+                            }
+                            catch (ServerException e) {
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            } catch (NetworkErrorException e) {
+                                Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                                toast.show();
+                            }
+                        }
+                    });
                 }
             } catch (SharedPreferencesException e) {
                 e.printStackTrace();
@@ -138,48 +184,6 @@ public class ThreadActivity extends Fragment {
 
             threadAuthorImage = rootView.findViewById(R.id.threadAuthorImage);
             setAuthorImage(thread.getAuthorImage());
-
-            threadVote.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        controllerForumPresentation.voteThread(threadId);
-                        threadVote.setImageResource(R.drawable.ic_voted_icon);
-                        threadVote.setEnabled(false);
-                        threadVotes.setText(String.valueOf(Integer.valueOf(threadVotes.getText().toString()) + 1));
-                    }
-                    catch (JSONException e) {
-                        Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
-                    }
-                    catch (ServerException e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    } catch (NetworkErrorException e) {
-                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-                }
-            });
-
-            threadReport.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        controllerForumPresentation.reportThread(threadId);
-                        threadReport.setImageResource(R.drawable.ic_reported);
-                        threadReport.setEnabled(false);
-                    }
-                    catch (JSONException e) {
-                        Toast.makeText(getContext(), "JSON error", Toast.LENGTH_LONG).show();
-                    }
-                    catch (ServerException e) {
-                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    } catch (NetworkErrorException e) {
-                        Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                }
-            });
 
             threadAuthorImage.setOnClickListener(new View.OnClickListener() {
                 @Override
