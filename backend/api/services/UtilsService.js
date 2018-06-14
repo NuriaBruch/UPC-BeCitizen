@@ -26,8 +26,12 @@ module.exports = {
         return result[1]+"/"+result[0]+"/"+result[2];
     },
 
-    getEmailFromHeader: (req) => jw.decode(req.get("token")).email,
-
+    getEmailFromHeader: function(req){
+      if(req.get("token") != undefined){
+        return jw.decode(req.get("token")).email;
+      }
+      else return undefined;
+    },
 
     update_deactivated: function(userFound, callback){
         User.update({email:userFound.email},{deactivated:false}).exec(function(err1,userFound){
