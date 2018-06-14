@@ -9,12 +9,14 @@ function sendNewPass(userFound,callback){
     var randomPass = UtilsService.getRandomString();
     var to = userFound.email;
     var smtpTransport = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.migadu.com',
+        port: 587,
+        secure: false, // upgrade later with STARTTLS
         auth: {
-               user: '',
-               pass: ''
-           }
-       });
+            user: 'admin@becitizen.cf',
+            pass: 'bienquesito'
+        }
+    });
     var mailOptions = {
         from: "Borja Fernández",
         to: userFound.email,
