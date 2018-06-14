@@ -171,16 +171,6 @@ public class CategoryFaqActivity extends Fragment implements CategoryFaqAdapter.
         return rootView;
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        progressBar.setVisibility(View.VISIBLE);
-        if (threadLoadThreads != null && threadLoadThreads.isAlive())
-            threadLoadThreads.interrupt();
-        threadLoadThreads = new Thread(loadThreads);
-        threadLoadThreads.start();
-    }*/
-
     @Override
     public void onPause() {
         super.onPause();

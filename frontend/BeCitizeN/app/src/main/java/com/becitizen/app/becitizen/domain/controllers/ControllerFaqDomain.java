@@ -149,6 +149,9 @@ public class ControllerFaqDomain {
         }
     }
 
+    /**
+     * Metodo para cargar los datos del servidor a la base de datos interna
+     */
     public void refreshData() throws Exception{
         for (String cat : getCategoriesServer()) {
             ArrayList<FaqEntry> entries = new ArrayList<>();
