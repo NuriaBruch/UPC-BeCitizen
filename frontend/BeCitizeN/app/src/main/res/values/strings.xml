@@ -481,4 +481,5 @@
     <string name="usingOffline">Using outdated data</string>
     <string name="wantToReport">Do you want to report this question?</string>
     <string name="alreadyReported">You have already reported this question</string>
+    <string name="selectCategory">Select a category</string>
 </resources>
