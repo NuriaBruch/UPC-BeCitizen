@@ -110,6 +110,8 @@ public class TranslatorActivity extends Fragment implements View.OnClickListener
                     Toast.makeText(rootView.getContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT).show();
                 }
             }
+
+            else textViewTranslated.setText("");
         }
 
     }

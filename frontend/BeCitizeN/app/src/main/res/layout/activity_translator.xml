@@ -1,134 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.utilities.TranslatorActivity">
 
-    <TextView
-        android:id="@+id/trTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="26dp"
-        android:text="@string/trTitle"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewFromT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_below="@id/trTitle"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5dp">
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/trTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_button_4"
-            android:padding="16dp">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="26dp"
+            android:text="@string/trTitle"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="36sp"
+            android:textStyle="bold" />
 
-
-            <TextView
-                android:id="@+id/trFromT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ccFrom"
-                android:textSize="20sp" />
-
-            <Spinner
-                android:id="@+id/spinnerFromT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|end"
-                android:entries="@array/languages"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/trFromT"/>
-
-            <EditText
-                android:id="@+id/editTextToTranslate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerFromT"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/translateText"
-                android:textSize="20sp"
-                android:inputType="textMultiLine"/>
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <Button
-        android:id="@+id/translateButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/cardViewFromT"
-        android:layout_alignStart="@id/cardViewFromT"
-        android:layout_below="@id/cardViewFromT"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:elevation="0dp"
-        android:text="@string/trAction"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        />
-
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewToT"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_below="@id/translateButton"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="5dp">
-
-        <RelativeLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewFromT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_button_5"
-            android:padding="16dp">
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_below="@id/trTitle"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp">
 
-
-            <TextView
-                android:id="@+id/ToTextT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ccTo"
-                android:textSize="24sp" />
-
-            <Spinner
-                android:id="@+id/spinnerToT"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/ToTextT"
-                android:gravity="center_vertical|end"
-                android:entries="@array/languages"
-                android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/ccToText"/>
-
-            <TextView
-                android:id="@+id/translated"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerToT"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:background="@drawable/card_button_4"
+                android:padding="16dp">
 
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/trFromT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ccFrom"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerFromT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/trFromT"
+                    android:gravity="center_vertical|end"
+                    android:entries="@array/languages"
+                    android:layout_alignParentEnd="true" />
+
+                <EditText
+                    android:id="@+id/editTextToTranslate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spinnerFromT"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/translateText"
+                    android:textSize="20sp"
+                    android:inputType="textMultiLine"/>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <Button
+            android:id="@+id/translateButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/cardViewFromT"
+            android:layout_alignStart="@id/cardViewFromT"
+            android:layout_below="@id/cardViewFromT"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:elevation="0dp"
+            android:text="@string/trAction"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardViewToT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_below="@id/translateButton"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_button_5"
+                android:padding="16dp">
+
+
+                <TextView
+                    android:id="@+id/ToTextT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ccTo"
+                    android:textSize="24sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerToT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/ToTextT"
+                    android:gravity="center_vertical|end"
+                    android:entries="@array/languages"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:id="@+id/translated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spinnerToT"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</ScrollView>

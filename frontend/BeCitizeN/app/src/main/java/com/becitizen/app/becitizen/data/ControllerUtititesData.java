@@ -91,6 +91,7 @@ public class ControllerUtititesData {
     }
 
     public String getTranslation(String translateFrom, String translateTo, String textFrom) {
+        textFrom = textFrom.replace(" ", "%20");
         try {
             String result = ServerAdapter.getInstance().doGetRequest(URI_TRANSLATION + "?text=" + textFrom + "&from=" + translateFrom + "&to=" + translateTo);
             JSONObject info = new JSONObject(result);
