@@ -116,15 +116,26 @@ public class ThreadActivity extends Fragment {
             threadAuthorRank.setText(thread.getAuthorRank());
 
             threadVote = rootView.findViewById(R.id.threadVoteButton);
-            if (!thread.isCanVote()) {
-                threadVote.setImageResource(R.drawable.ic_voted_icon);
-                threadVote.setEnabled(false);
-            }
             threadReport = rootView.findViewById(R.id.threadReportButton);
-            if (!thread.isCanReport()) {
-                threadReport.setImageResource(R.drawable.ic_reported);
-                threadReport.setEnabled(false);
+
+            try {
+                if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
+                    threadVote.setVisibility(View.GONE);
+                    threadReport.setVisibility(View.GONE);
+                } else {
+                    if (!thread.isCanVote()) {
+                        threadVote.setImageResource(R.drawable.ic_voted_icon);
+                        threadVote.setEnabled(false);
+                    }
+                    if (!thread.isCanReport()) {
+                        threadReport.setImageResource(R.drawable.ic_reported);
+                        threadReport.setEnabled(false);
+                    }
+                }
+            } catch (SharedPreferencesException e) {
+                e.printStackTrace();
             }
+
             threadAuthorImage = rootView.findViewById(R.id.threadAuthorImage);
             setAuthorImage(thread.getAuthorImage());
 

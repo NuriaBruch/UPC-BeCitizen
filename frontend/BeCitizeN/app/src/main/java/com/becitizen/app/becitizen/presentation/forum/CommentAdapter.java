@@ -18,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.Comment;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPresentation;
 import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 
@@ -193,21 +195,31 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
             }
         });
 
-        if (!comment.isVotable()) {
-            holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
-            holder.commentVote.setEnabled(false);
-        }
-        else {
-            holder.commentVote.setImageResource(R.drawable.vote_icon);
-            holder.commentVote.setEnabled(true);
-        }
-        if (!comment.isReportable()) {
-            holder.commentReport.setImageResource(R.drawable.ic_reported);
-            holder.commentReport.setEnabled(false);
-        }
-        else {
-            holder.commentReport.setImageResource(R.drawable.report_icon);
-            holder.commentReport.setEnabled(true);
+        try {
+            if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
+                holder.commentVote.setVisibility(View.GONE);
+                holder.commentReport.setVisibility(View.GONE);
+                holder.commentQuote.setVisibility(View.GONE);
+            } else {
+                if (!comment.isVotable()) {
+                    holder.commentVote.setImageResource(R.drawable.ic_voted_icon);
+                    holder.commentVote.setEnabled(false);
+                }
+                else {
+                    holder.commentVote.setImageResource(R.drawable.vote_icon);
+                    holder.commentVote.setEnabled(true);
+                }
+                if (!comment.isReportable()) {
+                    holder.commentReport.setImageResource(R.drawable.ic_reported);
+                    holder.commentReport.setEnabled(false);
+                }
+                else {
+                    holder.commentReport.setImageResource(R.drawable.report_icon);
+                    holder.commentReport.setEnabled(true);
+                }
+            }
+        } catch (SharedPreferencesException e) {
+            e.printStackTrace();
         }
 
         setAuthorImage(holder, comment.getAuthorImage());
