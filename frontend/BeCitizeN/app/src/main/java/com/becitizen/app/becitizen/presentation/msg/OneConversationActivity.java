@@ -55,6 +55,9 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         usernameView = (TextView) findViewById(R.id.text_message_username);
         appbar = (Toolbar) findViewById(R.id.toolbar_conv);
 
+    }
+
+    private void prepareContent() {
         int conversationId = getIntent().getExtras().getInt("id", -1);
         String name = getIntent().getExtras().getString("name", null);
         String username = getIntent().getExtras().getString("username", null);
@@ -84,6 +87,12 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         sendButton = (Button) findViewById(R.id.button_chatbox_send);
         sendButton.setOnClickListener(this);
         sendText = (EditText) findViewById(R.id.edittext_chatbox);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepareContent();
     }
 
     private void goBack() {

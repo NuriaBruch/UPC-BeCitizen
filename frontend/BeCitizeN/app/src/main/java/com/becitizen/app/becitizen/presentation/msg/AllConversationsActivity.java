@@ -48,8 +48,17 @@ public class AllConversationsActivity extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        prepareContent();
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void prepareContent() {
         initRecyclerView();
         List<Conversation> conversations = null;
         try {
