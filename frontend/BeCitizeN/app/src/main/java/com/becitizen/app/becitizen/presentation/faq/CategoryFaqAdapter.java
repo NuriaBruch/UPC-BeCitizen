@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.domain.controllers.ControllerUserDomain;
 import com.becitizen.app.becitizen.domain.entities.CategoryThread;
 import com.becitizen.app.becitizen.domain.entities.FaqEntry;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerFaqPresentation;
 import com.uncopt.android.widget.text.justify.JustifiedTextView;
 
@@ -66,7 +68,16 @@ public class CategoryFaqAdapter extends RecyclerView.Adapter<CategoryFaqAdapter.
             else {
                 expander.setRotation(180);
                 content.setVisibility(View.VISIBLE);
-                report.setVisibility(View.VISIBLE);
+                try {
+                    if(ControllerUserDomain.getUniqueInstance().isLoggedAsGuest()) {
+                        report.setVisibility(View.GONE);
+                        ratingBar.setIsIndicator(true);
+                    } else {
+                        report.setVisibility(View.VISIBLE);
+                    }
+                } catch (SharedPreferencesException e) {
+                    e.printStackTrace();
+                }
                 ratingBar.setVisibility(View.VISIBLE);
                 titleLong.setVisibility(View.VISIBLE);
             }
