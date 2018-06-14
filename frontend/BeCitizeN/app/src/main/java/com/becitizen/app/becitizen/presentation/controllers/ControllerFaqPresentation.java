@@ -49,6 +49,10 @@ public class ControllerFaqPresentation {
         return controllerFaqDomain.getCategories(false);
     }
 
+    /**
+     * Metodo que retorna todas las categorias despues de actualizar la base de datos
+     * @return empty arraylist si ha ocurrido algun error
+     */
     public ArrayList<String> getCategoriesForceRefresh() throws NetworkErrorException {
         return controllerFaqDomain.getCategories(true);
     }
@@ -63,7 +67,7 @@ public class ControllerFaqPresentation {
     }
 
     /**
-     * Metodo que retorna todas las faqs de una categoria que coincidentes con la busqueda
+     * Metodo que retorna todas las faqs de una categoria coincidentes con la busqueda
      * @param category nombre de la categoria
      * @param word nombre de la categoria
      * @return null si ha ocurrido algun error
