@@ -18,7 +18,7 @@ function sendNewPass(userFound,callback){
         }
     });
     var mailOptions = {
-        from: "Borja Fernández",
+        from: "admin@becitizen.cf",
         to: userFound.email,
         subject: 'BeCitizeN password recovery service',
         text: "",
@@ -68,6 +68,8 @@ function sendNewPass(userFound,callback){
                 else{
                     smtpTransport.sendMail(mailOptions, function(error, response){
                         if(error){
+                            console.log("Error sending email");
+                            console.log(error);
                             var response2 = {
                                 status: "E6",
                                 errors: []
@@ -360,6 +362,7 @@ module.exports = class GestionUser {
             status: "Ok",
             errors: []
         }
+        //console.log(userMail);
         User.findOne({email:userMail}).exec(function(err1,userFound){
             if(err1 !== undefined && err1){
                 response.status = "E1";
