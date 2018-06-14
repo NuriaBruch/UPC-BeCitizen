@@ -34,7 +34,7 @@ function sendNewPass(userFound,callback){
         '                  <h3><i class="fa fa-lock fa-4x"></i></h3>'+
         '                  <h2 class="text-center">Forgot Password?</h2>'+
         '                  <p>For your security erase this mail as soon as you log into the app. This is your new BeCitizeN password:</p>'+
-        '                    GRbrEXhXQBBxol7S34xFtyXo8oz4exp0'+
+        '                    '+ randomPass +
         '                </div>'+
         '              </div>'+
         '            </div>'+
