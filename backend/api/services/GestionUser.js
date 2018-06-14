@@ -9,14 +9,16 @@ function sendNewPass(userFound,callback){
     var randomPass = UtilsService.getRandomString();
     var to = userFound.email;
     var smtpTransport = nodemailer.createTransport({
-        service: 'gmail',
+        host: 'smtp.migadu.com',
+        port: 587,
+        secure: false, // upgrade later with STARTTLS
         auth: {
-               user: '',
-               pass: ''
-           }
-       });
+            user: 'admin@becitizen.cf',
+            pass: 'bienquesito'
+        }
+    });
     var mailOptions = {
-        from: "Borja Fernández",
+        from: "admin@becitizen.cf",
         to: userFound.email,
         subject: 'BeCitizeN password recovery service',
         text: "",
@@ -66,6 +68,8 @@ function sendNewPass(userFound,callback){
                 else{
                     smtpTransport.sendMail(mailOptions, function(error, response){
                         if(error){
+                            console.log("Error sending email");
+                            console.log(error);
                             var response2 = {
                                 status: "E6",
                                 errors: []
@@ -358,6 +362,7 @@ module.exports = class GestionUser {
             status: "Ok",
             errors: []
         }
+        //console.log(userMail);
         User.findOne({email:userMail}).exec(function(err1,userFound){
             if(err1 !== undefined && err1){
                 response.status = "E1";

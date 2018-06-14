@@ -350,6 +350,7 @@
     <string name="errorLoadMessages">No se han podido cargar los mensajes</string>
     <string name="Enter_message">Escribe un mensaje</string>
     <string name="SEND">ENVIAR</string>
+    <string name="noConversations">No tienes ninguna conversación aún!!\n\n\n\nPuedes empezar una conversación nueva con otro usuario desde su perfil</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Conversor de monedas</string>
@@ -380,6 +381,7 @@
         <item>language1</item>
         <item>language2</item>
     </string-array>
+    <string name="errorTranslator">El texto es demasiado largo</string>
 
     <!-- EXCEPTIONS -->
     <string name="serverError">Error del servidor</string>
@@ -461,6 +463,12 @@
     <string name="helpInformation_1">Puedes acceder a la funcionalidad de información haciendo clic en su icono en el menú lateral.</string>
     <string name="helpInformation_2">En esta parte de la aplicación puedes ver información útil sobre diferentes cosas sobre Barcelona que podrían ser útiles si vives ahí. Todas las publicaciones están clasificadas por categorías para que sea más fácil encontrar la información.</string>
 
+    <string name="helpFAQ_1">Puedes acceder a las preguntas frecuentes a través del menú lateral de la aplicación.\n
+                            En la primera pantalla encontrarás diferentes categorías, como en la pantalla de información.\n
+                            Una vez hayas seleccionado una de las categorías, verás una lista de preguntas. Si haces clic en cualquiera de ellas podrás leer su respuesta.\n
+                            En todas las preguntas tienes la posibilidad de valorar su respuesta con las estrellas de valoración.\n
+                            Por otro lado, también tienes la posibilidad de reportar una pregunta si lo consideras necesario.</string>
+
     <!-- PASSWORD CHANGE -->
     <string name="changePassword">Cambia tu contraseña</string>
     <string name="writePass">Escribe tu contraseña actual</string>
@@ -477,10 +485,19 @@
     <string name="no">No</string>
     <string name="wantToReport">¿Quieres reportar esta pregunta?</string>
     <string name="alreadyReported">Ya has reportado esta pregunta</string>
+    <string name="usingOffline">Utilizando datos antiguos</string>
+    <string name="selectCategory">Selecciona una categoría</string>
+
+    <!-- PASSWORD -->
+    <string name="resetExplanation">Si restableces tu contraseña, recibirás una nueva en tu correo.</string>
+    <string name="resetPassword">Restablecer contraseña</string>
+    <string name="resetSuccessfully">¡Tu contraseña se ha restablecido correctamente! Recibirás un correo con una nueva contraseña.</string>
+    <string name="noUserWithEmail">¡El correo no pertenece a ninguno de nuestros usuarios!</string>
+    <string name="forgotPassword">¿Has olvidado tu contraseña?</string>
 
     <!--Falta traduccio -->
-    <string name="usingOffline">Using outdated data</string>
-    <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
+
+
 
 
 </resources>

@@ -351,7 +351,6 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
     }
 
     private void startConversation() {
-        // TODO començar nova conversa
         if (userMail != null) {
             Conversation c = null;
             try {
@@ -413,9 +412,19 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
     }
 
     private void signOut() {
-        controllerUserPresentation.logout();
-        Toast.makeText(rootView.getContext(), getResources().getString(R.string.logout), Toast.LENGTH_LONG).show();
-        goToLogin();
+        new AlertDialog.Builder(rootView.getContext())
+                .setTitle(getResources().getString(R.string.logout))
+                .setMessage(getResources().getString(R.string.logoutMsg))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        controllerUserPresentation.logout();
+                        Toast.makeText(rootView.getContext(), getResources().getString(R.string.logout), Toast.LENGTH_LONG).show();
+                        goToLogin();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
     }
 
     private void goToLogin() {
