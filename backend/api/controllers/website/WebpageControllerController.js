@@ -26,15 +26,16 @@ module.exports = {
     Faq.find({}).populate("reportedBy")
     .then(faqs => {
       let faqsWithReports = faqs.map(f => {
-        let reports = f.reportedBy.length;
         return {
           question: f.question,
-          reports: reports
+          reports: f.numberReports,
+          id: f.id
         }
       })
-      .sort((a, b) => a.reports > b.reports)
+      .sort((a, b) => b.reports - a.reports)
       .slice(0, 6);
 
+      console.log(faqsWithReports);
       res.view("main", {
         layout: 'defaultLayout',
         faqsWithReports: JSON.stringify(faqsWithReports)
