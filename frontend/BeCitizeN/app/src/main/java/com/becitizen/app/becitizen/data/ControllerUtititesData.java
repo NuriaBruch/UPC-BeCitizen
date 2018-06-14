@@ -76,7 +76,7 @@ public class ControllerUtititesData {
         try {
             JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_ALL_LANGUAGES));
             if (info.get("status").equals("Ok")) {
-                JSONArray languagesInfo = (JSONArray)info.get("currencies");
+                JSONArray languagesInfo = (JSONArray)info.get("info");
                 for(int i = 0; i < languagesInfo.length(); i++){
                     JSONObject language = languagesInfo.getJSONObject(i);
                     languagesList.add(language.getString("name"));
@@ -92,7 +92,8 @@ public class ControllerUtititesData {
 
     public String getTranslation(String translateFrom, String translateTo, String textFrom) {
         try {
-            JSONObject info = new JSONObject(ServerAdapter.getInstance().doGetRequest(URI_TRANSLATION + "?text=" + textFrom + "&from=" + translateFrom + "&to=" + translateTo));
+            String result = ServerAdapter.getInstance().doGetRequest(URI_TRANSLATION + "?text=" + textFrom + "&from=" + translateFrom + "&to=" + translateTo);
+            JSONObject info = new JSONObject(result);
             if(info.get("status").equals("Ok")) {
                 if (info.get("info") != null) return info.getString("info");
             }

@@ -35,8 +35,8 @@
                 android:background="@drawable/card_button_2">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_above="@+id/iv_1"
@@ -77,8 +77,8 @@
                 android:background="@drawable/card_button_1">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_above="@+id/iv_2"
@@ -120,8 +120,8 @@
                 android:background="@drawable/card_button_5">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_above="@+id/iv_3"
@@ -162,8 +162,8 @@
                 android:background="@drawable/card_button_4">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:layout_above="@+id/iv_4"

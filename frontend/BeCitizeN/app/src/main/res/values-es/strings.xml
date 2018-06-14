@@ -348,6 +348,8 @@
     <string name="send">Enviar</string>
     <string name="emptyreply">Tu respuesta está vacía</string>
     <string name="errorLoadMessages">No se han podido cargar los mensajes</string>
+    <string name="Enter_message">Escribe un mensaje</string>
+    <string name="SEND">ENVIAR</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Conversor de monedas</string>
@@ -360,13 +362,13 @@
         <item>coin1</item>
         <item>coin2</item>
     </string-array>
-    <string name="convert">Convert</string>
+    <string name="convert">Convertir</string>
 
     <!-- WORD OF THE DAY -->
     <string name="wordOfTheDayTitle">Palabra del día</string>
     <string name="wordOfTheDayMeans">significa</string>
     <string name="wordOfTheDaySubtitle">Aprende una palabra en catalán cada día</string>
-    <string name="wordOfTheDayDefinition">Cada dia una palabra diferente en catalán con su definición traducida.</string>
+    <string name="wordOfTheDayDefinition">Cada día una palabra diferente en catalán con su definición traducida.</string>
     <string name="wordOfTheDayProvided">Ofrecido por rodamots.com</string>
 
     <!-- TRANSLATOR -->
@@ -428,7 +430,7 @@
     <string name="tab_text_6">Utilidades</string>
     <string name="tab_text_7">Perfil de usuario</string>
 
-    <string name="helpUser_1">Si deseas ver su perfil de usuario, puede hacer clic en cualquier momento en el ícono de perfil de usuario en la parte superior derecha de su pantalla.</string>
+    <string name="helpUser_1">Si deseas ver su perfil de usuario, puede hacer clic en cualquier momento en el icono de perfil de usuario en la parte superior derecha de su pantalla.</string>
     <string name="helpUser_2">Desde tu propia pantalla de perfil de usuario, también puedes editar el perfil haciendo clic en el icono de editar perfil.</string>
     <string name="helpUser_3">En la pantalla de editar perfil, puedes actualizar tus datos y también desactivar la cuenta con el icono de desactivar usuario.</string>
     <string name="helpUser_4">Des de la pantalla de tu perfil, puedes cerrar la sesión con el ícono de cierre de sesión. Esto te llevará a la pantalla inicial.</string>
@@ -451,13 +453,13 @@
     <string name="helpUtilities_7">Palabra del día</string>
     <string name="helpUtilities_8">En esta pantalla todos los días aparecerá una nueva palabra en catalán con su significado en inglés. Esta funcionalidad es posible gracias a rodamot.com.</string>
 
-    <string name="helpMessaging_1">Con el ícono de mensajería privada en el menú lateral, puedes acceder a tus conversaciones privadas con otros usuarios.</string>
-    <string name="helpMessaging_2">Para poder iniciar una nueva conversación, debes ir por el foro a otro perfil de usuario y desde allí hacer clic en el botón de mensajería privada.</string>
+    <string name="helpMessaging_1">Con el icono de mensajería privada en el menú lateral, puedes acceder a tus conversaciones privadas con otros usuarios.</string>
+    <string name="helpMessaging_2">Para poder iniciar una nueva conversación, debes ir por el foro a otro perfil de usuario y desde ahí hacer clic en el botón de mensajería privada.</string>
     <string name="helpMessaging_3">Si un usuario te envía mensajes, lo verás cuando entres en la pantalla de tus conversaciones privadas.</string>
-    <string name="helpMessaging_4">Si no quieres que un usuario te envíe mensajes, puedes bloquearlo accediendo a su perfil, ya sea a través del foro o de la conversación, y haga clic en el botón de bloquear usuario.</string>
+    <string name="helpMessaging_4">Si no quieres que un usuario te envíe mensajes, puedes bloquearlo accediendo a su perfil, ya sea a través del foro o de la conversación, y haz clic en el botón de bloquear usuario.</string>
 
     <string name="helpInformation_1">Puedes acceder a la funcionalidad de información haciendo clic en su icono en el menú lateral.</string>
-    <string name="helpInformation_2">En esta parte de la aplicación puedes ver información útil sobre diferentes cosas sobre Barcelona que podrían ser útiles si vives allí. Todas las publicaciones están clasificadas por categorías para que sea más fácil encontrar la información.</string>
+    <string name="helpInformation_2">En esta parte de la aplicación puedes ver información útil sobre diferentes cosas sobre Barcelona que podrían ser útiles si vives ahí. Todas las publicaciones están clasificadas por categorías para que sea más fácil encontrar la información.</string>
 
     <!-- PASSWORD CHANGE -->
     <string name="changePassword">Cambia tu contraseña</string>
@@ -478,6 +480,7 @@
 
     <!--Falta traduccio -->
     <string name="usingOffline">Using outdated data</string>
+    <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
 
 
 </resources>

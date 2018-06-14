@@ -20,7 +20,7 @@
         android:textStyle="bold" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardViewFrom"
+        android:id="@+id/cardViewFromT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -33,30 +33,31 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_button_1"
+            android:background="@drawable/card_button_4"
             android:padding="16dp">
 
 
             <TextView
-                android:id="@+id/trFrom"
+                android:id="@+id/trFromT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ccFrom"
                 android:textSize="20sp" />
 
             <Spinner
-                android:id="@+id/spinnerFrom"
+                android:id="@+id/spinnerFromT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
                 android:entries="@array/languages"
                 android:layout_alignParentEnd="true"
-                android:layout_alignBottom="@id/trFrom"/>
+                android:layout_alignBottom="@id/trFromT"/>
 
             <EditText
                 android:id="@+id/editTextToTranslate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerFrom"
+                android:layout_below="@id/spinnerFromT"
                 android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="@string/translateText"
@@ -71,9 +72,9 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@id/cardViewFrom"
-        android:layout_alignStart="@id/cardViewFrom"
-        android:layout_below="@id/cardViewFrom"
+        android:layout_alignEnd="@id/cardViewFromT"
+        android:layout_alignStart="@id/cardViewFromT"
+        android:layout_below="@id/cardViewFromT"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:elevation="0dp"
@@ -84,7 +85,7 @@
 
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cardViewTo"
+        android:id="@+id/cardViewToT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
@@ -96,21 +97,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/card_button_3"
+            android:background="@drawable/card_button_5"
             android:padding="16dp">
 
 
             <TextView
-                android:id="@+id/ccToText"
+                android:id="@+id/ToTextT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ccTo"
                 android:textSize="24sp" />
 
             <Spinner
-                android:id="@+id/spinnerTo"
+                android:id="@+id/spinnerToT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/ToTextT"
+                android:gravity="center_vertical|end"
                 android:entries="@array/languages"
                 android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@id/ccToText"/>
@@ -119,10 +122,10 @@
                 android:id="@+id/translated"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/spinnerTo"
+                android:layout_below="@id/spinnerToT"
                 android:layout_marginTop="10dp"
                 android:textAlignment="center"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>

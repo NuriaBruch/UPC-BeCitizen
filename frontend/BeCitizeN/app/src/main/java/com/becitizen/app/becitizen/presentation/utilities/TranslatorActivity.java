@@ -50,8 +50,8 @@ public class TranslatorActivity extends Fragment implements View.OnClickListener
         codesList = new LinkedList<>();
         editTextToTranslate = rootView.findViewById(R.id.editTextToTranslate);
         textViewTranslated = rootView.findViewById(R.id.translated);
-        spinnerFrom = rootView.findViewById(R.id.spinnerFrom);
-        spinnerTo = rootView.findViewById(R.id.spinnerTo);
+        spinnerFrom = rootView.findViewById(R.id.spinnerFromT);
+        spinnerTo = rootView.findViewById(R.id.spinnerToT);
         translateButton = rootView.findViewById(R.id.translateButton);
         translateButton.setOnClickListener(this);
 

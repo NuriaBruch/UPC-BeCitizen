@@ -348,6 +348,8 @@
     <string name="send">Send</string>
     <string name="emptyreply">Your reply is empty</string>
     <string name="errorLoadMessages">Could not load messages</string>
+    <string name="Enter_message">Enter message</string>
+    <string name="SEND">SEND</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Currency Converter</string>
@@ -477,7 +479,7 @@
     <string name="alreadyReported">You have already reported this question</string>
 
     <!--Falta traduccio -->
-    <string name="noConversations">You have not any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
+    <string name="noConversations">You do not have any conversation yet!\n\n\n\nYou can start a new conversation with another user from its profile</string>
 
     <!--Falta traduccio -->
     <string name="usingOffline">Using outdated data</string>
