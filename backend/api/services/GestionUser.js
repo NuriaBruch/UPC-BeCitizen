@@ -80,7 +80,11 @@ function sendNewPass(userFound,callback){
                             userFound.save();
                             callback(response2);
                         }else{
-                            callback(response);
+                            var response3 = {
+                                status: "Ok",
+                                errors: []
+                             };
+                            callback(response3);
                         }
                     });
                 }
