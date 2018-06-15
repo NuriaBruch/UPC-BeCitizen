@@ -16,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUtilitiesPresentation;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,6 +76,10 @@ public class TranslatorActivity extends Fragment implements View.OnClickListener
             controllerUtilitiesPresentation.getLanguagesList(languagesList, codesList);
         } catch (NetworkErrorException e) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT).show();
+        } catch (ServerException e) {
+            Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -114,6 +121,13 @@ public class TranslatorActivity extends Fragment implements View.OnClickListener
                         textViewTranslated.setText(resultado);
                     } catch (NetworkErrorException e) {
                         Toast.makeText(rootView.getContext(), getApplicationContext().getResources().getString(R.string.errorTranslator), Toast.LENGTH_SHORT).show();
+                        textViewTranslated.setText("");
+                    } catch (ServerException e) {
+                        Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        textViewTranslated.setText("");
+                    } catch (JSONException e) {
+                        Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_SHORT).show();
+                        textViewTranslated.setText("");
                     }
                 }
             }

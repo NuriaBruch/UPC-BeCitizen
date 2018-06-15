@@ -205,12 +205,12 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
         }
 
         catch (JSONException e) {
-            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
-            Log.d("JSONe", e.getMessage());
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_LONG).show();
             finishFragment();
         } catch (NetworkErrorException e) {
             Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
             toast.show();
+            finishFragment();
         }
     }
 
@@ -310,8 +310,7 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
                     if (loggedUser && controllerUserPresentation.isLoggedWithMail()) changePass();
                     else askConfirmation();
                 } catch (SharedPreferencesException e) {
-                    Toast.makeText(getContext(), "SharedPreferencesError", Toast.LENGTH_LONG).show();
-                    Log.e("SharedPreferencesE", e.getMessage());
+                    Toast.makeText(getContext(), getResources().getString(R.string.sharedPreferencesError), Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.fbPrivateMessage:

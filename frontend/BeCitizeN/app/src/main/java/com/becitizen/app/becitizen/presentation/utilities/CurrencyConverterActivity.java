@@ -15,7 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.controllers.ControllerUtilitiesPresentation;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,29 +69,7 @@ public class CurrencyConverterActivity extends Fragment {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.convertButton:
-                        if(currencyList.size() <= 0) {
-                            Context context = rootView.getContext();
-                            int duration = Toast.LENGTH_SHORT;
-
-                            Toast toast = Toast.makeText(context, R.string.ccErrorConvert, duration);
-                            toast.show();
-                            break;
-                        }
-                        String currencyFrom = spinnerFrom.getSelectedItem().toString();
-                        String currencyTo = spinnerTo.getSelectedItem().toString();
-                        String amount = editTextAmount.getText().toString();
-                        if(amount.equals("")){
-                            editTextAmount.setText("0");
-                            amount = "0";
-                        }
-                        double resultado = 0;
-                        try {
-                            resultado = ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom,currencyTo,amount);
-                        } catch (NetworkErrorException e) {
-                            Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        textViewResultado.setText(String.valueOf((float)resultado));
+                        convert();
                         break;
                 }
             }
@@ -101,7 +82,54 @@ public class CurrencyConverterActivity extends Fragment {
         } catch (NetworkErrorException e) {
             Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
             toast.show();
+        } catch (JSONException e) {
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_SHORT).show();
+        } catch (ServerException e) {
+            Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void convert() {
+        if(currencyList.size() <= 0) {
+            Context context = rootView.getContext();
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, R.string.ccErrorConvert, duration);
+            toast.show();
+        }
+
+        else {
+            String currencyFrom = spinnerFrom.getSelectedItem().toString();
+            String currencyTo = spinnerTo.getSelectedItem().toString();
+            String amount = editTextAmount.getText().toString();
+
+            if (!amount.equals("")) {
+
+                try {
+                    setResult(ControllerUtilitiesPresentation.getInstance().getConversion(currencyFrom, currencyTo, amount));
+                }
+
+                catch (NetworkErrorException e) {
+                    Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
+                    toast.show();
+                    setResult(0);
+                }
+
+                catch (ServerException e) {
+                    Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    setResult(0);
+                }
+
+                catch (JSONException e) {
+                    Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_SHORT).show();
+                    setResult(0);
+                }
+            }
+        }
+    }
+
+    private void setResult(double result) {
+        textViewResultado.setText(String.valueOf((float) result));
     }
 
 }
