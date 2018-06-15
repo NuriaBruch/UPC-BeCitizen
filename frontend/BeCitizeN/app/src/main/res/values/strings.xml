@@ -42,6 +42,7 @@
     <string name="errorMsgName">Not a valid input</string>
     <string name="errorUsername">Username already exists</string>
     <string name="errorBiography">Biography too long</string>
+    <string name="pickImage">Pick your image</string>
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
