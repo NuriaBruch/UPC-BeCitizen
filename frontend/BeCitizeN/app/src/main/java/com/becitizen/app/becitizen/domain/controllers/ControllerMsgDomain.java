@@ -125,7 +125,21 @@ public class ControllerMsgDomain {
         }
     }
 
-    public void newMessage(int id, String s) {
-        ControllerMsgData.getInstance().newMessage(id, s);
+    public void newMessage(int id, String s) throws ServerException {
+        String response = ControllerMsgData.getInstance().newMessage(id, s);
+
+        try {
+            JSONObject json = new JSONObject(response);
+            if (json.getString("status").equalsIgnoreCase("E4")) {
+                Log.e("SERVER_ERRORS", json.getJSONArray("errors").toString());
+                throw new ServerException("Blocked user");
+            } else if (!json.getString("status").equalsIgnoreCase("Ok")) {
+                Log.e("SERVER_ERRORS", json.getJSONArray("errors").toString());
+                throw new ServerException("Server has rerturned errors");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

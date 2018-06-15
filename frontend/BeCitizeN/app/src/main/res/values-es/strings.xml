@@ -319,6 +319,7 @@
     <string name="deleteAccountMsg">¿Seguro que quieres eliminar tu cuenta?</string>
     <string name="deactivateUser">Desactivar</string>
     <string name="blockUser">Bloquear</string>
+    <string name="blockedUser">Bloqueado</string>
     <string name="unblockUser">Desbloquear</string>
     <string name="blockUserMsg">¿Seguro que quieres bloquear a este usuario?</string>
     <string name="unblockUserMsg">¿Seguro que quieres desbloquear a este usuario?</string>

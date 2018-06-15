@@ -33,7 +33,7 @@ public class ControllerMsgPresentation {
         return ControllerMsgDomain.getInstance().getConversations();
     }
 
-    public void newMessage(int id, String s) {
+    public void newMessage(int id, String s) throws ServerException {
         ControllerMsgDomain.getInstance().newMessage(id, s);
     }
 }

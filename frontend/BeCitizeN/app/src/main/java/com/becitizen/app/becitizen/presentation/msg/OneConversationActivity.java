@@ -120,7 +120,13 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
     }
 
     private void sendMessage() {
-        ControllerMsgPresentation.getInstance().newMessage(conversation.getId(), sendText.getText().toString());
+        try {
+            ControllerMsgPresentation.getInstance().newMessage(conversation.getId(), sendText.getText().toString());
+        } catch (ServerException e) {
+            if (e.getMessage().equalsIgnoreCase("Blocked user"))
+                Toast.makeText(this, getResources().getString(R.string.blockedUser), Toast.LENGTH_LONG).show();
+            else Toast.makeText(this, getResources().getString(R.string.serverError), Toast.LENGTH_LONG).show();
+        }
         sendText.setText("");
         try {
             loadComments(conversation.getId());

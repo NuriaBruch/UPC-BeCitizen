@@ -41,7 +41,7 @@ public class ControllerMsgData {
     }
 
 
-    public void newMessage(int id, String s) {
+    public String newMessage(int id, String s) {
         JSONObject json = new JSONObject();
         try {
             json.put("idConver", id);
@@ -53,6 +53,7 @@ public class ControllerMsgData {
 
         String response = ServerAdapter.getInstance().doPostRequest(dataRequest);
         Log.d("Response", response);
+        return response;
     }
 
     public JSONObject getConversation(String email) throws ServerException {
