@@ -59,6 +59,11 @@ module.exports.policies = {
     getMessage: 'tokenAuth'
   },
 
+  FaqController: {
+    reportFaq: 'tokenAuth',
+    valorateFaq: 'tokenAuth'
+  },
+
   InformationController: {
     createInfo: 'sessionAuth',
     deleteInfo: 'sessionAuth',

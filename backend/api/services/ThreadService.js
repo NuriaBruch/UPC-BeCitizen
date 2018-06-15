@@ -96,9 +96,9 @@ module.exports = {
         });
     },
     deleteThread: function(threadId,callback){
-         var deleted = destroyThread(threadId,function(response){
-             callback(response);
-         });
+      destroyThread(threadId,function(response){
+        callback(response);
+      });
     },
     reportThread: function(id,email,callback){
         var response = {
