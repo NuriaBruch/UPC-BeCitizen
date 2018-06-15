@@ -33,6 +33,8 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ThreadActivity extends Fragment {
@@ -44,7 +46,8 @@ public class ThreadActivity extends Fragment {
     private ControllerForumPresentation controllerForumPresentation;
 
     TextView threadAuthor, threadTime, threadContent, threadTitle, threadVotes, threadAuthorRank;
-    ImageButton threadVote, threadReport, threadAuthorImage, commentSort;
+    ImageButton threadVote, threadReport, commentSort;
+    CircleImageView threadAuthorImage;
     EditText newCommentText;
     ImageButton newCommentButton;
     LinearLayout newCommentLayout;

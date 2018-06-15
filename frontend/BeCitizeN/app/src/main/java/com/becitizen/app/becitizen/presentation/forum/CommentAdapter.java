@@ -30,6 +30,8 @@ import org.json.JSONException;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
@@ -44,7 +46,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView commentAuthor, commentTime, commentContent, commentVotes, commentAuthorRank, commentId;
-        public ImageButton commentVote, commentReport, commentQuote, commentAuthorImage;
+        public ImageButton commentVote, commentReport, commentQuote;
+        public CircleImageView commentAuthorImage;
         public View commentView;
 
         public MyViewHolder(View view) {
