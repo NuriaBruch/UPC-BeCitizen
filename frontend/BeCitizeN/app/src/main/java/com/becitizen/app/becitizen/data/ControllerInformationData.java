@@ -7,9 +7,9 @@ import org.json.JSONObject;
 public class ControllerInformationData {
 
     //URIs
-    private static final String URI_INFORMATIONS_CATEGORY = "http://becitizen.cf/getAllInfoCategory?category=";
-    private static final String URI_INFORMATIONS_CATEGORY_SEARCH = "http://becitizen.cf/getInfoWords?category=";
-    private static final String URI_INFORMATION_CONTENT = "http://becitizen.cf/getInfo?infoId=";
+    private static final String URI_INFORMATIONS_CATEGORY = "https://becitizen.cf/getAllInfoCategory?category=";
+    private static final String URI_INFORMATIONS_CATEGORY_SEARCH = "https://becitizen.cf/getInfoWords?category=";
+    private static final String URI_INFORMATION_CONTENT = "https://becitizen.cf/getInfo?infoId=";
 
 
     private static ControllerInformationData instance = null;

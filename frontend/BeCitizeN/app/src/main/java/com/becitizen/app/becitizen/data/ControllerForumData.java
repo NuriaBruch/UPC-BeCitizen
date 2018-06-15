@@ -13,7 +13,7 @@ public class ControllerForumData {
 
     //URIs
 
-    private static final String URI_BCN = "http://becitizen.cf";
+    private static final String URI_BCN = "https://becitizen.cf";
 
     private static final String URI_THREADS_CATEGORY = URI_BCN + "/getAllThreadsCategory?category=";
     public static final String URI_CATEGORIES = URI_BCN + "/categories";

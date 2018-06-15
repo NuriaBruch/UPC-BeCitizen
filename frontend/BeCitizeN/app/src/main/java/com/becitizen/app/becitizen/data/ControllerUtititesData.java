@@ -16,11 +16,11 @@ import java.util.List;
 public class ControllerUtititesData {
     private static final ControllerUtititesData ourInstance = new ControllerUtititesData();
 
-    private static final String URI_GET_ALL_CURRENCIES = "http://becitizen.cf/getAllCurrencies";
-    private static final String URI_GET_EXCHANGE = "http://becitizen.cf/getExchange";
-    private static final String URI_GET_WORD = "http://becitizen.cf/getWord";
-    private static final String URI_ALL_LANGUAGES = "http://becitizen.cf/getLanguageCodes";
-    private static final String URI_TRANSLATION = "http://becitizen.cf/getTranslation";
+    private static final String URI_GET_ALL_CURRENCIES = "https://becitizen.cf/getAllCurrencies";
+    private static final String URI_GET_EXCHANGE = "https://becitizen.cf/getExchange";
+    private static final String URI_GET_WORD = "https://becitizen.cf/getWord";
+    private static final String URI_ALL_LANGUAGES = "https://becitizen.cf/getLanguageCodes";
+    private static final String URI_TRANSLATION = "https://becitizen.cf/getTranslation";
 
     public static ControllerUtititesData getInstance() {
         return ourInstance;
