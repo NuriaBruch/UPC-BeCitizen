@@ -200,7 +200,7 @@ public class ServerAdapter {
 
             try {
                 //add data
-                StringEntity entity = new StringEntity(json);
+                StringEntity entity = new StringEntity(json, HTTP.UTF_8);
                 httpput.setEntity(entity);
                 if (getTOKEN() != null)
                     httpput.setHeader("token", getTOKEN());
