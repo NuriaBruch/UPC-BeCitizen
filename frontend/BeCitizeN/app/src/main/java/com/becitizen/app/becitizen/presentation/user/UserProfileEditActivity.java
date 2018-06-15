@@ -279,10 +279,11 @@ public class UserProfileEditActivity extends Fragment implements View.OnClickLis
 
         catch (ServerException e) {
             Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            finishFragment();
         }
 
         catch (JSONException e) {
-            Toast.makeText(rootView.getContext(), "JSON error", Toast.LENGTH_LONG).show();
+            Toast.makeText(rootView.getContext(), getResources().getString(R.string.JSONerror), Toast.LENGTH_LONG).show();
         } catch (NetworkErrorException e) {
             Toast toast = Toast.makeText(getApplicationContext(), getApplicationContext().getResources().getString(R.string.networkError), Toast.LENGTH_SHORT);
             toast.show();
@@ -313,6 +314,14 @@ public class UserProfileEditActivity extends Fragment implements View.OnClickLis
         if (view.requestFocus()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    private void finishFragment() {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        getActivity().getSupportFragmentManager().popBackStack();
+        transaction.remove(this);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        transaction.commit();
     }
 
 }

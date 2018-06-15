@@ -88,6 +88,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
 
                             Log.d("DEBUG", "2");
                             Toast.makeText(getApplicationContext(), R.string.resetSuccessfully, Toast.LENGTH_LONG).show();
+                            onBackPressed();
 
 
                         } catch (ServerException e) {
@@ -107,6 +108,11 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
 

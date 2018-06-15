@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class ControllerUserData {
 
     //URIs
-    private static final String URI_BCN = "http://becitizen.cf";
+    private static final String URI_BCN = "https://becitizen.cf";
 
     private static final String URI_FB_LOGIN = URI_BCN + "/loginFacebook";
     private static final String URI_GOOGLE_LOGIN = URI_BCN + "/loginGoogle?idToken=";

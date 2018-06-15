@@ -195,12 +195,6 @@ public class SideMenuActivity extends AppCompatActivity
                     goToLogin();
                 }
                 break;
-            case R.id.nav_settings:
-                /*
-                fragment = new SettingsActivity();
-                fragmentTransaction(fragment);
-                */
-                break;
             case R.id.nav_help:
                 fragment = new HelpActivity();
                 fragmentTransaction(fragment, "HELP_ACTIVITY");

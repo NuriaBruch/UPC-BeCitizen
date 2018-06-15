@@ -23,11 +23,11 @@ public class ControllerUtilitiesDomain {
         controllerUtititesData = ControllerUtititesData.getInstance();
     }
 
-    public void getCurrencyList(List<String> currencyList) throws NetworkErrorException{
+    public void getCurrencyList(List<String> currencyList) throws NetworkErrorException, ServerException, JSONException{
         controllerUtititesData.getCurrencyList(currencyList);
     }
 
-    public double getConversion(String currencyFrom, String currencyTo, String amount) throws NetworkErrorException{
+    public double getConversion(String currencyFrom, String currencyTo, String amount) throws NetworkErrorException, ServerException, JSONException{
         return controllerUtititesData.getConversion(currencyFrom,currencyTo,amount);
     }
 
@@ -35,11 +35,11 @@ public class ControllerUtilitiesDomain {
         return controllerUtititesData.getWordOfTheDay();
     }
 
-    public void getLanguagesList(LinkedList<String> languagesList, LinkedList<String> codesList) {
+    public void getLanguagesList(LinkedList<String> languagesList, LinkedList<String> codesList) throws ServerException, JSONException{
         controllerUtititesData.getLanguagesList(languagesList, codesList);
     }
 
-    public String getTranslation(String translateFrom, String translateTo, String textFrom) {
+    public String getTranslation(String translateFrom, String translateTo, String textFrom) throws ServerException, JSONException {
         return controllerUtititesData.getTranslation(translateFrom, translateTo, textFrom);
     }
 }

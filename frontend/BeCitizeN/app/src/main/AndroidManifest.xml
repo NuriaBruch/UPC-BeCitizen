@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name=".presentation.user.ImageSelectionDialog"
-            android:label="Pick your image"
+            android:label="@string/pickImage"
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/NgDialogTheme" />

@@ -9,7 +9,6 @@
     <string name="login_cancel">El inicio de sesión se ha cancelado</string>
     <string name="login_fail">El inicio de sesión ha fallado</string>
     <string name="youAreIn">¡Estás dentro!</string>
-    <string name="loggedAs">Has entrado como invitado. \n Esta característica no está disponible para invitados. \n\n Puedes cerrar sesión y entrar con una cuenta.</string>
     <string name="logout">Salir</string>
     <string name="errorUserNotFound">Usuario no encontrado</string>
     <string name="errorIncorrPassw">Contraseña incorrecta</string>
@@ -42,6 +41,7 @@
     <string name="errorMsgName">Entrada no válida</string>
     <string name="errorUsername">El nombre de usuario ya existe</string>
     <string name="errorBiography">Biografía demasiado larga</string>
+    <string name="pickImage">Escoge tu imagen</string>
     <string-array name="countries" translatable="false">
         <item>Afghanistan</item>
         <item>Albania</item>
@@ -269,6 +269,7 @@
 
     <!-- GUEST -->
     <string name="guest">Invitado</string>
+    <string name="loggedAs">Has entrado como invitado. \n Esta característica no está disponible para invitados. \n\n Puedes cerrar sesión y entrar con una cuenta.</string>
 
     <!-- THREAD -->
     <string name="quoting">Citando comentario:</string>

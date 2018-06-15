@@ -11,7 +11,7 @@ import org.json.JSONObject;
 public class ControllerMsgData {
 
     //URIs
-    private static final String URI_BCN = "http://becitizen.cf";
+    private static final String URI_BCN = "https://becitizen.cf";
 
     private static final String URI_CONVERSATIONS = URI_BCN + "/conversations";
     private static final String URI_NEW_CONVERSATION = URI_BCN + "/conversation";

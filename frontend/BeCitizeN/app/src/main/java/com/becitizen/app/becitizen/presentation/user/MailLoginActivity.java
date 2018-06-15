@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +36,7 @@ public class MailLoginActivity extends AppCompatActivity {
         tietMail = findViewById(R.id.tietMail);
         tietPassw = findViewById(R.id.tietPassw);
         tietPassw.setTransformationMethod(new PasswordTransformationMethod());
+        tietPassw.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         forgotPass = (TextView) findViewById(R.id.forgotPass);
         forgotPass.setOnClickListener(new View.OnClickListener() {
