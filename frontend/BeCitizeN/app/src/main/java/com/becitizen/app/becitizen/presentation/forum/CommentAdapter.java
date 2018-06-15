@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -86,7 +89,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     public void onBindViewHolder (final MyViewHolder holder, int position) {
         final Comment comment = commentList.get(position);
         holder.commentAuthor.setText("@" + comment.getAuthor());
-        holder.commentTime.setText(comment.getCreatedAt());
+        Date date = new Date(comment.getCreatedAt());
+        holder.commentTime.setText(DateUtils.formatSameDayTime(date.getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
         holder.commentContent.setText(comment.getContent());
         holder.commentVotes.setText(String.valueOf(comment.getVotes()));
         holder.commentAuthorRank.setText(comment.getAuthorRank());

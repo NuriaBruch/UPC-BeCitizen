@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,9 @@ import com.becitizen.app.becitizen.presentation.controllers.ControllerForumPrese
 
 import org.json.JSONException;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -104,7 +107,9 @@ public class ThreadActivity extends Fragment {
             threadAuthor.setText("@" + thread.getAuthor());
 
             threadTime = rootView.findViewById(R.id.threadTimeText);
-            threadTime.setText(thread.getCreatedAt());
+
+            Date date = new Date(thread.getCreatedAt());
+            threadTime.setText(DateUtils.formatSameDayTime(date.getTime(), (new Date()).getTime(), DateFormat.SHORT, DateFormat.SHORT).toString());
 
             threadContent = rootView.findViewById(R.id.threadContentText);
             threadContent.setText(thread.getContent());
