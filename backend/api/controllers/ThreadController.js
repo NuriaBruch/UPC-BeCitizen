@@ -6,17 +6,11 @@
  */
 
 module.exports = {
-    
-    getAllCategories: function(req,res){
-        var response = {
-            status: "Ok",
-            errors: [],
-            categories: [ "culture", "education and formation",
-        "emergencies", "language", "justice", "public administration", "housing",
-        "health", "work", "tourism", "off topic"]
-        }
 
-        res.send(response);
+    getAllCategories: function(req,res){
+        ThreadService.getAllCategories(function(status){
+            res.send(status);
+        });
     },
 
     createThread: function(req,res){
@@ -45,20 +39,28 @@ module.exports = {
     getThread: function(req,res){
         var id = req.query.threadId;
         var email = UtilsService.getEmailFromHeader(req);
-        ThreadService.getThread(id,email,function(status){
+        if(email == undefined){
+          ThreadService.getThreadGuest(id,function(status){
             res.send(status);
-        });
+          });
+        }
+        else{
+          ThreadService.getThread(id,email,function(status){
+            res.send(status);
+          });
+        }
+
     },
 
     getAllThreadsCategory: function(req,res){
         var block = req.query.block;
         var category = req.query.category;
-        var sortedByVotes = req.query.sortedByVotes; 
+        var sortedByVotes = req.query.sortedByVotes;
         ThreadService.getAllThreadsCategory(block,category,sortedByVotes,function(status){
             res.send(status);
         });
     },
-    
+
     voteThread: function(req, res){
         var id = parseInt(req.query.threadId);
         var email = UtilsService.getEmailFromHeader(req);

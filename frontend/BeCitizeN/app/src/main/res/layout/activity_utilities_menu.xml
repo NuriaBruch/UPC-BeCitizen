@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.becitizen.app.becitizen.presentation.UtilitiesMenu"
+    tools:context="com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu"
     android:weightSum="10"
     android:orientation="vertical">
 
@@ -16,9 +16,7 @@
         <TextView
             android:id="@+id/textGrid"
             android:text="@string/utilities"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
+            style="@style/mainTitleLayout"
             android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

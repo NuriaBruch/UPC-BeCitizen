@@ -11,6 +11,11 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
@@ -19,16 +24,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.user.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.DataRegisterView"
+            android:name=".presentation.user.DataRegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.ViewSignUpMail"
+            android:name=".presentation.user.SignUpMailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presentation.MailLoginActivity"
+            android:name=".presentation.user.MailLoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presentation.msg.OneConversationActivity"
@@ -57,11 +62,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ImageSelection"
-            android:label="Pick your image"
+            android:name=".presentation.user.ImageSelectionDialog"
+            android:label="@string/pickImage"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/NgDialogTheme"></activity>
+            android:theme="@style/NgDialogTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -75,8 +80,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".presentation.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name=".presentation.info.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity
+            android:name=".presentation.user.ResetPasswordActivity"/>
     </application>
 
 </manifest>

@@ -7,14 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +48,17 @@ public class AllConversationsActivity extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        prepareContent();
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void prepareContent() {
         initRecyclerView();
         List<Conversation> conversations = null;
         try {
@@ -61,6 +73,11 @@ public class AllConversationsActivity extends Fragment {
         }
         mAdapter = new ConversationAdapter(getContext(), conversations);
         mRecyclerView.setAdapter(mAdapter);
+        if(conversations != null && conversations.size() > 0) {
+            Log.d("MSG", "No conversations");
+            TextView noConversationsText = (TextView) rootView.findViewById(R.id.noConversationsText);
+            noConversationsText.setVisibility(View.GONE);
+        }
     }
 
     private RecyclerView mRecyclerView;

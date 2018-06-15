@@ -46,7 +46,8 @@ module.exports.policies = {
     updateProfile: 'tokenAuth',
     viewProfile: 'tokenAuth',
     blockUser: 'tokenAuth',
-    unblockUser: 'tokenAuth'
+    unblockUser: 'tokenAuth',
+    changePassword: 'tokenAuth'
   },
   ConversationController: {
     newConversation: 'tokenAuth',
@@ -56,6 +57,30 @@ module.exports.policies = {
   MessageController: {
     newMessage: 'tokenAuth',
     getMessage: 'tokenAuth'
+  },
+
+  FaqController: {
+    reportFaq: 'tokenAuth',
+    valorateFaq: 'tokenAuth'
+  },
+
+  InformationController: {
+    createInfo: 'sessionAuth',
+    deleteInfo: 'sessionAuth',
+  },
+
+  "website/WebpageControllerController": {
+    renderMainPage: 'sessionAuth',
+    renderAllInfoPage: 'sessionAuth',
+    deleteInfos: "sessionAuth",
+    renderAddInfoPage: 'sessionAuth',
+    addInfo: 'sessionAuth',
+    editInfo: 'sessionAuth',
+    renderAllFaqsPage: 'sessionAuth',
+    deleteFaqs: "sessionAuth",
+    renderAddFaqPage: 'sessionAuth',
+    addFaq: 'sessionAuth',
+    editFaq: 'sessionAuth'
   }
 
   /***************************************************************************

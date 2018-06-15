@@ -12,8 +12,9 @@
     <color name="coal">#1C1C1C</color>
 
     <color name="messageReceived">#7e7e7b</color>
-    <color name="messageSent">#cacaba</color>
+    <color name="messageSent">#4E4E4B</color>
 
     <color name="round_green">#0aea07</color>
     <color name="blue">#2727b2</color>
+    <color name="green_dark">#008000</color>
 </resources>

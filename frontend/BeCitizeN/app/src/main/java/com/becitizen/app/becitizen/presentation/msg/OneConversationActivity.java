@@ -17,6 +17,7 @@ import com.becitizen.app.becitizen.R;
 import com.becitizen.app.becitizen.domain.entities.Conversation;
 import com.becitizen.app.becitizen.exceptions.ServerException;
 import com.becitizen.app.becitizen.presentation.SideMenuActivity;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerMsgPresentation;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,10 +41,12 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_chats);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("Toolbar","Clicked");
+                goBack();
             }
         });
 
@@ -52,6 +55,9 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         usernameView = (TextView) findViewById(R.id.text_message_username);
         appbar = (Toolbar) findViewById(R.id.toolbar_conv);
 
+    }
+
+    private void prepareContent() {
         int conversationId = getIntent().getExtras().getInt("id", -1);
         String name = getIntent().getExtras().getString("name", null);
         String username = getIntent().getExtras().getString("username", null);
@@ -83,6 +89,16 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
         sendText = (EditText) findViewById(R.id.edittext_chatbox);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        prepareContent();
+    }
+
+    private void goBack() {
+        super.onBackPressed();
+    }
+
     private void loadComments(int conversationId) throws ServerException {
         conversation.setMessages(ControllerMsgPresentation.getInstance().getMessages(conversationId));
         mMessageRecycler = (RecyclerView) findViewById(R.id.reyclerview_message_list);
@@ -104,7 +120,13 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
     }
 
     private void sendMessage() {
-        ControllerMsgPresentation.getInstance().newMessage(conversation.getId(), sendText.getText().toString());
+        try {
+            ControllerMsgPresentation.getInstance().newMessage(conversation.getId(), sendText.getText().toString());
+        } catch (ServerException e) {
+            if (e.getMessage().equalsIgnoreCase("Blocked user"))
+                Toast.makeText(this, getResources().getString(R.string.blockedUser), Toast.LENGTH_LONG).show();
+            else Toast.makeText(this, getResources().getString(R.string.serverError), Toast.LENGTH_LONG).show();
+        }
         sendText.setText("");
         try {
             loadComments(conversation.getId());
@@ -117,7 +139,7 @@ public class OneConversationActivity extends AppCompatActivity implements View.O
     private void viewProfile() {
         Intent i = new Intent(this, SideMenuActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString("fragment", "UserProfile");
+        bundle.putString("fragment", "UserProfileActivity");
         bundle.putBoolean("loggeduser", false);
         bundle.putString("username", conversation.getUserName());
         i.putExtras(bundle);

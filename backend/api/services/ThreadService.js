@@ -33,14 +33,14 @@ function reportAndEvaluateThread(threadId,email,callback){
             threadFound.numberReports = threadFound.numberReports + 1;
             threadFound.reportedBy.add(email);
             threadFound.save(function(err){
-                if(err){ 
+                if(err){
                     response.status = "E2"
                     response.errors.push(err);
-                    callback(response);    
+                    callback(response);
                  }
-            
+
                 else {
-                    
+
                     if(threadFound.numberReports > 20 && (threadFound.numberReports > threadFound.numberVotes)){
                         var userMail = threadFound.postedBy;
                         UtilsService.increaseUserKarma(-100,userMail, function(result){
@@ -54,10 +54,10 @@ function reportAndEvaluateThread(threadId,email,callback){
                                 });
                             }
                         });
-                        
+
                     }
                     else callback(response);
-                    
+
                 }
             });
         }
@@ -92,13 +92,13 @@ module.exports = {
                     }
                 });
                 callback(response);
-            }   
+            }
         });
     },
     deleteThread: function(threadId,callback){
-         var deleted = destroyThread(threadId,function(response){
-             callback(response);
-         });
+      destroyThread(threadId,function(response){
+        callback(response);
+      });
     },
     reportThread: function(id,email,callback){
         var response = {
@@ -128,11 +128,11 @@ module.exports = {
                 canReport:"false"
             }
          };
-        
-         Thread.findOne({id:id}).populate('reportedBy',{where:{email:email}}).populate('postedBy').populate('votedBy',{where:{email:email}}).exec(function(err2,threadFound){
-            if(err2 !== undefined && err2) {
-                response.status = "E2";
-                response.errors.push(err2);
+
+         Thread.findOne({id:id}).populate('reportedBy',{where:{email:email}}).populate('postedBy').populate('votedBy',{where:{email:email}}).exec(function(err1,threadFound){
+            if(err1 !== undefined && err1) {
+                response.status = "E1";
+                response.errors.push("Server error");
             }
             if(threadFound){
                 var userHasVoted = _.find(threadFound.votedBy,{email:email});
@@ -151,12 +151,56 @@ module.exports = {
                 callback(response);
             }
             else{
-                response.status = "Error";
+                response.status = "E2";
                 response.errors.push("Couldn't find the thread");
                 callback(response);
             }
         });
     },
+
+    getThreadGuest: function(id,callback){
+      var response = {
+          status: "Ok",
+          errors: [],
+          info:{
+              title:"",
+              content:"",
+              category:"",
+              postedBy:"",
+              username:"",
+              rank:"",
+              profilePicture:"",
+              createdAt:"",
+              votes:"",
+              canVote:"false",
+              canReport:"false"
+          }
+       };
+
+       Thread.findOne({id:id}).populate('postedBy').exec(function(err1,threadFound){
+          if(err1 !== undefined && err1) {
+              response.status = "E1";
+              response.errors.push("Server error");
+          }
+          if(threadFound){
+              response.info.postedBy = threadFound.postedBy.email;
+              response.info.votes = threadFound.numberVotes;
+              response.info.createdAt = threadFound.createdAt;
+              response.info.title = threadFound.title;
+              response.info.content = threadFound.content;
+              response.info.category = threadFound.category;
+              response.info.username = threadFound.postedBy.username;
+              response.info.rank =  threadFound.postedBy.rank;
+              response.info.profilePicture =  threadFound.postedBy.profilePicture;
+              callback(response);
+          }
+          else{
+              response.status = "E2";
+              response.errors.push("Couldn't find the thread");
+              callback(response);
+          }
+      });
+  },
 
     getThreadWords: function(words,email,block,category,sortedByVotes,callback){
         var limit = 10;
@@ -275,7 +319,7 @@ module.exports = {
                             threadInfo.username = thread.postedBy.username;
                             threadInfo.id = thread.id;
                             threadInfo.title = thread.title;
-                            threadInfo.votes = thread.numberVotes; 
+                            threadInfo.votes = thread.numberVotes;
                             response.threads.push(threadInfo);
                         });
                     }
@@ -289,7 +333,7 @@ module.exports = {
         });
     },
 
-    
+
     voteThread: function(id, email, callback){
         var response = {
             status: "Ok",
@@ -343,6 +387,17 @@ module.exports = {
             response.errors.push("Server error.");
             callback(response);
          });
+    },
+
+    getAllCategories: function(callback){
+        var response = {
+            status: "Ok",
+            errors: [],
+            categories: [ "culture", "education and formation",
+        "emergencies", "language", "justice", "public administration", "housing",
+        "health", "work", "tourism", "off topic"]
+        }
+        callback(response);
     }
 
 }

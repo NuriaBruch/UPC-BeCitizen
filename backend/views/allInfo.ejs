@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="/notInjectedStyles/general.css">
+<div class="container" style="margin-top: 0px">
+    <form action="" method="post">
+            <table id="allInfoTable" class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete ?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% infos.forEach(i => { %>
+                        <tr>
+                            <th scope="row"><%= i.id %></th>
+                            <td><%= i.title %></td>
+                            <td><%= i.category %></td>
+                            <td><%= i.content %></td>
+                            <td><a class="btn" href="/allInfo?id=<%= i.id %>"><span class="fa fa-pencil"></span></a></td>
+                            <td><input type="checkbox" name="id" id="id" value="<%= i.id %>"></td>
+                        </tr>
+                    <% }) %> 
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td scope="row" colspan="1">
+                            <button disabled="true" id="deleteBtn" type="submit" class="btn btn-secondary" style="width: 100px; height: 40px;">Delete 0</button>
+                        </td>
+                    </tr>
+                    <tr class="noBorders">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td scope="row">
+                            <a style="width: 100px; height: 40px;" class="btn btn-primary" href="/addInfo">New</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </form>
+    
+</div>
+
+<script>
+    function updateDeleteBtn(){
+        var count = $("#allInfoTable").find("input").filter(":checked").length;
+        $("#deleteBtn").text("Delete " + count);
+
+        count == 0 ? $("#deleteBtn").attr("disabled", true) : $("#deleteBtn").attr("disabled", false);
+    }
+
+    $(document).ready(function(){
+        $("#allInfoTable").find("input").change(function() {
+            updateDeleteBtn();
+        });
+    });
+</script>
+
+

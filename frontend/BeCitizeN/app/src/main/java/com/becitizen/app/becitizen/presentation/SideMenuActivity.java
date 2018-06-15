@@ -16,7 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.becitizen.app.becitizen.R;
+import com.becitizen.app.becitizen.exceptions.SharedPreferencesException;
+import com.becitizen.app.becitizen.presentation.controllers.ControllerUserPresentation;
+import com.becitizen.app.becitizen.presentation.faq.FaqCategoriesActivity;
+import com.becitizen.app.becitizen.presentation.forum.ForumCategoriesActivity;
+import com.becitizen.app.becitizen.presentation.info.InformationCategoriesActivity;
 import com.becitizen.app.becitizen.presentation.msg.AllConversationsActivity;
+import com.becitizen.app.becitizen.presentation.user.LoggedAsGuestActivity;
+import com.becitizen.app.becitizen.presentation.user.MainActivity;
+import com.becitizen.app.becitizen.presentation.user.UserProfileActivity;
+import com.becitizen.app.becitizen.presentation.utilities.AboutActivity;
+import com.becitizen.app.becitizen.presentation.utilities.HelpActivity;
+import com.becitizen.app.becitizen.presentation.utilities.UtilitiesMenu;
 
 public class SideMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -31,18 +42,19 @@ public class SideMenuActivity extends AppCompatActivity
 
         try {
             if(!ControllerUserPresentation.getUniqueInstance().isLogged()) goToLogin();
+            else ControllerUserPresentation.getUniqueInstance().getLoggedUser();
         } catch (Exception e) {
             e.printStackTrace();
             goToLogin();
         }
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfile")) {
+        if (bundle != null && bundle.containsKey("fragment") && bundle.getString("fragment").equals("UserProfileActivity")) {
             viewProfile(bundle);
         } else {
             //Set the fragment initially
-            Fragment fragment = new InsideActivity();
-            fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+            Fragment fragment = new MenuActivity();
+            fragmentTransaction(fragment, "MENU_ACTIVITY");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -118,12 +130,25 @@ public class SideMenuActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("loggeduser", true);
-            Fragment fragment = new UserProfile();
-            fragment.setArguments(bundle);
-            fragmentTransaction(fragment, "USER_PROFILE");
-            return true;
+            try {
+                if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                    Fragment fragment = new LoggedAsGuestActivity();
+                    fragmentTransaction(fragment, "LOGGED_AS_GUEST_ACTIVITY");
+                    return true;
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("loggeduser", true);
+                    Fragment fragment = new UserProfileActivity();
+                    fragment.setArguments(bundle);
+                    fragmentTransaction(fragment, "USER_PROFILE");
+                    return true;
+                }
+            } catch (SharedPreferencesException e) {
+                e.printStackTrace();
+                //Initialize MySharedPreferences
+                ControllerUserPresentation.getUniqueInstance().initializeMySharedPreferences(this);
+                goToLogin();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -143,8 +168,8 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "INFORMATION_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_faq:
-                fragment = new InsideActivity();
-                fragmentTransaction(fragment, "INSIDE_ACTIVITY");
+                fragment = new FaqCategoriesActivity();
+                fragmentTransaction(fragment, "FAQ_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_utilities:
                 fragment = new UtilitiesMenu();
@@ -155,14 +180,20 @@ public class SideMenuActivity extends AppCompatActivity
                 fragmentTransaction(fragment, "FORUM_CATEGORY_ACTIVITY");
                 break;
             case R.id.nav_private_messages:
-                fragment = new AllConversationsActivity();
-                fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
-                break;
-            case R.id.nav_settings:
-                /*
-                fragment = new SettingsActivity();
-                fragmentTransaction(fragment);
-                */
+                try {
+                    if (ControllerUserPresentation.getUniqueInstance().isLoggedAsGuest()) {
+                        fragment = new LoggedAsGuestActivity();
+                        fragmentTransaction(fragment, "LOGGED_AS_GUEST_ACTIVITY");
+                    } else {
+                        fragment = new AllConversationsActivity();
+                        fragmentTransaction(fragment, "ALL_CONVERSATIONS_ACTIVITY");
+                    }
+                } catch (SharedPreferencesException e) {
+                    e.printStackTrace();
+                    //Initialize MySharedPreferences
+                    ControllerUserPresentation.getUniqueInstance().initializeMySharedPreferences(this);
+                    goToLogin();
+                }
                 break;
             case R.id.nav_help:
                 fragment = new HelpActivity();
@@ -180,7 +211,7 @@ public class SideMenuActivity extends AppCompatActivity
     }
 
     private void viewProfile(Bundle bundle) {
-        Fragment fragment = new UserProfile();
+        Fragment fragment = new UserProfileActivity();
         fragment.setArguments(bundle);
         fragmentTransaction(fragment, "USER_PROFILE");
     }

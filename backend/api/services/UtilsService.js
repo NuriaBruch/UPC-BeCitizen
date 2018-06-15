@@ -26,8 +26,12 @@ module.exports = {
         return result[1]+"/"+result[0]+"/"+result[2];
     },
 
-    getEmailFromHeader: (req) => jw.decode(req.get("token")).email,
-
+    getEmailFromHeader: function(req){
+      if(req.get("token") != undefined){
+        return jw.decode(req.get("token")).email;
+      }
+      else return undefined;
+    },
 
     update_deactivated: function(userFound, callback){
         User.update({email:userFound.email},{deactivated:false}).exec(function(err1,userFound){
@@ -69,5 +73,19 @@ module.exports = {
 
     isEmptyOrBlank: function(str){
        return (!str || 0 === str.length || !str.trim());
+    },
+
+    translate: function(text, from, to){
+        //console.log(`${text} ${from} ${to}`);
+        const translate = require('google-translate-api');
+        return new Promise((resolve, reject) => {
+            translate(text, {from: from, to: to})
+            .then(res => {
+                resolve(res.text);
+            })
+            .catch(err => {
+                reject(err);
+            })
+        });
     }
 }
