@@ -351,7 +351,7 @@
     <string name="errorLoadMessages">No se han podido cargar los mensajes</string>
     <string name="Enter_message">Escribe un mensaje</string>
     <string name="SEND">ENVIAR</string>
-    <string name="noConversations">No tienes ninguna conversación aún!!\n\n\n\nPuedes empezar una conversación nueva con otro usuario desde su perfil</string>
+    <string name="noConversations">¡No tienes ninguna conversación aún!\n\n\n\nPuedes empezar una conversación nueva con otro usuario desde su perfil</string>
 
     <!-- CURRENCY CONVERTER -->
     <string name="ccTitle">Conversor de monedas</string>

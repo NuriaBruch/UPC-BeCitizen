@@ -179,8 +179,7 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
             if (e.getMessage().equals("User deactivated")) {
 
                 blockButton.setVisibility(View.INVISIBLE);
-                String user = "@" + username;
-                tvUsername.setText(user);
+                tvUsername.setText(username);
                 tvName.setText(getResources().getString(R.string.deactived));
                 tvName.setTextColor(Color.RED);
 
@@ -225,7 +224,9 @@ public class UserProfileActivity extends Fragment implements View.OnClickListene
 
     private void setTextView(String text, TextView tv) {
         if (userData.get(text) != null) {
-            tv.setText(userData.get(text).toString());
+            String text2 = userData.get(text).toString();
+            if (text.equals("username")) text2 = "@" + text2;
+            tv.setText(text2);
         }
         else {
             tv.setVisibility(View.GONE);
