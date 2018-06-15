@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,13 @@ public class ChangePasswordActivity extends Fragment  implements View.OnClickLis
         reNewPassword = (TextInputEditText) rootView.findViewById(R.id.reNewPassword);
         send = (Button) rootView.findViewById(R.id.newPasswordButton);
         send.setOnClickListener(this);
+
+        oldPassword.setTransformationMethod(new PasswordTransformationMethod());
+        newPassword.setTransformationMethod(new PasswordTransformationMethod());
+        reNewPassword.setTransformationMethod(new PasswordTransformationMethod());
+        oldPassword.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        newPassword.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        reNewPassword.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
 
         return rootView;
     }

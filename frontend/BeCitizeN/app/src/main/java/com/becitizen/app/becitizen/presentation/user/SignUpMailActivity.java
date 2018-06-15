@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,8 +35,10 @@ public class SignUpMailActivity extends AppCompatActivity {
         tietMail = findViewById(R.id.tietMail);
         tietPassw = findViewById(R.id.tietPassw);
         tietPassw.setTransformationMethod(new PasswordTransformationMethod());
+        tietPassw.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         tietPassw2 = findViewById(R.id.tietPassw2);
         tietPassw2.setTransformationMethod(new PasswordTransformationMethod());
+        tietPassw2.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
     }
 
     public void signUp(View view) {
